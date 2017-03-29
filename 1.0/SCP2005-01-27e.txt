@@ -1,0 +1,82 @@
+/*
+Created		27/5/2003
+Modified		27/1/2005
+Project		
+Model			
+Company		
+Author		
+Version		
+Database		MS SQL 2000 
+*/
+
+
+go
+
+Create table [TBAdicionais_cliente]
+(
+	[PKId_TBAdicionais_cliente] Integer Identity NOT NULL,
+	[FKId_TBCliente] Integer NOT NULL,
+	[DFData_TBAdicionais_cliente] Smalldatetime NOT NULL,
+	[DFDescricao_TBAdicionais_cliente] Nvarchar(300) NOT NULL,
+Primary Key ([PKId_TBAdicionais_cliente])
+) 
+go
+
+
+
+
+
+
+
+
+
+
+Alter table [TBAdicionais_cliente] add  foreign key([FKId_TBCliente]) references [TBCliente] ([PKId_TBCliente])  on update no action on delete no action 
+go
+
+
+Set quoted_identifier on
+go
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Set quoted_identifier off
+go
+
+
+
+
+
+
+
+
+/* Roles permissions */
+
+
+
+
+
+/* Users permissions */
+
+
+
+
+
+

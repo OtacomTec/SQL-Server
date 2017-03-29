@@ -1,0 +1,67 @@
+USE BDRetaguarda
+
+BEGIN TRANSACTION
+/*
+ *** IDENTIFICAÇÃO DO SCRIPT ***
+
+ 1 - Apartir de 20/12/2005, fica expressamente proibida a criação de scripts sem que seja preenchido este cabeçalho
+ 2 - Obrigatoriamente necessário que este paragrafo seja inserido apos um BEGIN TRANSACTION
+ 3 - Obrigatoriamente o preenchimento das variaveis abaixo(@Nomenclatura,@Observacao,@Data)com valores correspondentes e condizentes
+ Att: Marcos
+
+*/
+
+--INICIO CABECALHO
+
+declare @Nomenclatura as nvarchar(20)
+declare @Observacao as nvarchar(100)
+declare @Data as SMALLDATETIME
+
+SET @Nomenclatura = 'SCP2007-10-02b'
+SET @Observacao = 'Cria Tabela CSTProdutoRamo' 
+SET @Data = CURRENT_TIMESTAMP
+
+---LIMPEZA DA TABELA
+
+DELETE FROM TBSCRIPT
+
+---INSERCAO DO REGISTRO
+
+INSERT INTO BDRetaguarda.dbo.TBSCRIPT(DFNome_TBScript,DFObjetivo_TBScript,DFData_execucao_TBScript)
+VALUES(@Nomenclatura,@Observacao,@Data)
+
+---FIM CABECALHO
+
+Create table [TBCst_Ramo_atividade]
+(
+	[PKId_TBCst_Ramo_atividade] Integer Identity NOT NULL,
+	[FKCodigo_TBRamo_atividade] Integer NOT NULL,
+	[FKId_TBProduto] Integer NOT NULL,
+	[DFCst1_TBCst_Ramo_atividade] Char(1) NULL,
+	[DFCst2_TBCst_Ramo_atividade] Char(2) NULL,
+Primary Key ([PKId_TBCst_Ramo_atividade])
+) 
+go
+
+Alter table [TBCst_Ramo_atividade] add  foreign key([FKId_TBProduto]) references [TBProduto] ([PKId_TBProduto])  on update no action on delete no action 
+go
+Alter table [TBCst_Ramo_atividade] add  foreign key([FKCodigo_TBRamo_atividade]) references [TBRamo_atividade] ([PKCodigo_TBRamo_atividade])  on update no action on delete no action 
+go
+
+
+Set quoted_identifier on
+go
+
+Set quoted_identifier off
+go
+
+/* Roles permissions */
+
+/* Users permissions */
+
+
+go
+
+
+COMMIT TRANSACTION
+

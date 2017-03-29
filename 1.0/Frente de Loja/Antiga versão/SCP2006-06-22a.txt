@@ -1,0 +1,4 @@
+ALTER TABLE dbo.TBFinalizadora ADD
+	DFCodigo_link_plano_pagamento_Identificador_TBFinalizadora int NULL
+
+

@@ -1,0 +1,64 @@
+/*
+   segunda-feira, 7 de novembro de 2005 16:46:47
+   User: sa
+   Server: ONLYTECH-02
+   Database: BDRetaguarda
+   Application: MS SQLEM - Data Tools
+*/
+
+BEGIN TRANSACTION
+SET QUOTED_IDENTIFIER ON
+SET TRANSACTION ISOLATION LEVEL SERIALIZABLE
+SET ARITHABORT ON
+SET NUMERIC_ROUNDABORT OFF
+SET CONCAT_NULL_YIELDS_NULL ON
+SET ANSI_NULLS ON
+SET ANSI_PADDING ON
+SET ANSI_WARNINGS ON
+COMMIT
+BEGIN TRANSACTION
+ALTER TABLE dbo.TBCheque_Baixado
+	DROP CONSTRAINT FK__TBCheque___FKId___4D843D0C
+GO
+COMMIT
+BEGIN TRANSACTION
+CREATE TABLE dbo.Tmp_TBCheque_Baixado
+	(
+	PKId_TBCheque_Baixado int NOT NULL IDENTITY (1, 1),
+	FKId_TBCheque int NOT NULL,
+	DFData_Baixa_TBCheque_Baixado smalldatetime NULL,
+	DFUsuario_TBCheque_Baixado nvarchar(20) NULL,
+	DFObservacao_TBCheque_Baixado nvarchar(50) NULL,
+	DFValor_TBCheque_Baixado money NULL,
+	DFDiferenca_TBCheque_Baixado money NULL
+	)  ON [PRIMARY]
+GO
+SET IDENTITY_INSERT dbo.Tmp_TBCheque_Baixado ON
+GO
+IF EXISTS(SELECT * FROM dbo.TBCheque_Baixado)
+	 EXEC('INSERT INTO dbo.Tmp_TBCheque_Baixado (PKId_TBCheque_Baixado, FKId_TBCheque, DFData_Baixa_TBCheque_Baixado, DFUsuario_TBCheque_Baixado, DFObservacao_TBCheque_Baixado, DFValor_TBCheque_Baixado, DFDiferenca_TBCheque_Baixado)
+		SELECT PKId_TBCheque_Baixado, FKId_TBCheque, DFData_Baixa_TBCheque_Baixado, DFUsuario_TBCheque_Baixado, DFObservacao_TBCheque_Baixado, DFValor_TBCheque_Baixado, DFDiferenca_TBCheque_Baixado FROM dbo.TBCheque_Baixado TABLOCKX')
+GO
+SET IDENTITY_INSERT dbo.Tmp_TBCheque_Baixado OFF
+GO
+DROP TABLE dbo.TBCheque_Baixado
+GO
+EXECUTE sp_rename N'dbo.Tmp_TBCheque_Baixado', N'TBCheque_Baixado', 'OBJECT'
+GO
+ALTER TABLE dbo.TBCheque_Baixado ADD CONSTRAINT
+	PK_TBCheque_Baixado PRIMARY KEY CLUSTERED 
+	(
+	PKId_TBCheque_Baixado
+	) ON [PRIMARY]
+
+GO
+ALTER TABLE dbo.TBCheque_Baixado WITH NOCHECK ADD CONSTRAINT
+	FK__TBCheque___FKId___4D843D0C FOREIGN KEY
+	(
+	FKId_TBCheque
+	) REFERENCES dbo.TBCheque
+	(
+	PKId_TBCheque
+	)
+GO
+COMMIT

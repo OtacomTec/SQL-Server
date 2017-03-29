@@ -1,0 +1,3 @@
+update tbPlano_pagamento
+set DFAtivo_inativo_TBPlano_pagamento = 0
+from tbPlano_pagamento

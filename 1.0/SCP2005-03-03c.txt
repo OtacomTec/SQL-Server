@@ -1,0 +1,92 @@
+/*
+Created		27/5/2003
+Modified		3/3/2005
+Project		
+Model			
+Company		
+Author		
+Version		
+Database		MS SQL 2000 
+*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Create table [TBTipo_taxa]
+(
+	[PKCodigo_TBTipo_taxa] Integer NOT NULL,
+	[DFDescricao_TBTipo_taxa] Nvarchar(50) NOT NULL,
+Primary Key ([PKCodigo_TBTipo_taxa])
+) 
+go
+
+
+
+
+
+
+
+
+
+
+
+Set quoted_identifier on
+go
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Set quoted_identifier off
+go
+
+
+
+
+
+
+
+
+/* Roles permissions */
+
+
+
+
+
+/* Users permissions */
+
+
+
+
+
+

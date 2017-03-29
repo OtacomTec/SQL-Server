@@ -1,0 +1,77 @@
+/*
+Created		27/5/2003
+Modified		2/4/2005
+Project		
+Model			
+Company		
+Author		
+Version		
+Database		MS SQL 2000 
+*/
+
+
+go
+
+Create table [TBVeiculo_venda]
+(
+	[PKId_TBVeiculo_venda] Integer Identity NOT NULL,
+	[FKCodigo_TBVeiculo] Integer NOT NULL,
+	[DFData_venda_TBVeiculo_venda] Smalldatetime NOT NULL,
+	[DFValor_real_TBVeiculo_venda] Money NULL,
+	[DFValor_dolar_TBVeiculo_venda] Money NULL,
+	[DFInformacoes_gerais_TBVeiculo_venda] Nvarchar(200) NULL,
+	[DFInformacoes_recibo_TBVeiculo_venda] Nvarchar(200) NULL,
+Primary Key ([PKId_TBVeiculo_venda])
+) 
+go
+
+
+Alter table [TBVeiculo_venda] add  foreign key([FKCodigo_TBVeiculo]) references [TBVeiculo] ([PKCodigo_TBVeiculo])  on update no action on delete no action 
+go
+
+
+Set quoted_identifier on
+go
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Set quoted_identifier off
+go
+
+
+
+
+
+
+
+
+/* Roles permissions */
+
+
+
+
+
+/* Users permissions */
+
+
+
+
+
+

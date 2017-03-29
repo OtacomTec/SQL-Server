@@ -1,0 +1,8 @@
+
+CREATE TABLE [dbo].[TBCliente_Titulo_receber_palm](
+	[PKId_TBCliente_TBCliente_Titulo_receber_palm] [int] NULL,
+	[DFData_Vencimento_TBCliente_Titulo_receber_palm] [smalldatetime] NULL,
+	[DFNumero_titulo_TBCliente_TBCliente_Titulo_receber_palm] [nvarchar](20) NULL,
+	[DFValor_TBCliente_TBCliente_Titulo_receber_palm] [money] NULL,
+	[FKCodigo_TBCliente_palm] [int] NULL
+) ON [PRIMARY]

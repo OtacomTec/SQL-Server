@@ -1,0 +1,14 @@
+CREATE TABLE [dbo].[TBVendedor_palm](
+	[PKId_TBVendedor_palm] [int]IDENTITY (1, 1) NOT NULL,
+	[IXCodigo_TBEmpresa_palm] [int] NULL,
+	[IXCodigo_TBVendedor_palm] [int] NULL,
+	[DFNome_TBVendedor_palm] [nvarchar](40) NULL,
+	[DFTelefone_TBVendedor_palm] [nvarchar](20) NULL,
+	[FKCodigo_TBLinha_venda_palm] [int] NULL,
+	[FKCodigo_TBTipo_tabela_palm] [int] NULL,
+	[DFSaldo_conta_corrente_TBVendedor_palm] [money] NULL,
+	[DFSerial_palm_TBVendedor_palm] [nvarchar](30) NULL,
+	[DFConexao_data_center_TBVendedor_palm] [nvarchar](400) NULL,
+	[DFData_atualizacao_portal] [smalldatetime] NULL,
+	[DFHora_atualizacao_portal] [smalldatetime] NULL
+) ON [PRIMARY]

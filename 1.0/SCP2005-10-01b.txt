@@ -1,0 +1,61 @@
+/*
+   sábado, 1 de outubro de 2005 11:14:50
+   User: sa
+   Server: ONLYTECH-02
+   Database: BDRetaguarda
+   Application: MS SQLEM - Data Tools
+*/
+
+BEGIN TRANSACTION
+SET QUOTED_IDENTIFIER ON
+SET TRANSACTION ISOLATION LEVEL SERIALIZABLE
+SET ARITHABORT ON
+SET NUMERIC_ROUNDABORT OFF
+SET CONCAT_NULL_YIELDS_NULL ON
+SET ANSI_NULLS ON
+SET ANSI_PADDING ON
+SET ANSI_WARNINGS ON
+COMMIT
+BEGIN TRANSACTION
+ALTER TABLE dbo.TBTitulo_pago_credito_cliente
+	DROP CONSTRAINT FK_TBTitulo_pago_credito_cliente_TBTitulo_pagar_credito_cliente
+GO
+COMMIT
+BEGIN TRANSACTION
+CREATE TABLE dbo.Tmp_TBTitulo_pago_credito_cliente
+	(
+	PKId_TBTitulo_pago_credito_cliente int NOT NULL IDENTITY (1, 1),
+	FKId_TBTitulo_pagar_credito_cliente int NOT NULL,
+	DFData_pagamento_TBTitulo_pago_credito_cliente smalldatetime NULL,
+	DFBaixa_Caixa_banco_TBTitulo_pago_credito_cliente bit NULL
+	)  ON [PRIMARY]
+GO
+SET IDENTITY_INSERT dbo.Tmp_TBTitulo_pago_credito_cliente ON
+GO
+IF EXISTS(SELECT * FROM dbo.TBTitulo_pago_credito_cliente)
+	 EXEC('INSERT INTO dbo.Tmp_TBTitulo_pago_credito_cliente (PKId_TBTitulo_pago_credito_cliente, FKId_TBTitulo_pagar_credito_cliente, DFData_pagamento_TBTitulo_pago_credito_cliente, DFBaixa_Caixa_banco_TBTitulo_pago_credito_cliente)
+		SELECT PKId_TBTitulo_pago_credito_cliente, FKId_TBTitulo_pagar_credito_cliente, DFData_pagamento_TBTitulo_pago_credito_cliente, DFBaixa_Caixa_banco_TBTitulo_pago_credito_cliente FROM dbo.TBTitulo_pago_credito_cliente TABLOCKX')
+GO
+SET IDENTITY_INSERT dbo.Tmp_TBTitulo_pago_credito_cliente OFF
+GO
+DROP TABLE dbo.TBTitulo_pago_credito_cliente
+GO
+EXECUTE sp_rename N'dbo.Tmp_TBTitulo_pago_credito_cliente', N'TBTitulo_pago_credito_cliente', 'OBJECT'
+GO
+ALTER TABLE dbo.TBTitulo_pago_credito_cliente ADD CONSTRAINT
+	PK_TBTitulo_pago_credito_cliente PRIMARY KEY CLUSTERED 
+	(
+	PKId_TBTitulo_pago_credito_cliente
+	) ON [PRIMARY]
+
+GO
+ALTER TABLE dbo.TBTitulo_pago_credito_cliente WITH NOCHECK ADD CONSTRAINT
+	FK_TBTitulo_pago_credito_cliente_TBTitulo_pagar_credito_cliente FOREIGN KEY
+	(
+	FKId_TBTitulo_pagar_credito_cliente
+	) REFERENCES dbo.TBTitulo_pagar_credito_cliente
+	(
+	PKId_TBTitulo_pagar_credito_cliente
+	)
+GO
+COMMIT

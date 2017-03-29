@@ -1,0 +1,79 @@
+/*
+Created		27/5/2003
+Modified		25/8/2005
+Project		Only Tech - ERP
+Model			Olt
+Company		Only Tech
+Author		Only Tech
+Version		1.0
+Database		MS SQL 2000 
+*/
+
+
+
+
+Create table [TBVale_funcionario]
+(
+	[PKId_TBVale_funcionario] Integer Identity NOT NULL,
+	[FKId_TBFornecedor] Integer NOT NULL,
+	[FKCodigo_TBFuncionario] Integer NOT NULL,
+	[DFValor_TBVale_funcionario] Money NOT NULL,
+	[DFData_TBVale_funcionario] Integer NOT NULL,
+	[DFNumero_documento_TBVale_funcionario] Integer NOT NULL,
+	[DFMes_competencia_TBVale_funcionario] Integer NOT NULL,
+	[DFAno_competencia_TBVale_funcionario] Integer NOT NULL,
+	[DFMotivo_TBVale_funcionario] Nvarchar(100) NULL,
+	[DFObservacao_TBVale_funcionario] Nvarchar(100) NULL,
+	[DFData_pagamento_TBVale_funcionario] Smalldatetime NULL,
+Primary Key ([PKId_TBVale_funcionario])
+) 
+go
+
+
+
+
+
+Alter table [TBVale_funcionario] add  foreign key([FKId_TBFornecedor]) references [TBFornecedor] ([PKId_TBFornecedor])  on update no action on delete no action 
+go
+Alter table [TBVale_funcionario] add  foreign key([FKCodigo_TBFuncionario]) references [TBFuncionario] ([PKCodigo_TBFuncionario])  on update no action on delete no action 
+go
+Set quoted_identifier on
+go
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Set quoted_identifier off
+go
+
+
+
+
+
+
+
+
+/* Roles permissions */
+
+
+
+
+
+/* Users permissions */
+

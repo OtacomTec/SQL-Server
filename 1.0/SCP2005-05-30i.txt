@@ -1,0 +1,6 @@
+update TBItens_tabela_preco
+set  TBItens_tabela_preco.FKCodigo_TBMoeda = 1
+
+
+--Atenção somente quando o codigo da mOeda  Real = 1.
+

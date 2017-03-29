@@ -1,0 +1,26 @@
+BEGIN TRANSACTION
+SET QUOTED_IDENTIFIER ON
+SET TRANSACTION ISOLATION LEVEL SERIALIZABLE
+SET ARITHABORT ON
+SET NUMERIC_ROUNDABORT OFF
+SET CONCAT_NULL_YIELDS_NULL ON
+SET ANSI_NULLS ON
+SET ANSI_PADDING ON
+SET ANSI_WARNINGS ON
+COMMIT
+BEGIN TRANSACTION
+ALTER TABLE dbo.TBConveniados ADD
+	DFRegistro_geral_TBConveniados nvarchar(20) NULL,
+	DFOrgao_expedidor_TBConveniados nvarchar(50) NULL,
+	DFCpf_TBConveniados nvarchar(20) NULL,
+	DFCrm_TBConveniados nvarchar(20) NULL,
+	DFHorario_atendimento_TBConveniados nvarchar(30) NULL,
+	DFLocal_atendimento_TBConveniados nvarchar(50) NULL,
+	DFTelefone_comercial_TBConveniados nvarchar(20) NULL,
+	DFTelefone_residencial_TBConveniados nvarchar(20) NULL,
+	DFTelefone_celular_TBConveniados nvarchar(20) NULL,
+	FKCodigo_TBEspecialidade int NULL,
+        DFLocal_atendimento_TBConveniados nvarchar(50) NULL,
+        DFEndereco_comercial_TBConveniados nvarchar(50) NULL
+GO
+COMMIT

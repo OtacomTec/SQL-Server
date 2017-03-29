@@ -1,0 +1,72 @@
+/*
+Created		27/5/2003
+Modified		11/4/2005
+Project		
+Model			
+Company		
+Author		
+Version		
+Database		MS SQL 2000 
+*/
+
+
+
+Create table [TBCentro_custo_funcionario]
+(
+	[PKId_TBCentro_custo_funcionario] Integer Identity NOT NULL,
+	[FKId_TBCentro_custo] Integer NOT NULL,
+	[FKCodigo_TBFuncionario] Integer NOT NULL,
+	[DFPercentual_participacao_TBCentro_custo_funcionario] Money NULL,
+Primary Key ([PKId_TBCentro_custo_funcionario])
+) 
+go
+
+Alter table [TBCentro_custo_funcionario] add  foreign key([FKId_TBCentro_custo]) references [TBCentro_custo] ([PKId_TBCentro_custo])  on update no action on delete no action 
+go
+
+
+Set quoted_identifier on
+go
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Set quoted_identifier off
+go
+
+
+
+
+
+
+
+
+/* Roles permissions */
+
+
+
+
+
+/* Users permissions */
+
+
+
+
+
+

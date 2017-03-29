@@ -1,0 +1,61 @@
+/*
+Created		27/5/2003
+Modified		10/11/2005
+Project		Only Tech - ERP
+Model			Olt
+Company		Only Tech
+Author		Only Tech
+Version		1.0
+Database		MS SQL 2000 
+*/
+
+
+Create table [TBPonto_funcionario]
+(
+	[PKId_TBPonto_funcionario] Integer Identity NOT NULL,
+	[FKCodigo_TBFuncionario] Integer NOT NULL,
+	[DFData_TBPonto_funcionario] Smalldatetime NOT NULL,
+	[DFHora_entrada_TBPonto_funcionario] Nvarchar(8) NULL,
+	[DFHora_almoco_ida_TBPonto_funcionario] Nvarchar(8) NULL,
+	[DFHora_almoco_volta_TBPonto_funcionario] Nvarchar(8) NULL,
+	[DFHora_lanche_ida_TBPonto_funcionario] Nvarchar(8) NULL,
+	[DFHora_lanche_volta_TBPonto_funcionario] Nvarchar(8) NULL,
+	[DFHora_saida_TBPonto_funcionario] Nvarchar(8) NULL,
+	[DFHora_lanche_ida_2jornada_TBPonto_funcionario] Nvarchar(8) NULL,
+	[DFHora_lanche_volta_2jornada_TBPonto_funcionario] Nvarchar(8) NULL,
+Primary Key ([PKId_TBPonto_funcionario])
+) 
+go
+
+Alter table [TBPonto_funcionario] add  foreign key([FKCodigo_TBFuncionario]) references [TBFuncionario] ([PKCodigo_TBFuncionario])  on update no action on delete no action 
+go
+
+
+Set quoted_identifier on
+go
+
+
+
+Set quoted_identifier off
+go
+
+
+
+
+
+
+
+
+/* Roles permissions */
+
+
+
+
+
+/* Users permissions */
+
+
+
+
+
+

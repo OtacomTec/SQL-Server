@@ -1,0 +1,65 @@
+SET QUOTED_IDENTIFIER ON
+SET TRANSACTION ISOLATION LEVEL SERIALIZABLE
+SET ARITHABORT ON
+SET NUMERIC_ROUNDABORT OFF
+SET CONCAT_NULL_YIELDS_NULL ON
+SET ANSI_NULLS ON
+SET ANSI_PADDING ON
+SET ANSI_WARNINGS ON
+COMMIT
+BEGIN TRANSACTION
+ALTER TABLE dbo.TBAgenda_funcionario
+	DROP CONSTRAINT FK__TBAgenda___FKCod__0F231F2D
+GO
+ALTER TABLE dbo.TBAgenda_funcionario
+	DROP CONSTRAINT FK__TBAgenda___FKCod__18AC8967
+GO
+COMMIT
+BEGIN TRANSACTION
+CREATE TABLE dbo.Tmp_TBAgenda_funcionario
+	(
+	PKId_TBAgenda_funcionario int NOT NULL IDENTITY (1, 1),
+	FKCodigo_TBFuncionario int NOT NULL,
+	DFContato_TBAgenda_funcionario nvarchar(40) NOT NULL,
+	DFTelefone_TBAgenda_funcionario nvarchar(20) NOT NULL,
+	DFEmail_TBAgenda_funcionario nvarchar(50) NULL
+	)  ON [PRIMARY]
+GO
+SET IDENTITY_INSERT dbo.Tmp_TBAgenda_funcionario ON
+GO
+IF EXISTS(SELECT * FROM dbo.TBAgenda_funcionario)
+	 EXEC('INSERT INTO dbo.Tmp_TBAgenda_funcionario (PKId_TBAgenda_funcionario, FKCodigo_TBFuncionario, DFContato_TBAgenda_funcionario, DFTelefone_TBAgenda_funcionario, DFEmail_TBAgenda_funcionario)
+		SELECT PKId_TBAgenda_funcionario, FKCodigo_TBFuncionario, CONVERT(nvarchar(40), DFContato_TBAgenda_funcionario), DFTelefone_TBAgenda_funcionario, DFEmail_TBAgenda_funcionario FROM dbo.TBAgenda_funcionario TABLOCKX')
+GO
+SET IDENTITY_INSERT dbo.Tmp_TBAgenda_funcionario OFF
+GO
+DROP TABLE dbo.TBAgenda_funcionario
+GO
+EXECUTE sp_rename N'dbo.Tmp_TBAgenda_funcionario', N'TBAgenda_funcionario', 'OBJECT'
+GO
+ALTER TABLE dbo.TBAgenda_funcionario ADD CONSTRAINT
+	PK__TBAgenda_funcion__0781FD65 PRIMARY KEY CLUSTERED 
+	(
+	PKId_TBAgenda_funcionario
+	) WITH FILLFACTOR = 90 ON [PRIMARY]
+
+GO
+ALTER TABLE dbo.TBAgenda_funcionario WITH NOCHECK ADD CONSTRAINT
+	FK__TBAgenda___FKCod__0F231F2D FOREIGN KEY
+	(
+	FKCodigo_TBFuncionario
+	) REFERENCES dbo.TBFuncionario
+	(
+	PKCodigo_TBFuncionario
+	)
+GO
+ALTER TABLE dbo.TBAgenda_funcionario WITH NOCHECK ADD CONSTRAINT
+	FK__TBAgenda___FKCod__18AC8967 FOREIGN KEY
+	(
+	FKCodigo_TBFuncionario
+	) REFERENCES dbo.TBFuncionario
+	(
+	PKCodigo_TBFuncionario
+	)
+GO
+COMMIT

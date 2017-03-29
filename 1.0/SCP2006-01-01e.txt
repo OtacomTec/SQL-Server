@@ -1,0 +1,128 @@
+BEGIN TRANSACTION
+/*
+ *** IDENTIFICAÇÃO DO SCRIPT ***
+
+ 1 - Apartir de 20/12/2005, fica expressamente proibida a criação de scripts sem que seja preenchido este cabeçalho
+ 2 - Obrigatoriamente necessário que este paragrafo seja inserido apos um BEGIN TRANSACTION
+ 3 - Obrigatoriamente o preenchimento das variaveis abaixo(@Nomenclatura,@Observacao,@Data)com valores correspondentes e condizentes
+ Att: Marcos
+
+*/
+
+--INICIO CABECALHO
+
+declare @Nomenclatura as nvarchar(20)
+declare @Observacao as nvarchar(100)
+declare @Data as SMALLDATETIME
+
+SET @Nomenclatura = 'SCP2006-01-01e'
+SET @Observacao = 'CRIA Tabela Marcha'
+SET @Data = CURRENT_TIMESTAMP
+
+
+---LIMPEZA DA TABELA
+DELETE FROM TBSCRIPT
+
+---INSERCAO DO REGISTRO
+INSERT INTO TBSCRIPT(DFNome_TBScript,DFObjetivo_TBScript,DFData_execucao_TBScript)
+VALUES(@Nomenclatura,@Observacao,@Data)
+
+
+
+---FIM CABECALHO
+
+/*
+Created		27/5/2003
+Modified		2/1/2006
+Project		Only Tech - ERP
+Model			Olt
+Company		Only Tech
+Author		Only Tech
+Version		1.0
+Database		MS SQL 2000 
+*/
+
+Create table [TBMarcha]
+(
+	[PKId_TBMarcha] Integer Identity NOT NULL,
+	[FKId_TBCliente] Integer NOT NULL,
+	[FKCodigo_TBInsumo] Integer NOT NULL,
+	[FKCodigo_TBTipo_marcha] Integer NOT NULL,
+	[DFPrevisao_entrega_TBMarcha] Smalldatetime NOT NULL,
+	[DFPrioridade_TBMarcha] Integer NOT NULL,
+	[DFCompetencia_TBMarcha] Smalldatetime NOT NULL,
+	[DFLote_TBMarcha] Nvarchar(10) NULL,
+	[DFQuantidade_TBMarcha] Integer NULL,
+	[DFMedida_TBMarcha] Nvarchar(10) NULL,
+	[DFEmbalagem_TBMarcha] Nvarchar(20) NULL,
+	[DFData_fabricacao_TBMarcha] Smalldatetime NULL,
+	[DFData_validade_TBMarcha] Smalldatetime NULL,
+	[DFFabricante_TBMarcha] Nvarchar(50) NULL,
+	[DFData_fabricacao_material_TBMarcha] Nvarchar(10) NULL,
+	[DFData_validade_material_TBMarcha] Smalldatetime NULL,
+	[DFLote_material_TBMarcha] Nvarchar(10) NULL,
+Primary Key ([PKId_TBMarcha])
+) 
+go
+
+
+Create table [TBAcompanhamento_marcha]
+(
+	[PKId_TBAcompanhamento_marcha] Integer Identity NOT NULL,
+	[FKId_TBMarcha] Integer NOT NULL,
+	[DFEstagio_TBAcompanhamento_marcha] Integer NOT NULL,
+	[DFData_inicio_TBAcompanhamento_marcha] Smalldatetime NOT NULL,
+	[DFHora_inicio_TBAcompanhamento_marcha] Nvarchar(10) NOT NULL,
+	[DFData_fim_TBAcompanhamento_marcha] Smalldatetime NULL,
+	[DFHora_fim_TBAcompanhamento_marcha] Nvarchar(10) NULL,
+	[DFUsuario_DFHora_inicio_TBAcompanhamento_marcha] Nvarchar(20) NULL,
+Primary Key ([PKId_TBAcompanhamento_marcha])
+) 
+go
+
+Create table [TBAnalise_Insumo_marcha]
+(
+	[PKId_TBAnalise_Insumo_marcha] Integer Identity NOT NULL,
+	[FKId_TBMarcha] Integer NOT NULL,
+	[DFDescricao_TBAnalise_Insumo_marcha] Nvarchar(50) NOT NULL,
+Primary Key ([PKId_TBAnalise_Insumo_marcha])
+) 
+go
+
+Create table [TBEspecificao_analise_marcha]
+(
+	[PKId_TBEspecificao_analise_marcha] Integer Identity NOT NULL,
+	[FKId_TBAnalise_Insumo_marcha] Integer NOT NULL,
+	[DFDescricao_TBEspecificao_analise_marcha] Nvarchar(400) NOT NULL,
+	[DFResultado_TBEspecificao_analise_marcha] Nvarchar(50) NULL,
+Primary Key ([PKId_TBEspecificao_analise_marcha])
+) 
+go
+
+Alter table [TBMarcha] add  foreign key([FKId_TBCliente]) references [TBCliente] ([PKId_TBCliente])  on update no action on delete no action 
+go
+Alter table [TBAcompanhamento_marcha] add  foreign key([FKId_TBMarcha]) references [TBMarcha] ([PKId_TBMarcha])  on update no action on delete no action 
+go
+Alter table [TBAnalise_Insumo_marcha] add  foreign key([FKId_TBMarcha]) references [TBMarcha] ([PKId_TBMarcha])  on update no action on delete no action 
+go
+Alter table [TBMarcha] add  foreign key([FKCodigo_TBInsumo]) references [TBInsumo] ([PKCodigo_TBInsumo])  on update no action on delete no action 
+go
+Alter table [TBMarcha] add  foreign key([FKCodigo_TBTipo_marcha]) references [TBTipo_marcha] ([PKCodigo_TBTipo_marcha])  on update no action on delete no action 
+go
+Alter table [TBEspecificao_analise_marcha] add  foreign key([FKId_TBAnalise_Insumo_marcha]) references [TBAnalise_Insumo_marcha] ([PKId_TBAnalise_Insumo_marcha])  on update no action on delete no action 
+go
+
+Set quoted_identifier on
+go
+
+Set quoted_identifier off
+go
+
+/* Roles permissions */
+
+
+/* Users permissions */
+
+
+
+COMMIT

@@ -1,0 +1,93 @@
+/*
+Created		27/5/2003
+Modified		18/5/2005
+Project		
+Model			
+Company		
+Author		
+Version		
+Database		MS SQL 2000 
+*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Create table [TBDia_operacao_pdv]
+(
+	[PKID_TBDia_operacao_pdv] Integer NOT NULL, UNIQUE ([PKID_TBDia_operacao_pdv]),
+	[DFDia_TBDia_operacao_pdv] Smalldatetime NOT NULL,
+	[DFStatus_dia_TBDia_Operacao_pdv] Char(10) NOT NULL,
+Primary Key ([PKID_TBDia_operacao_pdv])
+) 
+go
+
+
+
+
+
+
+
+
+
+
+
+Set quoted_identifier on
+go
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Set quoted_identifier off
+go
+
+
+
+
+
+
+
+
+/* Roles permissions */
+
+
+
+
+
+/* Users permissions */
+
+
+
+
+
+

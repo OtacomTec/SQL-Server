@@ -1,0 +1,62 @@
+BEGIN TRANSACTION
+/*
+ *** IDENTIFICAÇÃO DO SCRIPT ***
+
+ 1 - Apartir de 20/12/2005, fica expressamente proibida a criação de scripts sem que seja preenchido este cabeçalho
+ 2 - Obrigatoriamente necessário que este paragrafo seja inserido apos um BEGIN TRANSACTION
+ 3 - Obrigatoriamente o preenchimento das variaveis abaixo(@Nomenclatura,@Observacao,@Data)com valores correspondentes e condizentes
+ Att: Marcos
+
+*/
+
+--INICIO CABECALHO
+
+declare @Nomenclatura as nvarchar(20)
+declare @Observacao as nvarchar(100)
+declare @Data as SMALLDATETIME
+
+SET @Nomenclatura = 'SCP2006-05-24b'
+SET @Observacao = 'Cria TBTelefone_empresa'
+SET @Data = CURRENT_TIMESTAMP
+
+
+---LIMPEZA DA TABELA
+
+DELETE FROM TBSCRIPT
+
+---INSERCAO DO REGISTRO
+INSERT INTO TBSCRIPT(DFNome_TBScript,DFObjetivo_TBScript,DFData_execucao_TBScript)
+VALUES(@Nomenclatura,@Observacao,@Data)
+
+---FIM CABECALHO
+
+CREATE TABLE dbo.TBTelefone_empresa
+	(
+	PKId_TBTelefone_empresa int NOT NULL IDENTITY (1, 1) NOT FOR REPLICATION,
+	FKCodigo_TBEmpresa int NOT NULL,
+	DFDescricao_TBTelefone_empresa nvarchar(20) NULL,
+	DFTelefone_TBTelefone_empresa nvarchar(20) NOT NULL,
+	DFIntegrado_portal_TBTelefone_empresa bit NULL,
+	DFIntegrado_filiais_TBTelefone_empresa bit NULL,
+	DFData_alteracao_TBTelefone_empresa smalldatetime NULL,
+	DFCodigo_Identificador_TBTelefone_empresa int NULL
+	)  ON [PRIMARY]
+GO
+ALTER TABLE dbo.TBTelefone_empresa ADD CONSTRAINT
+	PK_TBTelefone_empresa PRIMARY KEY CLUSTERED 
+	(
+	PKId_TBTelefone_empresa
+	) ON [PRIMARY]
+
+GO
+ALTER TABLE dbo.TBTelefone_empresa ADD CONSTRAINT
+	FK_TBTelefone_empresa_TBEmpresa FOREIGN KEY
+	(
+	FKCodigo_TBEmpresa
+	) REFERENCES dbo.TBEmpresa
+	(
+	PKCodigo_TBEmpresa
+	)
+GO
+
+COMMIT TRANSACTION

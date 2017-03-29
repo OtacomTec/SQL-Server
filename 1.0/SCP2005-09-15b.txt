@@ -1,0 +1,90 @@
+/*
+   quinta-feira, 15 de setembro de 2005 12:12:25
+   User: sa
+   Server: ONLYTECH-02
+   Database: BDRetaguarda
+   Application: MS SQLEM - Data Tools
+*/
+
+BEGIN TRANSACTION
+SET QUOTED_IDENTIFIER ON
+SET TRANSACTION ISOLATION LEVEL SERIALIZABLE
+SET ARITHABORT ON
+SET NUMERIC_ROUNDABORT OFF
+SET CONCAT_NULL_YIELDS_NULL ON
+SET ANSI_NULLS ON
+SET ANSI_PADDING ON
+SET ANSI_WARNINGS ON
+COMMIT
+BEGIN TRANSACTION
+ALTER TABLE dbo.TBNota_saida_fiscal
+	DROP CONSTRAINT FK_TBNota_saida_fiscal_TBTransportadora
+GO
+COMMIT
+BEGIN TRANSACTION
+ALTER TABLE dbo.TBNota_saida_fiscal
+	DROP CONSTRAINT FK_TBNota_saida_fiscal_TBTabela_preco
+GO
+COMMIT
+BEGIN TRANSACTION
+ALTER TABLE dbo.TBNota_saida_fiscal
+	DROP CONSTRAINT FK_TBNota_saida_fiscal_TBPlano_pagamento
+GO
+COMMIT
+BEGIN TRANSACTION
+ALTER TABLE dbo.TBNota_saida_fiscal
+	DROP CONSTRAINT FK_TBNota_saida_fiscal_TBVendedor
+GO
+COMMIT
+BEGIN TRANSACTION
+ALTER TABLE dbo.TBNota_saida_fiscal
+	DROP CONSTRAINT FK_TBNota_saida_fiscal_TBEmpresa
+GO
+COMMIT
+BEGIN TRANSACTION
+ALTER TABLE dbo.TBNota_saida_fiscal ADD CONSTRAINT
+	FK_TBNota_saida_fiscal_TBEmpresa1 FOREIGN KEY
+	(
+	FKCodigo_TBEmpresa
+	) REFERENCES dbo.TBEmpresa
+	(
+	PKCodigo_TBEmpresa
+	)
+GO
+ALTER TABLE dbo.TBNota_saida_fiscal ADD CONSTRAINT
+	FK_TBNota_saida_fiscal_TBVendedor1 FOREIGN KEY
+	(
+	FKId_TBVendedor
+	) REFERENCES dbo.TBVendedor
+	(
+	PKId_TBVendedor
+	)
+GO
+ALTER TABLE dbo.TBNota_saida_fiscal ADD CONSTRAINT
+	FK_TBNota_saida_fiscal_TBPlano_pagamento1 FOREIGN KEY
+	(
+	FKId_TBPlano_pagamento
+	) REFERENCES dbo.TBPlano_pagamento
+	(
+	PKId_TBPlano_pagamento
+	)
+GO
+ALTER TABLE dbo.TBNota_saida_fiscal ADD CONSTRAINT
+	FK_TBNota_saida_fiscal_TBTabela_preco1 FOREIGN KEY
+	(
+	FKCodigo_TBTabela_preco
+	) REFERENCES dbo.TBTabela_preco
+	(
+	PKCodigo_TBTabela_preco
+	)
+GO
+ALTER TABLE dbo.TBNota_saida_fiscal ADD CONSTRAINT
+	FK_TBNota_saida_fiscal_TBTransportadora1 FOREIGN KEY
+	(
+	FKCodigo_TBTransportadora
+	) REFERENCES dbo.TBTransportadora
+	(
+	PKCodigo_TBTransportadora
+	)
+GO
+COMMIT

@@ -1,0 +1,5 @@
+Insert  [BDRetaguarda].[dbo].[TBEstado_icms]
+( [FKId_TBProduto], [DFUf_TBEstado_icms], [DFPercentual_icms_saida_juridica_TBEstado_icms], [DFPercentual_icms_saida_fisica_TBEstado_icms], [DFPercentual_icms_entrada_TBEstado_icms], [DFPercentual_icms_substituicao_TBEstado_icms], [DFTributacao_impressora_fiscal_TBEstado_icms], [DFIntegrado_portal_TBEstado_icms], [DFIntegrado_filiais_TBEstado_icms], [DFData_alteracao_TBEstado_icms], [DFCodigo_Identificador_TBEstado_icms], [DFPercentual_reducao-basa-calculo_TBEstado_icms], [DFPercentual_reducao_substituicao_TBEstado_icms])
+SELECT  [PKId_TBProduto], 'RJ', 0, 0, 0, 0, 0, 0, 0, '20120101', 0, 0, 0
+ FROM TBproduto
+where TBProduto.PKId_TBProduto not in (select FKId_TBProduto from TBEstado_icms where dfuf_tbestado_icms = 'RJ') 

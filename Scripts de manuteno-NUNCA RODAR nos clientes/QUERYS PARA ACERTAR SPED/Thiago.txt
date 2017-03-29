@@ -1,0 +1,34 @@
+select 
+Fkid_TbProduto,
+Count (Fkid_TbProduto) As Cont
+into thiago_contador
+from Tbestado_icms
+inner join TbProduto
+On Fkid_TBproduto = Pkid_TBproduto
+where DFUF_Tbestado_icms = 'RJ'
+Group by Fkid_TbProduto
+
+order by ixcodigo_tbproduto 
+( ixcodigo_tbproduto = 1791
+and DFUF_Tbestado_icms = 'RJ'
+
+select * from thiago_contador
+inner join Tbestado_icms
+on thiago_contador.Fkid_TbProduto = Tbestado_icms.Fkid_TbProduto
+where Cont > 1
+and DFUF_Tbestado_icms = 'RJ'
+and DFPercentual_icms_saida_juridica_Tbestado_icms = 0
+order by Tbestado_icms.Fkid_TbProduto
+
+update Tbestado_icms
+set dfcodigo_identificador_Tbestado_icms = 9090
+from Tbestado_icms
+inner join thiago_contador
+on thiago_contador.Fkid_TbProduto = Tbestado_icms.Fkid_TbProduto
+where Cont > 1
+and DFUF_Tbestado_icms = 'RJ'
+and DFPercentual_icms_saida_juridica_Tbestado_icms = 0
+
+
+delete from Tbestado_icms
+where dfcodigo_identificador_Tbestado_icms = 9090

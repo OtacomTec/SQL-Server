@@ -1,0 +1,10 @@
+Autor Alex
+Data 02/01/2007
+
+Ajuste Na tabela de produtos com os seguintes campos
+TBProduto
+
+
+DFLocalizacao_estoque_rua_TBProduto	      nvarchar	15	
+DFLocalizacao_estoque_predio_TBProduto	      nvarchar	15	
+DFLocalizacao_estoque_apartamento_TBProduto   nvarchar	15	

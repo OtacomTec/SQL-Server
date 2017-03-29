@@ -1,0 +1,2 @@
+UPDATE TBItinerario 
+SET DFValor_frete_TBItinerario = '0,000000'

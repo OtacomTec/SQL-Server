@@ -1,0 +1,153 @@
+USE BDRetaguarda
+GO
+BEGIN TRANSACTION
+/*
+ *** IDENTIFICAÇÃO DO SCRIPT ***
+
+ 1 - Apartir de 20/12/2005, fica expressamente proibida a criação de scripts sem que seja preenchido este cabeçalho
+ 2 - Obrigatoriamente necessário que este paragrafo seja inserido apos um BEGIN TRANSACTION
+ 3 - Obrigatoriamente o preenchimento das variaveis abaixo(@Nomenclatura,@Observacao,@Data)com valores correspondentes e condizentes
+ Att: Marcos
+
+*/
+
+--INICIO CABECALHO
+
+declare @Nomenclatura as nvarchar(20)
+declare @Observacao as nvarchar(100)
+declare @Data as SMALLDATETIME
+
+SET @Nomenclatura = 'SCP2007-07-13a'
+SET @Observacao = 'Cria Tabelas Empenho- licitação' 
+SET @Data = CURRENT_TIMESTAMP
+
+---LIMPEZA DA TABELA
+
+DELETE FROM TBSCRIPT
+
+---INSERCAO DO REGISTRO
+INSERT INTO BDRetaguarda.dbo.TBSCRIPT(DFNome_TBScript,DFObjetivo_TBScript,DFData_execucao_TBScript)
+VALUES(@Nomenclatura,@Observacao,@Data)
+
+---FIM CABECALHO
+
+/*
+Created		27/5/2003
+Modified		13/7/2007
+Project		Only Tech - ERP
+Model			Olt
+Company		Only Tech
+Author		Only Tech
+Version		1.0
+Database		MS SQL 2000 
+*/
+
+Create table [TBTomada_preco]
+(
+	[PKid_TBTomada_preco] Integer Identity NOT NULL,
+	[FKId_TBCliente] Integer NOT NULL,
+	[FKCodigo_TBEmpresa] Integer NOT NULL,
+	[DFNumero_edital_TBTomada_preco] Nvarchar(20) NULL,
+	[DFNumero_tp_TBTomada_preco] Nvarchar(20) NULL,
+	[DFData_edital_TBTomada_preco] Smalldatetime NULL,
+	[DFData_cadastro_TBTomada_preco] Smalldatetime NULL,
+	[DFData_entrega_cotacao_TBTomada_preco] Smalldatetime NULL,
+	[DFStatus_TBTomada_preco] Integer NULL,
+	[DFObservacao_TBTomada_preco] Nvarchar(500) NULL,
+	[DFIntegrado_portal_TBTomada_Preco] Bit NULL,
+	[DFIntegrado_filiais_TBTomada_preco] Bit NULL,
+	[DFData_alteracao_TBTomada_preco] Smalldatetime NULL,
+	[DFCodigo_Identificador_TBTomada_preco] Integer NULL,
+Primary Key ([PKid_TBTomada_preco])
+) 
+go
+
+Create table [TBItens_tomada_preco]
+(
+	[PKId_TBItens_tomada_preco] Integer Identity NOT NULL,
+	[FKid_TBTomada_preco] Integer NOT NULL,
+	[DFDescricao_TBItens_tomada_preco] Nvarchar(4000) NULL,
+	[DFQuantidade_TBItens_tomada_preco] Money NULL,
+	[DFStatus_TBItens_tomada_preco] Integer NULL,
+	[DFResultado_TBItens_tomada_preco] Bit NULL,
+	[DFEmbalagem_TBItens_tomada_preco] Nvarchar(20) NULL,
+	[DFIntegrado_portal_TBItens_tomada_Preco] Bit NULL,
+	[DFIntegrado_filiais_TBItens_tomada_preco] Bit NULL,
+	[DFData_alteracao_TBItens_tomada_preco] Smalldatetime NULL,
+	[DFCodigo_Identificador_TBItens_tomada_preco] Integer NULL,
+Primary Key ([PKId_TBItens_tomada_preco])
+) 
+
+go
+
+Create table [TBItens_produto_tomada_preco]
+(
+	[PKId_TBItens_produto_tomada_preco] Integer Identity NOT NULL,
+	[FKId_TBProduto] Integer NOT NULL,
+	[FKId_TBItens_tomada_preco] Integer NOT NULL,
+	[DFEmbalagen_TBItens_produto_tomada_preco] Nvarchar(3) NULL,
+	[DFTipo_preco_TBItens_produto_tomada_preco] Integer NULL,
+	[DFPreco_TBItens_produto_tomada_preco] Money NULL,
+	[DFIntegrado_portal_TBItens_produto_tomada_Preco] Bit NULL,
+	[DFIntegrado_filiais_TBItens_produto_tomada_preco] Bit NULL,
+	[DFData_alteracao_TBItens_produto_tomada_preco] Smalldatetime NULL,
+	[DFCodigo_Identificador_TBItens_produto_tomada_preco] Integer NULL,
+Primary Key ([PKId_TBItens_produto_tomada_preco])
+) 
+
+go
+
+Create table [TBEmpenho]
+(
+	[PKId_TBEmpenho] Integer Identity NOT NULL,
+	[FKid_TBTomada_preco] Integer NOT NULL,
+	[DFData_TBEmpenho] Money NULL,
+	[DFValor_TBEmpenho] Money NULL,
+	[DFObservacao_TBEmpenho] Nvarchar(500) NULL,
+	[DFIntegrado_portal_TBEmpenho] Bit NULL,
+	[DFIntegrado_filiais_TBEmpenho] Bit NULL,
+	[DFData_alteracao_TBEmpenho] Smalldatetime NULL,
+	[DFCodigo_Identificador_TBEmpenho] Integer NULL,
+Primary Key ([PKId_TBEmpenho])
+) 
+go
+
+Create table [TBEmpenho_Nota]
+(
+	[PKId_TBEmpenho_Nota] Integer Identity NOT NULL,
+	[FKId_TBEmpenho] Integer NOT NULL,
+	[FKId_TBNota_saida] Integer NOT NULL,
+	[DFIntegrado_portal_TBEmpenho_nota] Bit NULL,
+	[DFIntegrado_filiais_TBEmpenho_nota] Bit NULL,
+	[DFData_alteracao_TBEmpenho_nota] Smalldatetime NULL,
+	[DFCodigo_Identificador_TBEmpenho_nota] Integer NULL,
+Primary Key ([PKId_TBEmpenho_Nota])
+) 
+go
+Alter table [TBItens_produto_tomada_preco] add  foreign key([FKId_TBProduto]) references [TBProduto] ([PKId_TBProduto])  on update no action on delete no action 
+go
+Alter table [TBEmpenho_Nota] add  foreign key([FKId_TBNota_saida]) references [TBNota_saida] ([PKId_TBNota_saida])  on update no action on delete no action 
+go
+Alter table [TBItens_tomada_preco] add  foreign key([FKid_TBTomada_preco]) references [TBTomada_preco] ([PKid_TBTomada_preco])  on update no action on delete no action 
+go
+Alter table [TBEmpenho] add  foreign key([FKid_TBTomada_preco]) references [TBTomada_preco] ([PKid_TBTomada_preco])  on update no action on delete no action 
+go
+Alter table [TBItens_produto_tomada_preco] add  foreign key([FKId_TBItens_tomada_preco]) references [TBItens_tomada_preco] ([PKId_TBItens_tomada_preco])  on update no action on delete no action 
+go
+Alter table [TBEmpenho_Nota] add  foreign key([FKId_TBEmpenho]) references [TBEmpenho] ([PKId_TBEmpenho])  on update no action on delete no action 
+go
+
+
+Set quoted_identifier on
+go
+
+Set quoted_identifier off
+go
+
+/* Roles permissions */
+
+/* Users permissions */
+
+
+commit transaction
+

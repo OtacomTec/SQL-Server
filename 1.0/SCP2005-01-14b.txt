@@ -1,0 +1,258 @@
+/*
+Created		27/5/2003
+Modified		14/1/2005
+Project		
+Model			
+Company		
+Author		
+Version		
+Database		MS SQL 2000 
+*/
+
+
+
+
+
+
+Create table [TBParametros_transporte]
+(
+	[PKId_TBParametros_transporte] Integer Identity NOT NULL,
+	[FKCodigo_TBEmpresa] Integer NOT NULL,
+	[DFProximo_modelo_veiculo_TBParametros_transporte] Integer NULL,
+	[DFProximo_especie_transporte_TBParametros_transporte] Integer NULL,
+	[DFProximo_tipo_frota_TBParametros_transporte] Integer NULL,
+	[DFProximo_tipo_pneu_TBParametros_transporte] Integer NULL,
+	[DFProximo_tipo_infracao_TBParametros_transporte] Integer NULL,
+	[DFProximo_natureza_transporte_TBParametros_transporte] Integer NULL,
+	[DFProximo_tipo_radar_TBParametros_transporte] Integer NULL,
+	[DFProximo_radar_TBParametros_transporte] Integer NULL,
+	[DFProximo_pedagio_TBParametros_transporte] Integer NULL,
+	[DFProximo_posto_conveniado_TBParametros_transporte] Integer NULL,
+	[DFProxima_oficina_conveniada_TBParametros_transporte] Integer NULL,
+	[DFProximo_itinerario_TBParametros_transporte] Integer NULL,
+	[DFProximo_destinatario_TBparametros_Transporte] Integer NULL,
+	[DFProximo_veiculo_TBParametros_transporte] Integer NULL,
+Primary Key ([PKId_TBParametros_transporte])
+) 
+go
+
+Create table [TBTipo_infracao]
+(
+	[PKCodigo_TBTipo_infracao] Integer NOT NULL,
+	[DFDescricao_TBTipo_infracao] Nvarchar(50) NULL,
+Primary Key ([PKCodigo_TBTipo_infracao])
+) 
+go
+
+Create table [TBNatureza_transporte]
+(
+	[PKCodigo_TBNatureza_transporte] Integer NOT NULL,
+	[DFDescricao_TBNatureza_transporte] Nvarchar(50) NULL,
+Primary Key ([PKCodigo_TBNatureza_transporte])
+) 
+go
+
+Create table [TBTipo_radar]
+(
+	[PKCodigo_TBTipo_radar] Integer NOT NULL,
+	[DFDescricao_TBTipo_radar] Char(10) NULL,
+Primary Key ([PKCodigo_TBTipo_radar])
+) 
+go
+
+Create table [TBRadar]
+(
+	[PKCodigo_TBRadar] Integer NOT NULL,
+	[FKCodigo_TBTipo_radar] Integer NOT NULL,
+	[DFLocal_TBRadar] Nvarchar(50) NULL,
+Primary Key ([PKCodigo_TBRadar])
+) 
+go
+
+Create table [TBPedagio]
+(
+	[PKCodigo_TBPedagio] Integer NOT NULL,
+	[DFConcessionaria_TBPedagio] Nvarchar(40) NULL,
+	[DFNome_praca_TBPedagio] Nvarchar(40) NULL,
+	[DFValor_eixo_TBPedagio] Money NULL,
+Primary Key ([PKCodigo_TBPedagio])
+) 
+go
+
+Create table [TBPosto_credenciado]
+(
+	[PKCodigo_TBPosto_credenciado] Integer NOT NULL,
+	[DFNome_TBPosto_credenciado] Integer NULL,
+Primary Key ([PKCodigo_TBPosto_credenciado])
+) 
+go
+
+Create table [TBOficina_credenciada]
+(
+	[PKCodigo_TBOficina_credenciada] Integer NOT NULL,
+	[DFDescricao_TBOficina_credenciada] Nvarchar(40) NULL,
+Primary Key ([PKCodigo_TBOficina_credenciada])
+) 
+go
+
+Create table [TBItinerario]
+(
+	[PKCodigo_TBItinerario] Integer NOT NULL,
+	[DFOrigem_TBItinerario] Nvarchar(40) NULL,
+	[DFUF_origem_TBItinerario] Nvarchar(2) NULL,
+	[DFDestino_TBItinerario] Nvarchar(40) NULL,
+	[DFUF_destino_TBItinerario] Nvarchar(2) NULL,
+	[DFKilometragem_TBItinerario] Integer NULL,
+	[DFPercentual_icms_TBItinerario] Money NULL,
+	[DFObservacao_TBItinerario] Nvarchar(100) NULL,
+Primary Key ([PKCodigo_TBItinerario])
+) 
+go
+
+Create table [TBPosto_itinerario]
+(
+	[PKId_TBPosto_itinerario] Integer Identity NOT NULL,
+	[PKCodigo_TBPosto_credenciado] Integer NOT NULL,
+	[FKCodigo_TBItinerario] Integer NOT NULL,
+Primary Key ([PKId_TBPosto_itinerario])
+) 
+go
+
+Create table [TBPedagio_itinerario]
+(
+	[PKId_TBPedagio_itinerario] Integer Identity NOT NULL,
+	[FKCodigo_TBPedagio] Integer NOT NULL,
+	[FKCodigo_TBItinerario] Integer NOT NULL,
+Primary Key ([PKId_TBPedagio_itinerario])
+) 
+go
+
+Create table [TBRadar_itinerario]
+(
+	[PKId_TBRadar_itinerario] Integer Identity NOT NULL,
+	[FKCodigo_TBItinerario] Integer NOT NULL,
+	[FKCodigo_TBRadar] Integer NOT NULL,
+Primary Key ([PKId_TBRadar_itinerario])
+) 
+go
+
+Create table [TBOficina_itinerario]
+(
+	[PKId_TBOficina_itinerario] Integer Identity NOT NULL,
+	[FKCodigo_TBItinerario] Integer NOT NULL,
+	[FKCodigo_TBOficina_credenciada] Integer NOT NULL,
+Primary Key ([PKId_TBOficina_itinerario])
+) 
+go
+
+Create table [TBDestinatario]
+(
+	[PKCodigo_TBDestinatario] Integer NOT NULL,
+	[FKId_TBCidade_otica] Integer NOT NULL,
+	[DFRazao_social_TBDestinatario] Nvarchar(50) NOT NULL,
+	[DFNome_fantasia_TBDestinatario] Char(10) NOT NULL,
+	[DFStatus_TBDestinatario] Bit NOT NULL,
+	[DFEmitir_fatura_TBDestinatario] Bit NOT NULL,
+	[DFEndereco_TBDestinatario] Nvarchar(50) NULL,
+	[DFNumero_TBDestinatario] Nvarchar(10) NULL,
+	[DFComplemento_TBDestinatario] Nvarchar(20) NULL,
+	[DFBairro_TBDestinatario] Nvarchar(30) NULL,
+	[DFCep_TBDestinatario] Nvarchar(10) NULL,
+	[DFTelefone_Fixo_TBDestinatario] Nvarchar(20) NULL,
+	[DFCelular_TBDestinatario] Nvarchar(20) NULL,
+	[DFTipo_pessoa_TBDestinatario] Bit NOT NULL,
+	[DFCnpj_TBDestinatario] Nvarchar(20) NOT NULL,
+	[DFInscricao_estadual_TBDestinatario] Nvarchar(20) NOT NULL,
+	[DFHome_page_TBDestinatario] Nvarchar(50) NULL,
+	[DFEmail_TBDestinatario] Nvarchar(50) NULL,
+	[DFObservacao_TBDestinatario] Nvarchar(200) NULL,
+Primary Key ([PKCodigo_TBDestinatario])
+) 
+go
+
+Create table [TBAgenda_Destinatario]
+(
+	[PKId_TBAgenda_Destinatario] Integer Identity NOT NULL,
+	[FKCodigo_TBDestinatario] Integer NOT NULL,
+	[DFContato_TBAgenda_Destinatario] Nvarchar(40) NOT NULL,
+	[DFTelefone_TBAgenda_Destinatario] Nvarchar(20) NOT NULL,
+	[DFEmail_TBAgenda_Destinatario] Nvarchar(50) NULL,
+Primary Key ([PKId_TBAgenda_Destinatario])
+) 
+go
+
+
+
+
+Alter table [TBParametros_transporte] add  foreign key([FKCodigo_TBEmpresa]) references [TBEmpresa] ([PKCodigo_TBEmpresa])  on update no action on delete no action 
+go
+Alter table [TBDestinatario] add  foreign key([FKId_TBCidade_otica]) references [TBCidade_otica] ([PKId_TBCidade_otica])  on update no action on delete no action 
+go
+
+Alter table [TBRadar] add  foreign key([FKCodigo_TBTipo_radar]) references [TBTipo_radar] ([PKCodigo_TBTipo_radar])  on update no action on delete no action 
+go
+Alter table [TBRadar_itinerario] add  foreign key([FKCodigo_TBRadar]) references [TBRadar] ([PKCodigo_TBRadar])  on update no action on delete no action 
+go
+Alter table [TBPedagio_itinerario] add  foreign key([FKCodigo_TBPedagio]) references [TBPedagio] ([PKCodigo_TBPedagio])  on update no action on delete no action 
+go
+Alter table [TBPosto_itinerario] add  foreign key([PKCodigo_TBPosto_credenciado]) references [TBPosto_credenciado] ([PKCodigo_TBPosto_credenciado])  on update no action on delete no action 
+go
+Alter table [TBOficina_itinerario] add  foreign key([FKCodigo_TBOficina_credenciada]) references [TBOficina_credenciada] ([PKCodigo_TBOficina_credenciada])  on update no action on delete no action 
+go
+Alter table [TBPosto_itinerario] add  foreign key([FKCodigo_TBItinerario]) references [TBItinerario] ([PKCodigo_TBItinerario])  on update no action on delete no action 
+go
+Alter table [TBPedagio_itinerario] add  foreign key([FKCodigo_TBItinerario]) references [TBItinerario] ([PKCodigo_TBItinerario])  on update no action on delete no action 
+go
+Alter table [TBRadar_itinerario] add  foreign key([FKCodigo_TBItinerario]) references [TBItinerario] ([PKCodigo_TBItinerario])  on update no action on delete no action 
+go
+Alter table [TBOficina_itinerario] add  foreign key([FKCodigo_TBItinerario]) references [TBItinerario] ([PKCodigo_TBItinerario])  on update no action on delete no action 
+go
+Alter table [TBAgenda_Destinatario] add  foreign key([FKCodigo_TBDestinatario]) references [TBDestinatario] ([PKCodigo_TBDestinatario])  on update no action on delete no action 
+go
+
+
+Set quoted_identifier on
+go
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Set quoted_identifier off
+go
+
+
+
+
+
+
+
+
+/* Roles permissions */
+
+
+
+
+
+/* Users permissions */
+
+
+
+
+
+

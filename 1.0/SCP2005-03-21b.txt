@@ -1,0 +1,3 @@
+Update  TBsecao
+set DFInativo_TBsecao = 0 
+from  TBsecao

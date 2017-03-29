@@ -1,0 +1,20 @@
+BEGIN TRANSACTION
+SET QUOTED_IDENTIFIER ON
+SET TRANSACTION ISOLATION LEVEL SERIALIZABLE
+SET ARITHABORT ON
+SET NUMERIC_ROUNDABORT OFF
+SET CONCAT_NULL_YIELDS_NULL ON
+SET ANSI_NULLS ON
+SET ANSI_PADDING ON
+SET ANSI_WARNINGS ON
+COMMIT
+BEGIN TRANSACTION
+ALTER TABLE dbo.TBParametros_ecf ADD
+	DFProduto_associado_taxa_TBParametros_ecf int NULL,
+	DFPercentual_taxa_TBParametros_ecf money NULL,
+	DFProduto_Desconto_associado_TBParametros_ecf int NULL,
+	DFControla_vendedor_TBParametros_ecf bit NULL,
+	DFFinalizadora_abertura_TBParametros_ecf int NULL,
+	DFFinalizadora_sangria_TBParametros_ecf int NULL
+GO
+COMMIT

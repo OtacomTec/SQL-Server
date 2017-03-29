@@ -1,0 +1,136 @@
+/*
+Created		27/5/2003
+Modified		8/11/2005
+Project		Only Tech - ERP
+Model			Olt
+Company		Only Tech
+Author		Only Tech
+Version		1.0
+Database		MS SQL 2000 
+*/
+
+
+Create table [TBInspecao_veiculo]
+(
+	[PKId_TBInspecao_veiculo] Integer Identity NOT NULL,
+	[FKCodigo_TBVeiculo] Integer NOT NULL,
+	[DFMes_ano_TBInspecao_veiculo] Smalldatetime NOT NULL,
+	[DFCartao_motorista_TBInspecao_veiculo] Bit NOT NULL,
+	[DFCnh_TBInspecao_veiculo] Bit NOT NULL,
+	[DFCurso_mope_TBInspecao_veiculo] Bit NOT NULL,
+	[DFCertificado_afericao_TBInspecao_veiculo] Bit NOT NULL,
+	[DFFicha_emergencia_TBInspecao_veiculo] Bit NOT NULL,
+	[DFEnvelope_transporte_TBInspecao_veiculo] Bit NOT NULL,
+	[DFCalcado_TBInspecao_veiculo] Bit NOT NULL,
+	[DFCapacete_TBInspecao_veiculo] Bit NOT NULL,
+	[DFLuvas_TBInspecao_veiculo] Bit NOT NULL,
+	[DFUniforme_TBInspecao_veiculo] Bit NOT NULL,
+	[DFSimbologia_produtos_TBInspecao_veiculo] Bit NOT NULL,
+	[DFExtintores_TBInspecao_veiculo] Bit NOT NULL,
+	[DFBateria_TBInspecao_veiculo] Bit NOT NULL,
+	[DFChave_geral_blindada_TBInspecao_veiculo] Bit NOT NULL,
+	[DFTacografo_TBInspecao_veiculo] Bit NOT NULL,
+	[DFLigacao_tanque_chassi_TBInspecao_veiculo] Bit NOT NULL,
+	[DFValvula_fundo_TBInspecao_veiculo] Bit NOT NULL,
+	[DFEstaqueamento_TBInspecao_veiculo] Bit NOT NULL,
+	[DFInstalacao_eletrica_fiacao_TBInspecao_veiculo] Bit NOT NULL,
+	[DFInstalacao_eletrica_Emendas_TBInspecao_veiculo] Bit NOT NULL,
+	[DFInstalacao_eletrica_isolamento_TBInspecao_veiculo] Bit NOT NULL,
+	[DFInstalacao_eletrica_farois_TBInspecao_veiculo] Bit NOT NULL,
+	[DFInstalacao_eletrica_lentes_TBInspecao_veiculo] Bit NOT NULL,
+	[DFAterramento_pintura_TBInspecao_veiculo] Bit NOT NULL,
+	[DFAterramento_tanque_TBInspecao_veiculo] Bit NOT NULL,
+	[DFAterramento_cabo_TBInspecao_veiculo] Bit NOT NULL,
+	[DFPneus_TBInspecao_veiculo] Bit NOT NULL,
+	[DFConjunto_emergencia_TBInspecao_veiculo] Bit NOT NULL,
+	[DFConjunto_calcos_TBInspecao_veiculo] Bit NOT NULL,
+	[DFConjunto_fita_TBInspecao_veiculo] Bit NOT NULL,
+	[DFConjunto_placas_TBInspecao_veiculo] Bit NOT NULL,
+	[DFConjunto_cavaletes_TBInspecao_veiculo] Bit NOT NULL,
+	[DFConjunto_telefone_TBInspecao_veiculo] Bit NOT NULL,
+	[DFConjunto_socorro_TBInspecao_veiculo] Bit NOT NULL,
+	[DFConjunto_lanternas_TBInspecao_veiculo] Bit NOT NULL,
+	[DFCapacidade_compartimentos_TBInspecao_veiculo] Bit NOT NULL,
+	[DFPisos_TBInspecao_veiculo] Bit NOT NULL,
+	[DFDispositivos_pressao_TBInspecao_veiculo] Bit NOT NULL,
+	[DFSetas_TBInspecao_veiculo] Bit NOT NULL,
+	[DFCinto_seguranca_TBInspecao_veiculo] Bit NOT NULL,
+	[DFLimpador_para_brisas_TBInspecao_veiculo] Bit NOT NULL,
+	[DFEspelho_retovisor_TBInspecao_veiculo] Bit NOT NULL,
+	[DFTriangulo_TBInspecao_veiculo] Bit NOT NULL,
+	[DFNumeros_emergenia_TBInspecao_veiculo] Bit NOT NULL,
+	[DFLona_TBInspecao_veiculo] Bit NOT NULL,
+	[DFBalde_TBInspecao_veiculo] Bit NOT NULL,
+	[DFPorta_mangote_TBInspecao_veiculo] Bit NOT NULL,
+	[DFEmissao_fumaca_TBInspecao_veiculo] Bit NOT NULL,
+	[DFRedutor_TBInspecao_veiculo] Bit NOT NULL,
+	[DFFaixa_refletiva_TBInspecao_veiculo] Bit NOT NULL,
+	[DFPadrao_pintura_TBInspecao_veiculo] Bit NOT NULL,
+	[DFPadrao_tanque_TBInspecao_veiculo] Bit NOT NULL,
+	[DFPadrao_cano_descarga_TBInspecao_veiculo] Bit NOT NULL,
+	[DFPadrao_para_choques_TBInspecao_veiculo] Bit NULL,
+	[DFPadrao_freios_TBInspecao_veiculo] Bit NULL,
+	[DFPadrao_buzina_TBInspecao_veiculo] Bit NULL,
+	[DFPadrao_volante_TBInspecao_veiculo] Bit NULL,
+	[DFPadrao_tampa_lacrada_TBInspecao_veiculo] Bit NULL,
+	[DFPadrao_bujao_TBInspecao_veiculo] Bit NULL,
+	[DFPadrao_quebra_ondas_TBInspecao_veiculo] Bit NULL,
+	[DFPadrao_nivel_produto_TBInspecao_veiculo] Bit NULL,
+	[DFPadrao_quantidade_produto_TBInspecao_veiculo] Bit NULL,
+	[DFPadrao_tanque_identificado_TBInspecao_veiculo] Bit NULL,
+	[DFInspetor_TBInspecao_veiculo] Nvarchar(40) NULL,
+	[DFMatricula_TBInspecao_veiculo] Nvarchar(20) NULL,
+	[DFObservacao_TBInspecao_veiculo] Nvarchar(200) NULL,
+Primary Key ([PKId_TBInspecao_veiculo])
+) 
+go
+
+Alter table [TBInspecao_veiculo] add  foreign key([FKCodigo_TBVeiculo]) references [TBVeiculo] ([PKCodigo_TBVeiculo])  on update no action on delete no action 
+go
+
+
+Set quoted_identifier on
+go
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Set quoted_identifier off
+go
+
+
+
+
+
+
+
+
+/* Roles permissions */
+
+
+
+
+
+/* Users permissions */
+
+
+
+
+
+

@@ -1,0 +1,91 @@
+/*
+Created		27/5/2003
+Modified		17/6/2005
+Project		Only Tech - ERP
+Model			Olt
+Company		Only Tech
+Author		Only Tech
+Version		1.0
+Database		MS SQL 2000 
+*/
+
+
+Create table [TBMeta_vendedor]
+(
+	[PKId_TBMeta_vendedor] Integer Identity NOT NULL,
+	[FKId_TBVendedor] Integer NOT NULL,
+	[DFValor_total_TBMeta_vendedor] Money NULL,
+	[DFClientes_positivados_TBMeta_vendedor] Integer NULL,
+	[DFData_inicio_vigencia_TBMeta_vendedor] Smalldatetime NULL,
+	[DFData_fim_vigencia_TBMeta_vendedor] Smalldatetime NULL,
+Primary Key ([PKId_TBMeta_vendedor])
+) 
+go
+
+Create table [TBMeta_vendedor_produto]
+(
+	[PKId_TBMeta_vendedor_produto] Integer Identity NOT NULL,
+	[FKId_TBProduto] Integer NOT NULL,
+	[FKId_TBMeta_vendedor] Integer NOT NULL,
+	[DFQuantidade_TBMeta_vendedor_produto] Money NULL,
+	[DFValor_TBMeta_vendedor_produto] Money NULL,
+	[DFClientes_positivados_TBMeta_vendedor_produto] Integer NULL,
+Primary Key ([PKId_TBMeta_vendedor_produto])
+) 
+go
+
+
+
+Alter table [TBMeta_vendedor_produto] add  foreign key([FKId_TBProduto]) references [TBProduto] ([PKId_TBProduto])  on update no action on delete no action 
+go
+Alter table [TBMeta_vendedor] add  foreign key([FKId_TBVendedor]) references [TBVendedor] ([PKId_TBVendedor])  on update no action on delete no action 
+go
+Alter table [TBMeta_vendedor_produto] add  foreign key([FKId_TBMeta_vendedor]) references [TBMeta_vendedor] ([PKId_TBMeta_vendedor])  on update no action on delete no action 
+go
+
+
+Set quoted_identifier on
+go
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Set quoted_identifier off
+go
+
+
+
+
+
+
+
+
+/* Roles permissions */
+
+
+
+
+
+/* Users permissions */
+
+
+
+
+
+

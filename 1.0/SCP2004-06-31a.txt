@@ -1,0 +1,68 @@
+/*
+Created		27/5/2003
+Modified		15/6/2004
+Project		
+Model		
+Company		
+Author		
+Version		
+Database		MS SQL 2000 
+*/
+
+
+
+Create table [TBCliente_Ocupacao] (
+	[PKId_TBCliente_Ocupacao] Integer Identity NOT NULL,
+	[DFLocal_TBCliente_Ocupacao] Nvarchar(40) NULL,
+	[DFFuncao_TBCliente_Ocupacao] Nvarchar(20) NULL,
+	[DFTelefone_TBCliente_Ocupacao] Nvarchar(20) NULL,
+	[DFSalario_TBCliente_Ocupacao] Money NULL,
+	[DFData_admissao_TBCliente_Ocupacao] Smalldatetime NULL,
+	[DFObservacao_TBCliente_Ocupacao] Nvarchar(50) NULL,
+	[FKId_TBCliente] Integer NOT NULL,
+Primary Key ([PKId_TBCliente_Ocupacao])
+) 
+go
+
+
+Alter table [TBCliente_Ocupacao] add  foreign key([FKId_TBCliente]) references [TBCliente] ([PKId_TBCliente])  on update no action on delete no action 
+go
+
+
+Set quoted_identifier on
+go
+
+
+
+
+
+
+
+
+
+
+
+
+Set quoted_identifier off
+go
+
+
+
+
+
+
+
+
+/* Roles permissions */
+
+
+
+
+
+/* Users permissions */
+
+
+
+
+
+

@@ -1,0 +1,61 @@
+/*
+   sexta-feira, 14 de outubro de 2005 16:21:03
+   User: sa
+   Server: ONLYTECH-02
+   Database: BDRetaguarda
+   Application: MS SQLEM - Data Tools
+*/
+
+BEGIN TRANSACTION
+SET QUOTED_IDENTIFIER ON
+SET TRANSACTION ISOLATION LEVEL SERIALIZABLE
+SET ARITHABORT ON
+SET NUMERIC_ROUNDABORT OFF
+SET CONCAT_NULL_YIELDS_NULL ON
+SET ANSI_NULLS ON
+SET ANSI_PADDING ON
+SET ANSI_WARNINGS ON
+COMMIT
+BEGIN TRANSACTION
+CREATE TABLE dbo.Tmp_TBServico_laboratorio
+	(
+	PKCodigo_TBServico_laboratorio int NOT NULL,
+	DFDescricao_TBServico_laboratorio nvarchar(50) NOT NULL,
+	DFPreco1_TBServico_laboratorio money NULL,
+	DFPreco1_conveniado_TBServico_laboratorio money NULL,
+	DFPreco2_TBServico_laboratorio money NULL,
+	DFPreco2_conveniado_TBServico_laboratorio money NULL,
+	DFPreco3_TBServico_laboratorio money NULL,
+	DFPreco3_conveniado_TBServico_laboratorio money NULL
+	)  ON [PRIMARY]
+GO
+IF EXISTS(SELECT * FROM dbo.TBServico_laboratorio)
+	 EXEC('INSERT INTO dbo.Tmp_TBServico_laboratorio (PKCodigo_TBServico_laboratorio, DFDescricao_TBServico_laboratorio, DFPreco1_TBServico_laboratorio, DFPreco1_conveniado_TBServico_laboratorio, DFPreco2_TBServico_laboratorio, DFPreco2_conveniado_TBServico_laboratorio, DFPreco3_TBServico_laboratorio, DFPreco3_conveniado_TBServico_laboratorio)
+		SELECT PKCodigo_TBServico_laboratorio, DFDescricao_TBServico_laboratorio, DFPreco1_TBServico_laboratorio, DFPreco1_conveniado_TBServico_laboratorio, DFPreco2_TBServico_laboratorio, DFPreco2_conveniado_TBServico_laboratorio, DFPreco3_TBServico_laboratorio, DFPreco3_conveniado_TBServico_laboratorio FROM dbo.TBServico_laboratorio TABLOCKX')
+GO
+ALTER TABLE dbo.TBPlano_servico_servico_laboratorio
+	DROP CONSTRAINT FK__TBPlano_s__FKCod__5F82F1B6
+GO
+DROP TABLE dbo.TBServico_laboratorio
+GO
+EXECUTE sp_rename N'dbo.Tmp_TBServico_laboratorio', N'TBServico_laboratorio', 'OBJECT'
+GO
+ALTER TABLE dbo.TBServico_laboratorio ADD CONSTRAINT
+	PK__TBServico_labora__57E1CFEE PRIMARY KEY CLUSTERED 
+	(
+	PKCodigo_TBServico_laboratorio
+	) ON [PRIMARY]
+
+GO
+COMMIT
+BEGIN TRANSACTION
+ALTER TABLE dbo.TBPlano_servico_servico_laboratorio WITH NOCHECK ADD CONSTRAINT
+	FK__TBPlano_s__FKCod__5F82F1B6 FOREIGN KEY
+	(
+	FKCodigo_TBServico_laboratorio
+	) REFERENCES dbo.TBServico_laboratorio
+	(
+	PKCodigo_TBServico_laboratorio
+	)
+GO
+COMMIT

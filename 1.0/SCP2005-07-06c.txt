@@ -1,0 +1,4 @@
+
+Update tbfornecedor
+set FKCodigo_TBRamo_atividade = 1
+

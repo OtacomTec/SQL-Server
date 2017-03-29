@@ -1,0 +1,63 @@
+/*
+   segunda-feira, 19 de setembro de 2005 19:11:13
+   User: 
+   Server: (local)
+   Database: BDRetaguarda
+   Application: MS SQLEM - Data Tools
+*/
+
+BEGIN TRANSACTION
+SET QUOTED_IDENTIFIER ON
+SET TRANSACTION ISOLATION LEVEL SERIALIZABLE
+SET ARITHABORT ON
+SET NUMERIC_ROUNDABORT OFF
+SET CONCAT_NULL_YIELDS_NULL ON
+SET ANSI_NULLS ON
+SET ANSI_PADDING ON
+SET ANSI_WARNINGS ON
+COMMIT
+BEGIN TRANSACTION
+ALTER TABLE dbo.TBBanco_vendedor
+	DROP CONSTRAINT FK__TBBanco_v__FKId___12ECBBCC
+GO
+COMMIT
+BEGIN TRANSACTION
+CREATE TABLE dbo.Tmp_TBBanco_vendedor
+	(
+	PKId_TBBanco_vendedor int NOT NULL IDENTITY (1, 1),
+	FKId_TBVendedor int NOT NULL,
+	FKCodigo_TBBancos int NOT NULL,
+	DFAgencia_TBBanco_vendedor nvarchar(10) NOT NULL,
+	DFConta_TBBanco_vendedor nvarchar(20) NOT NULL,
+	DFFavorecido_TBBanco_vendedor nvarchar(50) NULL
+	)  ON [PRIMARY]
+GO
+SET IDENTITY_INSERT dbo.Tmp_TBBanco_vendedor ON
+GO
+IF EXISTS(SELECT * FROM dbo.TBBanco_vendedor)
+	 EXEC('INSERT INTO dbo.Tmp_TBBanco_vendedor (PKId_TBBanco_vendedor, FKId_TBVendedor, FKCodigo_TBBancos, DFAgencia_TBBanco_vendedor, DFConta_TBBanco_vendedor, DFFavorecido_TBBanco_vendedor)
+		SELECT PKId_TBBanco_vendedor, FKId_TBVendedor, FKCodigo_TBBancos, DFAgencia_TBBanco_vendedor, DFConta_TBBanco_vendedor, DFFavorecido_TBBanco_vendedor FROM dbo.TBBanco_vendedor TABLOCKX')
+GO
+SET IDENTITY_INSERT dbo.Tmp_TBBanco_vendedor OFF
+GO
+DROP TABLE dbo.TBBanco_vendedor
+GO
+EXECUTE sp_rename N'dbo.Tmp_TBBanco_vendedor', N'TBBanco_vendedor', 'OBJECT'
+GO
+ALTER TABLE dbo.TBBanco_vendedor ADD CONSTRAINT
+	PK__TBBanco_vendedor__11F89793 PRIMARY KEY CLUSTERED 
+	(
+	PKId_TBBanco_vendedor
+	) ON [PRIMARY]
+
+GO
+ALTER TABLE dbo.TBBanco_vendedor WITH NOCHECK ADD CONSTRAINT
+	FK__TBBanco_v__FKId___12ECBBCC FOREIGN KEY
+	(
+	FKId_TBVendedor
+	) REFERENCES dbo.TBVendedor
+	(
+	PKId_TBVendedor
+	)
+GO
+COMMIT

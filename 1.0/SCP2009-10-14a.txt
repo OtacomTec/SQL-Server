@@ -1,0 +1,64 @@
+USE BDRetaguarda
+
+BEGIN TRANSACTION
+/*
+ *** IDENTIFICAÇÃO DO SCRIPT ***
+
+ 1 - Apartir de 20/12/2005, fica expressamente proibida a criação de scripts sem que seja preenchido este cabeçalho
+ 2 - Obrigatoriamente necessário que este paragrafo seja inserido apos um BEGIN TRANSACTION
+ 3 - Obrigatoriamente o preenchimento das variaveis abaixo(@Nomenclatura,@Observacao,@Data)com valores correspondentes e condizentes
+ Att: Marcos
+
+*/
+
+--INICIO CABECALHO
+
+declare @Nomenclatura as nvarchar(20)
+declare @Observacao as nvarchar(100)
+declare @Data as SMALLDATETIME
+
+SET @Nomenclatura = 'SCP2009-10-14a'
+SET @Observacao = 'cria tabela TBPacote_simulador'
+SET @Data = CURRENT_TIMESTAMP
+
+---LIMPEZA DA TABELA
+
+DELETE FROM TBSCRIPT
+
+---INSERCAO DO REGISTRO
+
+INSERT INTO BDRetaguarda.dbo.TBSCRIPT(DFNome_TBScript,DFObjetivo_TBScript,DFData_execucao_TBScript)
+VALUES(@Nomenclatura,@Observacao,@Data)
+
+
+CREATE TABLE [dbo].[TBPacote_simulador] (
+	[PKID_TBPacote_simulador] [int] IDENTITY (1, 1) NOT NULL ,
+	[DFNome_TBPacote_simulador] [nvarchar] (40) COLLATE Latin1_General_CI_AS NULL ,
+	[DFValor_brinde_TBPacote_simulador] [money] NULL ,
+	[DFObservacao_TBPacote_simulador] [nvarchar] (200) COLLATE Latin1_General_CI_AS NULL ,
+	[DFValor_itens_TBPacote_simulador] [money] NULL ,
+	[DFValor_total_TBPacote_simulador] [money] NULL ,
+	[DFValor_st_TBPacote_simulador] [money] NULL ,
+	[DFRentabilidade_com_st_TBPacote_simulador] [money] NULL ,
+	[DFRentabilidade_sem_st_TBPacote_simulador] [money] NULL ,
+	[DFValor_despesa_acessoria_TBPacote_simnulador] [money] NULL ,
+	[FKCodigo_TBEmpresa] [int] NULL 
+) ON [PRIMARY]
+
+ALTER TABLE [dbo].[TBPacote_simulador] ADD 
+	CONSTRAINT [PK_TBPacote_simulador] PRIMARY KEY  CLUSTERED 
+	(
+		[PKID_TBPacote_simulador]
+	)  ON [PRIMARY] 
+
+ALTER TABLE [dbo].[TBPacote_simulador] ADD 
+	CONSTRAINT [FK_TBPacote_simulador_TBEmpresa] FOREIGN KEY 
+	(
+		[FKCodigo_TBEmpresa]
+	) REFERENCES [dbo].[TBEmpresa] (
+		[PKCodigo_TBEmpresa]
+	)
+
+---FIM CABECALHO
+
+COMMIT TRANSACTION

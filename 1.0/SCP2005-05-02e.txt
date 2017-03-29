@@ -1,0 +1,51 @@
+/*
+Created		27/5/2003
+Modified		2/5/2005
+Project		
+Model			
+Company		
+Author		
+Version		
+Database		MS SQL 2000 
+*/
+
+
+Create table [TBConta_corrente_vendedor]
+(
+	[PKId_TBConta_corrente_vendedor] Integer Identity NOT NULL,
+	[FKId_TBVendedor] Integer NOT NULL,
+	[DFNumero_documento_TBConta_corrente_vendedor] Integer NOT NULL,
+	[DFSerie_documento_TBConta_corrente_vendedor] Char(3) NULL,
+	[DFProduto_TBConta_corrente_vendedor] Integer NULL,
+	[DFValor_TBConta_corrente_vendedor] Money NULL,
+	[DFData_TBConta_corrente_vendedor] Smalldatetime NULL,
+	[DFHistorico_TBConta_corrente_vendedor] Nvarchar(200) NULL,
+Primary Key ([PKId_TBConta_corrente_vendedor])
+) 
+go
+
+
+
+Alter table [TBConta_corrente_vendedor] add  foreign key([FKId_TBVendedor]) references [TBVendedor] ([PKId_TBVendedor])  on update no action on delete no action 
+go
+
+
+Set quoted_identifier on
+go
+
+
+
+Set quoted_identifier off
+go
+
+
+
+/* Roles permissions */
+
+
+
+
+
+/* Users permissions */
+
+

@@ -1,0 +1,93 @@
+/*
+Created		27/5/2003
+Modified		28/4/2005
+Project		
+Model			
+Company		
+Author		
+Version		
+Database		MS SQL 2000 
+*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Create table [TBMoeda]
+(
+	[PKCodigo_TBMoeda] Integer NOT NULL,
+	[DFDescricao_TBMoeda] Nvarchar(40) NOT NULL,
+	[DFSigla_TBMoeda] Nvarchar(4) NULL,
+Primary Key ([PKCodigo_TBMoeda])
+) 
+go
+
+
+
+
+
+
+
+
+
+
+
+Set quoted_identifier on
+go
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Set quoted_identifier off
+go
+
+
+
+
+
+
+
+
+/* Roles permissions */
+
+
+
+
+
+/* Users permissions */
+
+
+
+
+
+

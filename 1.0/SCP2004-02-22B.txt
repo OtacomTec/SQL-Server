@@ -1,0 +1,159 @@
+/*
+Created		27/5/2003
+Modified		21/2/2004
+Project		
+Model		
+Company		
+Author		
+Version		
+Database		MS SQL 2000 
+*/
+
+
+Create table [TBNota_saida] (
+	[PKId_TBNota_saida] Integer Identity NOT NULL,
+	[FKCodigo_TBEmpresa] Integer NOT NULL,
+	[FKId_TBVendedor] Integer NOT NULL,
+	[FKId_TBPlano_pagamento] Integer NOT NULL,
+	[FKCodigo_TBTabela_preco] Integer NOT NULL,
+	[FKCodigo_TBTransportadora] Integer NOT NULL,
+	[DFTipo_operacao_TBNota_saida] Integer NOT NULL,
+	[DFNumero_TBNota_saida] Integer NOT NULL,
+	[DFSerie_TBNota_saida] Nvarchar(3) NOT NULL,
+	[DFTipo_emitente_TBNota_saida] Bit NOT NULL,
+	[DFEmitente_TBNota_saida] Integer NOT NULL,
+	[DFTotal_itens_TBNota_saida] Money NOT NULL,
+	[DFTotal_nota_TBNota_saida] Money NOT NULL,
+	[DFTotal_nota_tabela_TBNota_saida] Money NOT NULL,
+	[DFDesconto_especial_TBNota_saida] Money NULL,
+	[DFDesconto_indenizacao_TBNota_saida] Money NULL,
+	[DFData_Emissao_TBNota_saida] Smalldatetime NOT NULL,
+	[DFData_Saida_TBNota_saida] Smalldatetime NOT NULL,
+	[DFFaturista_TBNota_saida] Nvarchar(20) NOT NULL,
+	[DFDigitador_TBNota_saida] Nvarchar(20) NOT NULL,
+	[DFPrevisao_TBNota_saida] Bit NOT NULL,
+	[DFValor_ipi_TBNota_saida] Money NULL,
+	[DFDespesas_acessorias_TBNota_saida] Money NULL,
+	[DFTotal_descontos_itens_TBNota_saida] Money NULL,
+	[DFTotal_peso_liquido_TBNota_saida] Money NOT NULL,
+	[DFTotal_peso_bruto_TBNota_saida] Money NOT NULL,
+	[DFTotal_custo_medio_TBNota_saida] Money NOT NULL,
+	[DFTotal_custo_real_TBNota_saida] Money NOT NULL,
+	[DFTotal_custo_contabil_TBNota_saida] Money NOT NULL,
+	[DFNumero_pedido_TBNota_saida] Integer NOT NULL,
+        [DFNumero_pedido_TBNota_saida] Integer NOT NULL,
+        [DFCancelado_TBNota_saida] Bit NOT NULL,
+        [DFMotivo_cancelamento_TBNota_saida] Nvarchar(50) NOT NULL,
+        [DFUsuario_cancelamento_TBNota_saida] Nvarchar(20) NOT NULL,
+        [DFIntegrado_fiscal_TBNota_saida] Bit NOT NULL,
+Primary Key ([PKId_TBNota_saida])
+) 
+go
+
+Create table [TBImpostos_nota_saida] (
+	[PKId_TBImpostos_nota_saida] Integer Identity NOT NULL,
+	[FKId_TBNota_saida] Integer NOT NULL,
+	[DFAliquota_TBImpostos_nota_saida] Money NOT NULL,
+	[DFBase_calculo_TBImpostos_nota_saida] Money NOT NULL,
+	[DFValor_TBImpostos_nota_saida] Money NOT NULL,
+Primary Key ([PKId_TBImpostos_nota_saida])
+) 
+go
+
+Create table [TBItens_nota_saida] (
+	[PKId_TBItens_nota_saida] Integer Identity NOT NULL,
+	[FKId_TBNota_saida] Integer NOT NULL,
+	[FKId_TBProduto] Integer NOT NULL,
+	[FKId_TBCfop] Integer NOT NULL,
+	[DFCst1_TBItens_nota_saida] Char(1) NOT NULL,
+	[DFCst2_TBItens_nota_saida] Char(2) NOT NULL,
+	[DFQuantidade_TBItens_nota_saida] Money NOT NULL,
+	[DFTipo_preco_TBItens_nota_saida] Integer NOT NULL,
+	[DFPreco_tabela_TBItens_nota_saida] Money NOT NULL,
+	[DFPercentual_desconto_TBItens_nota_saida] Money NOT NULL,
+	[DFPreco_praticado_TBItens_nota_saida] Money NOT NULL,
+	[DFValor_total_tabela_TBItens_nota_saida] Money NOT NULL,
+	[DFValor_total_praticado_TBItens_nota_saida] Money NOT NULL,
+	[DFPercentual_icms_TBItens_nota_saida] Money NOT NULL,
+	[DFValor_total_icms_TBItens_nota_saida] Money NOT NULL,
+	[DFUnidade_TBItens_nota_saida] Char(3) NOT NULL,
+	[DFCusto_real_TBItens_nota_saida] Money NOT NULL,
+	[DFCusto_contabil_TBItens_nota_saida] Money NOT NULL,
+	[DFCusto_medio_TBItens_nota_saida] Money NOT NULL,
+	[DFPeso_liquido_TBItens_nota_saida] Money NOT NULL,
+	[DFPeso_bruto_TBItens_nota_saida] Money NOT NULL,
+	[DFQuantidade_baixa_estoque_TBItens_nota_saida] Money NOT NULL,
+	[DFValor_total_item_TBItens_nota_saida] Money NOT NULL,
+Primary Key ([PKId_TBItens_nota_saida])
+) 
+go
+
+Create table [TBCfop_nota_saida] (
+	[PKId_TBCfop_nota_saida] Integer Identity NOT NULL,
+	[FKId_TBCfop] Integer NOT NULL,
+	[FKId_TBNota_saida] Integer NOT NULL,
+Primary Key ([PKId_TBCfop_nota_saida])
+) 
+go
+
+Alter table [TBNota_saida] add  foreign key([FKCodigo_TBEmpresa]) references [TBEmpresa] ([PKCodigo_TBEmpresa])  on update no action on delete no action 
+go
+Alter table [TBItens_nota_saida] add  foreign key([FKId_TBProduto]) references [TBProduto] ([PKId_TBProduto])  on update no action on delete no action 
+go
+Alter table [TBNota_saida] add  foreign key([FKId_TBVendedor]) references [TBVendedor] ([PKId_TBVendedor])  on update no action on delete no action 
+go
+Alter table [TBNota_saida] add  foreign key([FKId_TBPlano_pagamento]) references [TBPlano_pagamento] ([PKId_TBPlano_pagamento])  on update no action on delete no action 
+go
+Alter table [TBNota_saida] add  foreign key([FKCodigo_TBTransportadora]) references [TBTransportadora] ([PKCodigo_TBTransportadora])  on update no action on delete no action 
+go
+Alter table [TBItens_nota_saida] add  foreign key([FKId_TBCfop]) references [TBCfop] ([PKId_TBCfop])  on update no action on delete no action 
+go
+Alter table [TBCfop_nota_saida] add  foreign key([FKId_TBCfop]) references [TBCfop] ([PKId_TBCfop])  on update no action on delete no action 
+go
+Alter table [TBNota_saida] add  foreign key([FKCodigo_TBTabela_preco]) references [TBTabela_preco] ([PKCodigo_TBTabela_preco])  on update no action on delete no action 
+go
+Alter table [TBImpostos_nota_saida] add  foreign key([FKId_TBNota_saida]) references [TBNota_saida] ([PKId_TBNota_saida])  on update no action on delete no action 
+go
+Alter table [TBItens_nota_saida] add  foreign key([FKId_TBNota_saida]) references [TBNota_saida] ([PKId_TBNota_saida])  on update no action on delete no action 
+go
+Alter table [TBCfop_nota_saida] add  foreign key([FKId_TBNota_saida]) references [TBNota_saida] ([PKId_TBNota_saida])  on update no action on delete no action 
+go
+
+
+Set quoted_identifier on
+go
+
+
+
+
+
+
+
+
+
+
+
+
+Set quoted_identifier off
+go
+
+
+
+
+
+
+
+
+/* Roles permissions */
+
+
+
+
+
+/* Users permissions */
+
+
+
+
+
+

@@ -1,0 +1,65 @@
+USE BDRetaguarda
+GO
+BEGIN TRANSACTION
+/*
+ *** IDENTIFICAÇÃO DO SCRIPT ***
+
+ 1 - Apartir de 20/12/2005, fica expressamente proibida a criação de scripts sem que seja preenchido este cabeçalho
+ 2 - Obrigatoriamente necessário que este paragrafo seja inserido apos um BEGIN TRANSACTION
+ 3 - Obrigatoriamente o preenchimento das variaveis abaixo(@Nomenclatura,@Observacao,@Data)com valores correspondentes e condizentes
+ Att: Marcos
+
+*/
+
+--INICIO CABECALHO
+
+declare @Nomenclatura as nvarchar(20)
+declare @Observacao as nvarchar(100)
+declare @Data as SMALLDATETIME
+
+SET @Nomenclatura = 'SCP2006-12-15a'
+SET @Observacao = 'Endereço entrega TBFornecedor '
+SET @Data = CURRENT_TIMESTAMP
+
+
+---LIMPEZA DA TABELA
+
+DELETE FROM TBSCRIPT
+
+---INSERCAO DO REGISTRO
+INSERT INTO BDRetaguarda.dbo.TBSCRIPT(DFNome_TBScript,DFObjetivo_TBScript,DFData_execucao_TBScript)
+VALUES(@Nomenclatura,@Observacao,@Data)
+
+---FIM CABECALHO
+
+
+SET QUOTED_IDENTIFIER ON
+SET TRANSACTION ISOLATION LEVEL SERIALIZABLE
+SET ARITHABORT ON
+SET NUMERIC_ROUNDABORT OFF
+SET CONCAT_NULL_YIELDS_NULL ON
+SET ANSI_NULLS ON
+SET ANSI_PADDING ON
+SET ANSI_WARNINGS ON
+
+ALTER TABLE dbo.TBFornecedor ADD
+	DFEndereco_Entrega_TBFornecedor nvarchar(40) NULL,
+	DFNumero_Entrega_TBFornecedor nvarchar(10) NULL,
+	DFComplemento_Entrega_TBFornecedor nvarchar(20) NULL,
+	DFBairro_Entrega_TBFornecedor nvarchar(30) NULL,
+	FKId_Entrega_TBCidade_otica int NULL,
+	DFCep_Entrega_TBFornecedor nvarchar(10) NULL
+GO
+ALTER TABLE dbo.TBFornecedor ADD CONSTRAINT
+	FK_TBFornecedor_TBCidade_otica FOREIGN KEY
+	(
+	FKId_Entrega_TBCidade_otica
+	) REFERENCES dbo.TBCidade_otica
+	(
+	PKId_TBCidade_otica
+	)
+GO
+
+
+
+COMMIT TRANSACTION

@@ -1,0 +1,73 @@
+/*
+Created		27/5/2003
+Modified		27/10/2005
+Project		Only Tech - ERP
+Model			Olt
+Company		Only Tech
+Author		Only Tech
+Version		1.0
+Database		MS SQL 2000 
+*/
+
+
+
+Create table [TBAgregado_veiculo]
+(
+	[PKId_TBAgregado_veiculo] Integer Identity NOT NULL,
+	[FKId_TBFornecedor] Integer NOT NULL,
+	[FKCodigo_TBVeiculo] Integer NOT NULL,
+Primary Key ([PKId_TBAgregado_veiculo])
+) 
+go
+
+Alter table [TBAgregado_veiculo] add  foreign key([FKId_TBFornecedor]) references [TBFornecedor] ([PKId_TBFornecedor])  on update no action on delete no action 
+go
+Alter table [TBAgregado_veiculo] add  foreign key([FKCodigo_TBVeiculo]) references [TBVeiculo] ([PKCodigo_TBVeiculo])  on update no action on delete no action 
+go
+
+
+Set quoted_identifier on
+go
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Set quoted_identifier off
+go
+
+
+
+
+
+
+
+
+/* Roles permissions */
+
+
+
+
+
+/* Users permissions */
+
+
+
+
+
+

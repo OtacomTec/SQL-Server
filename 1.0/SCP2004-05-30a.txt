@@ -1,0 +1,62 @@
+/*
+Created		27/5/2003
+Modified		14/5/2004
+Project		
+Model		
+Company		
+Author		
+Version		
+Database		MS SQL 2000 
+*/
+
+Create table [TBDependente_funcionario] (
+	[PKId_TBDependente_funcionario] Integer Identity NOT NULL,
+	[FKCodigo_TBFuncionario] Integer NOT NULL,
+	[DFNome_TBDependente_funcionario] Nvarchar(40) NOT NULL,
+	[DFParentesco_TBDependente_funcionario] Integer NULL,
+	[DFData_aniversario_TBDependente_funcionario] Datetime NULL,
+Primary Key ([PKId_TBDependente_funcionario])
+) 
+go
+
+Alter table [TBDependente_funcionario] add  foreign key([FKCodigo_TBFuncionario]) references [TBFuncionario] ([PKCodigo_TBFuncionario])  on update no action on delete no action 
+go
+
+
+Set quoted_identifier on
+go
+
+
+
+
+
+
+
+
+
+
+
+
+Set quoted_identifier off
+go
+
+
+
+
+
+
+
+
+/* Roles permissions */
+
+
+
+
+
+/* Users permissions */
+
+
+
+
+
+

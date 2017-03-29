@@ -1,0 +1,70 @@
+/*
+Created		27/5/2003
+Modified		6/12/2005
+Project		Only Tech - ERP
+Model			Olt
+Company		Only Tech
+Author		Only Tech
+Version		1.0
+Database		MS SQL 2000 
+*/
+
+Create table [TBBaixa_associado]
+(
+	[PKId_TBBaixa_associado] Integer Identity NOT NULL,
+	[FKCodigo_TBAssociado] Integer NOT NULL,
+	[DFData_TBBaixa_associado] Smalldatetime NOT NULL,
+	[DFMotivo_TBBaixa_associado] Integer NULL,
+Primary Key ([PKId_TBBaixa_associado])
+) 
+go
+
+Alter table [TBBaixa_associado] add  foreign key([FKCodigo_TBAssociado]) references [TBAssociado] ([PKCodigo_TBAssociado])  on update no action on delete no action 
+go
+
+
+Set quoted_identifier on
+go
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Set quoted_identifier off
+go
+
+
+
+
+
+
+
+
+/* Roles permissions */
+
+
+
+
+
+/* Users permissions */
+
+
+
+
+
+

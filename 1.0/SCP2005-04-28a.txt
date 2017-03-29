@@ -1,0 +1,93 @@
+/*
+Created		27/5/2003
+Modified		28/4/2005
+Project		
+Model			
+Company		
+Author		
+Version		
+Database		MS SQL 2000 
+*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Create table [TBEmbalagem]
+(
+	[PKCodigo_TBEmbalagem] Integer NOT NULL,
+	[DFDescricao_TBEmbalagem] Nvarchar(40) NOT NULL,
+	[DFSigla_TBEmbalagem] Nvarchar(3) NOT NULL,
+Primary Key ([PKCodigo_TBEmbalagem])
+) 
+go
+
+
+
+
+
+
+
+
+
+
+
+Set quoted_identifier on
+go
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Set quoted_identifier off
+go
+
+
+
+
+
+
+
+
+/* Roles permissions */
+
+
+
+
+
+/* Users permissions */
+
+
+
+
+
+

@@ -1,0 +1,99 @@
+BEGIN TRANSACTION
+SET QUOTED_IDENTIFIER ON
+SET TRANSACTION ISOLATION LEVEL SERIALIZABLE
+SET ARITHABORT ON
+SET NUMERIC_ROUNDABORT OFF
+SET CONCAT_NULL_YIELDS_NULL ON
+SET ANSI_NULLS ON
+SET ANSI_PADDING ON
+SET ANSI_WARNINGS ON
+COMMIT
+BEGIN TRANSACTION
+ALTER TABLE dbo.TBHIstorico_transporte_roteiro
+	DROP CONSTRAINT FK__TBHIstori__FKId___442F11A5
+GO
+COMMIT
+BEGIN TRANSACTION
+ALTER TABLE dbo.TBHIstorico_transporte_roteiro
+	DROP CONSTRAINT FK__TBHIstori__FKCod__4246C933
+GO
+COMMIT
+BEGIN TRANSACTION
+ALTER TABLE dbo.TBHIstorico_transporte_roteiro
+	DROP CONSTRAINT FK__TBHIstori__FKCod__4152A4FA
+GO
+COMMIT
+BEGIN TRANSACTION
+CREATE TABLE dbo.Tmp_TBHIstorico_transporte_roteiro
+	(
+	PKId_TBHIstorico_transporte_roteiro int NOT NULL IDENTITY (1, 1),
+	FKId_TBHIstorico_transporte int NOT NULL,
+	FKCodigo_TBItinerario int NOT NULL,
+	FKCodigo_TBDestinatario int NOT NULL,
+	DFPedagio_custear_receber_ratear_TBHIstorico_transporte_roteiro int NOT NULL,
+	DFIcms_custear_ratear_TBHIstorico_transporte_roteiro bit NOT NULL,
+	DFValor_frete_kg_lt_TBHIstorico_transporte_roteiro nvarchar(20) NULL,
+	DFPaga_pedagio_eixo_suspenso_TBHIstorico_transporte_roteiro bit NULL
+	)  ON [PRIMARY]
+GO
+SET IDENTITY_INSERT dbo.Tmp_TBHIstorico_transporte_roteiro ON
+GO
+IF EXISTS(SELECT * FROM dbo.TBHIstorico_transporte_roteiro)
+	 EXEC('INSERT INTO dbo.Tmp_TBHIstorico_transporte_roteiro (PKId_TBHIstorico_transporte_roteiro, FKId_TBHIstorico_transporte, FKCodigo_TBItinerario, FKCodigo_TBDestinatario, DFPedagio_custear_receber_ratear_TBHIstorico_transporte_roteiro, DFIcms_custear_ratear_TBHIstorico_transporte_roteiro, DFValor_frete_kg_lt_TBHIstorico_transporte_roteiro, DFPaga_pedagio_eixo_suspenso_TBHIstorico_transporte_roteiro)
+		SELECT PKId_TBHIstorico_transporte_roteiro, FKId_TBHIstorico_transporte, FKCodigo_TBItinerario, FKCodigo_TBDestinatario, DFPedagio_custear_receber_ratear_TBHIstorico_transporte_roteiro, DFIcms_custear_ratear_TBHIstorico_transporte_roteiro, CONVERT(nvarchar(20), DFValor_frete_kg_lt_TBHIstorico_transporte_roteiro), DFPaga_pedagio_eixo_suspenso_TBHIstorico_transporte_roteiro FROM dbo.TBHIstorico_transporte_roteiro TABLOCKX')
+GO
+SET IDENTITY_INSERT dbo.Tmp_TBHIstorico_transporte_roteiro OFF
+GO
+ALTER TABLE dbo.TBOperacao_transporte
+	DROP CONSTRAINT FK__TBOperaca__FKId___452335DE
+GO
+DROP TABLE dbo.TBHIstorico_transporte_roteiro
+GO
+EXECUTE sp_rename N'dbo.Tmp_TBHIstorico_transporte_roteiro', N'TBHIstorico_transporte_roteiro', 'OBJECT'
+GO
+ALTER TABLE dbo.TBHIstorico_transporte_roteiro ADD CONSTRAINT
+	PK__TBHIstorico_tran__3AA5A76B PRIMARY KEY CLUSTERED 
+	(
+	PKId_TBHIstorico_transporte_roteiro
+	) ON [PRIMARY]
+
+GO
+ALTER TABLE dbo.TBHIstorico_transporte_roteiro WITH NOCHECK ADD CONSTRAINT
+	FK__TBHIstori__FKCod__4152A4FA FOREIGN KEY
+	(
+	FKCodigo_TBItinerario
+	) REFERENCES dbo.TBItinerario
+	(
+	PKCodigo_TBItinerario
+	)
+GO
+ALTER TABLE dbo.TBHIstorico_transporte_roteiro WITH NOCHECK ADD CONSTRAINT
+	FK__TBHIstori__FKCod__4246C933 FOREIGN KEY
+	(
+	FKCodigo_TBDestinatario
+	) REFERENCES dbo.TBDestinatario
+	(
+	PKCodigo_TBDestinatario
+	)
+GO
+ALTER TABLE dbo.TBHIstorico_transporte_roteiro WITH NOCHECK ADD CONSTRAINT
+	FK__TBHIstori__FKId___442F11A5 FOREIGN KEY
+	(
+	FKId_TBHIstorico_transporte
+	) REFERENCES dbo.TBHistorico_transporte
+	(
+	PKId_TBHistorico_transporte
+	)
+GO
+COMMIT
+BEGIN TRANSACTION
+ALTER TABLE dbo.TBOperacao_transporte WITH NOCHECK ADD CONSTRAINT
+	FK__TBOperaca__FKId___452335DE FOREIGN KEY
+	(
+	FKId_TBHIstorico_transporte_roteiro
+	) REFERENCES dbo.TBHIstorico_transporte_roteiro
+	(
+	PKId_TBHIstorico_transporte_roteiro
+	)
+GO
+COMMIT

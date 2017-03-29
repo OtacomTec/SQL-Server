@@ -1,0 +1,93 @@
+BEGIN TRANSACTION
+/*
+ *** IDENTIFICAÇÃO DO SCRIPT ***
+
+ 1 - Apartir de 20/12/2005, fica expressamente proibida a criação de scripts sem que seja preenchido este cabeçalho
+ 2 - Obrigatoriamente necessário que este paragrafo seja inserido apos um BEGIN TRANSACTION
+ 3 - Obrigatoriamente o preenchimento das variaveis abaixo(@Nomenclatura,@Observacao,@Data)com valores correspondentes e condizentes
+ Att: Marcos
+
+*/
+
+--INICIO CABECALHO
+
+declare @Nomenclatura as nvarchar(20)
+declare @Observacao as nvarchar(100)
+declare @Data as SMALLDATETIME
+
+SET @Nomenclatura = 'SCP2006-02-20a'
+SET @Observacao = 'ALTERANDO CAMPO NOME DA TABELA DEPENDENTES DE 40 PARA 80'
+SET @Data = CURRENT_TIMESTAMP
+
+
+---LIMPEZA DA TABELA
+
+DELETE FROM TBSCRIPT
+
+---INSERCAO DO REGISTRO
+INSERT INTO TBSCRIPT(DFNome_TBScript,DFObjetivo_TBScript,DFData_execucao_TBScript)
+VALUES(@Nomenclatura,@Observacao,@Data)
+
+---FIM CABECALHO
+
+
+ALTER TABLE dbo.TBDependente
+	DROP CONSTRAINT FK__TBDepende__FKId___3A179ED3
+
+ALTER TABLE dbo.TBDependente
+	DROP CONSTRAINT FK__TBDepende__FKId___6442E2C9
+
+
+
+CREATE TABLE dbo.Tmp_TBDependente
+	(
+	PKId_Dependentes int NOT NULL IDENTITY (1, 1),
+	FKId_TBCliente int NOT NULL,
+	DFNome_TBDependente nvarchar(80) NOT NULL,
+	DFParentesco_TBDependente int NULL,
+	DFData_aniversario_TBDependente datetime NULL
+	)  ON [PRIMARY]
+
+SET IDENTITY_INSERT dbo.Tmp_TBDependente ON
+
+IF EXISTS(SELECT * FROM dbo.TBDependente)
+	 EXEC('INSERT INTO dbo.Tmp_TBDependente (PKId_Dependentes, FKId_TBCliente, DFNome_TBDependente, DFParentesco_TBDependente, DFData_aniversario_TBDependente)
+		SELECT PKId_Dependentes, FKId_TBCliente, DFNome_TBDependente, DFParentesco_TBDependente, DFData_aniversario_TBDependente FROM dbo.TBDependente TABLOCKX')
+
+SET IDENTITY_INSERT dbo.Tmp_TBDependente OFF
+
+DROP TABLE dbo.TBDependente
+
+EXECUTE sp_rename N'dbo.Tmp_TBDependente', N'TBDependente', 'OBJECT'
+
+ALTER TABLE dbo.TBDependente ADD CONSTRAINT
+	PK__TBDependente__1CBC4616 PRIMARY KEY CLUSTERED 
+	(
+	PKId_Dependentes
+	) WITH FILLFACTOR = 90 ON [PRIMARY]
+
+
+ALTER TABLE dbo.TBDependente WITH NOCHECK ADD CONSTRAINT
+	FK__TBDepende__FKId___3A179ED3 FOREIGN KEY
+	(
+	FKId_TBCliente
+	) REFERENCES dbo.TBCliente
+	(
+	PKId_TBCliente
+	)
+
+ALTER TABLE dbo.TBDependente WITH NOCHECK ADD CONSTRAINT
+	FK__TBDepende__FKId___6442E2C9 FOREIGN KEY
+	(
+	FKId_TBCliente
+	) REFERENCES dbo.TBCliente
+	(
+	PKId_TBCliente
+	)
+
+
+
+
+
+COMMIT
+

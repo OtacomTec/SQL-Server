@@ -1,0 +1,14 @@
+update tbcliente
+set DFEndereco_entrega_TBCliente = DFEndereco_TBCliente,
+    DFNumero_entrega_TBCliente = DFNumero_TBCliente,
+    DFComplemento_entrega_TBCliente = DFComplemento_TBCliente,
+    DFBairro_entrega_TBCliente = DFBairro_TBCliente,
+    FKId_entrega_TBCidade_otica = FKId_TBCidade_otica,
+    DFCep_entrega_TBCliente = DFCep_TBCliente,
+    DFEndereco_cobranca_TBCliente = DFEndereco_TBCliente,
+    DFNumero_cobranca_TBCliente = DFNumero_TBCliente,
+    DFComplemento_cobranca_TBCliente = DFComplemento_TBCliente,
+    DFBairro_cobranca_TBCliente = DFBairro_TBCliente,
+    FKId_cobranca_TBCidade_otica = FKId_TBCidade_otica,
+    DFCep_cobranca_TBCliente = DFCep_TBCliente
+from tbcliente

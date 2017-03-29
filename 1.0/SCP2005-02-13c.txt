@@ -1,0 +1,85 @@
+/*
+Created		27/5/2003
+Modified		13/2/2005
+Project		
+Model			
+Company		
+Author		
+Version		
+Database		MS SQL 2000 
+*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Create table [TBTipo_sinistro]
+(
+	[PKCodigo_TBTipo_sinistro] Integer NOT NULL,
+	[DFDescricao_TBTipo_sinistro] Nvarchar(50) NULL,
+Primary Key ([PKCodigo_TBTipo_sinistro])
+) 
+go
+
+
+
+
+Set quoted_identifier on
+go
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Set quoted_identifier off
+go
+
+
+
+
+
+
+
+
+/* Roles permissions */
+
+
+
+
+
+/* Users permissions */
+
+
+
+
+
+

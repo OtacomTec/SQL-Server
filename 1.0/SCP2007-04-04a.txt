@@ -1,0 +1,62 @@
+USE BDRetaguarda
+GO
+BEGIN TRANSACTION
+/*
+ *** IDENTIFICAÇÃO DO SCRIPT ***
+
+ 1 - Apartir de 20/12/2005, fica expressamente proibida a criação de scripts sem que seja preenchido este cabeçalho
+ 2 - Obrigatoriamente necessário que este paragrafo seja inserido apos um BEGIN TRANSACTION
+ 3 - Obrigatoriamente o preenchimento das variaveis abaixo(@Nomenclatura,@Observacao,@Data)com valores correspondentes e condizentes
+ Att: Marcos
+
+*/
+
+--INICIO CABECALHO
+
+declare @Nomenclatura as nvarchar(20)
+declare @Observacao as nvarchar(100)
+declare @Data as SMALLDATETIME
+
+SET @Nomenclatura = 'SCP2007-04-04a'
+SET @Observacao = 'Cria Tabela TBOcorrencias_nota_entrada' 
+SET @Data = CURRENT_TIMESTAMP
+
+
+---LIMPEZA DA TABELA
+
+DELETE FROM TBSCRIPT
+
+---INSERCAO DO REGISTRO
+INSERT INTO BDRetaguarda.dbo.TBSCRIPT(DFNome_TBScript,DFObjetivo_TBScript,DFData_execucao_TBScript)
+VALUES(@Nomenclatura,@Observacao,@Data)
+
+---FIM CABECALHO
+
+CREATE TABLE [dbo].[TBOcorrencias_nota_entrada] (
+	[PKId_TBOcorrencias_nota_entrada] [int] NOT NULL ,
+	[FKId_TBNota_entrada] [int] NOT NULL ,
+	[DFMotivo_TBOcorrencias_nota_entrada] [nvarchar] (500) COLLATE Latin1_General_CI_AS NOT NULL ,
+	[DFData_TBOcorrencias_nota_entrada] [smalldatetime] NULL ,
+	[DFIntegrado_filiais_TBOcorrencias_nota_entrada] [bit] NULL ,
+	[DFIntegrado_portal_TBOcorrencias_nota_entrada] [bit] NULL ,
+	[DFData_alteracao_TBOcorrencias_nota_entrada] [smalldatetime] NULL ,
+	[DFCodigo_Identificador_TBOcorrencias_nota_entrada] [int] NULL 
+) ON [PRIMARY]
+GO
+
+ALTER TABLE [dbo].[TBOcorrencias_nota_entrada] WITH NOCHECK ADD 
+	CONSTRAINT [PK_TBOcorrencias_nota_entrada] PRIMARY KEY  CLUSTERED 
+	(
+		[PKId_TBOcorrencias_nota_entrada]
+	)  ON [PRIMARY] 
+GO
+
+
+
+/* Roles permissions */
+
+/* Users permissions */
+
+
+commit transaction
+

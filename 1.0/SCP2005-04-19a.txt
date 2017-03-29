@@ -1,0 +1,134 @@
+BEGIN TRANSACTION
+SET QUOTED_IDENTIFIER ON
+SET TRANSACTION ISOLATION LEVEL SERIALIZABLE
+SET ARITHABORT ON
+SET NUMERIC_ROUNDABORT OFF
+SET CONCAT_NULL_YIELDS_NULL ON
+SET ANSI_NULLS ON
+SET ANSI_PADDING ON
+SET ANSI_WARNINGS ON
+COMMIT
+BEGIN TRANSACTION
+ALTER TABLE dbo.TBOrdem_compra
+	DROP CONSTRAINT FK__TBOrdem_c__FKCod__09235A70
+GO
+ALTER TABLE dbo.TBOrdem_compra
+	DROP CONSTRAINT FK__TBOrdem_c__FKCod__7EA5CBFD
+GO
+COMMIT
+BEGIN TRANSACTION
+ALTER TABLE dbo.TBOrdem_compra
+	DROP CONSTRAINT FK__TBOrdem_c__FKCod__0646EDC5
+GO
+ALTER TABLE dbo.TBOrdem_compra
+	DROP CONSTRAINT FK__TBOrdem_c__FKCod__7BC95F52
+GO
+COMMIT
+BEGIN TRANSACTION
+CREATE TABLE dbo.Tmp_TBOrdem_compra
+	(
+	PKId_TBOrdem_compra int NOT NULL IDENTITY (1, 1),
+	FKCodigo_TBEmpresa int NOT NULL,
+	FKCodigo_TBComprador int NOT NULL,
+	FKId_TBFornecedor int NOT NULL,
+	DFData_lancamento_TBOrdem_compra smalldatetime NULL,
+	DFData_previsao_entrega_TBOrdem_compra smalldatetime NULL,
+	DFValor_frete_TBOrdem_compra money NULL,
+	DFVerba_TBOrdem_compra money NULL,
+	DFNome_vendedor_TBOrdem_compra nvarchar(50) NULL,
+	DFPercentual_vendor_TBOrdem_compra money NULL,
+	DFValor_total_compra_TBOrdem_compra money NULL,
+	DFStatus_aberto_fechado_TBordem_compra bit NULL,
+	DFObservacao_TBOrdem_compra nvarchar(200) NULL,
+	DFDespesa_acessoria_TBOrdem_compra money NULL,
+	DFValor_total_ipi_TBOrdem_compra money NULL,
+	DFTotal_peso_liquido_TBOrdem_compra money NULL,
+	DFTotal_peso_bruto_TBOrdem_compra money NULL,
+	DFTotal_descontos_itens_TBOrdem_Compra money NULL,
+	DFTotal_itens_TBOrdem_Compra money NULL,
+	DFBase_calculo_subst_tributaria_TBOrdem_compra money NULL,
+	DFValor_subst_tributaria_TBOrdem_compra money NULL
+	)  ON [PRIMARY]
+GO
+SET IDENTITY_INSERT dbo.Tmp_TBOrdem_compra ON
+GO
+IF EXISTS(SELECT * FROM dbo.TBOrdem_compra)
+	 EXEC('INSERT INTO dbo.Tmp_TBOrdem_compra (PKId_TBOrdem_compra, FKCodigo_TBEmpresa, FKCodigo_TBComprador, FKId_TBFornecedor, DFData_lancamento_TBOrdem_compra, DFData_previsao_entrega_TBOrdem_compra, DFValor_frete_TBOrdem_compra, DFVerba_TBOrdem_compra, DFNome_vendedor_TBOrdem_compra, DFPercentual_vendor_TBOrdem_compra, DFValor_total_compra_TBOrdem_compra, DFStatus_aberto_fechado_TBordem_compra, DFObservacao_TBOrdem_compra, DFDespesa_acessoria_TBOrdem_compra, DFValor_total_ipi_TBOrdem_compra, DFTotal_peso_liquido_TBOrdem_compra, DFTotal_peso_bruto_TBOrdem_compra, DFTotal_descontos_itens_TBOrdem_Compra, DFTotal_itens_TBOrdem_Compra, DFBase_calculo_subst_tributaria_TBOrdem_compra, DFValor_subst_tributaria_TBOrdem_compra)
+		SELECT PKId_TBOrdem_compra, FKCodigo_TBEmpresa, FKCodigo_TBComprador, FKId_TBFornecedor, DFData_lancamento_TBOrdem_compra, CONVERT(smalldatetime, DFData_previsao_entrega_TBOrdem_compra), DFValor_frete_TBOrdem_compra, DFVerba_TBOrdem_compra, DFNome_vendedor_TBOrdem_compra, DFPercentual_vendor_TBOrdem_compra, DFValor_total_compra_TBOrdem_compra, DFStatus_aberto_fechado_TBordem_compra, DFObservacao_TBOrdem_compra, DFDespesa_acessoria_TBOrdem_compra, DFValor_total_ipi_TBOrdem_compra, DFTotal_peso_liquido_TBOrdem_compra, DFTotal_peso_bruto_TBOrdem_compra, DFTotal_descontos_itens_TBOrdem_Compra, DFTotal_itens_TBOrdem_Compra, DFBase_calculo_subst_tributaria_TBOrdem_compra, DFValor_subst_tributaria_TBOrdem_compra FROM dbo.TBOrdem_compra TABLOCKX')
+GO
+SET IDENTITY_INSERT dbo.Tmp_TBOrdem_compra OFF
+GO
+ALTER TABLE dbo.TBItens_ordem_compra
+	DROP CONSTRAINT FK__TBItens_o__FKId___0A177EA9
+GO
+ALTER TABLE dbo.TBItens_ordem_compra
+	DROP CONSTRAINT FK__TBItens_o__FKId___7F99F036
+GO
+DROP TABLE dbo.TBOrdem_compra
+GO
+EXECUTE sp_rename N'dbo.Tmp_TBOrdem_compra', N'TBOrdem_compra', 'OBJECT'
+GO
+ALTER TABLE dbo.TBOrdem_compra ADD CONSTRAINT
+	PK__TBOrdem_compra__751C61C3 PRIMARY KEY CLUSTERED 
+	(
+	PKId_TBOrdem_compra
+	) ON [PRIMARY]
+
+GO
+ALTER TABLE dbo.TBOrdem_compra WITH NOCHECK ADD CONSTRAINT
+	FK__TBOrdem_c__FKCod__0646EDC5 FOREIGN KEY
+	(
+	FKCodigo_TBEmpresa
+	) REFERENCES dbo.TBEmpresa
+	(
+	PKCodigo_TBEmpresa
+	)
+GO
+ALTER TABLE dbo.TBOrdem_compra WITH NOCHECK ADD CONSTRAINT
+	FK__TBOrdem_c__FKCod__09235A70 FOREIGN KEY
+	(
+	FKCodigo_TBComprador
+	) REFERENCES dbo.TBComprador
+	(
+	PKCodigo_TBComprador
+	)
+GO
+ALTER TABLE dbo.TBOrdem_compra WITH NOCHECK ADD CONSTRAINT
+	FK__TBOrdem_c__FKCod__7BC95F52 FOREIGN KEY
+	(
+	FKCodigo_TBEmpresa
+	) REFERENCES dbo.TBEmpresa
+	(
+	PKCodigo_TBEmpresa
+	)
+GO
+ALTER TABLE dbo.TBOrdem_compra WITH NOCHECK ADD CONSTRAINT
+	FK__TBOrdem_c__FKCod__7EA5CBFD FOREIGN KEY
+	(
+	FKCodigo_TBComprador
+	) REFERENCES dbo.TBComprador
+	(
+	PKCodigo_TBComprador
+	)
+GO
+COMMIT
+BEGIN TRANSACTION
+ALTER TABLE dbo.TBItens_ordem_compra WITH NOCHECK ADD CONSTRAINT
+	FK__TBItens_o__FKId___0A177EA9 FOREIGN KEY
+	(
+	FKId_TBOrdem_compra
+	) REFERENCES dbo.TBOrdem_compra
+	(
+	PKId_TBOrdem_compra
+	)
+GO
+ALTER TABLE dbo.TBItens_ordem_compra WITH NOCHECK ADD CONSTRAINT
+	FK__TBItens_o__FKId___7F99F036 FOREIGN KEY
+	(
+	FKId_TBOrdem_compra
+	) REFERENCES dbo.TBOrdem_compra
+	(
+	PKId_TBOrdem_compra
+	)
+GO
+COMMIT

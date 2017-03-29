@@ -1,0 +1,26 @@
+BEGIN TRANSACTION
+SET QUOTED_IDENTIFIER ON
+SET TRANSACTION ISOLATION LEVEL SERIALIZABLE
+SET ARITHABORT ON
+SET NUMERIC_ROUNDABORT OFF
+SET CONCAT_NULL_YIELDS_NULL ON
+SET ANSI_NULLS ON
+SET ANSI_PADDING ON
+SET ANSI_WARNINGS ON
+COMMIT
+BEGIN TRANSACTION
+ALTER TABLE dbo.TBCliente ADD
+	DFEndereco_entrega_TBCliente nvarchar(40) NULL,
+	DFNumero_entrega_TBCliente nvarchar(10) NULL,
+	DFComplemento_entrega_TBCliente nvarchar(20) NULL,
+	DFBairro_entrega_TBCliente nvarchar(30) NULL,
+	FKId_entrega_TBCidade_otica int NULL,
+	DFCep_entrega_TBCliente nvarchar(10) NULL,
+	DFEndereco_cobranca_TBCliente nvarchar(40) NULL,
+	DFNumero_cobranca_TBCliente nvarchar(10) NULL,
+	DFComplemento_cobranca_TBCliente nvarchar(20) NULL,
+	DFBairro_cobranca_TBCliente nvarchar(30) NULL,
+	FKId_cobranca_TBCidade_otica int NULL,
+	DFCep_cobranca_TBCliente nvarchar(10) NULL
+GO
+COMMIT

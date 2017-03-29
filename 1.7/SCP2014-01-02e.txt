@@ -1,0 +1,72 @@
+USE BDRetaguarda
+GO
+BEGIN TRANSACTION
+/*
+ *** IDENTIFICAÇÃO DO SCRIPT ***
+
+ 1 - Apartir de 20/12/2005, fica expressamente proibida a criação de scripts sem que seja preenchido este cabeçalho
+ 2 - Obrigatoriamente necessário que este paragrafo seja inserido apos um BEGIN TRANSACTION
+ 3 - Obrigatoriamente o preenchimento das variaveis abaixo(@Nomenclatura,@Observacao,@Data)com valores correspondentes e condizentes
+ Att: Marcos
+
+*/
+
+--INICIO CABECALHO
+
+declare @Nomenclatura as nvarchar(20)
+declare @Observacao as nvarchar(100)
+declare @Data as SMALLDATETIME
+
+SET @Nomenclatura = 'SCP2014-01-02e'
+SET @Observacao = 'Cria Campos TBTranseunte'
+SET @Data = CURRENT_TIMESTAMP
+
+
+---LIMPEZA DA TABELA
+
+DELETE FROM TBSCRIPT
+
+---INSERCAO DO REGISTRO
+
+INSERT INTO BDRetaguarda.dbo.TBSCRIPT(DFNome_TBScript,DFObjetivo_TBScript,DFData_execucao_TBScript)
+VALUES(@Nomenclatura,@Observacao,@Data)
+
+---FIM CABECALHO\
+
+CREATE TABLE TBTranseunte  (
+	[PKId_TBTranseunte] [int] IDENTITY(1,1) NOT NULL,
+	[DFTipo_pessoa_TBTranseunte] [bit] NULL,
+	[DFNome_TBTranseunte] [nvarchar](40) NULL,
+	[DFSexo_TBTranseunte] [int] NOT NULL,
+	[DFEstado_civil_TBTranseunte] [int] NULL,
+	[DFCpf_TBTranseunte] [nvarchar](20) NULL,
+	[DFRegistro_geral_TBTranseunte] [nvarchar](20) NULL,
+	[DFOrgao_emissao_TBTranseunte] [nvarchar](10) NULL,
+	[DFData_aniversario_TBTranseunte] [smalldatetime] NULL,
+	[DFFiliacao_pai_TBTranseunte] [nvarchar](40) NULL,
+	[DFFiliacao_mae_TBTranseunte] [nvarchar](40) NULL,
+	[DFGrau_instrucao_TBTranseunte] [int] NULL,
+	[DFCep_TBTranseunte] [nvarchar](10) NOT NULL,
+	[DFEndereco_TBTranseunte] [nvarchar](40) NOT NULL,
+	[DFNumero_TBTranseunte] [nvarchar](10) NOT NULL,
+	[DFComplemento_TBTranseunte] [nvarchar](20) NULL,
+	[DFBairro_TBTranseunte] [nvarchar](30) NOT NULL,
+	[FKId_TBCidade_otica] [int] NOT NULL,
+	[DFTelefone_Fixo_TBTranseunte] [nvarchar](20) NULL,
+	[DFTelefone_Celular_TBTranseunte] [nvarchar](20) NULL,
+	[DFData_cadastro_TBTranseunte] [smalldatetime] NOT NULL,
+	[DFObservacao_TBTranseunte] [nvarchar](600) NULL,
+	[DFBloqueado_TBTranseunte] [bit] NULL,
+	[DFInativo_TBTranseunte] [bit] NULL,
+	[DFPath_imagem_TBTranseunte] [nvarchar](100) NULL,
+	[DFImagem_stream_TBTranseunte] [image] NULL,
+	[DFPath_biometria_TBTranseunte] [nvarchar](100) NULL,
+	[DFEmail_TBTranseunte] nvarchar(100) NULL,
+	[DFBiometria_stream_TBTranseunte] [image] NULL,
+	[DFBinario_biometria_TBTranseunte] [varbinary](MAX) NULL,
+	[FkCodigo_TBStatus] [int] NOT NULL,
+	[DFResponsavel_TBTranseunte] [nvarchar](40) NULL,
+	[DFCpf_responsavel_TBTranseunte] [nvarchar](20) NULL,
+	[DFRG_responsavel_TBTranseunte] [nvarchar](20) NULL)
+
+commit transaction

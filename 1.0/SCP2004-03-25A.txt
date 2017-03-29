@@ -1,0 +1,56 @@
+/*
+Created		27/05/2003
+Modified		24/03/2004
+Project		
+Model		
+Company		
+Author		
+Version		
+Database		MS SQL 2000 
+*/
+
+Create table [TBCliente_externo] (
+	[PKId_TBCliente_externo] Integer Identity NOT NULL,
+	[FKId_TBCidade_otica] Integer NOT NULL,
+	[DFNome_TBCliente_externo] Nvarchar(40) NOT NULL,
+	[DFEndereco_TBCliente_externo] Nvarchar(40) NOT NULL,
+	[DFNumero_TBCliente_externo] Nvarchar(10) NOT NULL,
+	[DFComplemento_TBCliente_externo] Nvarchar(20) NULL,
+	[DFBairro_TBCliente_externo] Nvarchar(30) NOT NULL,
+	[DFCep_TBCliente_externo] Nvarchar(10) NOT NULL,
+	[DFTipo_pessoa_TBCliente_externo] Bit NULL,
+	[DFCnpj_TBCliente_externo] Nvarchar(20) NULL,
+	[DFData_cadastro_TBCliente_externo] Smalldatetime NOT NULL,
+	[DFTelefone_TBCliente_externo] Nvarchar(20) NULL,
+	[DFContato_TBCliente_externo] Nvarchar(20) NULL,
+Primary Key ([PKId_TBCliente_externo])
+) 
+go
+
+
+
+Alter table [TBCliente_externo] add  foreign key([FKId_TBCidade_otica]) references [TBCidade_otica] ([PKId_TBCidade_otica])  on update no action on delete no action 
+go
+
+
+Set quoted_identifier on
+go
+
+
+Set quoted_identifier off
+go
+
+
+
+/* Roles permissions */
+
+
+
+
+
+/* Users permissions */
+
+
+
+
+

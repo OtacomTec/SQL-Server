@@ -1,0 +1,2233 @@
+/*
+Created		27/5/2003
+Modified		12/9/2007
+Project		Only Tech - ERP
+Model			Olt
+Company		Only Tech
+Author		Only Tech
+Version		1.0
+Database		MS SQL 2000 
+*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Create table [TBMenu]
+(
+	[PKId_TBMenu] Integer Identity NOT NULL,
+	[DFOrdem_TBMenu] Integer NOT NULL,
+	[DFDescricao_TBMenu] Nvarchar(20) NOT NULL,
+Primary Key ([PKId_TBMenu])
+) 
+go
+
+Create table [TBSubmenu]
+(
+	[PKId_TBSubmenu] Integer Identity NOT NULL,
+	[FKId_TBMenu] Integer NOT NULL,
+	[DFOrdem_TBSubmenu] Integer NOT NULL,
+	[DFDescricao_TBSubmenu] Nvarchar(20) NULL,
+	[DFPrograma_TBSubmenu] Nvarchar(20) NOT NULL,
+	[DFTipo_TBSubmenu] Integer NULL,
+Primary Key ([PKId_TBSubmenu])
+) 
+go
+
+Create table [TBAcessibilidade_grupo]
+(
+	[PKId_TBAcessibilidade_grupo] Integer Identity NOT NULL,
+	[FKId_TBModulo] Integer NOT NULL,
+	[DFInclusao_TBAcessibilidade_grupo] Bit NOT NULL,
+	[DFExclusao_TBAcessibilidade_grupo] Bit NOT NULL,
+	[DFConsulta_TBAcessibilidade_grupo] Bit NOT NULL,
+	[DFAlteracao_TBAcessibilidade_grupo] Bit NOT NULL,
+	[DFAcesso_TBAcessibilidade_grupo] Bit NOT NULL,
+Primary Key ([PKId_TBAcessibilidade_grupo])
+) 
+go
+
+Create table [TBModulo]
+(
+	[PKId_TBModulo] Integer Identity NOT NULL,
+	[FKId_TBSubmenu] Integer NOT NULL,
+	[DFDescricao_TBModulo] Nvarchar(20) NOT NULL,
+Primary Key ([PKId_TBModulo])
+) 
+go
+
+Create table [TBAcessibilidade]
+(
+	[PKId_TBAcessibilidade] Integer Identity NOT NULL,
+	[FKId_TBModulo] Integer NOT NULL,
+	[FKCodigo_TBUsuario] Integer NOT NULL,
+	[DFInclusao_TBAcessibilidade] Bit NOT NULL,
+	[DFExclusao_TBAcessibilidade] Bit NOT NULL,
+	[DFConsulta_TBAcessibilidade] Bit NOT NULL,
+	[DFAlteracao_TBAcessibilidade] Bit NOT NULL,
+	[DFAcesso_TBAcessibilidade] Bit NOT NULL,
+Primary Key ([PKId_TBAcessibilidade])
+) 
+go
+
+Create table [TBUsuario_grupo]
+(
+	[PKId_TBUsuario_grupo] Integer Identity NOT NULL,
+	[FKCodigo_TBUsuario] Integer NOT NULL,
+Primary Key ([PKId_TBUsuario_grupo])
+) 
+go
+
+Create table [TBUsuario]
+(
+	[PKCodigo_TBUsuario] Integer NOT NULL,
+	[FKCodigo_TBEmpresa] Integer NOT NULL,
+	[DFNome_TBUsuario] Nvarchar(40) NOT NULL,
+	[DFNome_resumido_TBUsuario] Nvarchar(20) NOT NULL, UNIQUE ([DFNome_resumido_TBUsuario]),
+	[IXData_cadastro_TBUsuario] Smalldatetime NOT NULL,
+	[IXData_validade_TBUsuario] Smalldatetime NOT NULL,
+	[DFSenha_TBUsuario] Nvarchar(10) NOT NULL,
+	[DFNivel_TBUsuario] Integer NOT NULL,
+	[DFPrazo_expira_senha_TBUsuario] Integer Default 90 NOT NULL,
+Primary Key ([PKCodigo_TBUsuario])
+) 
+go
+
+Create table [TBScript]
+(
+	[PKId_TBScript] Integer Identity NOT NULL,
+	[DFNome_TBScript] Nvarchar(20) NOT NULL,
+	[DFObjetivo_TBScript] Nvarchar(100) NOT NULL,
+	[DFData_execucao_TBScript] Smalldatetime NOT NULL,
+Primary Key ([PKId_TBScript])
+) 
+go
+
+Create table [dbo].[TBBairro]
+(
+	[PKCodigo_TBBairro] Integer NOT NULL,
+	[DFNome_bairro_TBBairro] Nvarchar(72) NOT NULL,
+	[DFNome_bairro_abreviado_TBBairro] Nvarchar(36) NULL,
+	[FKCodigo_cidade_TBBairro] Integer NOT NULL,
+	[DFUf_TBBairro] Nvarchar(2) NOT NULL,
+Primary Key ([PKCodigo_TBBairro])
+) 
+go
+
+Create table [dbo].[TBLogradouro]
+(
+	[PKCodigo_TBLogradouro] Integer NOT NULL,
+	[DFNome_TBLogradouro] Nvarchar(125) NULL,
+	[DFNome_resumido_TBLogradouro] Nvarchar(70) NOT NULL,
+	[DFNome_resumido_sem_acento_TBLogradouro] Nvarchar(70) NOT NULL,
+	[DFComplemento_TBLogradouro] Nvarchar(100) NULL,
+	[FKBairro_seq_inicial_TBLogradouro] Integer NULL,
+	[FKBairro_seq_final_TBLogradouro] Integer NULL,
+	[DFCep_TBLogradouro] Nvarchar(8) NOT NULL,
+	[FKCodigo_cidade_TBLogradouro] Integer NOT NULL,
+	[DFUf_seguranca_TBLogradouro] Nvarchar(2) NOT NULL,
+Primary Key ([PKCodigo_TBLogradouro])
+) 
+go
+
+Create table [dbo].[TBCidade]
+(
+	[PKCodigo_TBCidade] Integer NOT NULL,
+	[DFNome_cidade_TBCidade] Nvarchar(60) NULL,
+	[DFNome_cidade_abreviado_TBCidade] Nvarchar(50) NOT NULL,
+	[DFCep_TBCidade] Nvarchar(8) NULL,
+	[DFUf_seguranca_TBCidade] Nvarchar(2) NOT NULL,
+Primary Key ([PKCodigo_TBCidade])
+) 
+go
+
+Create table [TBEmpresa]
+(
+	[PKCodigo_TBEmpresa] Integer NOT NULL,
+	[DFRazao_Social_TBEmpresa] Nvarchar(40) NOT NULL,
+	[DFNome_fantasia_TBEmpresa] Nvarchar(20) NOT NULL,
+	[DFNome_reduzido_TBEmpresa] Nvarchar(20) NOT NULL, UNIQUE ([DFNome_reduzido_TBEmpresa]),
+	[DFEndereco_TBEmpresa] Nvarchar(40) NOT NULL,
+	[DFNumero_TBEmpresa] Nvarchar(10) NOT NULL,
+	[DFComplemento_TBEmpresa] Nvarchar(20) NULL,
+	[DFBairro_TBEmpresa] Nvarchar(30) NOT NULL,
+	[DFCep_TBEmpresa] Nvarchar(10) NOT NULL,
+	[DFEmail_TBEmpresa] Nvarchar(50) NULL,
+	[DFHome_page_TBEmpresa] Nvarchar(50) NULL,
+	[DFCnpj_TBEmpresa] Nchar(20) NOT NULL,
+	[DFInscricao_estadual_TBEmpresa] Nvarchar(20) NOT NULL,
+	[DFInscricao_municipal_TBEmpresa] Nvarchar(20) NOT NULL,
+	[DFTelefone_TBEmpresa] Nvarchar(20) NULL,
+	[DFFax_TBEmpresa] Nvarchar(20) NULL,
+	[DFMatriz_filial_TBEmpresa] Bit NULL,
+	[DFPath_integracao_tx_TBEmpresa] Nvarchar(100) NULL,
+	[DFPath_integracao_rx_TBEmpresa] Nvarchar(100) NULL,
+	[DFPath_logomarca_TBEmpresa] Nvarchar(100) NULL,
+	[DFIntegrado_portal_TBEmpresa] Bit NULL,
+	[DFIntegrado_filiais_TBEmpresa] Bit NULL,
+	[DFData_alteracao_TBEmpresa] Smalldatetime NULL,
+Primary Key ([PKCodigo_TBEmpresa])
+) 
+go
+
+Create table [TBCidade_otica]
+(
+	[PKId_TBCidade_otica] Integer Identity NOT NULL,
+	[IXCodigo_Correios_TBCidade_otica] Integer NULL,
+	[DFNome_TBCidade_otica] Nvarchar(40) NOT NULL,
+	[DFPais_TBCidade_otica] Char(2) NOT NULL,
+	[DFUf_TBCidade_otica] Char(2) NOT NULL,
+	[DFPopulação_TBCidade_otica] Integer NULL,
+	[DFIntegrado_portal_TBCidade_otica] Bit NULL,
+	[DFIntegrado_filiais_TBCidade_otica] Bit NULL,
+	[DFData_alteracao_TBCidade_otica] Smalldatetime NULL,
+	[DFCodigo_Identificador_TBCidade_otica] Integer NULL,
+Primary Key ([PKId_TBCidade_otica])
+) 
+go
+
+Create table [TBSecao]
+(
+	[PKCodigo_TBSecao] Integer NOT NULL,
+	[DFDescricao_TBsecao] Nvarchar(40) NOT NULL,
+	[DFInativo_TBsecao] Bit NULL,
+	[DFClassificacao_TBSecao] Nvarchar(20) NULL,
+	[DFIntegrado_portal_TBSecao] Bit NULL,
+	[DFIntegrado_filiais_TBSecao] Bit NULL,
+	[DFData_alteracao_TBSecao] Smalldatetime NULL,
+	[DFCodigo_Identificador_TBSecao] Integer NULL,
+	[DFPermitite_inclusao_itens_TBSecao] Bit NULL,
+Primary Key ([PKCodigo_TBSecao])
+) 
+go
+
+Create table [TBProduto]
+(
+	[PKId_TBProduto] Integer Identity NOT NULL,
+	[IXCodigo_TBProduto] Integer NOT NULL,
+	[IXCodigo_TBEmpresa] Integer NOT NULL,
+	[FKCodigo_TBSecao] Integer NOT NULL,
+	[FKCodigo_Fabricante] Integer NOT NULL,
+	[DFDescricao_TBProduto] Nvarchar(40) NOT NULL,
+	[DFDescricao_resumida_TBProduto] Nvarchar(20) NOT NULL,
+	[DFReferencia_TBProduto] Nvarchar(30) NULL,
+	[DFCst1_TBProduto] Char(1) NOT NULL,
+	[DFCst2_TBProduto] Char(2) NOT NULL,
+	[DFUnidade_venda_TBProduto] Char(3) NOT NULL,
+	[DFPreco_venda_TBProduto] Money NOT NULL,
+	[DFTipo_preco_TBProduto] Integer NOT NULL,
+	[DFPreco_promocao_TBProduto] Money NULL,
+	[DFData_inicio_promocao-TBProduto] Smalldatetime NULL,
+	[DFData_fim_promocao-TBProduto] Smalldatetime NULL,
+	[DFCusto_real_TBProduto] Money NULL,
+	[DFCusto_contabil_TBProduto] Money NULL,
+	[DFCusto_medio_TBProduto] Money NULL,
+	[DFData_cadastro_TBProduto] Smalldatetime NOT NULL,
+	[DFUnidade_compra_TBProduto] Char(3) NOT NULL,
+	[DFFator_venda_TBProduto] Integer NOT NULL,
+	[DFFator_compra_TBProduto] Integer NOT NULL,
+	[DFPercentual_ipi_TBProduto] Money NULL,
+	[DFSuspenso_TBProduto] Bit NOT NULL,
+	[DFInativo_TBProduto] Bit NOT NULL,
+	[DFBaixa_estoque_TBProduto] Bit NOT NULL,
+	[DFMargem_teorica_TBProduto] Money NULL,
+	[DFPeso_liquido_TBProduto] Money NULL,
+	[DFPeso_bruto_TBProduto] Money NULL,
+	[DFEstoque_minimo_TBProduto] Money NULL,
+	[DFEstoque_maximo_TBProduto] Money NULL,
+	[DFEstoque_atual_TBProduto] Money NULL,
+	[DFPonto_pedido_TBProduto] Money NULL,
+	[DFPath_imagem_TBProduto] Nvarchar(100) NULL,
+	[DFData_ultima_entrada_TBProduto] Smalldatetime NULL,
+	[DFQuantidade_ultima_entrada_TBProduto] Money NULL,
+	[DFPreco_unitario_ultima_entrada_TBProduto] Money NULL,
+	[DFUnidade_ultima_entrada_TBProduto] Nvarchar(3) NULL,
+	[DFEmitente_ultima_entrada_TBProduto] Integer NULL,
+	[DFTipo_emitente_ultima_entrada_TBProduto] Bit NULL,
+	[DFCusto_real_anterior_TBProduto] Money NULL,
+	[DFNumero_nota_ultima_entrada_TBProduto] Integer NULL,
+	[DFSerie_nota_ultima_entrada_TBProduto] Nchar(3) NULL,
+	[DFCusto_contabil_anterior_TBProduto] Money NULL,
+	[DFCusto_medio_anterior_TBProduto] Money NULL,
+	[DFData_ultima_entrada_anterior_TBProduto] Smalldatetime NULL,
+	[DFQuantidade_ultima_entrada_anterior_TBProduto] Money NULL,
+	[DFPreco_unitario_ultima_entrada_anterior_TBProduto] Money NULL,
+	[DFUnidade_ultima_entrada_anterior_TBProduto] Nvarchar(3) NULL,
+	[DFEmitente_ultima_entrada_anterior_TBProduto] Integer NULL,
+	[DFTipo_emitente_ultima_entrada_anterior_TBProduto] Bit NULL,
+	[DFNumero_nota_ultima_entrada_anterior_TBProduto] Integer NULL,
+	[DFSerie_nota_ultima_entrada_anterior_TBProduto] Nchar(3) NULL,
+	[DFUnidade_varejo_TBProduto] Char(3) NULL,
+	[DFFator_varejo_TBProduto] Integer NULL,
+	[DFPeso_variavel_TBProduto] Bit NULL,
+	[DFClassificacao_fiscal_TBProduto] Nvarchar(50) NULL,
+	[DFObservacao_TBProduto] Nvarchar(500) NULL,
+	[DFTipo_TBproduto] Integer NULL,
+	[DFData_alteracao_TBProduto] Smalldatetime NULL,
+	[DFIntegrado_portal_TBProduto] Integer NULL,
+	[DFIntegrado_filiais_TBProduto] Bit NULL,
+	[DFProcessamento_TBProduto] Integer NULL,
+	[DFFator_processamento_TBProduto] Money NULL,
+Primary Key ([PKId_TBProduto])
+) 
+go
+
+Create table [TBCodigo_barras]
+(
+	[PKId_TBCodigo_barras] Integer Identity NOT NULL,
+	[FKId_TBProduto] Integer NOT NULL,
+	[IXCodigo_TBCodigo_barras] Bigint NOT NULL,
+	[DFUnidade_TBCodigo_barras] Char(3) NULL,
+	[DFIntegrado_portal_TBCodigo_barras] Bit NULL,
+	[DFIntegrado_filiais_TBCodigo_barras] Bit NULL,
+	[DFData_alteracao_TBCodigo_barras] Smalldatetime NULL,
+	[DFCodigo_Identificador_TBCodigo_barras] Integer NULL,
+Primary Key ([PKId_TBCodigo_barras])
+) 
+go
+
+Create table [TBFornecedor]
+(
+	[PKId_TBFornecedor] Integer Identity NOT NULL,
+	[FKCodigo_TBRamo_atividade] Integer NOT NULL,
+	[IXCodigo_TBEmpresa] Integer NOT NULL,
+	[IXCodigo_TBFornecedor] Integer NOT NULL,
+	[DFNome_TBFornecedor] Nvarchar(40) NOT NULL,
+	[DFEndereco_TBFornecedor] Nvarchar(40) NOT NULL,
+	[DFNumero_TBFornecedor] Nvarchar(10) NOT NULL,
+	[DFComplemento_TBFornecedor] Nvarchar(20) NULL,
+	[DFBairro_TBFornecedor] Nvarchar(30) NOT NULL,
+	[FKId_TBCidade_otica] Integer NOT NULL,
+	[DFCep_TBFornecedor] Nvarchar(10) NOT NULL,
+	[DFTipo_pessoa_TBFornecedor] Bit NOT NULL,
+	[DFCnpj_TBFornecedor] Nvarchar(20) NOT NULL,
+	[DFInscricao_estadual_TBFornecedor] Nvarchar(20) NOT NULL,
+	[DFData_cadastro_TBFornecedor] Smalldatetime NOT NULL,
+	[DFHome_page_TBFornecedor] Nvarchar(50) NULL,
+	[DFInativo_TBFornecedor] Bit NOT NULL,
+	[DFTipo_TBFornecedor] Integer NULL,
+	[DFData_alteracao_TBFornecedor] Smalldatetime NULL,
+	[DFIntegrado_portal_TBFornecedor] Bit NULL,
+	[DFIntegrado_filiais_TBFornecedor] Bit NULL,
+	[DFCodigo_Identificador_TBFornecedor] Integer NULL,
+Primary Key ([PKId_TBFornecedor])
+) 
+go
+
+Create table [TBCliente]
+(
+	[PKId_TBCliente] Integer Identity NOT NULL,
+	[IXCodigo_TBEmpresa] Integer NOT NULL,
+	[IXCodigo_TBCliente] Integer NOT NULL,
+	[DFNome_TBCliente] Nvarchar(40) NOT NULL,
+	[DFSexo_TBCliente] Bit NOT NULL,
+	[DFEndereco_TBCliente] Nvarchar(40) NOT NULL,
+	[DFNumero_TBCliente] Nvarchar(10) NOT NULL,
+	[DFComplemento_TBCliente] Nvarchar(20) NULL,
+	[DFBairro_TBCliente] Nvarchar(30) NOT NULL,
+	[FKId_TBCidade_otica] Integer NOT NULL,
+	[DFCep_TBCliente] Nvarchar(10) NOT NULL,
+	[DFCpf_TBCliente] Nvarchar(20) NULL,
+	[DFRegistro_geral_TBCliente] Nvarchar(20) NULL,
+	[DFOrgao_emissao_TBCliente] Nvarchar(10) NULL,
+	[DFData_cadastro_TBCliente] Smalldatetime NOT NULL,
+	[DFEstado_civil_TBCliente] Integer NULL,
+	[DFData_aniversario_TBCliente] Smalldatetime NOT NULL,
+	[FKCodigo_TBStatus] Char(1) NOT NULL,
+	[DFBloqueado_TBCliente] Bit NOT NULL,
+	[DFInativo_TBCliente] Bit NOT NULL,
+	[DFData_recadastramento_TBCliente] Smalldatetime NULL,
+	[DFInscricao_estadual_TBCliente] Nvarchar(20) NOT NULL,
+	[DFIntegrado_TBCliente] Bit NULL,
+	[DFIntegrado_filiais_TBCliente] Bit NULL,
+	[DFData_alteracao_TBCliente] Smalldatetime NULL,
+	[DFCodigo_Identificador_TBCliente] Integer NULL,
+Primary Key ([PKId_TBCliente])
+) 
+go
+
+Create table [TBStatus]
+(
+	[PkCodigo_TBStatus] Char(1) NOT NULL,
+	[DFDescricao_TBStatus] Nvarchar(20) NOT NULL,
+	[DFIntegrado_portal_TBStatus] Bit NULL,
+	[DFIntegrado_filiais_TBStatus] Bit NULL,
+	[DFData_alteracao_TBStatus] Smalldatetime NULL,
+	[DFCodigo_Identificador_TBStatus] Integer NULL,
+Primary Key ([PkCodigo_TBStatus])
+) 
+go
+
+Create table [TBAgenda_fornecedor]
+(
+	[PKId_TBAgenda_fornecedor] Integer Identity NOT NULL,
+	[FKId_TBFornecedor] Integer NOT NULL,
+	[DFContato_TBAgenda_fornecedor] Nvarchar(40) NOT NULL,
+	[DFTelefone_TBAgenda_fornecedor] Nvarchar(20) NOT NULL,
+	[DFEmail_TBAgenda_fornecedor] Nvarchar(50) NULL,
+	[DFIntegrado_portal_TBAgenda_fornecedor] Bit NULL,
+	[DFIntegrado_filiais_TBAgenda_fornecedor_] Bit NULL,
+	[DFData_alteracao_TBAgenda_fornecedor] Smalldatetime NULL,
+	[DFCodigo_Identificador_TBAgenda_fornecedor] Integer NULL,
+Primary Key ([PKId_TBAgenda_fornecedor])
+) 
+go
+
+Create table [TBProduto_Fornecedor]
+(
+	[PKId_TBProduto_fornecedor] Integer Identity NOT NULL,
+	[FKId_TBFornecedor] Integer NOT NULL,
+	[FKId_TBProduto] Integer NOT NULL,
+	[DFPattern_number_TBProduto_fornecedor] Nvarchar(20) NULL,
+	[DFPrincipal_TBProduto_fornecedor] Bit NULL,
+	[DFIntegrado_portal_TBProduto_Fornecedor] Bit NULL,
+	[DFIntegrado_filiais_TBProduto_Fornecedor] Bit NULL,
+	[DFData_alteracao_TBProduto_Fornecedor] Smalldatetime NULL,
+	[DFCodigo_Identificador_TBProduto_Fornecedor] Integer NULL,
+Primary Key ([PKId_TBProduto_fornecedor])
+) 
+go
+
+Create table [TBParametros_gerais]
+(
+	[PKId_TBParametros_gerais] Integer Identity NOT NULL,
+	[FKCodigo_TBBancos] Integer NOT NULL,
+	[FKCodigo_TBEmpresa] Integer NOT NULL,
+	[DFProximo_produto_TBParametros_gerais] Integer NOT NULL,
+	[DFProximo_fornecedor_TBParametros_gerais] Integer NOT NULL,
+	[DFProximo_cliente_TBParametros_gerais] Integer NOT NULL,
+	[DFProximo_receituario_TBParametros_gerais] Integer NOT NULL,
+	[DFProximo_nota_TBParametros_gerais] Integer NOT NULL,
+	[DFProximo_ordem_compra_TBParametros_gerais] Integer NOT NULL,
+	[DFProximo_vendedor_TBParametros_gerais] Integer NOT NULL,
+	[DFProximo_supervisor_TBParametros_gerais] Integer NOT NULL,
+	[DFProximo_oftalmo_TBParametros_gerais] Integer NOT NULL,
+	[DFProximo_paciente_TBParametros_gerais] Integer NOT NULL,
+	[DFProximo_cidade_TBParametros_gerais] Integer NOT NULL,
+	[DFProximo_plano_pagamento_TBParametros_gerais] Integer NOT NULL,
+	[DFSerie_Nota_TBParametros_gerais] Nvarchar(2) NULL,
+	[DFSerie_Orcamento_TBParametros_gerais] Nvarchar(2) NULL,
+	[DFProximo_orcamento_TBParametros_gerais] Integer NULL,
+	[DFCarteira_TBParametros_gerais] Nvarchar(3) NULL,
+	[DFPath_arquivo_remessa_TBParametros_gerais] Nvarchar(200) NULL,
+	[DFIntegra_online_TBParametros_gerais] Bit NULL,
+	[DFCalcula_custo_un_compra_venda_TBParametros_gerais] Bit NULL,
+	[DFCalcula_conta_corrente_vendedor_TBParametros_gerais] Bit NULL,
+	[DFCaminho_impressora_via_porta_TBParametros_gerais] Nvarchar(50) NULL,
+	[DFIntegra_portal_TBParametros_gerais] Bit NULL,
+	[DFProxima_requisicao_TBParametros_gerais] Integer NULL,
+	[DFDias_inativacao_TBParametros_gerais] Integer NULL,
+	[DFIntegrado_portal_TBParametros_gerais] Bit NULL,
+	[DFIntegrado_filiais_TBParametros_gerais] Bit NULL,
+	[DFData_alteracao_TBParametros_gerais_] Smalldatetime NULL,
+	[DFCodigo_Identificador_TBParametros_gerais] Integer NULL,
+	[DFIntegra_filial_TBParametros_gerais] Bit NULL,
+	[DFControla_score_item_TBParametros_gerais] Integer NULL,
+Primary Key ([PKId_TBParametros_gerais])
+) 
+go
+
+Create table [TBBancos]
+(
+	[PKCodigo_TBBancos] Integer NOT NULL,
+	[DFNome_TBBancos] Nvarchar(40) NOT NULL,
+	[DFIntegrado_portal_TBBancos] Bit NULL,
+	[DFIntegrado_filiais_TBBancos] Bit NULL,
+	[DFData_alteracao_TBBancos_] Smalldatetime NULL,
+	[DFCodigo_Identificador_TBBancos] Integer NULL,
+Primary Key ([PKCodigo_TBBancos])
+) 
+go
+
+Create table [TBPlano_pagamento]
+(
+	[PKId_TBPlano_pagamento] Integer Identity NOT NULL,
+	[IXCodigo_TBEmpresa] Integer NOT NULL,
+	[IXCodigo_TBPlano_pagamento] Integer NOT NULL,
+	[DFDescricao_TBPlano_pagamento] Nvarchar(40) NOT NULL,
+	[DFModalidade_TBPlano_pagamento] Integer NOT NULL,
+	[DFAcrescimo_desconto_TBPlano_pagamento] Integer NOT NULL,
+	[DFPercentual_TBPlano_pagamento] Decimal(5,2) NULL,
+	[DFAtivo_inativo_TBPlano_pagamento] Bit NOT NULL,
+	[DFValor_minimo_pedido_TBPlano_pagamento] Money NULL,
+	[DFBaixa_Titulo_TBPlano_pagamento] Bit NULL,
+	[DFImprime_vencimento_TBPlano_pagamento] Bit NULL,
+	[DFDigita_vencimento_TBPlano_pagamento] Bit NULL,
+Primary Key ([PKId_TBPlano_pagamento])
+) 
+go
+
+Create table [TBDias_pagamento]
+(
+	[PKId_TBDias_pagamento] Integer Identity NOT NULL,
+	[FKId_TBPlano_pagamento] Integer NOT NULL,
+	[DFNumero_dias_TBDias_pagamento] Integer NULL,
+	[DFIntegrado_portal_TBDias_pagamento] Bit NULL,
+	[DFIntegrado_filiais_TBDias_pagamento] Bit NULL,
+	[DFData_alteracao_TBDias_pagamento] Smalldatetime NULL,
+	[DFCodigo_Identificador_TBDias_pagamento] Integer NULL,
+Primary Key ([PKId_TBDias_pagamento])
+) 
+go
+
+Create table [TBHistorico_padrao]
+(
+	[PKId_TBHistorico_padrao] Integer NOT NULL,
+	[FKCodigo_TBEmpresa] Integer NOT NULL,
+	[IXCodigo_TBHistorico_padrao] Integer NOT NULL,
+	[DFDebito_credito] Bit NOT NULL,
+	[DFDescricao_TBHistorico_padrao] Nvarchar(40) NOT NULL,
+Primary Key ([PKId_TBHistorico_padrao])
+) 
+go
+
+Create table [TBParametros_venda]
+(
+	[PKId_TBParametros_venda] Integer NOT NULL,
+	[IXCodigo_TBEmpresa] Integer NOT NULL,
+	[DFHistorico_padrão_receita_TBParametros_venda] Integer NOT NULL,
+	[DFHistorico_padrão_orcamento_TBParametros_venda] Integer NOT NULL,
+	[DFHistorico_padrão_exclusao_receita_TBParametros_venda] Integer NULL,
+	[DFHistorico_padrão_exclusao_venda_TBParametros_venda] Integer NULL,
+	[DFNumero_tabela_vigente_TBParametros_venda] Integer NOT NULL,
+	[DFBaixa_estoque_pedido_TBParametro_venda] Bit NOT NULL,
+	[DFLibera_produto_linha_venda_pedido_TBParametro_venda] Bit NOT NULL,
+	[DFLibera_vendedor_cliente_pedido_TBParametro_venda] Bit NOT NULL,
+	[DFLibera_digitacao_pedido_produto_sem_estoque_TBParametro_venda] Bit NULL,
+	[DFMensagem_nota_fiscal_saida_TBParametro_venda] Nvarchar(100) NULL,
+	[DFNumero_itens_nota_TBParametros_venda] Integer NULL,
+	[DFNumero_itens_orcamento_TBParametros_venda] Integer NULL,
+	[DFMensagem_titulo_TBParametro_venda] Nvarchar(200) NULL,
+	[DFEmite_banco_TBParametros_venda] Bit NULL,
+	[DFMult_moeda_TBParametros_venda] Bit NULL,
+	[DFCalcula_preco_tabela_TBParametros_venda] Bit NULL,
+	[DFCalcula_arredondamento_preco_tabela_TBParametros_venda] Bit NULL,
+	[DFTipo_impressora_orcamento_balcao] Char(1) NULL,
+	[DFLimite_desconto_venda_varejo_perc_TBParametros_venda] Integer NULL,
+	[DFTrava_manipulacao_valores_venda_varejo_TBParametros_venda] Bit NULL,
+	[DFDesconto_Item_venda_varejo_TBParametros_venda] Bit NULL,
+	[DFPraca_pagamento_titulo_TBParametro_venda] Nvarchar(100) NULL,
+	[DFPerfil_varejo_TBParametros_ecf] Integer NULL,
+	[DFIdentificador_nota_TBParametro_venda] Integer NULL,
+	[DFLanca_volume_nota_TBParametro_venda] Bit NULL,
+	[DFHistorico_padrao_baixa_crediario_TBParametros_venda] Integer NULL,
+	[DFHistorico_padrao_baixa_contas_pagar_TBParametros_venda] Integer NULL,
+	[DFImprime_venda_TBParametros_venda] Bit NULL,
+	[DFDigitacao_rapida_venda_TBParametros_venda] Bit NULL,
+	[DFDigitacao_rapida_itens_venda_TBParametros_venda] Bit NULL,
+	[DFFinaliza_digitacao_rapida_venda_TBParametros_venda] Bit NULL,
+	[DFBaixa_estoque_composicao_TBParametros_venda] Integer NULL,
+Primary Key ([PKId_TBParametros_venda])
+) 
+go
+
+Create table [TBTitulo_receber]
+(
+	[PKId_TBTitulo_receber] Integer Identity NOT NULL,
+	[FKCodigo_TBBancos] Integer NOT NULL,
+	[FKCodigo_TBEmpresa] Integer NOT NULL,
+	[FKId_TBCliente] Integer NOT NULL,
+	[DFTipo_documento_TBTitulo_receber] Integer NULL,
+	[DFNumero_documento_TBTitulo_receber] Integer NULL,
+	[DFLetra_TBTitulo_receber] Char(2) NULL,
+	[DFData_emissao_TBTitulo_receber] Smalldatetime NOT NULL,
+	[DFData_vencimento_TBTitulo_receber] Smalldatetime NOT NULL,
+	[DFValor_TBTitulo_receber] Money NOT NULL,
+	[DFObervacao_TBTitulo_receber] Nvarchar(200) NULL,
+	[DFNumero_gerado_TBTitulo_receber] Integer NULL,
+	[DFLetra_gerada_TBTitulo_receber] Char(2) NULL,
+	[DFNosso_numero_TBTitulo_receber] Nvarchar(20) NULL,
+	[DFNosso_numero_digito_TBTitulo_receber] Nvarchar(2) NULL,
+	[DFCarteira_TBTitulo_receber] Nvarchar(3) NULL,
+	[DFPrevisao_TBTitulo_receber] Bit NOT NULL,
+	[DFSerie_TBTitulo_receber] Nvarchar(3) NULL,
+	[DFJa_impresso_TBTitulo_receber] Bit NULL,
+	[DFIntegrado_TBTitulo_receber] Bit NULL,
+	[DFValor_desconto_gerado_TBTitulo_receber] Money NULL,
+Primary Key ([PKId_TBTitulo_receber])
+) 
+go
+
+Create table [TBTitulo_recebido]
+(
+	[PKId_TBTitulo_recebido] Integer Identity NOT NULL,
+	[FKId_TBTitulo_receber] Integer NOT NULL,
+	[DFValor_TBTitulo_recebido] Money NOT NULL,
+	[DFData_recebimento_TBTitulo_recebido] Smalldatetime NOT NULL,
+	[DFUsuario_TBTitulo_recebido] Nvarchar(20) NULL,
+	[DFValor_diferença_TBTitulo_recebido] Money NULL,
+Primary Key ([PKId_TBTitulo_recebido])
+) 
+go
+
+Create table [TBCaixa]
+(
+	[PKId_TBCaixa] Integer Identity NOT NULL,
+	[FKCodigo_TBEmpresa] Integer NOT NULL,
+	[FKId_TBHistorico_padrao] Integer NOT NULL,
+	[DFData_lancamento_TBCaixa] Smalldatetime NOT NULL,
+	[DFComplemento_TBCaixa] Nvarchar(50) NULL,
+	[DFValor_TBCaixa] Money NOT NULL,
+	[DFIntegrado_portal_TBCaixa] Bit NULL,
+	[DFIntegrado_filiais_TBCaixa_] Bit NULL,
+	[DFData_alteracao_TBCaixa] Smalldatetime NULL,
+	[DFCodigo_Identificador_TBCaixa] Integer NULL,
+Primary Key ([PKId_TBCaixa])
+) 
+go
+
+Create table [TBTitulo_pago]
+(
+	[PKId_TBTitulo_pago] Integer Identity NOT NULL,
+	[FKId_TBTitulo_pagar] Integer NOT NULL,
+	[DFValor_TBTitulo_pago] Money NOT NULL,
+	[DFData_pagamento_TBTitulo_pago] Smalldatetime NOT NULL,
+	[DFForma_pagamento_TBTitulo_pago] Integer NOT NULL,
+	[DFObservacao_TBTitulo_pago] Nvarchar(200) NULL,
+	[DFTipo_baixa_TBtitulo_pago] Bit NOT NULL,
+	[DFValor_diferenca_TBTitulo_pago] Money NULL,
+	[DFUsuario_TBTitulo_pago] Nvarchar(50) NOT NULL,
+Primary Key ([PKId_TBTitulo_pago])
+) 
+go
+
+Create table [TBTitulo_pagar]
+(
+	[PKId_TBTitulo_pagar] Integer Identity NOT NULL,
+	[FKCodigo_TBBancos] Integer NOT NULL,
+	[FKId_TBFornecedor] Integer NOT NULL,
+	[FKCodigo_TBEmpresa] Integer NOT NULL,
+	[DFTipo_documento_TBTitulo_pagar] Integer NULL,
+	[DFNumero_documento_TBTitulo_pagar] Integer NULL,
+	[DFLetra_TBTitulo_pagar] Char(2) NULL,
+	[DFData_lancamento_TBTitulo_pagar] Smalldatetime NOT NULL,
+	[DFData_emissao_TBTitulo_pagar] Smalldatetime NOT NULL,
+	[DFData_vencimento_TBTitulo_pagar] Smalldatetime NOT NULL,
+	[DFValor_TBTitulo_pagar] Money NOT NULL,
+	[DFObservacao_TBTitulo_pagar] Nvarchar(100) NULL,
+	[DFCodigo_automacao_TBTitulo_pagar] Integer NULL,
+	[DFPrevisao_TBTitulo_pagar] Bit NOT NULL,
+	[FKId_TBPlano_pagamento] Integer NOT NULL,
+	[DFNumero_gerado_TBTitulo_pagar] Integer NULL,
+	[DFLetra_gerada_TBTitulo_pagar] Nvarchar(3) NULL,
+	[DF_Ja_impresso_TBTitulo_pagar] Bit NOT NULL,
+	[DFIntegrado_banco_TBTitulo_pagar] Bit NOT NULL,
+	[DFNosso_numero_digito_TBTitulo_pagar] Nvarchar(3) NULL,
+	[DFCarteira_TBTitulo_pagar] Nvarchar(3) NULL,
+	[DFSerie_TBTitulo_pagar] Nvarchar(3) NULL,
+	[DFNosso_numero_TBTitulo_pagar] Nvarchar(20) NULL,
+Primary Key ([PKId_TBTitulo_pagar])
+) 
+go
+
+Create table [TBTransportadora]
+(
+	[PKCodigo_TBTransportadora] Integer NOT NULL,
+	[DFRazao_Social_TBTransportadora] Nvarchar(40) NOT NULL,
+	[DFEndereco_TBTransportadora] Nvarchar(40) NOT NULL,
+	[DFNumero_TBTransportadora] Nvarchar(10) NOT NULL,
+	[DFComplemento_TBTransportadora] Nvarchar(20) NULL,
+	[DFBairro_TBTransportadora] Nvarchar(30) NOT NULL,
+	[FKId_TBCidade_otica] Integer NOT NULL,
+	[DFCep_TBTransportadora] Nvarchar(10) NOT NULL,
+	[DFTipo_pessoa_TBTransportadora] Bit NULL,
+	[DFCnpj_cpf_TBTransportadora] Nchar(20) NOT NULL,
+	[DFInscricao_estadual_TBTransportadora] Nvarchar(20) NOT NULL,
+	[DFTelefone_TBTransportadora] Nvarchar(20) NULL,
+	[DFFax_TBTransportadora] Nvarchar(20) NULL,
+	[DFObservacao_TBTransportadora] Nvarchar(50) NULL,
+	[DFIntegrado_portal_TBTransportadora] Bit NULL,
+	[DFIntegrado_filiais_TBTransportadora] Bit NULL,
+	[DFData_alteracao_TBTransportadora] Smalldatetime NULL,
+	[DFCodigo_Identificador_TBTransportadora] Integer NULL,
+Primary Key ([PKCodigo_TBTransportadora])
+) 
+go
+
+Create table [TBEstado_icms]
+(
+	[PKId_TBEstado_icms] Integer Identity NOT NULL,
+	[FKId_TBProduto] Integer NOT NULL,
+	[DFUf_TBEstado_icms] Char(2) NOT NULL,
+	[DFPercentual_icms_saida_juridica_TBEstado_icms] Money NULL,
+	[DFPercentual_icms_saida_fisica_TBEstado_icms] Money NULL,
+	[DFPercentual_icms_entrada_TBEstado_icms] Money NULL,
+	[DFPercentual_icms_substituicao_TBEstado_icms] Money NULL,
+	[DFTributacao_impressora_fiscal_TBEstado_icms] Char(3) NULL,
+	[DFIntegrado_portal_TBEstado_icms] Bit NULL,
+	[DFIntegrado_filiais_TBEstado_icms] Bit NULL,
+	[DFData_alteracao_TBEstado_icms] Smalldatetime NULL,
+	[DFCodigo_Identificador_TBEstado_icms] Integer NULL,
+Primary Key ([PKId_TBEstado_icms])
+) 
+go
+
+Create table [TBCfop]
+(
+	[PKId_TBCfop] Integer Identity NOT NULL,
+	[DFCodigo_TBCfop] Integer NOT NULL,
+	[DFDescricao_TBCfop] Nvarchar(40) NOT NULL,
+	[DFEstoque_TBCfop] Integer NULL,
+	[DFGera_titulo_TBCfop] Bit NULL,
+	[DFEmitente_TBCfop] Bit NOT NULL,
+	[DFAtualiza_custo_TBCfop] Bit NOT NULL,
+	[DFRegistro_sintegra_TBCfop] Integer NULL,
+	[DFIntegrado_portal_TBCfop] Bit NULL,
+	[DFIntegrado_filiais_TBCfop] Bit NULL,
+	[DFData_alteracao_TBCfop] Smalldatetime NULL,
+	[DFCodigo_Identificador_TBCfop] Integer NULL,
+Primary Key ([PKId_TBCfop])
+) 
+go
+
+Create table [TBParametros_fiscais]
+(
+	[PKId_TBParametros_fiscais] Integer Identity NOT NULL,
+	[FKCodigo_TBEmpresa] Integer NOT NULL,
+	[DFProximo_cfop_venda_dentro_estado_TBParametros_fiscais] Integer NOT NULL,
+	[DFProximo_cfop_venda_fora_estado_TBParametros_fiscais] Integer NOT NULL,
+	[DFProximo_cfop_venda_dentro_substituicao_estado_TBParametros_fiscais] Integer NOT NULL,
+	[DFProximo_cfop_venda_fora_estado_substituicao_TBParametros_fiscais] Integer NOT NULL,
+	[DFProximo_cfop_transferencia_dentro_estado_TBParametros_fiscais] Integer NOT NULL,
+	[DFProximo_cfop_transferencia_fora_estado_TBParametros_fiscais] Integer NOT NULL,
+	[DFProximo_cfop_devolucao_cliente_dentro_estado_TBParametros_fiscais] Integer NOT NULL,
+	[DFProximo_cfop_devolucao_cliente_fora_estado_TBParametros_fiscais] Integer NOT NULL,
+	[DFProximo_cfop_devolucao_fornecedor_dentro_estado_TBParametros_fiscais] Integer NOT NULL,
+	[DFProximo_cfop_devolucao_fornecedor_fora_estado_TBParametros_fiscais] Integer NOT NULL,
+	[DFProximo_livro_entrada_TBParametros_fiscais] Integer NOT NULL,
+	[DFNumero_paginas_livro_entrada_TBParametros_fiscais] Integer NOT NULL,
+	[DFProximo_pagina_livro_entrada_TBParametros_fiscais] Integer NULL,
+	[DFProximo_livro_saida_TBParametros_fiscais] Integer NULL,
+	[DFProximo_pagina_livro_saida_TBParametros_fiscais] Integer NULL,
+	[DFNumero_paginas_livro_saida_TBParametros_fiscais] Integer NULL,
+	[DFPercentual_pis_TBParametros_fiscais] Money NULL,
+	[DFPercentual_cofins_TBParametros_fiscais] Money NULL,
+	[DFProxima_carta_correcao_TBParametros_fiscais] Integer NULL,
+	[DFContato_sintegra_TBParametros_fiscais] Nvarchar(40) NULL,
+	[DFTelefone_TBParametros_fiscais] Nvarchar(12) NULL,
+	[DFPercentual_contribuicao_social_TBParametros_fiscais] Money NULL,
+	[DFPercentual_irrf_TBParametros_fiscais] Money NULL,
+	[DFValor_minimo_calculo_contribuicao_TBParametros_fiscais] Char(10) NULL,
+	[DFValor_minimo_calculo_irrf_TBParametros_fiscais] Money NULL,
+	[DFPercentual_iss_TBParametros_fiscais] Money NULL,
+	[DFMensagem_contribuicao_TBParametros_fiscais] Nvarchar(100) NULL,
+	[DFProximo_cfop_venda_industrializado_dentro_estado_TBParametros_fiscais] Integer NULL,
+	[DFProximo_cfop_venda_industrializado_fora_estado_TBParametros_fiscais] Integer NULL,
+	[DFProximo_cfop_transporte_industrializado_fora_estado_TBParametros_fiscais] Integer NULL,
+	[DFProximo_cfop_transporte_industrializado_dentro_estado_TBParametros_fiscais] Integer NULL,
+	[DFProximo_cfop_transporte_comecializado_fora_estado_TBParametros_fiscais] Integer NULL,
+	[DFProximo_cfop_transporte_comecializado_dentro_estado_TBParametros_fiscais] Integer NULL,
+Primary Key ([PKId_TBParametros_fiscais])
+) 
+go
+
+Create table [TBComprador]
+(
+	[PKCodigo_TBComprador] Integer NOT NULL,
+	[DFNome_TBComprador] Nvarchar(40) NOT NULL,
+	[DFLimite_pedido_TBComprador] Money NULL,
+	[DFLimite_mensal_TBComprador] Money NULL,
+	[DFData_cadastro_TBComprador] Smalldatetime NULL,
+	[DFIntegrado_portal_TBComprador] Bit NULL,
+	[DFIntegrado_filiais_TBComprador] Bit NULL,
+	[DFData_alteracao_TBComprador] Bit NULL,
+	[DFCodigo_Identificador_TBComprador] Bit NULL,
+Primary Key ([PKCodigo_TBComprador])
+) 
+go
+
+Create table [TBCfop_pedido]
+(
+	[PKId_TBCfop_pedido] Integer Identity NOT NULL,
+	[FKId_TBCfop] Integer NOT NULL,
+	[DFIntegrado_portal_TBCfop_pedido] Bit NULL,
+	[DFIntegrado_filiais_TBCfop_pedido] Bit NULL,
+	[DFData_alteracao_TBCfop_pedido] Smalldatetime NULL,
+	[DFCodigo_Identificador_TBCfop_pedido] Integer NULL,
+Primary Key ([PKId_TBCfop_pedido])
+) 
+go
+
+Create table [TBTabela_preco]
+(
+	[PKCodigo_TBTabela_preco] Integer NOT NULL,
+	[FKCodigo_TBEmpresa] Integer NOT NULL,
+	[DFData_inicio_vigencia_TBTabela_preco] Smalldatetime NOT NULL,
+	[DFData_fim_vigencia_TBTabela_preco] Smalldatetime NOT NULL,
+Primary Key ([PKCodigo_TBTabela_preco])
+) 
+go
+
+Create table [TBItens_tabela_preco]
+(
+	[PKId_TBItens_tabela_preco] Integer Identity NOT NULL,
+	[FKId_TBProduto] Integer NOT NULL,
+	[FKCodigo_TBTabela_preco] Integer NOT NULL,
+	[DFPreco_avista_TBItens_tabela_preco] Money NOT NULL,
+	[DFPreco_promocao_TBItens_tabela_preco] Money NULL,
+	[DFPreco_revenda_TBItens_tabela_preco] Money NULL,
+	[DFPreco_especial_TBItens_tabela_preco] Money NULL,
+	[DFCondicao_promocao_TBItens_tabela_preco] Nvarchar(20) NULL,
+	[DFPreco_especial_TBItens_tabela_varejo] Money NULL,
+	[DFData_alteracao_TBItens_tabela_preco] Smalldatetime NULL,
+Primary Key ([PKId_TBItens_tabela_preco])
+) 
+go
+
+Create table [TBFabricante]
+(
+	[PKCodigo_TBFabricante] Integer Identity NOT NULL,
+	[DFNome_TBFabricante] Nvarchar(40) NOT NULL,
+	[DFIntegrado_TBFabricante] Bit NULL,
+	[DFIntegrado_portal_TBFabricante] Bit NULL,
+	[DFIntegrado_filiais_TBFabricante] Bit NULL,
+	[DFData_alteracao_TBFabricante] Smalldatetime NULL,
+	[DFCodigo_Identificador_TBFabricante] Integer NULL,
+Primary Key ([PKCodigo_TBFabricante])
+) 
+go
+
+Create table [TBAgenda_cliente]
+(
+	[PKId_TBAgenda_cliente] Integer Identity NOT NULL,
+	[FKId_TBCliente] Integer NOT NULL,
+	[DFContato_TBAgenda_cliente] Nvarchar(40) NOT NULL,
+	[DFTelefone_TBAgenda_cliente] Nvarchar(20) NOT NULL,
+	[DFEmail_TBAgenda_cliente] Nvarchar(50) NULL,
+	[DFIntegrado_portal_TBAgenda_cliente] Bit NULL,
+	[DFIntegrado_filiais_TBAgenda_cliente] Bit NULL,
+	[DFData_alteracao_TBAgenda_cliente_] Smalldatetime NULL,
+	[DFCodigo_Identificador_TBAgenda_cliente] Integer NULL,
+Primary Key ([PKId_TBAgenda_cliente])
+) 
+go
+
+Create table [TBRamo_atividade]
+(
+	[PKCodigo_TBRamo_atividade] Integer NOT NULL,
+	[DFDescricao_TBRamo_atividade] Nvarchar(40) NOT NULL,
+	[DFIntegrado_TBRamo_atividade] Bit NULL,
+	[DFIntegrado_filiais_TBRamo_atividade] Bit NULL,
+	[DFData_alteracao_TBRamo_atividade] Smalldatetime NULL,
+	[DFCodigo_Identificador_TBRamo_atividade] Integer NULL,
+Primary Key ([PKCodigo_TBRamo_atividade])
+) 
+go
+
+Create table [TBOcorrencia_produto]
+(
+	[PKId_TBOcorrencia_produto] Integer Identity NOT NULL,
+	[FKId_TBProduto] Integer NOT NULL,
+	[DFQuantidade_movimento_TBOcorrencia_produto] Money NOT NULL,
+	[DFEstoque_anterior_TBOcorrencia_produto] Money NOT NULL,
+	[DFEstoque_atual_TBOcorrencia_produto] Money NOT NULL,
+	[DFData_movimento_TBOcorrencia_produto] Smalldatetime NOT NULL,
+	[DFHora_movimento_TBOcorrencia_produto] Nvarchar(8) NOT NULL,
+	[DFUsuario_TBOcorrencia_produto] Nvarchar(30) NOT NULL,
+	[DFPrograma_TBOcorrencia_produto] Nvarchar(20) NOT NULL,
+	[DFObservacao_TBOcorrencia_produto] Nvarchar(50) NULL,
+Primary Key ([PKId_TBOcorrencia_produto])
+) 
+go
+
+Create table [TBNota_saida]
+(
+	[PKId_TBNota_saida] Integer Identity NOT NULL,
+	[FKCodigo_TBEmpresa] Integer NOT NULL,
+	[FKId_TBPlano_pagamento] Integer NOT NULL,
+	[FKCodigo_TBTabela_preco] Integer NOT NULL,
+	[FKCodigo_TBTransportadora] Integer NOT NULL,
+	[DFTipo_operacao_TBNota_saida] Integer NOT NULL,
+	[DFNumero_TBNota_saida] Integer NOT NULL,
+	[DFSerie_TBNota_saida] Nchar(3) NOT NULL,
+	[DFTipo_emitente_TBNota_saida] Bit NOT NULL,
+	[DFEmitente_TBNota_saida] Integer NOT NULL,
+	[DFTotal_itens_TBNota_saida] Money NOT NULL,
+	[DFTotal_nota_TBNota_saida] Money NOT NULL,
+	[DFTotal_nota_tabela_TBNota_saida] Money NOT NULL,
+	[DFDesconto_especial_TBNota_saida] Money NULL,
+	[DFDesconto_indenizacao_TBNota_saida] Money NULL,
+	[DFData_Emissao_TBNota_saida] Smalldatetime NOT NULL,
+	[DFData_Saida_TBNota_saida] Smalldatetime NOT NULL,
+	[DFFaturista_TBNota_saida] Nvarchar(20) NOT NULL,
+	[DFDigitador_TBNota_saida] Nvarchar(20) NOT NULL,
+	[DFPrevisao_TBNota_saida] Bit NOT NULL,
+	[DFValor_ipi_TBNota_saida] Money NULL,
+	[DFDespesas_acessorias_TBNota_saida] Money NULL,
+	[DFTotal_descontos_itens_TBNota_saida] Money NULL,
+	[DFTotal_peso_liquido_TBNota_saida] Money NOT NULL,
+	[DFTotal_peso_bruto_TBNota_saida] Money NOT NULL,
+	[DFTotal_custo_medio_TBNota_saida] Money NOT NULL,
+	[DFTotal_custo_real_TBNota_saida] Money NOT NULL,
+	[DFTotal_custo_contabil_TBNota_saida] Money NOT NULL,
+	[DFNumero_pedido_TBNota_saida] Integer NOT NULL,
+	[DFCancelado_TBNota_saida] Bit NOT NULL,
+	[DFMotivo_cancelamento_TBNota_saida] Nvarchar(50) NULL,
+	[DFUsuario_cancelamento_TBNota_saida] Nvarchar(20) NULL,
+	[DFIntegrado_fiscal_TBNota_saida] Bit NOT NULL,
+	[DFBase_calculo_subst_tributaria_TBNota_saida] Money NULL,
+	[DFValor_subst_tributaria_TBNota_saida] Money NULL,
+	[DFAbatimento_especial_TBNota_saida] Money NULL,
+	[DFObservacao_TBNota_saida] Nvarchar(150) NULL,
+	[DFBase_calculo_subst_tributaria_TBItens_nota_saida_] Money NULL,
+	[DFValor_subst_tributaria_TBItens_nota_saida_] Money NULL,
+	[DFTipo_Frete_TBNota_saida] Bit NULL,
+Primary Key ([PKId_TBNota_saida])
+) 
+go
+
+Create table [TBImpostos_nota_saida]
+(
+	[PKId_TBImpostos_nota_saida] Integer Identity NOT NULL,
+	[FKId_TBNota_saida] Integer NOT NULL,
+	[DFAliquota_TBImpostos_nota_saida] Money NOT NULL,
+	[DFBase_calculo_TBImpostos_nota_saida] Money NOT NULL,
+	[DFValor_TBImpostos_nota_saida] Money NOT NULL,
+Primary Key ([PKId_TBImpostos_nota_saida])
+) 
+go
+
+Create table [TBItens_nota_saida]
+(
+	[PKId_TBItens_nota_saida] Integer Identity NOT NULL,
+	[FKId_TBNota_saida] Integer NOT NULL,
+	[FKId_TBProduto] Integer NOT NULL,
+	[FKId_TBCfop] Integer NOT NULL,
+	[DFCst1_TBItens_nota_saida] Char(1) NOT NULL,
+	[DFCst2_TBItens_nota_saida] Char(2) NOT NULL,
+	[DFQuantidade_TBItens_nota_saida] Money NOT NULL,
+	[DFTipo_preco_TBItens_nota_saida] Integer NOT NULL,
+	[DFPreco_tabela_TBItens_nota_saida] Money NOT NULL,
+	[DFPercentual_desconto_TBItens_nota_saida] Money NOT NULL,
+	[DFPreco_praticado_TBItens_nota_saida] Money NOT NULL,
+	[DFValor_total_tabela_TBItens_nota_saida] Money NOT NULL,
+	[DFValor_total_praticado_TBItens_nota_saida] Money NOT NULL,
+	[DFPercentual_icms_TBItens_nota_saida] Money NOT NULL,
+	[DFValor_total_icms_TBItens_nota_saida] Money NOT NULL,
+	[DFUnidade_TBItens_nota_saida] Char(3) NOT NULL,
+	[DFCusto_real_TBItens_nota_saida] Money NOT NULL,
+	[DFCusto_contabil_TBItens_nota_saida] Money NOT NULL,
+	[DFCusto_medio_TBItens_nota_saida] Money NOT NULL,
+	[DFPeso_liquido_TBItens_nota_saida] Money NOT NULL,
+	[DFPeso_bruto_TBItens_nota_saida] Money NOT NULL,
+	[DFQuantidade_baixa_estoque_TBItens_nota_saida] Money NOT NULL,
+	[DFValor_total_item_TBItens_nota_saida] Money NOT NULL,
+	[DFDivisor_baixa_estouqe_TBItens_nota_saida] Integer NULL,
+	[DFBase_calculo_subst_tributaria_TBItens_nota_saida] Money NULL,
+	[DFValor_subst_tributaria_TBItens_nota_saida] Money NULL,
+	[DFValor_conta_corrente_vendedor_TBItens_nota_saida] Money NULL,
+	[DFEntrega_TBItens_nota_saida] Bit NULL,
+Primary Key ([PKId_TBItens_nota_saida])
+) 
+go
+
+Create table [TBCfop_nota_saida]
+(
+	[PKId_TBCfop_nota_saida] Integer Identity NOT NULL,
+	[FKId_TBCfop] Integer NOT NULL,
+	[FKId_TBNota_saida] Integer NOT NULL,
+	[DFIntegrado_portal_TBCfop_nota_saida] Bit NULL,
+	[DFIntegrado_filiais_TBCfop_nota_saida] Bit NULL,
+	[DFData_alteracao_TBCfop_nota_saida] Smalldatetime NULL,
+	[DFCodigo_Identificador_TBCfop_nota_saida] Integer NULL,
+Primary Key ([PKId_TBCfop_nota_saida])
+) 
+go
+
+Create table [TBAgenda_pessoal]
+(
+	[PKCodigo_TBAgenda_pessoal] Integer NOT NULL,
+	[DFNome_TBAgenda_pessoal] Nvarchar(40) NOT NULL,
+	[DFEndereco_TBAgenda_pessoal] Nvarchar(40) NOT NULL,
+	[DFNumero_TBAgenda_pessoal] Nvarchar(10) NULL,
+	[DFComplemento_TBAgenda_pessoal] Nvarchar(20) NULL,
+	[DFBairro_TBAgenda_pessoal] Nvarchar(30) NULL,
+	[FKId_TBCidade_otica] Integer NOT NULL,
+	[DFCep_TBAgenda_pessoal] Nvarchar(10) NOT NULL,
+	[DFData_Aniversario_TBAgenda_pessoal] Smalldatetime NOT NULL,
+	[DFObservacao_TBAgenda_pessoal] Nvarchar(50) NULL,
+	[DFIntegrado_portal_TBAgenda_pessoal] Bit NULL,
+	[DFIntegrado_filiais_TBAgenda_pessoal] Bit NULL,
+	[DFData_alteracao_TBAgenda_pessoal] Smalldatetime NULL,
+	[DFCodigo_Identificador_TBAgenda_pessoal] Integer NULL,
+Primary Key ([PKCodigo_TBAgenda_pessoal])
+) 
+go
+
+Create table [TBItens_nota_entrada]
+(
+	[PKId_TBItens_nota_entrada] Integer Identity NOT NULL,
+	[FKId_TBNota_entrada] Integer NOT NULL,
+	[FKId_TBProduto] Integer NOT NULL,
+	[FKId_TBCfop] Integer NOT NULL,
+	[DFCst1_TBItens_nota_entrada] Char(1) NOT NULL,
+	[DFCst2_TBItens_nota_entrada] Char(2) NOT NULL,
+	[DFQuantidade_TBItens_nota_entrada] Money NOT NULL,
+	[DFPreco_TBItens_nota_entrada] Money NOT NULL,
+	[DFPercentual_desconto_TBItens_nota_entrada] Money NOT NULL,
+	[DFValor_total_TBItens_nota_entrada] Money NOT NULL,
+	[DFPercentual_icms_TBItens_nota_entrada] Money NULL,
+	[DFValor_total_icms_TBItens_nota_entrada] Money NULL,
+	[DFPercentual_ipi_TBItens_nota_entrada] Money NOT NULL,
+	[DFValor_total_ipi_TBItens_nota_entrada] Money NOT NULL,
+	[DFUnidade_TBItens_nota_entrada] Char(3) NOT NULL,
+	[DFCusto_real_TBItens_nota_entrada] Money NOT NULL,
+	[DFCusto_contabil_TBItens_nota_entrada] Money NOT NULL,
+	[DFCusto_medio_TBItens_nota_entrada] Money NOT NULL,
+	[DFPeso_liquido_TBItens_nota_entrada] Money NOT NULL,
+	[DFPeso_bruto_TBItens_nota_entrada] Money NOT NULL,
+	[DFQuantidade_lancamento_estoque_TBItens_nota_entrada] Money NOT NULL,
+	[DFDivisor_movimenta_estoque_TBItens_nota_entrada] Money NULL,
+Primary Key ([PKId_TBItens_nota_entrada])
+) 
+go
+
+Create table [TBNota_entrada]
+(
+	[PKId_TBNota_entrada] Integer Identity NOT NULL,
+	[FKCodigo_TBEmpresa] Integer NOT NULL,
+	[FKId_TBPlano_pagamento] Integer NOT NULL,
+	[DFTipo_operacao_TBNota_entrada] Integer NOT NULL,
+	[DFNumero_TBNota_entrada] Integer NOT NULL,
+	[DFSerie_TBNota_entrada] Nchar(3) NOT NULL,
+	[DFTipo_emitente_TBNota_entrada] Bit NOT NULL,
+	[DFEmitente_TBNota_entrada] Integer NOT NULL,
+	[DFTotal_itens_TBNota_entrada] Money NOT NULL,
+	[DFTotal_nota_TBNota_entrada] Money NOT NULL,
+	[DFDesconto_especial_TBNota_entrada] Money NULL,
+	[DFDesconto_indenizacao_TBNota_entrada] Money NULL,
+	[DFData_emissao_TBNota_entrada] Smalldatetime NOT NULL,
+	[DFData_entrada_TBNota_entrada] Smalldatetime NOT NULL,
+	[DFData_lancamento_TBNota_entrada] Smalldatetime NULL,
+	[DFDigitador_TBNota_entrada] Nvarchar(20) NOT NULL,
+	[DFPrevisao_TBNota_entrada] Bit NOT NULL,
+	[DFValor_ipi_TBNota_entrada] Money NULL,
+	[DFDespesas_acessorias_TBNota_entrada] Money NULL,
+	[DFValor_frete_TBNota_entrada] Money NULL,
+	[DFTotal_descontos_itens_TBNota_entrada] Money NULL,
+	[DFTotal_peso_liquido_TBNota_entrada] Money NOT NULL,
+	[DFTotal_peso_bruto_TBNota_entrada] Money NOT NULL,
+	[DFNumero_pedido_TBNota_entrada] Integer NOT NULL,
+	[DFIntegrado_fiscal_TBNota_entrada] Bit NOT NULL,
+	[DFValor_seguro_TBNota_entrada] Money NULL,
+	[DFBase_calculo_icms_TBNota_entrada] Money NULL,
+	[DFValor_icms_TBNota_entrada] Money NULL,
+	[DFFator_vendor_TBNota_entrada] Money NULL,
+	[DFPercentual_desconto_antecipacao_TBNota_entrada] Money NULL,
+	[DFBase_calculo_subst_tributaria_TBNota_entrada] Money NULL,
+	[DFValor_subst_tributaria_TBNota_entrada] Money NULL,
+	[DFAbatimento_especial_TBNota_entrada] Money NULL,
+	[DFDiferido_TBNota_entrada] Money NULL,
+	[DFValor_frete_conhecimento_TBNota_entrada] Money NULL,
+	[DFBase_calculo_iss_TBNota_entrada] Money NULL,
+	[DFAliquota_iss_TBNota_entrada] Money NULL,
+	[DFValor_calculo_iss_TBNota_entrada] Money NULL,
+	[DFObservacao_TBNota_entrada] Nvarchar(100) NULL,
+Primary Key ([PKId_TBNota_entrada])
+) 
+go
+
+Create table [TBCfop_nota_entrada]
+(
+	[PKId_TBCfop_nota_entrada] Integer Identity NOT NULL,
+	[FKId_TBNota_entrada] Integer NOT NULL,
+	[FKId_TBCfop] Integer NOT NULL,
+	[DFIntegrado_portal_TBCfop_nota_entrada_] Bit NULL,
+	[DFIntegrado_filiais_TBCfop_nota_entrada] Bit NULL,
+	[DFData_alteracao_TBCfop_nota_entrada] Smalldatetime NULL,
+	[DFCodigo_Identificador_TBCfop_nota_entrada] Integer NULL,
+Primary Key ([PKId_TBCfop_nota_entrada])
+) 
+go
+
+Create table [TBImpostos_nota_entrada]
+(
+	[PKId_TBImpostos_nota_entrada] Integer Identity NOT NULL,
+	[FKId_TBNota_entrada] Integer NOT NULL,
+	[DFAliquota_TBImpostos_nota_entrada] Money NOT NULL,
+	[DFBase_calculo_TBImpostos_nota_entrada] Money NOT NULL,
+	[DFValor_TBImpostos_nota_entrada] Money NOT NULL,
+Primary Key ([PKId_TBImpostos_nota_entrada])
+) 
+go
+
+Create table [TBTitulo_pagar_nota_entrada]
+(
+	[PKId_TBTitulo_pagar_nota_entrada] Integer Identity NOT NULL,
+	[FKId_TBNota_entrada] Integer NOT NULL,
+	[FKId_TBTitulo_pagar] Integer NOT NULL,
+Primary Key ([PKId_TBTitulo_pagar_nota_entrada])
+) 
+go
+
+Create table [TBConta_corrente]
+(
+	[PkId_TBConta_corrente] Integer Identity NOT NULL,
+	[FKCodigo_TBBancos] Integer NOT NULL,
+	[DFAgencia_TBConta_corrente] Nvarchar(10) NULL,
+	[DFNumero_contaTBConta_corrente] Nvarchar(10) NOT NULL,
+	[DFDigito_conta_TBConta_corrente] Nvarchar(2) NULL,
+	[DFCarteira_TBConta_corrente] Nvarchar(3) NOT NULL,
+	[DFProximo_nosso_numero_TBConta_corrente] Nvarchar(20) NOT NULL,
+	[DFConta_Corrente_Poupanca_TBConta_corrente] Bit NULL,
+	[DFIntegrado_portal_TBConta_corrente] Bit NULL,
+	[DFIntegrado_filiais_TBConta_corrente] Bit NULL,
+	[DFData_alteracao_TBConta_corrente] Smalldatetime NULL,
+	[DFCodigo_Identificador_TBConta_corrente] Integer NULL,
+	[DFSaldo_TBConta_corrente] Money NULL,
+Primary Key ([PkId_TBConta_corrente])
+) 
+go
+
+Create table [TBTitulo_nota_saida]
+(
+	[PKId_TBTitulo_nota_saida] Integer Identity NOT NULL,
+	[FKId_TBNota_saida] Integer NOT NULL,
+	[FKId_TBTitulo_receber] Integer NOT NULL,
+Primary Key ([PKId_TBTitulo_nota_saida])
+) 
+go
+
+Create table [TBCentro_custo]
+(
+	[PKId_TBCentro_custo] Integer Identity NOT NULL,
+	[DFClassificacao_TBCentro_custo] Nvarchar(20) NOT NULL,
+	[DFDescricao_TBCentro_custo] Nvarchar(40) NOT NULL,
+	[DFOrdem_TBCentro_custo] Nvarchar(100) NULL,
+	[DFIntegrado_portal_TBCentro_custo] Bit NULL,
+	[DFIntegrado_filiais_TBCentro_custo] Bit NULL,
+	[DFData_alteracao_TBCentro_custo] Smalldatetime NULL,
+	[DFCodigo_Identificador_TBCentro_custo] Integer NULL,
+Primary Key ([PKId_TBCentro_custo])
+) 
+go
+
+Create table [TBPedido_devolucao]
+(
+	[PKId_TBPedido_devolucao] Integer Identity NOT NULL,
+	[FKId_TBNota_saida] Integer NOT NULL,
+Primary Key ([PKId_TBPedido_devolucao])
+) 
+go
+
+Create table [TBNota_devolucao]
+(
+	[PKId_TBNota_devolucao] Integer Identity NOT NULL,
+	[FKId_TBNota_saida] Integer NOT NULL,
+	[FKId_TBNota_entrada] Integer NOT NULL,
+Primary Key ([PKId_TBNota_devolucao])
+) 
+go
+
+Create table [TBCentro_custo_pagar]
+(
+	[PKId_TBCentro_custo_pagar] Integer Identity NOT NULL,
+	[FKId_TBTitulo_pagar] Integer NOT NULL,
+	[FKId_TBCentro_custo] Integer NOT NULL,
+	[DFValor_TBCentro_custo_pagar] Money NOT NULL,
+	[DFIntegrado_portal_TBCentro_custo_pagar] Bit NULL,
+	[DFIntegrado_filiais_TBCentro_custo_pagar] Bit NULL,
+	[DFData_alteracao_TBCentro_custo_pagar] Smalldatetime NULL,
+	[DFCodigo_Identificador_TBCentro_custo_pagar] Integer NULL,
+Primary Key ([PKId_TBCentro_custo_pagar])
+) 
+go
+
+Create table [TBMes_competencia_pagar]
+(
+	[PKId_TBMes_competencia_pagar] Integer Identity NOT NULL,
+	[FKId_TBTitulo_pagar] Integer NOT NULL,
+	[DFValor_TBMes_competencia_pagar] Money NOT NULL,
+	[DFMes_ano_TBMes_competencia_pagar] Smalldatetime NOT NULL,
+Primary Key ([PKId_TBMes_competencia_pagar])
+) 
+go
+
+Create table [TBBanco_Fornecedor]
+(
+	[PKId_TBBanco_fornecedor] Integer Identity NOT NULL,
+	[FKId_TBFornecedor] Integer NOT NULL,
+	[FKCodigo_TBBancos] Integer NOT NULL,
+	[DFAgencia_TBBanco_Fornecedor] Nvarchar(10) NOT NULL,
+	[DFConta_TBBanco_Fornecedor] Nvarchar(20) NOT NULL,
+	[DFFavorecido_TBBanco_fornecedor] Nvarchar(50) NULL,
+	[DFIntegrado_portal_TBBanco_fornecedor] Bit NULL,
+	[DFIntegrado_filiais_TBBanco_fornecedor] Bit NULL,
+	[DFData_alteracao_TBBanco_fornecedor] Smalldatetime NULL,
+	[DFCodigo_Identificador_TBBanco_fornecedor] Integer NULL,
+Primary Key ([PKId_TBBanco_fornecedor])
+) 
+go
+
+Create table [TBOperadores_ecf]
+(
+	[PKCodigo_TBOperadores_ecf] Integer NOT NULL,
+	[DFNome_TBOperadores_ecf] Nvarchar(50) NULL,
+	[DFNivel_TBOperadores_ecf] Integer NULL,
+	[DFNumero_cartao_TBOperadores_ecf] Integer NULL,
+	[DFSenha_TBOperadores_ecf] Nvarchar(10) NULL,
+	[FKCodigo_TBEmpresa] Integer NOT NULL,
+Primary Key ([PKCodigo_TBOperadores_ecf])
+) 
+go
+
+Create table [TBPdv]
+(
+	[PKCodigo_TBPdv] Integer NOT NULL,
+	[FKCodigo_TBImpressoras_ecf] Integer NOT NULL,
+	[DFNumero_ecf_TBPdv] Integer NULL,
+	[DFEndereco_ip_TBPdv] Char(15) NULL,
+	[DFImpressoes_suportadas_TBPdv] Char(1) NULL,
+	[DFGaveta_integrada_TBPdv] Bit NULL,
+	[DFLeitor_Serial_integrado] Bit NULL,
+	[DFPorta_com_leitor_serial] Char(2) NULL,
+	[DFTipo_impressora_orcamento_balcao_TBpdv] Char(1) NULL,
+      [IXCodigo_TBEmpresa] Integer NULL,
+Primary Key ([PKCodigo_TBPdv])
+) 
+go
+
+Create table [TBImpressoras_ecf]
+(
+	[PKCodigo_TBImpressoras_ecf] Integer NOT NULL,
+	[DFNome_TBImpressoras_ecf] Nvarchar(40) NULL,
+	[DFVersao_TBImpressoras_ecf] Nvarchar(20) NULL,
+	[DFNumero_serie_impressora_fiscal] Nvarchar(30) NULL,
+Primary Key ([PKCodigo_TBImpressoras_ecf])
+) 
+go
+
+Create table [TBParametros_ecf]
+(
+	[PKCodigo_TBParametros_ecf] Integer NOT NULL,
+	[DFTipo_quantidade_TBParametros_ecf] Char(1) NULL,
+	[DFNumero_decimais_TBParametros_ecf] Integer NULL,
+	[DFTipo_desconto_TBParametros_ecf] Char(1) NULL,
+	[DFCodigo_inicial_peso_variavel_TBParametros_ecf] Integer NULL,
+	[DFPreco_peso_balanca_TBParametros_ecf] Bit NULL,
+	[DFProduto_associado_taxa_TBParametros_ecf] Integer NULL,
+	[DFPercentual_taxa_TBParametros_ecf] Money NULL,
+	[DFProduto_desconto_associado_TBParametros_ecf] Integer NULL,
+	[DFControla_vendedor_TBParametros_ecf] Bit NULL,
+	[DFFinalizadora_abertura_TBParametros_ecf] Integer NULL,
+	[DFFinalizadora_sangria_TBParametros_ecf] Integer NULL,
+	[FKCodigo_TBEmpresa] Integer NOT NULL,
+	[DFProximo_orcamento_balcao_TBParametros_ecf] Integer NULL,
+	[DFProximo_serie_orcamento_balcao_TBParametros_ecf] Char(3) NULL,
+	[DFIntegracao_online_pdv_retaguarda_TBParametros_ecf] Bit NULL,
+	[DFAtualizacao_preco_online_retaguarda_pdv_TBParametros_ecf] Bit NULL,
+	[DFEndereco_ip_concentrador_TBParametros_ecf] Nvarchar(15) NULL,
+	[DFSenha_seguranca_TBparametros_ecf] Nchar(10) NULL,
+	[DFProximo_cupom_TBParametros_ecf] Integer NULL,
+	[DFProximo_serie_cupom_TBParametros_ecf] Char(3) NULL,
+	[DFComissao_vendedor_TBParametros_ecf] Bit NULL,
+	[DFFinalizadora_cartao_afinidade_TBParametros_ecf] Integer NULL,
+	[DFPerfil_varejo_TBParametros_ecf] Integer NULL,
+	[DFFinalizadora_fechamento_operador_TBParametros_ecf] Integer NULL,
+	[DFFinalizadora_fechamento_dia_TBParametros_ecf] Integer NULL,
+	[DFFinalizadora_X_TBParametros_ecf] Integer NULL,
+	[DFFinalizadora_cancelamento_TBParametros_ecf] Integer NULL,
+	[DFDigita_mensagem_sangria_TBParametros_ecf] Bit NULL,
+Primary Key ([PKCodigo_TBParametros_ecf])
+) 
+go
+
+Create table [TBOperacao_caixa]
+(
+	[PKId_TBOperacao_caixa] Integer Identity NOT NULL,
+	[FKCodigo_TBEmpresa] Integer NOT NULL,
+	[FKCofigo_TBPdv] Integer NOT NULL,
+	[FKId_TBFinalizadora] Integer NOT NULL,
+	[FKCodigo_TBOperadores_ecf] Integer NOT NULL,
+	[DFData_TBOperacao_caixa] Smalldatetime NULL,
+	[DFHora_TBOperacao_caixa] Nvarchar(10) NULL,
+	[DFValor_TBOperacao_caixa] Money NULL,
+	[DFTipo_operacao_TBOperacao_caixa] Bit NULL,
+	[DFStatus_aberto_fechado_TBOperacao_caixa] Bit NULL,
+	[DFObservacao_TBOperacao_caixa] Nvarchar(100) NULL,
+Primary Key ([PKId_TBOperacao_caixa])
+) 
+go
+
+Create table [TBFinalizadora]
+(
+	[PKId_TBFinalizadora] Integer Identity NOT NULL,
+	[IXCodigo_TBFinalizadora] Integer NOT NULL,
+	[DFDescricao_TBFinalizadora] Nvarchar(40) NOT NULL,
+	[DFModalidade_TBFinalizadora] Integer NOT NULL,
+	[DFAcrescimo_desconto_TBFinalizadora] Integer NOT NULL,
+	[DFPercentual_TBFinalizadora] Money NULL,
+	[DFDebito_credito_TBFinalizadora] Bit NULL,
+	[DFTroco_TBFinalizadora] Bit NULL,
+	[DFControle_venda_TBFinalizadora] Bit NULL,
+	[DFCodificacao_impressora_fiscal_TBFinalizadora] Char(3) NULL,
+	[DFCodigo_asc_TBFinalizadora] Integer NULL,
+	[DFIntegrado_portal_TBFinalizadora] Bit NULL,
+	[DFIntegrado_filiais_TBFinalizadora] Bit NULL,
+	[DFData_alteracao_TBFinalizadora] Smalldatetime NULL,
+	[DFCodigo_Identificador_TBFinalizadora] Integer NULL,
+Primary Key ([PKId_TBFinalizadora])
+) 
+go
+
+Create table [TBComposicao_produto]
+(
+	[PKId_TBComposicao_produto] Integer Identity NOT NULL,
+	[FKId_TBProduto] Integer NOT NULL,
+	[DFCodigo_produto_relacionado_TBComposicao_produto] Integer NULL,
+	[DFQuantidade_baixa_estoque_TBComposicao_produto] Money NULL,
+	[DFIntegrado_portal_TBComposicao_produt] Bit NULL,
+	[DFIntegrado_filiais_TBComposicao_produto] Bit NULL,
+	[DFData_alteracao_TBComposicao_produto] Smalldatetime NULL,
+	[DFCodigo_Identificador_TBComposicao_produto] Integer NULL,
+Primary Key ([PKId_TBComposicao_produto])
+) 
+go
+
+Create table [TBOrdem_compra]
+(
+	[PKId_TBOrdem_compra] Integer Identity NOT NULL,
+	[FKCodigo_TBEmpresa] Integer NOT NULL,
+	[FKCodigo_TBComprador] Integer NOT NULL,
+	[FKId_TBFornecedor] Integer NOT NULL,
+	[DFData_lancamento_TBOrdem_compra] Smalldatetime NULL,
+	[DFData_previsao_entrega_TBOrdem_compra] Integer NULL,
+	[DFValor_frete_TBOrdem_compra] Money NULL,
+	[DFVerba_TBOrdem_compra] Money NULL,
+	[DFNome_vendedor_TBOrdem_compra] Nvarchar(50) NULL,
+	[DFPercentual_vendor_TBOrdem_compra] Money NULL,
+	[DFValor_total_compra_TBOrdem_compra] Money NULL,
+	[DFStatus_aberto_fechado_TBordem_compra] Bit NULL,
+	[DFObservacao_TBOrdem_compra] Nvarchar(200) NULL,
+	[DFDespesa_acessoria_TBOrdem_compra] Money NULL,
+	[DFValor_total_ipi_TBOrdem_compra] Money NULL,
+	[DFTotal_peso_liquido_TBOrdem_compra] Money NULL,
+	[DFTotal_peso_bruto_TBOrdem_compra] Money NULL,
+	[DFTotal_descontos_itens_TBOrdem_Compra] Money NULL,
+	[DFTotal_itens_TBOrdem_compra] Money NULL,
+	[DFBase_calculo_subst_tributaria_TBOrdem_compra] Money NULL,
+	[DFValor_subst_tributaria_TBOrdem_compra] Money NULL,
+Primary Key ([PKId_TBOrdem_compra])
+) 
+go
+
+Create table [TBItens_ordem_compra]
+(
+	[PKId_TBItens_ordem_compra] Integer Identity NOT NULL,
+	[FKId_TBProduto] Integer NOT NULL,
+	[FKId_TBOrdem_compra] Integer NOT NULL,
+	[DFQuantidade_TBItens_ordem_compra] Money NOT NULL,
+	[DFValor_unitario_TBItens_ordem_compra] Money NULL,
+	[DFValor_desconto_TBItens_ordem_compra] Money NULL,
+	[DFValor_Total_TBItens_ordem_compra] Money NULL,
+	[DFVerba_TBItens_ordem_compra] Money NULL,
+	[DFQuantidade_bonificacao_TBItens_ordem_compra] Money NULL,
+	[DFPercentual_st_TBItens_ordem_compra] Money NULL,
+	[DFPercentual_ipí_TBitens_ordem_compra] Money NULL,
+	[DFValor_total_ipi_TBItens_ordem_compra] Money NULL,
+	[DFQuantidade_recebida_TBItens_ordem_compra] Money NULL,
+	[DFQuantidade_recebida_bonificacao_TBItens_ordem_compra] Money NULL,
+	[DFUnidade_negociada_TBItens_ordem_compra] Char(3) NULL,
+	[DFFator_TBItens_ordem_compra] Integer NULL,
+Primary Key ([PKId_TBItens_ordem_compra])
+) 
+go
+
+Create table [TBDesconto_itens_ordem_compra]
+(
+	[PKId_TBDesconto_itens_ordem_compra] Integer Identity NOT NULL,
+	[FKId_TBItens_ordem_compra] Integer NOT NULL,
+	[DFPercentual_TBDesconto_itens_ordem_compra] Money NULL,
+	[DFIntegrado_portal_TBDesconto_itens_ordem_compra_] Bit NULL,
+	[DFIntegrado_filiais_TBDesconto_itens_ordem_compra] Bit NULL,
+	[DFData_alteracao_TBDependentes_Associados] Smalldatetime NULL,
+	[DFCodigo_Identificador_TBDesconto_itens_ordem_compra] Integer NULL,
+Primary Key ([PKId_TBDesconto_itens_ordem_compra])
+) 
+go
+
+Create table [TBCompra_empresa]
+(
+	[PKId_TBCompra_empresa] Integer Identity NOT NULL,
+	[FKCodigo_TBEmpresa] Integer NOT NULL,
+	[FKId_TBItens_ordem_compra] Integer NOT NULL,
+	[DFQuantidade_TBCompra_empresa] Money NULL,
+	[DFBonificacao_TBCompra_empresa] Money NULL,
+	[DFIntegrado_portal_TBCompra_empresa] Bit NULL,
+	[DFIntegrado_filiais_TBCompra_empresa] Bit NULL,
+	[DFData_alteracao_TBCompra_empresa] Smalldatetime NULL,
+	[DFCodigo_Identificador_TBCompra_empresa] Integer NULL,
+Primary Key ([PKId_TBCompra_empresa])
+) 
+go
+
+Create table [TBEmbalagem]
+(
+	[PKCodigo_TBEmbalagem] Integer NOT NULL,
+	[DFDescricao_TBEmbalagem] Nvarchar(40) NOT NULL,
+	[DFSigla_TBEmbalagem] Nvarchar(3) NOT NULL,
+	[DFIntegrado_portal_TBEmbalagem] Bit NULL,
+	[DFIntegrado_filiais_TBEmbalagem] Bit NULL,
+	[DFData_alteracao_TBEmbalagem] Smalldatetime NULL,
+	[DFCodigo_Identificador_TBEmbalagem] Integer NULL,
+Primary Key ([PKCodigo_TBEmbalagem])
+) 
+go
+
+Create table [TBAgenda_solicitacao_visita]
+(
+	[PKId_TBAgenda_solicitacao_visita] Integer Identity NOT NULL,
+	[DFContato_TBAgenda_solicitacao_visita] Nvarchar(40) NULL,
+	[DFTelefone_TBAgenda_solicitacao_visita] Nvarchar(20) NULL,
+	[DFIntegrado_portal_TBAgenda_solicitacao_visita] Bit NULL,
+	[DFIntegrado_filiais_TBAgenda_solicitacao_visita] Bit NULL,
+	[DFData_alteracao_TBAgenda_solicitacao_visita] Smalldatetime NULL,
+	[DFCodigo_Identificador_TBAgenda_solicitacao_visita] Integer NULL,
+Primary Key ([PKId_TBAgenda_solicitacao_visita])
+) 
+go
+
+Create table [TBTipo_preco]
+(
+	[PKId_TBTipo_preco] Integer Identity NOT NULL, UNIQUE ([PKId_TBTipo_preco]),
+	[DFNome_Preco_avista_TBTipo_preco] Nvarchar(20) NOT NULL,
+	[DFNome_Preco_promocao_TBTipo_preco] Nvarchar(20) NULL,
+	[DFPercentual_preco_promocao_TBTipo_preco] Money NULL,
+	[DFNome_Preco_revenda_TBTipo_preco] Nvarchar(20) NULL,
+	[DFPercentual_preco_revenda_TBTipo_preco] Money NULL,
+	[DFNome_Preco_especial_TBTipo_preco] Nvarchar(20) NULL,
+	[DFPercentual_preco_especial_TBTipo_preco] Money NULL,
+	[DFNome_Preco_varejo_TBTipo_preco] Nvarchar(20) NULL,
+	[DFPercentual_preco_varejo_TBTipo_preco] Money NULL,
+Primary Key ([PKId_TBTipo_preco])
+) 
+go
+
+Create table [TBPedidos_validos]
+(
+	[PKId_TBPedidos_validos] Integer NOT NULL,
+	[DFLetra1_TBPedidos_validos] Char(1) NOT NULL,
+	[DFLetra2_TBPedidos_validos] Char(1) NOT NULL,
+	[DFLetra3_TBPedidos_validos] Char(1) NOT NULL,
+	[DFLetra4_TBPedidos_validos] Char(1) NOT NULL,
+	[DFLetra5_TBPedidos_validos] Char(1) NOT NULL,
+	[DFLetra6_TBPedidos_validos] Char(1) NULL,
+	[DFBloqueado_TBPedidos_validos] Bit NULL,
+Primary Key ([PKId_TBPedidos_validos])
+) 
+go
+
+Create table [TBTitulo_pagar_credito_cliente]
+(
+	[PKId_TBTitulo_pagar_credito_cliente] Integer Identity NOT NULL,
+	[FKCodigo_TBEmpresa] Integer NOT NULL,
+	[FKId_TBCliente] Integer NOT NULL,
+	[DFData_emissao_TBTitulo_receber_pagar_cliente] Smalldatetime NOT NULL,
+	[DFValor_TBTitulo_pagar_credito_cliente] Money NOT NULL,
+	[DFObervacao_TBTitulo_pagar_credito_cliente] Nvarchar(200) NULL,
+Primary Key ([PKId_TBTitulo_pagar_credito_cliente])
+) 
+go
+
+Create table [TBTitulo_pago_credito_cliente]
+(
+	[PKId_TBTitulo_recebido_credito_cliente] Integer NULL,
+	[FKId_TBTitulo_pago_credito_cliente] Integer NOT NULL,
+	[DFData_pagamento_TBTitulo_pago_credito_cliente] Smalldatetime NULL,
+	[DFBaixa_Caixa_banco_TBTitulo_pago_credito_cliente] Bit NULL,
+	[DFValor_TBTitulo_pago_credito_cliente] Money NULL,
+	[DFValor_diferencaTBTitulo_pago_credito_cliente] Money NULL
+) 
+go
+
+Create table [TBAgregado_veiculo]
+(
+	[PKId_TBAgregado_veiculo] Integer Identity NOT NULL,
+	[FKId_TBFornecedor] Integer NOT NULL,
+	[DFPercentual_Comissao_TBAgregado_veiculo] Money NULL,
+	[DFIntegrado_portal_TBAgregado_veiculo] Bit NULL,
+	[DFIntegrado_filiais_TBAgregado_veiculo] Bit NULL,
+	[DFData_alteracao_TBAgregado_veiculo] Smalldatetime NULL,
+	[DFCodigo_Identificador_TBAgregado_veiculo] Integer NULL,
+Primary Key ([PKId_TBAgregado_veiculo])
+) 
+go
+
+Create table [TBAlineas]
+(
+	[PKCodigo_TBAlineas] Integer NOT NULL,
+	[DFDescricao_TBAlineas] Nvarchar(50) NULL,
+	[DFDescricao_alerta_TBAlineas] Nvarchar(20) NULL,
+	[DFCritico_TBAlineas] Bit NULL,
+	[DFIntegrado_portal_TBAlineas] Bit NULL,
+	[DFIntegrado_filiais_TBAlineas] Bit NULL,
+	[DFData_alteracao_TBAlineas] Smalldatetime NULL,
+	[DFCodigo_Identificador_TBAlineas_] Integer NULL,
+Primary Key ([PKCodigo_TBAlineas])
+) 
+go
+
+Create table [TBCheque]
+(
+	[PKId_TBCheque] Integer Identity NOT NULL,
+	[FKId_TBCliente] Integer NOT NULL,
+	[FKCodigo_TBEmpresa] Integer NOT NULL,
+	[FKCodigo_TBAlineas] Integer NOT NULL,
+	[FKCodigo_TBBancos] Integer NOT NULL,
+	[DFAgencia_TBcheque] Nvarchar(10) NULL,
+	[DFNumero_conta_TBCheque] Nvarchar(20) NULL,
+	[DFNumero_TBCheque] Integer NULL,
+	[DFValor_TBCheque] Money NOT NULL,
+	[DFData_emissao_TBCheque] Smalldatetime NOT NULL,
+	[DFData_vencimento_TBCheque] Smalldatetime NOT NULL,
+	[DFPlaca_TBCheque] Nvarchar(8) NULL,
+	[DFEmitente_TBCheque] Nvarchar(40) NULL,
+	[DFTelefone_contato_TBCheque] Nvarchar(20) NULL,
+	[DFCnpj_cpf_emitente_TBCheque] Nvarchar(20) NULL,
+	[DFCnpj_cpf_cliente_TBCheque] Nvarchar(20) NULL,
+	[DFObservacao_TBCheque] Nvarchar(100) NULL,
+	[DFData_devolucao_TBCheque] Smalldatetime NULL,
+	[DFIntegrado_portal_TBCheque] Bit NULL,
+	[DFIntegrado_filiais_TBCheque] Bit NULL,
+	[DFData_alteracao_TBCheque] Smalldatetime NULL,
+	[DFCodigo_Identificador_TBCheque] Integer NULL,
+Primary Key ([PKId_TBCheque])
+) 
+go
+
+Create table [TBCheque_Baixado]
+(
+	[PKId_TBCheque_Baixado] Integer NULL,
+	[FKId_TBCheque] Integer NOT NULL,
+	[DFData_Baixa_TBCheque_Baixado] Smalldatetime NULL,
+	[DFUsuario_TBCheque_Baixado] Nvarchar(20) NULL,
+	[DFObservacao_TBCheque_Baixado] Nvarchar(50) NULL,
+	[DFValor_TBCheque_Baixado] Money NULL,
+	[DFDiferenca_TBCheque_Baixado] Money NULL,
+	[DFIntegrado_portal_TBCheque_Baixado] Bit NULL,
+	[DFIntegrado_filiais_TBCheque_Baixado] Bit NULL,
+	[DFData_alteracao_TBCheque_Baixado] Smalldatetime NULL,
+	[DFCodigo_Identificador_TBCheque_Baixado] Integer NULL
+) 
+go
+
+Create table [PKTBProgramas]
+(
+	[PKId_TBProgramas] Integer Identity NOT NULL,
+	[FKId_TBMenu] Integer NOT NULL,
+	[DFDescricao_TBProgramas] Nvarchar(60) NULL,
+	[DFOrdem_Programas] Numeric(9,0) NULL,
+Primary Key ([PKId_TBProgramas])
+) 
+go
+
+Create table [TBLancamento_banco]
+(
+	[PKId_TBLancamento_banco] Integer Identity NOT NULL,
+	[FKd_TBConta_corrente] Integer NOT NULL,
+	[FKId_TBHistorico_padrao] Integer NOT NULL,
+	[DFComplemento_DFIntegrado_portal_TBLancamento_banco] Nvarchar(50) NULL,
+	[DFNumero_documento_TBLancamento_banco] Nvarchar(10) NULL,
+	[DFData_TBLancamento_banco] Smalldatetime NOT NULL,
+	[DFValor_TBLancamento_banco] Money NULL,
+	[DFIntegrado_portal_TBLancamento_banco] Bit NULL,
+	[DFIntegrado_filiais_TBLancamento_banco] Bit NULL,
+	[DFData_alteracao_TBLancamento_banco] Smalldatetime NULL,
+	[DFCodigo_Identificador_TBConta_corrente] Integer NULL,
+Primary Key ([PKId_TBLancamento_banco])
+) 
+go
+
+Create table [TBTelefone_empresa]
+(
+	[PKId_TBTelefone_empresa] Integer Identity NOT NULL,
+	[FKCodigo_TBEmpresa] Integer NOT NULL,
+	[DFDescricao_TBTelefone_empresa] Nvarchar(20) NULL,
+	[DFTelefone_TBTelefone_empresa] Nvarchar(20) NULL,
+	[DFIntegrado_portal_TBTelefone_empresa] Bit NULL,
+	[DFIntegrado_filiais_TBTelefone_empresa] Bit NULL,
+	[DFData_alteracao_TBTelefone_empresa] Smalldatetime NULL,
+	[DFCodigo_Identificador_TBTelefone_empresa] Integer NULL,
+Primary Key ([PKId_TBTelefone_empresa])
+) 
+go
+
+Create table [TBInventario]
+(
+	[PKId_TBInventario] Integer Identity NOT NULL,
+	[FKid_TBCentro_estoque] Integer NOT NULL,
+	[FKCodigo_TBSeparador] Integer NOT NULL,
+	[DFData_TBInventario] Smalldatetime NOT NULL,
+	[DFDescricao_TBInventario] Nvarchar(40) NULL,
+	[DFResultado_balanco_TBInventario] Money NOT NULL,
+	[DFObservacao_TBInventario] Nvarchar(100) NULL,
+Primary Key ([PKId_TBInventario])
+) 
+go
+
+Create table [TBLote_entrada]
+(
+	[PKId_TBLote_entrada] Integer Identity NOT NULL,
+	[FKId_TBProduto] Integer NOT NULL,
+	[FKId_TBItens_nota_entrada] Integer NOT NULL,
+	[DFNumero_lote_TBLote_entrada] Nvarchar(20) NULL,
+	[DFQuantidade_TBlote_entrada] Char(10) NULL,
+	[DFData_fabricacao_TBLote_entrada] Smalldatetime NULL,
+	[DFData_validade_TBLote_entrada] Smalldatetime NULL,
+	[DFIntegrado_portal_TBLote_entrada] Bit NULL,
+	[DFIntegrado_filiais_TBLote_entrada] Bit NULL,
+	[DFData_alteracao_TBLote_entrada] Smalldatetime NULL,
+	[DFCodigo_Identificador_TBLote_entrada] Integer NULL,
+Primary Key ([PKId_TBLote_entrada])
+) 
+go
+
+Create table [TBCentro_estoque]
+(
+	[PKid_TBCentro_estoque] Integer Identity NOT NULL,
+	[DF_Descricao_TBCentro_estoque] Nvarchar(40) NOT NULL,
+	[DFAtualiza_estoque_atual_TBCentro_estoque] Bit NULL,
+	[DFIntegrado_portal_TBCentro_estoque] Bit NULL,
+	[DFIntegrado_filiais_TBCentro_estoque] Bit NULL,
+	[DFData_alteracao_TBCentro_estoque] Smalldatetime NULL,
+	[DFCodigo_Identificador_TBCentro_estoque] Integer NULL,
+Primary Key ([PKid_TBCentro_estoque])
+) 
+go
+
+Create table [TBSeparador]
+(
+	[PKCodigo_TBSeparador] Integer NOT NULL,
+	[DFDescricao_TBSeparador] Nvarchar(40) NULL,
+	[DFSeparador_conferente_ambos_TBSeparador] Integer NULL,
+	[DFIntegrado_portal_TBSeparador] Bit NULL,
+	[DFIntegrado_filiais_TBSeparador] Bit NULL,
+	[DFData_alteracao_TBSeparador] Smalldatetime NULL,
+	[DFCodigo_Identificador_TBSeparador] Integer NULL,
+Primary Key ([PKCodigo_TBSeparador])
+) 
+go
+
+Create table [TBCheque_list_ordem_compra]
+(
+	[PKId_TBCheque_list_ordem_compra] Integer Identity NOT NULL,
+	[FKId_TBOrdem_compra] Integer NOT NULL,
+	[FKCodigo_TBSeparador] Integer NOT NULL,
+	[FKCodigo_conferente_TBSeparador] Integer NOT NULL,
+	[DFEstado_mercadoria_TBCheque_list_ordem_compra] Bit NULL,
+	[DFConformidade_TBCheque_list_ordem_compra] Bit NULL,
+	[DFPontualidade_TBCheque_list_ordem_compra] Bit NULL,
+	[DFObservacao_TBCheque_list_ordem_compra] Nvarchar(200) NULL,
+	[DFIntegrado_portal_TBCheque_list_ordem_compra] Bit NULL,
+	[DFIntegrado_filiais_TBCheque_list_ordem_compra] Bit NULL,
+	[DFData_alteracao_TBCheque_list_ordem_compra] Smalldatetime NULL,
+	[DFCodigo_Identificador_TBCheque_list_ordem_compra] Integer NULL,
+	[DFData_TBCheque_list_ordem_compra] Smalldatetime NULL,
+Primary Key ([PKId_TBCheque_list_ordem_compra])
+) 
+go
+
+Create table [TBConferencia_Itens_ordem_compra]
+(
+	[PKId_TBConferencia_Itens_ordem_compra] Integer Identity NOT NULL,
+	[FKId_TBItens_ordem_compra] Integer NOT NULL,
+	[FKId_TBCheque_list_ordem_compra] Integer NOT NULL,
+	[DFQuantidade_TBConferencia_itens_ordem_compra] Money NULL,
+	[DFIntegrado_portal_TBConferencia_Itens_ordem_compra] Integer NULL,
+	[DFIntegrado_filiais_TBConferencia_Itens_ordem_compra] Integer NULL,
+	[DFData_alteracao_TBConferencia_Itens_ordem_compra] Smalldatetime NULL,
+	[DFCodigo_Identificador_TBConferencia_Itens_ordem_compra] Integer NULL,
+	[DFObservacao_TBConferencia_itens_ordem_compra] Nvarchar(200) NULL,
+Primary Key ([PKId_TBConferencia_Itens_ordem_compra])
+) 
+go
+
+Create table [TBEnderecamento_estoque]
+(
+	[PKid_TBEnderecamento_estoque] Integer Identity NOT NULL,
+	[FKid_TBCentro_estoque] Integer NOT NULL,
+	[DFRua_TBEnderecamento_estoque] Nvarchar(5) NULL,
+	[DFApartamento_TBEnderecamento_estoque] Nvarchar(5) NULL,
+Primary Key ([PKid_TBEnderecamento_estoque])
+) 
+go
+
+Create table [TBEstoque_Lote_enderecado_ordem_compra]
+(
+	[PKId_TBEstoque_Lote_enderecado_ordem_compra] Integer Identity NOT NULL,
+	[FKId_TBConferencia_Itens_ordem_compra] Integer NOT NULL,
+	[FKid_TBEnderecamento_estoque] Integer NOT NULL,
+	[DFLote_TBEstoque_Lote_enderecado_ordem_compra] Nvarchar(20) NULL,
+	[DFQuantidade_TBEstoque_Lote_enderecado_ordem_compra] Money NULL,
+	[DFData_fabricacao_TBEstoque_Lote_enderecado_ordem_compra] Smalldatetime NULL,
+	[DFData_validade_TBEstoque_Lote_enderecado_ordem_compra] Smalldatetime NULL,
+	[DFIntegrado_portal_TBEstoque_Lote_enderecado_ordem_compra] Bit NULL,
+	[DFIntegrado_filiais_TBEstoque_lote] Bit NULL,
+	[DFData_alteracao_TBEstoque_lote] Smalldatetime NULL,
+	[DFCodigo_Identificador_TBEstoque_lote] Integer NULL,
+Primary Key ([PKId_TBEstoque_Lote_enderecado_ordem_compra])
+) 
+go
+
+Create table [TBEstoque_Lote_enderecado_produto]
+(
+	[PKId_TBEstoque_Lote_enderecado_produto] Integer Identity NOT NULL,
+	[FKId_TBProduto] Integer NOT NULL,
+	[FKid_TBEnderecamento_estoque] Integer NOT NULL,
+	[DFLote_TBEstoque_Lote_enderecado_produto] Nvarchar(20) NULL,
+	[DFQuantidade_TBEstoque_Lote_enderecado_produto] Money NULL,
+	[DFData_fabricacao_TBEstoque_Lote_enderecado_produto] Smalldatetime NULL,
+	[DFData_validade_TBEstoque_Lote_enderecado_produto] Smalldatetime NULL,
+	[DFIntegrado_portal_TBEstoque_Lote_enderecado_produto] Bit NULL,
+	[DFIntegrado_filiais_TBEstoque_Lote_enderecado_produto] Bit NULL,
+	[DFData_alteracao_TBEstoque_Lote_enderecado_produto] Smalldatetime NULL,
+	[DFCodigo_Identificador_TBEstoque_Lote_enderecado_produto] Integer NULL,
+Primary Key ([PKId_TBEstoque_Lote_enderecado_produto])
+) 
+go
+
+Create table [TBEstoque_Lote_enderecado_nota_saida]
+(
+	[PKId_TBEstoque_Lote_enderecado_nota_saida] Integer Identity NOT NULL,
+	[FKId_TBItens_nota_saida] Integer NOT NULL,
+	[FKid_TBCentro_estoque] Integer NOT NULL,
+	[DFLote_TBEstoque_Lote_enderecado_nota_saida] Nvarchar(20) NULL,
+	[DFQuantidade_TBEstoque_Lote_enderecado_nota_saida] Money NULL,
+	[DFData_fabricacao_TBEstoque_Lote_enderecado_nota_saida] Smalldatetime NULL,
+	[DFData_validade_TBEstoque_Lote_enderecado_nota_saida] Smalldatetime NULL,
+	[DFIntegrado_portal_TBEstoque_Lote_enderecado_nota_saida] Bit NULL,
+	[DFIntegrado_filiais_TBEstoque_Lote_enderecado_nota_saida] Bit NULL,
+	[DFData_alteracao_TBEstoque_Lote_enderecado_nota_saida] Smalldatetime NULL,
+	[DFCodigo_Identificador_TBEstoque_Lote_enderecado_nota_saida] Integer NULL,
+Primary Key ([PKId_TBEstoque_Lote_enderecado_nota_saida])
+) 
+go
+
+Create table [TBEstoque_Lote_enderecado_pedido]
+(
+	[PKId_TBEstoque_Lote_enderecado_pedido] Integer Identity NOT NULL,
+	[FKid_TBCentro_estoque] Integer NOT NULL,
+	[DFLote_TBEstoque_Lote_enderecado_pedido] Nvarchar(20) NULL,
+	[DFQuantidade_TBEstoque_Lote_enderecado_pedido] Money NULL,
+	[DFData_fabricacao_TBEstoque_Lote_enderecado_pedido] Smalldatetime NULL,
+	[DFData_validade_TBEstoque_Lote_enderecado_pedido] Smalldatetime NULL,
+	[DFIntegrado_portal_TBEstoque_Lote_enderecado_pedido] Bit NULL,
+	[DFIntegrado_filiais_TBEstoque_Lote_enderecado_pedido] Bit NULL,
+	[DFData_alteracao_TBEstoque_Lote_enderecado_pedido] Smalldatetime NULL,
+	[DFCodigo_Identificador_TBEstoque_Lote_enderecado_pedido] Integer NULL,
+Primary Key ([PKId_TBEstoque_Lote_enderecado_pedido])
+) 
+go
+
+Create table [TBItens_inventario]
+(
+	[PKId_TBItens_inventario] Integer Identity NOT NULL,
+	[FKId_TBProduto] Integer NOT NULL,
+	[FKId_TBInventario] Integer NOT NULL,
+	[DFQuantidade_TBItens_inventario] Money NULL,
+	[DFDigitado_TBItens_Inventario] Money NULL,
+Primary Key ([PKId_TBItens_inventario])
+) 
+go
+
+Create table [TBRequisicao]
+(
+	[PKId_TBRequisicao] Integer Identity NOT NULL,
+	[FKid_TBCentro_estoque_origem] Integer NOT NULL,
+	[FKCodigo_origem_TBSeparador] Integer NOT NULL,
+	[DFConferido_origem_TBrequisicao] Bit NULL,
+	[FKid_TBCentro_estoque_destino] Integer NOT NULL,
+	[FKCodigo_destino_TBSeparador] Integer NOT NULL,
+	[DFConferido_destino_TBrequisicao] Bit NULL,
+	[DFData_TBRequisicao] Money NULL,
+Primary Key ([PKId_TBRequisicao])
+) 
+go
+
+Create table [TBItens_requisicao]
+(
+	[PKId_TBItens_requisicao] Integer Identity NOT NULL,
+	[FKId_TBProduto] Integer NOT NULL,
+	[FKId_TBRequisicao] Integer NOT NULL,
+	[DFQuantidade_TBItens_requisicao] Money NOT NULL,
+Primary Key ([PKId_TBItens_requisicao])
+) 
+go
+
+Create table [TBProcessamendo]
+(
+	[PKId_TBProcessamendo] Integer Identity NOT NULL,
+	[FKid_origemTBCentro_estoque] Integer NOT NULL,
+	[FKCodigo_origem_TBSeparador] Integer NOT NULL,
+	[FKid_destino_TBCentro_estoque] Integer NOT NULL,
+	[FKCodigo_destino_TBSeparador] Integer NOT NULL,
+	[DFData_TBProcessamendo] Money NULL,
+Primary Key ([PKId_TBProcessamendo])
+) 
+go
+
+Create table [TBItens_processamento]
+(
+	[PKId_TBItens_processamento] Integer Identity NOT NULL,
+	[FKId_TBProcessamendo] Integer NOT NULL,
+	[FKId_origem_TBProduto] Integer NOT NULL,
+	[DFQuantidade_origem_TBItens_processamento] Money NULL,
+	[DFFator_conversao_TBItens_processamento] Money NULL,
+	[FKId_destino_TBProduto] Integer NOT NULL,
+	[DFQuantidade_destino_TBItens_processamento] Money NULL,
+Primary Key ([PKId_TBItens_processamento])
+) 
+go
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Alter table [TBSubmenu] add  foreign key([FKId_TBMenu]) references [TBMenu] ([PKId_TBMenu])  on update no action on delete no action 
+go
+Alter table [PKTBProgramas] add  foreign key([FKId_TBMenu]) references [TBMenu] ([PKId_TBMenu])  on update no action on delete no action 
+go
+Alter table [TBModulo] add  foreign key([FKId_TBSubmenu]) references [TBSubmenu] ([PKId_TBSubmenu])  on update no action on delete no action 
+go
+Alter table [TBAcessibilidade] add  foreign key([FKId_TBModulo]) references [TBModulo] ([PKId_TBModulo])  on update no action on delete no action 
+go
+Alter table [TBAcessibilidade_grupo] add  foreign key([FKId_TBModulo]) references [TBModulo] ([PKId_TBModulo])  on update no action on delete no action 
+go
+Alter table [TBAcessibilidade] add  foreign key([FKCodigo_TBUsuario]) references [TBUsuario] ([PKCodigo_TBUsuario])  on update no action on delete no action 
+go
+Alter table [TBUsuario_grupo] add  foreign key([FKCodigo_TBUsuario]) references [TBUsuario] ([PKCodigo_TBUsuario])  on update no action on delete no action 
+go
+Alter table [dbo].[TBLogradouro] add  foreign key([FKBairro_seq_inicial_TBLogradouro]) references [dbo].[TBBairro] ([PKCodigo_TBBairro])  on update no action on delete no action 
+go
+Alter table [dbo].[TBLogradouro] add  foreign key([FKCodigo_cidade_TBLogradouro]) references [dbo].[TBCidade] ([PKCodigo_TBCidade])  on update no action on delete no action 
+go
+Alter table [TBUsuario] add  foreign key([FKCodigo_TBEmpresa]) references [TBEmpresa] ([PKCodigo_TBEmpresa])  on update no action on delete no action 
+go
+Alter table [TBCliente] add  foreign key([IXCodigo_TBEmpresa]) references [TBEmpresa] ([PKCodigo_TBEmpresa])  on update no action on delete no action 
+go
+Alter table [TBFornecedor] add  foreign key([IXCodigo_TBEmpresa]) references [TBEmpresa] ([PKCodigo_TBEmpresa])  on update no action on delete no action 
+go
+Alter table [TBProduto] add  foreign key([IXCodigo_TBEmpresa]) references [TBEmpresa] ([PKCodigo_TBEmpresa])  on update no action on delete no action 
+go
+Alter table [TBParametros_gerais] add  foreign key([FKCodigo_TBEmpresa]) references [TBEmpresa] ([PKCodigo_TBEmpresa])  on update no action on delete no action 
+go
+Alter table [TBPlano_pagamento] add  foreign key([IXCodigo_TBEmpresa]) references [TBEmpresa] ([PKCodigo_TBEmpresa])  on update no action on delete no action 
+go
+Alter table [TBParametros_venda] add  foreign key([IXCodigo_TBEmpresa]) references [TBEmpresa] ([PKCodigo_TBEmpresa])  on update no action on delete no action 
+go
+Alter table [TBHistorico_padrao] add  foreign key([FKCodigo_TBEmpresa]) references [TBEmpresa] ([PKCodigo_TBEmpresa])  on update no action on delete no action 
+go
+Alter table [TBTitulo_receber] add  foreign key([FKCodigo_TBEmpresa]) references [TBEmpresa] ([PKCodigo_TBEmpresa])  on update no action on delete no action 
+go
+Alter table [TBCaixa] add  foreign key([FKCodigo_TBEmpresa]) references [TBEmpresa] ([PKCodigo_TBEmpresa])  on update no action on delete no action 
+go
+Alter table [TBTitulo_pagar] add  foreign key([FKCodigo_TBEmpresa]) references [TBEmpresa] ([PKCodigo_TBEmpresa])  on update no action on delete no action 
+go
+Alter table [TBParametros_fiscais] add  foreign key([FKCodigo_TBEmpresa]) references [TBEmpresa] ([PKCodigo_TBEmpresa])  on update no action on delete no action 
+go
+Alter table [TBTabela_preco] add  foreign key([FKCodigo_TBEmpresa]) references [TBEmpresa] ([PKCodigo_TBEmpresa])  on update no action on delete no action 
+go
+Alter table [TBNota_saida] add  foreign key([FKCodigo_TBEmpresa]) references [TBEmpresa] ([PKCodigo_TBEmpresa])  on update no action on delete no action 
+go
+Alter table [TBNota_entrada] add  foreign key([FKCodigo_TBEmpresa]) references [TBEmpresa] ([PKCodigo_TBEmpresa])  on update no action on delete no action 
+go
+Alter table [TBParametros_ecf] add  foreign key([FKCodigo_TBEmpresa]) references [TBEmpresa] ([PKCodigo_TBEmpresa])  on update no action on delete no action 
+go
+Alter table [TBOperadores_ecf] add  foreign key([FKCodigo_TBEmpresa]) references [TBEmpresa] ([PKCodigo_TBEmpresa])  on update no action on delete no action 
+go
+Alter table [TBOrdem_compra] add  foreign key([FKCodigo_TBEmpresa]) references [TBEmpresa] ([PKCodigo_TBEmpresa])  on update no action on delete no action 
+go
+Alter table [TBCompra_empresa] add  foreign key([FKCodigo_TBEmpresa]) references [TBEmpresa] ([PKCodigo_TBEmpresa])  on update no action on delete no action 
+go
+Alter table [TBOperacao_caixa] add  foreign key([FKCodigo_TBEmpresa]) references [TBEmpresa] ([PKCodigo_TBEmpresa])  on update no action on delete no action 
+go
+Alter table [TBTitulo_pagar_credito_cliente] add  foreign key([FKCodigo_TBEmpresa]) references [TBEmpresa] ([PKCodigo_TBEmpresa])  on update no action on delete no action 
+go
+Alter table [TBCheque] add  foreign key([FKCodigo_TBEmpresa]) references [TBEmpresa] ([PKCodigo_TBEmpresa])  on update no action on delete no action 
+go
+Alter table [TBTelefone_empresa] add  foreign key([FKCodigo_TBEmpresa]) references [TBEmpresa] ([PKCodigo_TBEmpresa])  on update no action on delete no action 
+go
+Alter table [TBCliente] add  foreign key([FKId_TBCidade_otica]) references [TBCidade_otica] ([PKId_TBCidade_otica])  on update no action on delete no action 
+go
+Alter table [TBFornecedor] add  foreign key([FKId_TBCidade_otica]) references [TBCidade_otica] ([PKId_TBCidade_otica])  on update no action on delete no action 
+go
+Alter table [TBTransportadora] add  foreign key([FKId_TBCidade_otica]) references [TBCidade_otica] ([PKId_TBCidade_otica])  on update no action on delete no action 
+go
+Alter table [TBAgenda_pessoal] add  foreign key([FKId_TBCidade_otica]) references [TBCidade_otica] ([PKId_TBCidade_otica])  on update no action on delete no action 
+go
+Alter table [TBProduto] add  foreign key([FKCodigo_TBSecao]) references [TBSecao] ([PKCodigo_TBSecao])  on update no action on delete no action 
+go
+Alter table [TBCodigo_barras] add  foreign key([FKId_TBProduto]) references [TBProduto] ([PKId_TBProduto])  on update no action on delete no action 
+go
+Alter table [TBProduto_Fornecedor] add  foreign key([FKId_TBProduto]) references [TBProduto] ([PKId_TBProduto])  on update no action on delete no action 
+go
+Alter table [TBEstado_icms] add  foreign key([FKId_TBProduto]) references [TBProduto] ([PKId_TBProduto])  on update no action on delete no action 
+go
+Alter table [TBItens_tabela_preco] add  foreign key([FKId_TBProduto]) references [TBProduto] ([PKId_TBProduto])  on update no action on delete no action 
+go
+Alter table [TBOcorrencia_produto] add  foreign key([FKId_TBProduto]) references [TBProduto] ([PKId_TBProduto])  on update no action on delete no action 
+go
+Alter table [TBItens_nota_saida] add  foreign key([FKId_TBProduto]) references [TBProduto] ([PKId_TBProduto])  on update no action on delete no action 
+go
+Alter table [TBItens_nota_entrada] add  foreign key([FKId_TBProduto]) references [TBProduto] ([PKId_TBProduto])  on update no action on delete no action 
+go
+Alter table [TBComposicao_produto] add  foreign key([FKId_TBProduto]) references [TBProduto] ([PKId_TBProduto])  on update no action on delete no action 
+go
+Alter table [TBItens_ordem_compra] add  foreign key([FKId_TBProduto]) references [TBProduto] ([PKId_TBProduto])  on update no action on delete no action 
+go
+Alter table [TBLote_entrada] add  foreign key([FKId_TBProduto]) references [TBProduto] ([PKId_TBProduto])  on update no action on delete no action 
+go
+Alter table [TBEstoque_Lote_enderecado_produto] add  foreign key([FKId_TBProduto]) references [TBProduto] ([PKId_TBProduto])  on update no action on delete no action 
+go
+Alter table [TBItens_inventario] add  foreign key([FKId_TBProduto]) references [TBProduto] ([PKId_TBProduto])  on update no action on delete no action 
+go
+Alter table [TBItens_requisicao] add  foreign key([FKId_TBProduto]) references [TBProduto] ([PKId_TBProduto])  on update no action on delete no action 
+go
+Alter table [TBItens_processamento] add  foreign key([FKId_origem_TBProduto]) references [TBProduto] ([PKId_TBProduto])  on update no action on delete no action 
+go
+Alter table [TBItens_processamento] add  foreign key([FKId_destino_TBProduto]) references [TBProduto] ([PKId_TBProduto])  on update no action on delete no action 
+go
+Alter table [TBAgenda_fornecedor] add  foreign key([FKId_TBFornecedor]) references [TBFornecedor] ([PKId_TBFornecedor])  on update no action on delete no action 
+go
+Alter table [TBProduto_Fornecedor] add  foreign key([FKId_TBFornecedor]) references [TBFornecedor] ([PKId_TBFornecedor])  on update no action on delete no action 
+go
+Alter table [TBTitulo_pagar] add  foreign key([FKId_TBFornecedor]) references [TBFornecedor] ([PKId_TBFornecedor])  on update no action on delete no action 
+go
+Alter table [TBBanco_Fornecedor] add  foreign key([FKId_TBFornecedor]) references [TBFornecedor] ([PKId_TBFornecedor])  on update no action on delete no action 
+go
+Alter table [TBOrdem_compra] add  foreign key([FKId_TBFornecedor]) references [TBFornecedor] ([PKId_TBFornecedor])  on update no action on delete no action 
+go
+Alter table [TBAgregado_veiculo] add  foreign key([FKId_TBFornecedor]) references [TBFornecedor] ([PKId_TBFornecedor])  on update no action on delete no action 
+go
+Alter table [TBTitulo_receber] add  foreign key([FKId_TBCliente]) references [TBCliente] ([PKId_TBCliente])  on update no action on delete no action 
+go
+Alter table [TBAgenda_cliente] add  foreign key([FKId_TBCliente]) references [TBCliente] ([PKId_TBCliente])  on update no action on delete no action 
+go
+Alter table [TBTitulo_pagar_credito_cliente] add  foreign key([FKId_TBCliente]) references [TBCliente] ([PKId_TBCliente])  on update no action on delete no action 
+go
+Alter table [TBCheque] add  foreign key([FKId_TBCliente]) references [TBCliente] ([PKId_TBCliente])  on update no action on delete no action 
+go
+Alter table [TBCliente] add  foreign key([FKCodigo_TBStatus]) references [TBStatus] ([PkCodigo_TBStatus])  on update no action on delete no action 
+go
+Alter table [TBTitulo_pagar] add  foreign key([FKCodigo_TBBancos]) references [TBBancos] ([PKCodigo_TBBancos])  on update no action on delete no action 
+go
+Alter table [TBConta_corrente] add  foreign key([FKCodigo_TBBancos]) references [TBBancos] ([PKCodigo_TBBancos])  on update no action on delete no action 
+go
+Alter table [TBTitulo_receber] add  foreign key([FKCodigo_TBBancos]) references [TBBancos] ([PKCodigo_TBBancos])  on update no action on delete no action 
+go
+Alter table [TBParametros_gerais] add  foreign key([FKCodigo_TBBancos]) references [TBBancos] ([PKCodigo_TBBancos])  on update no action on delete no action 
+go
+Alter table [TBBanco_Fornecedor] add  foreign key([FKCodigo_TBBancos]) references [TBBancos] ([PKCodigo_TBBancos])  on update no action on delete no action 
+go
+Alter table [TBCheque] add  foreign key([FKCodigo_TBBancos]) references [TBBancos] ([PKCodigo_TBBancos])  on update no action on delete no action 
+go
+Alter table [TBDias_pagamento] add  foreign key([FKId_TBPlano_pagamento]) references [TBPlano_pagamento] ([PKId_TBPlano_pagamento])  on update no action on delete no action 
+go
+Alter table [TBNota_saida] add  foreign key([FKId_TBPlano_pagamento]) references [TBPlano_pagamento] ([PKId_TBPlano_pagamento])  on update no action on delete no action 
+go
+Alter table [TBNota_entrada] add  foreign key([FKId_TBPlano_pagamento]) references [TBPlano_pagamento] ([PKId_TBPlano_pagamento])  on update no action on delete no action 
+go
+Alter table [TBTitulo_pagar] add  foreign key([FKId_TBPlano_pagamento]) references [TBPlano_pagamento] ([PKId_TBPlano_pagamento])  on update no action on delete no action 
+go
+Alter table [TBCaixa] add  foreign key([FKId_TBHistorico_padrao]) references [TBHistorico_padrao] ([PKId_TBHistorico_padrao])  on update no action on delete no action 
+go
+Alter table [TBLancamento_banco] add  foreign key([FKId_TBHistorico_padrao]) references [TBHistorico_padrao] ([PKId_TBHistorico_padrao])  on update no action on delete no action 
+go
+Alter table [TBTitulo_recebido] add  foreign key([FKId_TBTitulo_receber]) references [TBTitulo_receber] ([PKId_TBTitulo_receber])  on update no action on delete no action 
+go
+Alter table [TBTitulo_nota_saida] add  foreign key([FKId_TBTitulo_receber]) references [TBTitulo_receber] ([PKId_TBTitulo_receber])  on update no action on delete no action 
+go
+Alter table [TBTitulo_pago] add  foreign key([FKId_TBTitulo_pagar]) references [TBTitulo_pagar] ([PKId_TBTitulo_pagar])  on update no action on delete no action 
+go
+Alter table [TBTitulo_pagar_nota_entrada] add  foreign key([FKId_TBTitulo_pagar]) references [TBTitulo_pagar] ([PKId_TBTitulo_pagar])  on update no action on delete no action 
+go
+Alter table [TBCentro_custo_pagar] add  foreign key([FKId_TBTitulo_pagar]) references [TBTitulo_pagar] ([PKId_TBTitulo_pagar])  on update no action on delete no action 
+go
+Alter table [TBMes_competencia_pagar] add  foreign key([FKId_TBTitulo_pagar]) references [TBTitulo_pagar] ([PKId_TBTitulo_pagar])  on update no action on delete no action 
+go
+Alter table [TBNota_saida] add  foreign key([FKCodigo_TBTransportadora]) references [TBTransportadora] ([PKCodigo_TBTransportadora])  on update no action on delete no action 
+go
+Alter table [TBCfop_pedido] add  foreign key([FKId_TBCfop]) references [TBCfop] ([PKId_TBCfop])  on update no action on delete no action 
+go
+Alter table [TBItens_nota_saida] add  foreign key([FKId_TBCfop]) references [TBCfop] ([PKId_TBCfop])  on update no action on delete no action 
+go
+Alter table [TBCfop_nota_saida] add  foreign key([FKId_TBCfop]) references [TBCfop] ([PKId_TBCfop])  on update no action on delete no action 
+go
+Alter table [TBItens_nota_entrada] add  foreign key([FKId_TBCfop]) references [TBCfop] ([PKId_TBCfop])  on update no action on delete no action 
+go
+Alter table [TBCfop_nota_entrada] add  foreign key([FKId_TBCfop]) references [TBCfop] ([PKId_TBCfop])  on update no action on delete no action 
+go
+Alter table [TBOrdem_compra] add  foreign key([FKCodigo_TBComprador]) references [TBComprador] ([PKCodigo_TBComprador])  on update no action on delete no action 
+go
+Alter table [TBItens_tabela_preco] add  foreign key([FKCodigo_TBTabela_preco]) references [TBTabela_preco] ([PKCodigo_TBTabela_preco])  on update no action on delete no action 
+go
+Alter table [TBNota_saida] add  foreign key([FKCodigo_TBTabela_preco]) references [TBTabela_preco] ([PKCodigo_TBTabela_preco])  on update no action on delete no action 
+go
+Alter table [TBProduto] add  foreign key([FKCodigo_Fabricante]) references [TBFabricante] ([PKCodigo_TBFabricante])  on update no action on delete no action 
+go
+Alter table [TBFornecedor] add  foreign key([FKCodigo_TBRamo_atividade]) references [TBRamo_atividade] ([PKCodigo_TBRamo_atividade])  on update no action on delete no action 
+go
+Alter table [TBImpostos_nota_saida] add  foreign key([FKId_TBNota_saida]) references [TBNota_saida] ([PKId_TBNota_saida])  on update no action on delete no action 
+go
+Alter table [TBItens_nota_saida] add  foreign key([FKId_TBNota_saida]) references [TBNota_saida] ([PKId_TBNota_saida])  on update no action on delete no action 
+go
+Alter table [TBCfop_nota_saida] add  foreign key([FKId_TBNota_saida]) references [TBNota_saida] ([PKId_TBNota_saida])  on update no action on delete no action 
+go
+Alter table [TBTitulo_nota_saida] add  foreign key([FKId_TBNota_saida]) references [TBNota_saida] ([PKId_TBNota_saida])  on update no action on delete no action 
+go
+Alter table [TBPedido_devolucao] add  foreign key([FKId_TBNota_saida]) references [TBNota_saida] ([PKId_TBNota_saida])  on update no action on delete no action 
+go
+Alter table [TBNota_devolucao] add  foreign key([FKId_TBNota_saida]) references [TBNota_saida] ([PKId_TBNota_saida])  on update no action on delete no action 
+go
+Alter table [TBEstoque_Lote_enderecado_nota_saida] add  foreign key([FKId_TBItens_nota_saida]) references [TBItens_nota_saida] ([PKId_TBItens_nota_saida])  on update no action on delete no action 
+go
+Alter table [TBLote_entrada] add  foreign key([FKId_TBItens_nota_entrada]) references [TBItens_nota_entrada] ([PKId_TBItens_nota_entrada])  on update no action on delete no action 
+go
+Alter table [TBItens_nota_entrada] add  foreign key([FKId_TBNota_entrada]) references [TBNota_entrada] ([PKId_TBNota_entrada])  on update no action on delete no action 
+go
+Alter table [TBImpostos_nota_entrada] add  foreign key([FKId_TBNota_entrada]) references [TBNota_entrada] ([PKId_TBNota_entrada])  on update no action on delete no action 
+go
+Alter table [TBCfop_nota_entrada] add  foreign key([FKId_TBNota_entrada]) references [TBNota_entrada] ([PKId_TBNota_entrada])  on update no action on delete no action 
+go
+Alter table [TBTitulo_pagar_nota_entrada] add  foreign key([FKId_TBNota_entrada]) references [TBNota_entrada] ([PKId_TBNota_entrada])  on update no action on delete no action 
+go
+Alter table [TBNota_devolucao] add  foreign key([FKId_TBNota_entrada]) references [TBNota_entrada] ([PKId_TBNota_entrada])  on update no action on delete no action 
+go
+Alter table [TBLancamento_banco] add  foreign key([FKd_TBConta_corrente]) references [TBConta_corrente] ([PkId_TBConta_corrente])  on update no action on delete no action 
+go
+Alter table [TBCentro_custo_pagar] add  foreign key([FKId_TBCentro_custo]) references [TBCentro_custo] ([PKId_TBCentro_custo])  on update no action on delete no action 
+go
+Alter table [TBOperacao_caixa] add  foreign key([FKCodigo_TBOperadores_ecf]) references [TBOperadores_ecf] ([PKCodigo_TBOperadores_ecf])  on update no action on delete no action 
+go
+Alter table [TBOperacao_caixa] add  foreign key([FKCofigo_TBPdv]) references [TBPdv] ([PKCodigo_TBPdv])  on update no action on delete no action 
+go
+Alter table [TBPdv] add  foreign key([FKCodigo_TBImpressoras_ecf]) references [TBImpressoras_ecf] ([PKCodigo_TBImpressoras_ecf])  on update no action on delete no action 
+go
+Alter table [TBOperacao_caixa] add  foreign key([FKId_TBFinalizadora]) references [TBFinalizadora] ([PKId_TBFinalizadora])  on update no action on delete no action 
+go
+Alter table [TBItens_ordem_compra] add  foreign key([FKId_TBOrdem_compra]) references [TBOrdem_compra] ([PKId_TBOrdem_compra])  on update no action on delete no action 
+go
+Alter table [TBCheque_list_ordem_compra] add  foreign key([FKId_TBOrdem_compra]) references [TBOrdem_compra] ([PKId_TBOrdem_compra])  on update no action on delete no action 
+go
+Alter table [TBDesconto_itens_ordem_compra] add  foreign key([FKId_TBItens_ordem_compra]) references [TBItens_ordem_compra] ([PKId_TBItens_ordem_compra])  on update no action on delete no action 
+go
+Alter table [TBCompra_empresa] add  foreign key([FKId_TBItens_ordem_compra]) references [TBItens_ordem_compra] ([PKId_TBItens_ordem_compra])  on update no action on delete no action 
+go
+Alter table [TBConferencia_Itens_ordem_compra] add  foreign key([FKId_TBItens_ordem_compra]) references [TBItens_ordem_compra] ([PKId_TBItens_ordem_compra])  on update no action on delete no action 
+go
+Alter table [TBTitulo_pago_credito_cliente] add  foreign key([FKId_TBTitulo_pago_credito_cliente]) references [TBTitulo_pagar_credito_cliente] ([PKId_TBTitulo_pagar_credito_cliente])  on update no action on delete no action 
+go
+Alter table [TBCheque] add  foreign key([FKCodigo_TBAlineas]) references [TBAlineas] ([PKCodigo_TBAlineas])  on update no action on delete no action 
+go
+Alter table [TBCheque_Baixado] add  foreign key([FKId_TBCheque]) references [TBCheque] ([PKId_TBCheque])  on update no action on delete no action 
+go
+Alter table [TBItens_inventario] add  foreign key([FKId_TBInventario]) references [TBInventario] ([PKId_TBInventario])  on update no action on delete no action 
+go
+Alter table [TBEnderecamento_estoque] add  foreign key([FKid_TBCentro_estoque]) references [TBCentro_estoque] ([PKid_TBCentro_estoque])  on update no action on delete no action 
+go
+Alter table [TBEstoque_Lote_enderecado_nota_saida] add  foreign key([FKid_TBCentro_estoque]) references [TBCentro_estoque] ([PKid_TBCentro_estoque])  on update no action on delete no action 
+go
+Alter table [TBEstoque_Lote_enderecado_pedido] add  foreign key([FKid_TBCentro_estoque]) references [TBCentro_estoque] ([PKid_TBCentro_estoque])  on update no action on delete no action 
+go
+Alter table [TBInventario] add  foreign key([FKid_TBCentro_estoque]) references [TBCentro_estoque] ([PKid_TBCentro_estoque])  on update no action on delete no action 
+go
+Alter table [TBRequisicao] add  foreign key([FKid_TBCentro_estoque_origem]) references [TBCentro_estoque] ([PKid_TBCentro_estoque])  on update no action on delete no action 
+go
+Alter table [TBRequisicao] add  foreign key([FKid_TBCentro_estoque_destino]) references [TBCentro_estoque] ([PKid_TBCentro_estoque])  on update no action on delete no action 
+go
+Alter table [TBProcessamendo] add  foreign key([FKid_origemTBCentro_estoque]) references [TBCentro_estoque] ([PKid_TBCentro_estoque])  on update no action on delete no action 
+go
+Alter table [TBProcessamendo] add  foreign key([FKid_destino_TBCentro_estoque]) references [TBCentro_estoque] ([PKid_TBCentro_estoque])  on update no action on delete no action 
+go
+Alter table [TBCheque_list_ordem_compra] add  foreign key([FKCodigo_TBSeparador]) references [TBSeparador] ([PKCodigo_TBSeparador])  on update no action on delete no action 
+go
+Alter table [TBCheque_list_ordem_compra] add  foreign key([FKCodigo_conferente_TBSeparador]) references [TBSeparador] ([PKCodigo_TBSeparador])  on update no action on delete no action 
+go
+Alter table [TBInventario] add  foreign key([FKCodigo_TBSeparador]) references [TBSeparador] ([PKCodigo_TBSeparador])  on update no action on delete no action 
+go
+Alter table [TBRequisicao] add  foreign key([FKCodigo_origem_TBSeparador]) references [TBSeparador] ([PKCodigo_TBSeparador])  on update no action on delete no action 
+go
+Alter table [TBRequisicao] add  foreign key([FKCodigo_destino_TBSeparador]) references [TBSeparador] ([PKCodigo_TBSeparador])  on update no action on delete no action 
+go
+Alter table [TBProcessamendo] add  foreign key([FKCodigo_origem_TBSeparador]) references [TBSeparador] ([PKCodigo_TBSeparador])  on update no action on delete no action 
+go
+Alter table [TBProcessamendo] add  foreign key([FKCodigo_destino_TBSeparador]) references [TBSeparador] ([PKCodigo_TBSeparador])  on update no action on delete no action 
+go
+Alter table [TBConferencia_Itens_ordem_compra] add  foreign key([FKId_TBCheque_list_ordem_compra]) references [TBCheque_list_ordem_compra] ([PKId_TBCheque_list_ordem_compra])  on update no action on delete no action 
+go
+Alter table [TBEstoque_Lote_enderecado_ordem_compra] add  foreign key([FKId_TBConferencia_Itens_ordem_compra]) references [TBConferencia_Itens_ordem_compra] ([PKId_TBConferencia_Itens_ordem_compra])  on update no action on delete no action 
+go
+Alter table [TBEstoque_Lote_enderecado_ordem_compra] add  foreign key([FKid_TBEnderecamento_estoque]) references [TBEnderecamento_estoque] ([PKid_TBEnderecamento_estoque])  on update no action on delete no action 
+go
+Alter table [TBEstoque_Lote_enderecado_produto] add  foreign key([FKid_TBEnderecamento_estoque]) references [TBEnderecamento_estoque] ([PKid_TBEnderecamento_estoque])  on update no action on delete no action 
+go
+Alter table [TBItens_requisicao] add  foreign key([FKId_TBRequisicao]) references [TBRequisicao] ([PKId_TBRequisicao])  on update no action on delete no action 
+go
+Alter table [TBItens_processamento] add  foreign key([FKId_TBProcessamendo]) references [TBProcessamendo] ([PKId_TBProcessamendo])  on update no action on delete no action 
+go
+
+
+Set quoted_identifier on
+go
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Set quoted_identifier off
+go
+
+
+
+
+
+
+
+
+/* Roles permissions */
+
+
+
+
+
+/* Users permissions */
+
+
+
+
+
+

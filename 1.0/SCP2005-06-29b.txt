@@ -1,0 +1,2 @@
+update TBParametros_venda 
+set DFPerfil_faturamento_TBParametros_venda = 0

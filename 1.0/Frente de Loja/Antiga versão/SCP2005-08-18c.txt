@@ -1,0 +1,104 @@
+/*
+Created		27/5/2003
+Modified		18/8/2005
+Project		Only Tech - ERP
+Model			Olt
+Company		Only Tech
+Author		Only Tech
+Version		1.0
+Database		MS SQL 2000 
+*/
+
+
+go
+
+Create table [TBEncerrante]
+(
+	[PKId_TBEncerrante] Integer Identity NOT NULL,
+	[FKCodigo_TBPdv] Integer NOT NULL,
+	[FKCodigo_TBOperadores_ecf] Integer NOT NULL,
+	[DFData_TBEncerrante] Smalldatetime NOT NULL,
+	[DFHora_TBEncerrante] Nvarchar(10) NULL,
+	[DFAbertura_fechamento_TBEncerrante] Bit NULL,
+Primary Key ([PKId_TBEncerrante])
+) 
+go
+
+Create table [TBEncerrante_Bomba]
+(
+	[PKId_TBEncerrante_Bomba] Integer Identity NOT NULL,
+	[FKId_TBBomba_bico] Integer NOT NULL,
+	[FKId_TBEncerrante] Integer NOT NULL,
+	[DFEncerrante_TBEncerrante_Bomba] Money NOT NULL,
+Primary Key ([PKId_TBEncerrante_Bomba])
+) 
+go
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Alter table [TBEncerrante] add  foreign key([FKCodigo_TBOperadores_ecf]) references [TBOperadores_ecf] ([PKCodigo_TBOperadores_ecf])  on update no action on delete no action 
+go
+Alter table [TBEncerrante] add  foreign key([FKCodigo_TBPdv]) references [TBPdv] ([PKCodigo_TBPdv])  on update no action on delete no action 
+go
+Alter table [TBEncerrante_Bomba] add  foreign key([FKId_TBBomba_bico]) references [TBBomba_bico] ([PKId_TBBomba])  on update no action on delete no action 
+go
+Alter table [TBEncerrante_Bomba] add  foreign key([FKId_TBEncerrante]) references [TBEncerrante] ([PKId_TBEncerrante])  on update no action on delete no action 
+go
+
+
+Set quoted_identifier on
+go
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Set quoted_identifier off
+go
+
+
+
+
+
+
+
+
+/* Roles permissions */
+
+
+
+
+
+/* Users permissions */
+
+
+
+
+
+

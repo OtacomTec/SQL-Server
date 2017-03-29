@@ -1,0 +1,86 @@
+BEGIN TRANSACTION
+/*
+ *** IDENTIFICAÇÃO DO SCRIPT ***
+
+ 1 - Apartir de 20/12/2005, fica expressamente proibida a criação de scripts sem que seja preenchido este cabeçalho
+ 2 - Obrigatoriamente necessário que este paragrafo seja inserido apos um BEGIN TRANSACTION
+ 3 - Obrigatoriamente o preenchimento das variaveis abaixo(@Nomenclatura,@Observacao,@Data)com valores correspondentes e condizentes
+ Att: Marcos
+
+*/
+
+--INICIO CABECALHO
+
+declare @Nomenclatura as nvarchar(20)
+declare @Observacao as nvarchar(100)
+declare @Data as SMALLDATETIME
+
+SET @Nomenclatura = 'SCP2014-04-11a'
+SET @Observacao = 'Cria a Tabela [TBTomada_preco], excluindo a anterior'
+SET @Data = CURRENT_TIMESTAMP
+
+---LIMPEZA DA TABELA
+
+DELETE FROM TBSCRIPT
+
+---INSERCAO DO REGISTRO
+
+INSERT INTO BDRetaguarda.dbo.TBSCRIPT(DFNome_TBScript,DFObjetivo_TBScript,DFData_execucao_TBScript)
+VALUES(@Nomenclatura,@Observacao,@Data)
+
+---FIM CABECALHO\
+
+ 
+DROP TABLE [TBTomada_preco]
+
+CREATE TABLE [TBTomada_preco](
+	[PKid_TBTomada_preco] [int] IDENTITY(1,1) NOT NULL,
+	[FKId_TBCliente] [int] NOT NULL,
+	[FKCodigo_TBEmpresa] [int] NOT NULL,
+	[DFNumero_edital_TBTomada_preco] [nvarchar](20) NULL,
+	[DFNumero_tp_TBTomada_preco] [nvarchar](20) NULL,
+	[DFData_edital_TBTomada_preco] [smalldatetime] NULL,
+	[DFData_cadastro_TBTomada_preco] [smalldatetime] NULL,
+	[DFData_entrega_cotacao_TBTomada_preco] [smalldatetime] NULL,	
+	[DFData_cotacao_precos_itens_TBTomada_preco] [smalldatetime] NULL,
+	[DFData_fechamento_cotacao_TBTomada_preco] [smalldatetime] NULL,
+	[DFData_resultado_cotacao_TBTomada_preco] [smalldatetime] NULL,
+	[DFData_impugnacao_proposta_TBTomada_preco] [smalldatetime] NULL,
+	[DFStatus_TBTomada_preco] [int] NULL,
+	[DFObservacao_TBTomada_preco] [nvarchar](500) NULL,
+	[DFIntegrado_portal_TBTomada_Preco] [bit] NULL,
+	[DFIntegrado_filiais_TBTomada_preco] [bit] NULL,
+	[DFData_alteracao_TBTomada_preco] [smalldatetime] NULL,
+	[DFCodigo_Identificador_TBTomada_preco] [int] NULL,
+	[DFTipo_TBTomada_preco] [int] NULL,
+	[DFObjeto_TBTomada_preco] [nvarchar](4000) NULL,
+	[DFEmail_contato_TBTomada_preco] [nvarchar](50) NULL,
+	[DFContato_TBTomada_preco] [nvarchar](100) NULL,
+	[DFTelefone_contato_TBTomada_preco] [nvarchar](20) NULL,
+	[DFTipo_formulario_proposta_TBTomada_preco] [int] NULL,
+	[DFNumero_vias_proposta_TBTomada_preco] [int] NULL,
+	[DFNumero_casas_decimal_TBTomada_preco] [int] NULL,
+	[DFTipo_extenso_TBTomada_preco] [int] NULL,
+	[DFTipo_Julgamento_TBTomada_preco] [int] NULL,
+	[DFTipo_midia_entrega_TBTomada_preco] [int] NULL,
+	[DFPrazo_entrega_TBTomada_preco] [int] NULL,
+	[DFTempo_contrato_TBTomada_preco] [int] NULL,
+	[DFTempo_prorrogacao_contrato_TBTomada_preco] [int] NULL,
+	[DFRubricar_docs_TBTomada_preco] [bit] NULL,
+	[DFNumerar_paginas_TBTomada_preco] [bit] NULL,
+	[DFValidade_proposta_TBTomada_preco] [int] NULL,
+	[DFValor_Estimado_proposta_TBTomada_preco] [money] NULL,
+	[DFPercentual_caucao_proposta_TBTomada_preco] [money] NULL,
+	[DFValor_caucao_proposta_TBTomada_preco] [money] NULL,
+	[DFQuanto_impugnacao_proposta_TBTomada_preco] [nvarchar](4000) NULL,
+	[DFTipo_entrega_amostras_TBTomada_preco] [int] NULL,
+	[DFLocal_retirada_edital_TBTomada_preco] [nvarchar](500) NULL,
+	[DFTipo_impressao_nfe_TBTomada_preco] [int] NULL,
+	[DFUsuario_responsavel_cadastro_TBTomada_preco] [nvarchar](50) NULL,
+	[DFUsuario_responsavel_cotar_precos_itens_TBTomada_preco] [nvarchar](50) NULL,
+	[DFUsuario_responsavel_fechamento_TBTomada_preco] [nvarchar](50) NULL,
+	[DFUsuario_responsavel_lancar_resultados_TBTomada_preco] [nvarchar](50) NULL,
+	[DFUsuario_responsavel_lancar_entrega_TBTomada_preco] [nvarchar](50) NULL)
+
+
+commit transaction

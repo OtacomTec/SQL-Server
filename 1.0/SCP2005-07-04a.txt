@@ -1,0 +1,16 @@
+if exists (select * from dbo.sysobjects where id = object_id(N'[dbo].[TBPedidos_validos]') and OBJECTPROPERTY(id, N'IsUserTable') = 1)
+drop table [dbo].[TBPedidos_validos]
+GO
+
+CREATE TABLE [dbo].[TBPedidos_validos] (
+	[PKId_TBPedidos_validos] [int] IDENTITY (1, 1) NOT NULL ,
+	[DFLetra1_TBPedidos_validos] [char] (1) COLLATE Latin1_General_CI_AS NOT NULL ,
+	[DFLetra2_TBPedidos_validos] [char] (1) COLLATE Latin1_General_CI_AS NOT NULL ,
+	[DFLetra3_TBPedidos_validos] [char] (1) COLLATE Latin1_General_CI_AS NOT NULL ,
+	[DFLetra4_TBPedidos_validos] [char] (1) COLLATE Latin1_General_CI_AS NOT NULL ,
+	[DFLetra5_TBPedidos_validos] [char] (1) COLLATE Latin1_General_CI_AS NOT NULL ,
+	[DFLetra6_TBPedidos_validos] [char] (1) COLLATE Latin1_General_CI_AS NOT NULL ,
+	[DFBloqueado_TBPedidos_validos] [bit] NOT NULL 
+) ON [PRIMARY]
+GO
+

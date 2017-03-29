@@ -1,0 +1,83 @@
+/*
+Created		27/5/2003
+Modified		9/6/2005
+Project		Only Tech - ERP
+Model			Olt
+Company		Only Tech
+Author		Only Tech
+Version		1.0
+Database		MS SQL 2000 
+*/
+
+
+Create table [TBConcorrente]
+(
+	[PKCodigo_TBConcorrente] Integer NOT NULL,
+	[DFNome_TBConcorrente] Nvarchar(40) NULL,
+Primary Key ([PKCodigo_TBConcorrente])
+) 
+go
+
+Create table [TBPesquisa_preco_concorrente]
+(
+	[PKId_TBPesquisa_preco_concorrente] Integer Identity NOT NULL,
+	[FKCodigo_TBConcorrente] Integer NOT NULL,
+	[FKId_TBProduto] Integer NOT NULL,
+	[DFPreco_TBPesquisa_preco_concorrente] Money NOT NULL,
+	[DFData_TBPesquisa_preco_concorrente] Smalldatetime NOT NULL,
+Primary Key ([PKId_TBPesquisa_preco_concorrente])
+) 
+go
+
+
+Alter table [TBPesquisa_preco_concorrente] add  foreign key([FKId_TBProduto]) references [TBProduto] ([PKId_TBProduto])  on update no action on delete no action 
+go
+Alter table [TBPesquisa_preco_concorrente] add  foreign key([FKCodigo_TBConcorrente]) references [TBConcorrente] ([PKCodigo_TBConcorrente])  on update no action on delete no action 
+go
+
+
+Set quoted_identifier on
+go
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Set quoted_identifier off
+go
+
+
+
+
+
+
+
+
+/* Roles permissions */
+
+
+
+
+
+/* Users permissions */
+
+
+
+
+
+

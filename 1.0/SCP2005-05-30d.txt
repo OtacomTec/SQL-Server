@@ -1,0 +1,2 @@
+Update  dbo.TBFornecedor 
+set DFInativo_TBFornecedor = 0

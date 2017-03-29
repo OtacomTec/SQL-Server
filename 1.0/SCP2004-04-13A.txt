@@ -1,0 +1,108 @@
+/*
+Created		27/5/2003
+Modified		13/4/2004
+Project		
+Model		
+Company		
+Author		
+Version		
+Database		MS SQL 2000 
+*/
+
+
+Create table [TBMovimento_pagamento] (
+	[PKId_TBMovimento_pagamento] Integer Identity NOT NULL,
+	[FKCodigo_TBFuncionario] Integer NOT NULL,
+	[DFMes_ano_TBMovimento_pagamento] Smalldatetime NOT NULL,
+	[DFLabel_creditar1_TBMovimento_pagamento] Nvarchar(30) NULL,
+	[DFValor_creditar1_TBMovimento_pagamento] Money NULL,
+	[DFLabel_creditar2_TBMovimento_pagamento] Nvarchar(30) NULL,
+	[DFValor_creditar2_TBMovimento_pagamento] Money NULL,
+	[DFLabel_creditar3_TBMovimento_pagamento] Nvarchar(30) NULL,
+	[DFValor_creditar3_TBMovimento_pagamento] Money NULL,
+	[DFLabel_creditar4_TBMovimento_pagamento] Nvarchar(30) NULL,
+	[DFValor_creditar4_TBMovimento_pagamento] Money NULL,
+	[DFLabel_creditar5_TBMovimento_pagamento] Nvarchar(30) NULL,
+	[DFValor_creditar5_TBMovimento_pagamento] Money NULL,
+	[DFLabel_creditar6_TBMovimento_pagamento] Nvarchar(30) NULL,
+	[DFValor_creditar6_TBMovimento_pagamento] Money NULL,
+	[DFLabel_creditar7_TBMovimento_pagamento] Nvarchar(30) NULL,
+	[DFValor_creditar7_TBMovimento_pagamento] Money NULL,
+	[DFLabel_creditar8_TBMovimento_pagamento] Nvarchar(30) NULL,
+	[DFValor_creditar8_TBMovimento_pagamento] Money NULL,
+	[DFLabel_creditar9_TBMovimento_pagamento] Nvarchar(30) NULL,
+	[DFValor_creditar9_TBMovimento_pagamento] Money NULL,
+	[DFLabel_creditar10_TBMovimento_pagamento] Nvarchar(30) NULL,
+	[DFValor_creditar10_TBMovimento_pagamento] Money NULL,
+	[DFValor_total_creditar_TBMovimento_pagamento] Money NULL,
+	[DFLabel_debitar1_TBMovimento_pagamento] Nvarchar(30) NULL,
+	[DFValor_debitar1_TBMovimento_pagamento] Money NULL,
+	[DFLabel_debitar2_TBMovimento_pagamento] Nvarchar(30) NULL,
+	[DFValor_debitar2_TBMovimento_pagamento] Money NULL,
+	[DFLabel_debitar3_TBMovimento_pagamento] Nvarchar(30) NULL,
+	[DFValor_debitar3_TBMovimento_pagamento] Money NULL,
+	[DFLabel_debitar4_TBMovimento_pagamento] Nvarchar(30) NULL,
+	[DFValor_debitar4_TBMovimento_pagamento] Money NULL,
+	[DFLabel_debitar5_TBMovimento_pagamento] Nvarchar(30) NULL,
+	[DFValor_debitar5_TBMovimento_pagamento] Money NULL,
+	[DFLabel_debitar6_TBMovimento_pagamento] Nvarchar(30) NULL,
+	[DFValor_debitar6_TBMovimento_pagamento] Money NULL,
+	[DFLabel_debitar7_TBMovimento_pagamento] Nvarchar(30) NULL,
+	[DFValor_debitar7_TBMovimento_pagamento] Money NULL,
+	[DFLabel_debitar8_TBMovimento_pagamento] Nvarchar(30) NULL,
+	[DFValor_debitar8_TBMovimento_pagamento] Money NULL,
+	[DFLabel_debitar9_TBMovimento_pagamento] Nvarchar(30) NULL,
+	[DFValor_debitar9_TBMovimento_pagamento] Money NULL,
+	[DFLabel_debitar10_TBMovimento_pagamento] Nvarchar(30) NULL,
+	[DFValor_debitar10_TBMovimento_pagamento] Money NULL,
+	[DFValor_total_debitar_TBMovimento_pagamento] Money NULL,
+	[DFValor_receber_TBMovimento_pagamento] Money NULL,
+Primary Key ([PKId_TBMovimento_pagamento])
+) 
+go
+
+
+
+
+
+Alter table [TBMovimento_pagamento] add  foreign key([FKCodigo_TBFuncionario]) references [TBFuncionario] ([PKCodigo_TBFuncionario])  on update no action on delete no action 
+go
+
+
+Set quoted_identifier on
+go
+
+
+
+
+
+
+
+
+
+
+
+
+Set quoted_identifier off
+go
+
+
+
+
+
+
+
+
+/* Roles permissions */
+
+
+
+
+
+/* Users permissions */
+
+
+
+
+
+

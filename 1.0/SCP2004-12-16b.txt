@@ -1,0 +1,136 @@
+/*
+Created		27/5/2003
+Modified		15/12/2004
+Project		
+Model			
+Company		
+Author		
+Version		
+Database		MS SQL 2000 
+*/
+
+
+Create table [TBConveniados]
+(
+	[PKCodigo_TBConveniados] Integer NOT NULL,
+	[DFNome_TBConveniados] Nvarchar(50) NULL,
+	[FKId_TBFornecedor] Integer NOT NULL,
+	[FKCodigo_TBGrupo_convenio] Integer NOT NULL,
+Primary Key ([PKCodigo_TBConveniados])
+) 
+go
+
+Create table [TBGrupo_convenio]
+(
+	[PKCodigo_TBGrupo_convenio] Integer NOT NULL,
+	[DFNome_TBGrupo_convenio] Nvarchar(50) NULL,
+Primary Key ([PKCodigo_TBGrupo_convenio])
+) 
+go
+
+Create table [TBTitulo_receber_plano_saude]
+(
+	[PKId_TBTitulo_receber_plano_saude] Integer Identity NOT NULL,
+	[FKCodigo_TBBancos] Integer NOT NULL,
+	[FKId_TBVendedor] Integer NOT NULL,
+	[FKCodigo_TBEmpresa] Integer NOT NULL,
+	[FKCodigo_TBAssociado] Integer NOT NULL,
+	[DFTipo_documento_TBTitulo_receber_plano_saude] Integer NULL,
+	[DFNumero_documento_TBTitulo_receber_plano_saude] Integer NULL,
+	[DFLetra_TBTitulo_receber_plano_saude] Char(2) NULL,
+	[DFData_emissao_TBTitulo_receber_plano_saude] Smalldatetime NOT NULL,
+	[DFData_vencimento_TBTitulo_receber_plano_saude] Smalldatetime NOT NULL,
+	[DFValor_TBTitulo_receber_plano_saude] Money NOT NULL,
+	[DFObervacao_TBTitulo_receber_plano_saude] Nvarchar(50) NULL,
+	[DFNumero_gerado_TBTitulo_receber_plano_saude] Integer NULL,
+	[DFLetra_gerada_TBTitulo_receber_plano_saude] Char(2) NULL,
+	[DFNosso_numero_TBTitulo_receber_plano_saude] Nvarchar(20) NULL,
+	[DFNosso_numero_digito_TBTitulo_receber_plano_saude] Nvarchar(2) NULL,
+	[DFCarteira_TBTitulo_receber_plano_saude] Nvarchar(3) NULL,
+	[DFPrevisao_TBTitulo_receber_plano_saude] Bit NOT NULL,
+	[DFSerie_TBTitulo_receber_plano_saude] Nvarchar(3) NULL,
+        [FKId_TBPlano_pagamento] Integer NOT NULL,
+        [DFJa_impresso_TBTitulo_receber_plano_saude] Bit NOT NULL,
+        [DFIntegrado_banco_TBTitulo_receber_plano_saude] Bit NOT NULL,
+Primary Key ([PKId_TBTitulo_receber_plano_saude])
+) 
+go
+
+Create table [TBTitulo_recebido_plano_saude]
+(
+	[PKId_TBTitulo_recebido_plano_saude] Integer Identity NOT NULL,
+	[FKId_TBTitulo_receber] Integer NOT NULL,
+	[DFValor_TBTitulo_recebido_plano_saude] Money NOT NULL,
+	[DFData_recebimento_TBTitulo_recebido_plano_saude] Smalldatetime NOT NULL,
+Primary Key ([PKId_TBTitulo_recebido_plano_saude])
+) 
+go
+
+
+
+
+
+
+
+
+Alter table [TBTitulo_receber_plano_saude] add  foreign key([FKCodigo_TBEmpresa]) references [TBEmpresa] ([PKCodigo_TBEmpresa])  on update no action on delete no action 
+go
+Alter table [TBConveniados] add  foreign key([FKId_TBFornecedor]) references [TBFornecedor] ([PKId_TBFornecedor])  on update no action on delete no action 
+go
+Alter table [TBTitulo_receber_plano_saude] add  foreign key([FKId_TBVendedor]) references [TBVendedor] ([PKId_TBVendedor])  on update no action on delete no action 
+go
+Alter table [TBTitulo_receber_plano_saude] add  foreign key([FKCodigo_TBBancos]) references [TBBancos] ([PKCodigo_TBBancos])  on update no action on delete no action 
+go
+Alter table [TBTitulo_receber_plano_saude] add  foreign key([FKCodigo_TBAssociado]) references [TBAssociado] ([PKCodigo_TBAssociado])  on update no action on delete no action 
+go
+Alter table [TBConveniados] add  foreign key([FKCodigo_TBGrupo_convenio]) references [TBGrupo_convenio] ([PKCodigo_TBGrupo_convenio])  on update no action on delete no action 
+go
+Alter table [TBTitulo_recebido_plano_saude] add  foreign key([FKId_TBTitulo_receber]) references [TBTitulo_receber_plano_saude] ([PKId_TBTitulo_receber_plano_saude])  on update no action on delete no action 
+go
+Alter table [TBTitulo_receber_plano_saude] add  foreign key([FKId_TBPlano_pagamento]) references [TBPlano_pagamento] ([PKId_TBPlano_pagamento])  on update no action on delete no action 
+
+Set quoted_identifier on
+go
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Set quoted_identifier off
+go
+
+
+
+
+
+
+
+
+/* Roles permissions */
+
+
+
+
+
+/* Users permissions */
+
+
+
+
+
+

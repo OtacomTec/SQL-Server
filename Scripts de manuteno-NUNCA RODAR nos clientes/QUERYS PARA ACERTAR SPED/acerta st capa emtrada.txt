@@ -1,0 +1,6 @@
+update Tbnota_entrada_fiscal
+set DFDespesas_acessorias_TBNota_entrada_fiscal = DFValor_subst_tributaria_TBNota_entrada_fiscal,
+DFValor_subst_tributaria_TBNota_entrada_fiscal = 0
+from Tbnota_entrada_fiscal
+where DFValor_subst_tributaria_TBNota_entrada_fiscal <> 0
+and DFBase_calculo_subst_tributaria_TBNota_entrada_fiscal = 0

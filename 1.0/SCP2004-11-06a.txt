@@ -1,0 +1,78 @@
+/*
+Created		27/5/2003
+Modified		30/10/2004
+Project		
+Model		
+Company		
+Author		
+Version		
+Database		MS SQL 2000 
+*/
+
+
+
+Create table [TBCentro_custo_pagar] (
+	[PKId_TBCentro_custo_pagar] Integer Identity NOT NULL,
+	[FKId_TBTitulo_pagar] Integer NOT NULL,
+	[FKId_TBCentro_custo] Integer NOT NULL,
+	[DFValor_TBCentro_custo_pagar] Money NOT NULL,
+Primary Key ([PKId_TBCentro_custo_pagar])
+) 
+go
+
+Create table [TBMes_competencia_pagar] (
+	[PKId_TBMes_competencia_pagar] Integer Identity NOT NULL,
+	[FKId_TBTitulo_pagar] Integer NOT NULL,
+	[DFValor_TBMes_competencia_pagar] Money NOT NULL,
+	[DFMes_ano_TBMes_competencia_pagar] Smalldatetime NOT NULL,
+Primary Key ([PKId_TBMes_competencia_pagar])
+) 
+go
+
+
+
+Alter table [TBCentro_custo_pagar] add  foreign key([FKId_TBTitulo_pagar]) references [TBTitulo_pagar] ([PKId_TBTitulo_pagar])  on update no action on delete no action 
+go
+Alter table [TBMes_competencia_pagar] add  foreign key([FKId_TBTitulo_pagar]) references [TBTitulo_pagar] ([PKId_TBTitulo_pagar])  on update no action on delete no action 
+go
+Alter table [TBCentro_custo_pagar] add  foreign key([FKId_TBCentro_custo]) references [TBCentro_custo] ([PKId_TBCentro_custo])  on update no action on delete no action 
+go
+
+
+Set quoted_identifier on
+go
+
+
+
+
+
+
+
+
+
+
+
+
+Set quoted_identifier off
+go
+
+
+
+
+
+
+
+
+/* Roles permissions */
+
+
+
+
+
+/* Users permissions */
+
+
+
+
+
+

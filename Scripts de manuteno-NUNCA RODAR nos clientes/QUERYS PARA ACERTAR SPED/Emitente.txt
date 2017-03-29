@@ -1,0 +1,7 @@
+
+update TbNota_entrada_fiscal
+set dftipo_emitente_TbNota_entrada_fiscal = 0
+from TbNota_entrada_fiscal
+where dfnumero_Tbnota_entrada_fiscal = 218599
+or dfnumero_Tbnota_entrada_fiscal = 218598
+or dfnumero_Tbnota_entrada_fiscal = 218600

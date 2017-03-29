@@ -1,0 +1,6 @@
+update Tbnota_entrada_fiscal
+set DFBase_calculo_icms_TBNota_entrada_fiscal = Base,
+DFValor_icms_TBNota_entrada_fiscal = icms
+from Tbnota_entrada_fiscal
+inner join entrada
+on pkid_Tbnota_entrada_fiscal = entrada.fkid_Tbnota_entrada

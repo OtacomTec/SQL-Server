@@ -1,0 +1,8 @@
+SET ANSI_WARNINGS ON
+
+BEGIN TRANSACTION
+ALTER TABLE dbo.TBItens_nota_saida ADD
+	DFBase_calculo_subst_tributaria_TBItens_nota_saida money NULL,
+	DFValor_subst_tributaria_TBItens_nota_saida money NULL
+GO
+COMMIT

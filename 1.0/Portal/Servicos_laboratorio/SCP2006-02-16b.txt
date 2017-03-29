@@ -1,0 +1,14 @@
+/*
+   quarta-feira, 15 de fevereiro de 2006 11:57:02
+   User: sa
+   Server: ONLYTECH-DADOS
+   Database: BDPortal
+   Application: MS SQLEM - Data Tools
+*/
+
+
+BEGIN TRANSACTION
+ALTER TABLE dbo.TBTriagem_portal ADD
+	DFIntegrado_retaguarda_TBTriagem_portal bit NULL
+GO
+COMMIT

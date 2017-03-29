@@ -1,0 +1,119 @@
+/*
+Created		27/5/2003
+Modified		11/10/2005
+Project		Only Tech - ERP
+Model			Olt
+Company		Only Tech
+Author		Only Tech
+Version		1.0
+Database		MS SQL 2000 
+*/
+
+
+Create table [TBServico_laboratorio]
+(
+	[PKCodigo_TBServico_laboratorio] Integer NOT NULL,
+	[DFDescricao_TBServico_laboratorio] Nvarchar(50) NOT NULL,
+	[DFPreco1_TBServico_laboratorio] Money NOT NULL,
+	[DFPreco1_conveniado_TBServico_laboratorio] Money NOT NULL,
+	[DFPreco2_TBServico_laboratorio] Money NOT NULL,
+	[DFPreco2_conveniado_TBServico_laboratorio] Money NOT NULL,
+	[DFPreco3_TBServico_laboratorio] Money NOT NULL,
+	[DFPreco3_conveniado_TBServico_laboratorio] Money NOT NULL,
+Primary Key ([PKCodigo_TBServico_laboratorio])
+) 
+go
+
+Create table [TBPlano_servico]
+(
+	[PKCodigo_TBPlano_servico] Integer NOT NULL,
+	[DFDescricao_TBPlano_servico] Nvarchar(40) NOT NULL,
+	[DFValor_TBPlano_servico] Money NOT NULL,
+	[DFValor_servico_TBPlano_servico] Bit NOT NULL,
+Primary Key ([PKCodigo_TBPlano_servico])
+) 
+go
+
+Create table [TBPlano_servico_servico_laboratorio]
+(
+	[PkId_TBPlano_servico_servico_laboratorio] Integer Identity NOT NULL,
+	[FKCodigo_TBServico_laboratorio] Integer NOT NULL,
+	[FKCodigo_TBPlano_servico] Integer NOT NULL,
+	[DFQuantidade_TBPlano_servico_servico_laboratorio] Integer NULL,
+Primary Key ([PkId_TBPlano_servico_servico_laboratorio])
+) 
+go
+
+Create table [TBContrato_cliente]
+(
+	[PKCodigo_TBContrato_cliente] Integer NOT NULL,
+	[FKId_TBCliente] Integer NOT NULL,
+	[FKCodigo_TBPlano_servico] Integer NOT NULL,
+	[DFValor_TBContrato_cliente] Money NOT NULL,
+	[DFDesconto_TBContrato_cliente] Money NOT NULL,
+	[DFTabela_preco_TBContrato_cliente] Integer NOT NULL,
+	[DFBanco_TBContrato_cliente] Integer NOT NULL,
+	[DFData_envio_certificado_TBContrato_cliente] Smalldatetime NOT NULL,
+	[DFData_validade_TBContrato_cliente] Smalldatetime NOT NULL,
+	[DFObservacao_TBContrato_cliente] Nvarchar(100) NULL,
+Primary Key ([PKCodigo_TBContrato_cliente])
+) 
+go
+
+
+
+Alter table [TBContrato_cliente] add  foreign key([FKId_TBCliente]) references [TBCliente] ([PKId_TBCliente])  on update no action on delete no action 
+go
+Alter table [TBPlano_servico_servico_laboratorio] add  foreign key([FKCodigo_TBServico_laboratorio]) references [TBServico_laboratorio] ([PKCodigo_TBServico_laboratorio])  on update no action on delete no action 
+go
+Alter table [TBPlano_servico_servico_laboratorio] add  foreign key([FKCodigo_TBPlano_servico]) references [TBPlano_servico] ([PKCodigo_TBPlano_servico])  on update no action on delete no action 
+go
+Alter table [TBContrato_cliente] add  foreign key([FKCodigo_TBPlano_servico]) references [TBPlano_servico] ([PKCodigo_TBPlano_servico])  on update no action on delete no action 
+go
+
+
+Set quoted_identifier on
+go
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Set quoted_identifier off
+go
+
+
+
+
+
+
+
+
+/* Roles permissions */
+
+
+
+
+
+/* Users permissions */
+
+
+
+
+
+

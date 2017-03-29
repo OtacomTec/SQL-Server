@@ -1,0 +1,94 @@
+/*
+   quarta-feira, 2 de novembro de 2005 12:25:30
+   User: sa
+   Server: ONLYTECH-02
+   Database: BDRetaguarda
+   Application: MS SQLEM - Data Tools
+*/
+
+BEGIN TRANSACTION
+SET QUOTED_IDENTIFIER ON
+SET TRANSACTION ISOLATION LEVEL SERIALIZABLE
+SET ARITHABORT ON
+SET NUMERIC_ROUNDABORT OFF
+SET CONCAT_NULL_YIELDS_NULL ON
+SET ANSI_NULLS ON
+SET ANSI_PADDING ON
+SET ANSI_WARNINGS ON
+COMMIT
+BEGIN TRANSACTION
+CREATE TABLE dbo.Tmp_TBPlano_servico
+	(
+	PKCodigo_TBPlano_servico int NOT NULL,
+	DFDescricao_TBPlano_servico nvarchar(40) NOT NULL,
+	DFControle_TBPlano_servico int NOT NULL
+	)  ON [PRIMARY]
+GO
+IF EXISTS(SELECT * FROM dbo.TBPlano_servico)
+	 EXEC('INSERT INTO dbo.Tmp_TBPlano_servico (PKCodigo_TBPlano_servico, DFDescricao_TBPlano_servico, DFControle_TBPlano_servico)
+		SELECT PKCodigo_TBPlano_servico, DFDescricao_TBPlano_servico, CONVERT(int, DFValor_servico_TBPlano_servico) FROM dbo.TBPlano_servico TABLOCKX')
+GO
+ALTER TABLE dbo.TBPlano_servico_servico_laboratorio
+	DROP CONSTRAINT FK__TBPlano_s__FKCod__5A1F1E1B
+GO
+ALTER TABLE dbo.TBContrato_cliente
+	DROP CONSTRAINT FK__TBContrat__FKCod__5B134254
+GO
+ALTER TABLE dbo.TBPlano_servico_servico_laboratorio
+	DROP CONSTRAINT FK__TBPlano_s__FKCod__607715EF
+GO
+ALTER TABLE dbo.TBContrato_cliente
+	DROP CONSTRAINT FK__TBContrat__FKCod__616B3A28
+GO
+DROP TABLE dbo.TBPlano_servico
+GO
+EXECUTE sp_rename N'dbo.Tmp_TBPlano_servico', N'TBPlano_servico', 'OBJECT'
+GO
+ALTER TABLE dbo.TBPlano_servico ADD CONSTRAINT
+	PK__TBPlano_servico__59CA1860 PRIMARY KEY CLUSTERED 
+	(
+	PKCodigo_TBPlano_servico
+	) ON [PRIMARY]
+
+GO
+COMMIT
+BEGIN TRANSACTION
+ALTER TABLE dbo.TBContrato_cliente WITH NOCHECK ADD CONSTRAINT
+	FK__TBContrat__FKCod__5B134254 FOREIGN KEY
+	(
+	FKCodigo_TBPlano_servico
+	) REFERENCES dbo.TBPlano_servico
+	(
+	PKCodigo_TBPlano_servico
+	)
+GO
+ALTER TABLE dbo.TBContrato_cliente WITH NOCHECK ADD CONSTRAINT
+	FK__TBContrat__FKCod__616B3A28 FOREIGN KEY
+	(
+	FKCodigo_TBPlano_servico
+	) REFERENCES dbo.TBPlano_servico
+	(
+	PKCodigo_TBPlano_servico
+	)
+GO
+COMMIT
+BEGIN TRANSACTION
+ALTER TABLE dbo.TBPlano_servico_servico_laboratorio WITH NOCHECK ADD CONSTRAINT
+	FK__TBPlano_s__FKCod__5A1F1E1B FOREIGN KEY
+	(
+	FKCodigo_TBPlano_servico
+	) REFERENCES dbo.TBPlano_servico
+	(
+	PKCodigo_TBPlano_servico
+	)
+GO
+ALTER TABLE dbo.TBPlano_servico_servico_laboratorio WITH NOCHECK ADD CONSTRAINT
+	FK__TBPlano_s__FKCod__607715EF FOREIGN KEY
+	(
+	FKCodigo_TBPlano_servico
+	) REFERENCES dbo.TBPlano_servico
+	(
+	PKCodigo_TBPlano_servico
+	)
+GO
+COMMIT

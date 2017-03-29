@@ -1,0 +1,133 @@
+/*
+Created		27/5/2003
+Modified		16/1/2005
+Project		
+Model			
+Company		
+Author		
+Version		
+Database		MS SQL 2000 
+*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+go
+
+Create table [TBComanda]
+(
+	[PKCodigo_TBComanda] Integer NOT NULL,
+	[FKId_TBVendedor] Integer NOT NULL,
+	[DFData_lancamento_TBComanda] Smalldatetime NULL,
+	[DFHora_abertura_TBComanda] Nvarchar(10) NULL,
+	[DFNumero_cupom_TBComanda] Integer NULL,
+Primary Key ([PKCodigo_TBComanda])
+) 
+go
+
+Create table [TBItens_comanda]
+(
+	[PKId_TBItens_comanda] Integer Identity NOT NULL,
+	[FKCodigo_TBComanda] Integer NOT NULL,
+	[FKId_TBProduto] Integer NOT NULL,
+	[DFQuantidade_TBItens_comanda] Money NULL,
+	[DFPreco_TBItens_comanda] Money NULL,
+	[DFValor_total_TBItens_comanda] Money NULL,
+Primary Key ([PKId_TBItens_comanda])
+) 
+go
+
+Create table [TBComposicao_produto]
+(
+	[PKId_TBComposicao_produto] Integer Identity NOT NULL,
+	[FKId_TBProduto] Integer NOT NULL,
+	[DFCodigo_produto_relacionado_TBComposicao_produto] Integer NULL,
+	[DFQuantidade_baixa_estoque_TBComposicao_produto] Money NULL,
+Primary Key ([PKId_TBComposicao_produto])
+) 
+go
+
+
+
+
+
+
+
+
+
+
+
+
+
+go
+Alter table [TBItens_comanda] add  foreign key([FKId_TBProduto]) references [TBProduto] ([PKId_TBProduto])  on update no action on delete no action 
+go
+Alter table [TBComposicao_produto] add  foreign key([FKId_TBProduto]) references [TBProduto] ([PKId_TBProduto])  on update no action on delete no action 
+go
+Alter table [TBComanda] add  foreign key([FKId_TBVendedor]) references [TBVendedor] ([PKId_TBVendedor])  on update no action on delete no action 
+go
+Alter table [TBItens_comanda] add  foreign key([FKCodigo_TBComanda]) references [TBComanda] ([PKCodigo_TBComanda])  on update no action on delete no action 
+go
+
+
+Set quoted_identifier on
+go
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Set quoted_identifier off
+go
+
+
+
+
+
+
+
+
+/* Roles permissions */
+
+
+
+
+
+/* Users permissions */
+
+
+
+
+
+

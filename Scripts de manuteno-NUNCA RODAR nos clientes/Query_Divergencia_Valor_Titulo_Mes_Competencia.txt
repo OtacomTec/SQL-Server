@@ -1,0 +1,19 @@
+Select
+PKId_TBTitulo_pagar AS id_titulo,
+DFNumero_documento_TBTitulo_pagar As numero,
+DFData_lancamento_TBTitulo_pagar As Data,
+DFValor_TBTitulo_pagar As Valor,
+TBMes_competencia_pagar.FKId_TBTitulo_pagar As ID_centrocusto,
+sum ( DFValor_TBMes_competencia_pagar) As Somatorio
+into Tbteste
+FROM dbo.TBTitulo_pagar 
+inner Join dbo.TBMes_competencia_pagar
+on TBTitulo_pagar.PKId_TBTitulo_pagar = dbo.TBMes_competencia_pagar.FKId_TBTitulo_pagar  
+group by PKId_TBTitulo_pagar,DFNumero_documento_TBTitulo_pagar,DFData_lancamento_TBTitulo_pagar,DFValor_TBTitulo_pagar,TBMes_competencia_pagar.FKId_TBTitulo_pagar
+
+select * from tbteste
+where Somatorio <> Valor
+
+
+
+drop table tbteste

@@ -1,0 +1,76 @@
+/*
+Created		27/5/2003
+Modified		2/7/2004
+Project		
+Model		
+Company		
+Author		
+Version		
+Database		MS SQL 2000 
+*/
+
+
+Create table [TBPedido_devolucao] (
+	[PKId_TBPedido_devolucao] Integer Identity NOT NULL,
+	[FKId_TBNota_saida] Integer NOT NULL,
+	[FKId_TBPedido] Integer NOT NULL,
+Primary Key ([PKId_TBPedido_devolucao])
+) 
+go
+
+Create table [TBNota_devolucao] (
+	[PKId_TBNota_devolucao] Integer Identity NOT NULL,
+	[FKId_TBNota_saida] Integer NOT NULL,
+	[FKId_TBNota_entrada] Integer NOT NULL,
+Primary Key ([PKId_TBNota_devolucao])
+) 
+go
+
+
+Alter table [TBPedido_devolucao] add  foreign key([FKId_TBPedido]) references [TBPedido] ([PKId_TBPedido])  on update no action on delete no action 
+go
+Alter table [TBPedido_devolucao] add  foreign key([FKId_TBNota_saida]) references [TBNota_saida] ([PKId_TBNota_saida])  on update no action on delete no action 
+go
+Alter table [TBNota_devolucao] add  foreign key([FKId_TBNota_saida]) references [TBNota_saida] ([PKId_TBNota_saida])  on update no action on delete no action 
+go
+Alter table [TBNota_devolucao] add  foreign key([FKId_TBNota_entrada]) references [TBNota_entrada] ([PKId_TBNota_entrada])  on update no action on delete no action 
+go
+
+
+Set quoted_identifier on
+go
+
+
+
+
+
+
+
+
+
+
+
+
+Set quoted_identifier off
+go
+
+
+
+
+
+
+
+
+/* Roles permissions */
+
+
+
+
+
+/* Users permissions */
+
+
+
+
+
+

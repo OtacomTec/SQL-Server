@@ -1,0 +1,24 @@
+/*
+   sexta-feira, 16 de setembro de 2005 15:35:33
+   User: sa
+   Server: ONLYTECH-02
+   Database: BDRetaguarda
+   Application: MS SQLEM - Data Tools
+*/
+
+BEGIN TRANSACTION
+SET QUOTED_IDENTIFIER ON
+SET TRANSACTION ISOLATION LEVEL SERIALIZABLE
+SET ARITHABORT ON
+SET NUMERIC_ROUNDABORT OFF
+SET CONCAT_NULL_YIELDS_NULL ON
+SET ANSI_NULLS ON
+SET ANSI_PADDING ON
+SET ANSI_WARNINGS ON
+COMMIT
+BEGIN TRANSACTION
+EXECUTE sp_rename N'dbo.TBItens_pedido.DFLocal_Baixa_Estoque', N'Tmp_DFLocal_Baixa_Estoque_TBitens_pedido', 'COLUMN'
+GO
+EXECUTE sp_rename N'dbo.TBItens_pedido.Tmp_DFLocal_Baixa_Estoque_TBitens_pedido', N'DFLocal_Baixa_Estoque_TBitens_pedido', 'COLUMN'
+GO
+COMMIT

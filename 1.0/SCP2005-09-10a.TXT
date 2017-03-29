@@ -1,0 +1,82 @@
+/*
+   sexta-feira, 9 de setembro de 2005 11:38:23
+   User: 
+   Server: ONLYTECH-05
+   Database: BDRetaguarda
+   Application: MS SQLEM - Data Tools
+*/
+
+BEGIN TRANSACTION
+SET QUOTED_IDENTIFIER ON
+SET TRANSACTION ISOLATION LEVEL SERIALIZABLE
+SET ARITHABORT ON
+SET NUMERIC_ROUNDABORT OFF
+SET CONCAT_NULL_YIELDS_NULL ON
+SET ANSI_NULLS ON
+SET ANSI_PADDING ON
+SET ANSI_WARNINGS ON
+COMMIT
+BEGIN TRANSACTION
+ALTER TABLE dbo.TBVale_funcionario
+	DROP CONSTRAINT FK__TBVale_fu__FKCod__2B4E5542
+GO
+COMMIT
+BEGIN TRANSACTION
+ALTER TABLE dbo.TBVale_funcionario
+	DROP CONSTRAINT FK__TBVale_fu__FKId___2A5A3109
+GO
+COMMIT
+BEGIN TRANSACTION
+CREATE TABLE dbo.Tmp_TBVale_funcionario
+	(
+	PKId_TBVale_funcionario int NOT NULL IDENTITY (1, 1),
+	FKId_TBFornecedor int NOT NULL,
+	FKCodigo_TBFuncionario int NOT NULL,
+	DFValor_TBVale_funcionario money NOT NULL,
+	DFData_TBVale_funcionario smalldatetime NOT NULL,
+	DFNumero_documento_TBVale_funcionario int NOT NULL,
+	DFMes_competencia_TBVale_funcionario int NOT NULL,
+	DFAno_competencia_TBVale_funcionario int NOT NULL,
+	DFMotivo_TBVale_funcionario nvarchar(100) NULL,
+	DFObservacao_TBVale_funcionario nvarchar(200) NULL,
+	DFData_pagamento_TBVale_funcionario smalldatetime NULL
+	)  ON [PRIMARY]
+GO
+SET IDENTITY_INSERT dbo.Tmp_TBVale_funcionario ON
+GO
+IF EXISTS(SELECT * FROM dbo.TBVale_funcionario)
+	 EXEC('INSERT INTO dbo.Tmp_TBVale_funcionario (PKId_TBVale_funcionario, FKId_TBFornecedor, FKCodigo_TBFuncionario, DFValor_TBVale_funcionario, DFData_TBVale_funcionario, DFNumero_documento_TBVale_funcionario, DFMes_competencia_TBVale_funcionario, DFAno_competencia_TBVale_funcionario, DFMotivo_TBVale_funcionario, DFObservacao_TBVale_funcionario, DFData_pagamento_TBVale_funcionario)
+		SELECT PKId_TBVale_funcionario, FKId_TBFornecedor, FKCodigo_TBFuncionario, DFValor_TBVale_funcionario, DFData_TBVale_funcionario, DFNumero_documento_TBVale_funcionario, DFMes_competencia_TBVale_funcionario, DFAno_competencia_TBVale_funcionario, DFMotivo_TBVale_funcionario, DFObservacao_TBVale_funcionario, DFData_pagamento_TBVale_funcionario FROM dbo.TBVale_funcionario TABLOCKX')
+GO
+SET IDENTITY_INSERT dbo.Tmp_TBVale_funcionario OFF
+GO
+DROP TABLE dbo.TBVale_funcionario
+GO
+EXECUTE sp_rename N'dbo.Tmp_TBVale_funcionario', N'TBVale_funcionario', 'OBJECT'
+GO
+ALTER TABLE dbo.TBVale_funcionario ADD CONSTRAINT
+	PK__TBVale_funcionar__29660CD0 PRIMARY KEY CLUSTERED 
+	(
+	PKId_TBVale_funcionario
+	) ON [PRIMARY]
+
+GO
+ALTER TABLE dbo.TBVale_funcionario WITH NOCHECK ADD CONSTRAINT
+	FK__TBVale_fu__FKId___2A5A3109 FOREIGN KEY
+	(
+	FKId_TBFornecedor
+	) REFERENCES dbo.TBFornecedor
+	(
+	PKId_TBFornecedor
+	)
+GO
+ALTER TABLE dbo.TBVale_funcionario WITH NOCHECK ADD CONSTRAINT
+	FK__TBVale_fu__FKCod__2B4E5542 FOREIGN KEY
+	(
+	FKCodigo_TBFuncionario
+	) REFERENCES dbo.TBFuncionario
+	(
+	PKCodigo_TBFuncionario
+	)
+GO
+COMMIT

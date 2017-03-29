@@ -1,0 +1,71 @@
+/*
+Created		27/5/2003
+Modified		23/5/2005
+Project		
+Model			
+Company		
+Author		
+Version		
+Database		MS SQL 2000 
+*/
+
+
+Create table [TBCobrador]
+(
+	[PKCodigo_TBCobrador] Integer NOT NULL,
+	[DFNome_TBCobrador] Nvarchar(40) NULL,
+	[DFPercentual_comissao_TBCobrador] Money NULL,
+Primary Key ([PKCodigo_TBCobrador])
+) 
+go
+
+
+Alter table [TBAssociado] add  foreign key([FKCodigo_TBCobrador]) references [TBCobrador] ([PKCodigo_TBCobrador])  on update no action on delete no action 
+go
+
+
+Set quoted_identifier on
+go
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Set quoted_identifier off
+go
+
+
+
+
+
+
+
+
+/* Roles permissions */
+
+
+
+
+
+/* Users permissions */
+
+
+
+
+
+

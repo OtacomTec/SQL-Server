@@ -1,0 +1,105 @@
+/*
+Created		27/5/2003
+Modified		27/12/2004
+Project		
+Model			
+Company		
+Author		
+Version		
+Database		MS SQL 2000 
+*/
+
+
+
+
+
+
+
+
+
+
+Create table [TBGPA]
+(
+	[PKId_TBGPA] Integer Identity NOT NULL,
+	[FKId_TBAutorizacao_servico] Integer NOT NULL,
+	[DFMotivo_TBGPA] Nvarchar(100) NULL,
+	[DFObservacao_TBGPA] Nvarchar(100) NULL,
+	[DFData_TBGPA] Smalldatetime NOT NULL,
+	[DFHora_TBGPA] Nvarchar(8) NULL,
+	[DFDestino_paciente_TBGPA] Integer NULL,
+	[DFResponsavel_TBGpa] Nvarchar(40) NULL,
+	[DFDocumento_responsavel_TBGPA] Nvarchar(20) NULL,
+Primary Key ([PKId_TBGPA])
+) 
+go
+
+Create table [TBProcedimento_gpa]
+(
+	[PKId_TBProcedimento_gpa] Integer Identity NOT NULL,
+	[FKId_TBGPA] Integer NOT NULL,
+	[DFDescricao_TBProcedimento_gpa] Nvarchar(100) NOT NULL,
+Primary Key ([PKId_TBProcedimento_gpa])
+) 
+go
+
+
+
+
+
+
+
+
+
+
+
+Alter table [TBGPA] add  foreign key([FKId_TBAutorizacao_servico]) references [TBAutorizacao_servico] ([PKId_TBAutorizacao_servico])  on update no action on delete no action 
+go
+Alter table [TBProcedimento_gpa] add  foreign key([FKId_TBGPA]) references [TBGPA] ([PKId_TBGPA])  on update no action on delete no action 
+go
+
+
+Set quoted_identifier on
+go
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Set quoted_identifier off
+go
+
+
+
+
+
+
+
+
+/* Roles permissions */
+
+
+
+
+
+/* Users permissions */
+
+
+
+
+
+

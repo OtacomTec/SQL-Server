@@ -1,0 +1,174 @@
+/*
+Created		27/5/2003
+Modified		21/4/2004
+Project		
+Model		
+Company		
+Author		
+Version		
+Database		MS SQL 2000 
+*/
+
+
+
+Create table [TBItens_nota_entrada] (
+	[PKId_TBItens_nota_saida] Integer Identity NOT NULL,
+	[FKId_TBNota_entrada] Integer NOT NULL,
+	[FKId_TBProduto] Integer NOT NULL,
+	[FKId_TBCfop] Integer NOT NULL,
+	[DFCst1_TBItens_nota_entrada] Char(1) NOT NULL,
+	[DFCst2_TBItens_nota_entrada] Char(2) NOT NULL,
+	[DFQuantidade_TBItens_nota_entrada] Money NOT NULL,
+	[DFPreco_TBItens_nota_entrada] Money NOT NULL,
+	[DFPercentual_desconto_TBItens_nota_entrada] Money NOT NULL,
+	[DFValor_total_TBItens_nota_entrada] Money NOT NULL,
+	[DFPercentual_icms_TBItens_nota_entrada] Money NULL,
+	[DFValor_total_icms_TBItens_nota_entrada] Money NULL,
+	[DFPercentual_ipi_TBItens_nota_entrada] Money NOT NULL,
+	[DFValor_total_ipi_TBItens_nota_entrada] Money NOT NULL,
+	[DFUnidade_TBItens_nota_entrada] Char(3) NOT NULL,
+	[DFCusto_real_TBItens_nota_entrada] Money NOT NULL,
+	[DFCusto_contabil_TBItens_nota_entrada] Money NOT NULL,
+	[DFCusto_medio_TBItens_nota_entrada] Money NOT NULL,
+	[DFPeso_liquido_TBItens_nota_entrada] Money NOT NULL,
+	[DFPeso_bruto_TBItens_nota_entrada] Money NOT NULL,
+	[DFQuantidade_lancamento_estoque_TBItens_nota_entrada] Money NOT NULL,
+	[DFDivisor_movimenta_estoque_TBItens_nota_entrada] Money NULL,
+Primary Key ([PKId_TBItens_nota_saida])
+) 
+go
+
+Create table [TBNota_entrada] (
+	[PKId_TBNota_entrada] Integer Identity NOT NULL,
+	[FKCodigo_TBEmpresa] Integer NOT NULL,
+	[FKId_TBPlano_pagamento] Integer NOT NULL,
+	[DFTipo_operacao_TBNota_entrada] Integer NOT NULL,
+	[DFNumero_TBNota_entrada] Integer NOT NULL,
+	[DFSerie_TBNota_entrada] Nchar(3) NOT NULL,
+	[DFTipo_emitente_TBNota_entrada] Bit NOT NULL,
+	[DFEmitente_TBNota_entrada] Integer NOT NULL,
+	[DFTotal_itens_TBNota_entrada] Money NOT NULL,
+	[DFTotal_nota_TBNota_entrada] Money NOT NULL,
+	[DFDesconto_especial_TBNota_entrada] Money NULL,
+	[DFDesconto_indenizacao_TBNota_entrada] Money NULL,
+	[DFData_emissao_TBNota_entrada] Smalldatetime NOT NULL,
+	[DFData_entrada_TBNota_saida] Smalldatetime NOT NULL,
+	[DFData_lancamento_TBNota_saida] Smalldatetime NULL,
+	[DFDigitador_TBNota_entrada] Nvarchar(20) NOT NULL,
+	[DFPrevisao_TBNota_entrada] Bit NOT NULL,
+	[DFValor_ipi_TBNota_entrada] Money NULL,
+	[DFDespesas_acessorias_TBNota_entrada] Money NULL,
+	[DFValor_frete_TBNota_entrada] Money NULL,
+	[DFTotal_descontos_itens_TBNota_entrada] Money NULL,
+	[DFTotal_peso_liquido_TBNota_entrada] Money NOT NULL,
+	[DFTotal_peso_bruto_TBNota_entrada] Money NOT NULL,
+	[DFNumero_pedido_TBNota_entrada] Integer NOT NULL,
+	[DFIntegrado_fiscal_TBNota_entrada] Bit NOT NULL,
+	[DFValor_seguro_TBNota_entrada] Money NULL,
+	[DFBase_calculo_icms_TBNota_entrada] Money NULL,
+	[DFValor_icms_TBNota_entrada] Money NULL,
+Primary Key ([PKId_TBNota_entrada])
+) 
+go
+
+Create table [TBCfop_nota_entrada] (
+	[PKId_TBCfop_nota_saida] Integer Identity NOT NULL,
+	[FKId_TBCfop] Integer NOT NULL,
+	[FKId_TBItens_nota_saida] Integer NOT NULL,
+Primary Key ([PKId_TBCfop_nota_saida])
+) 
+go
+
+Create table [TBImpostos_nota_entrada] (
+	[PKId_TBImpostos_nota_entrada] Integer Identity NOT NULL,
+	[FKId_TBNota_entrada] Integer NOT NULL,
+	[DFAliquota_TBImpostos_nota_entrada] Money NOT NULL,
+	[DFBase_calculo_TBImpostos_nota_entrada] Money NOT NULL,
+	[DFValor_TBImpostos_nota_entrada] Money NOT NULL,
+Primary Key ([PKId_TBImpostos_nota_entrada])
+) 
+go
+
+Create table [TBTitulo_pagar_nota_entrada] (
+	[PKId_TBTitulo_pagar_nota_entrada] Integer Identity NOT NULL,
+	[FKId_TBItens_nota_saida] Integer NOT NULL,
+	[FKId_TBTitulo_pagar] Integer NOT NULL,
+Primary Key ([PKId_TBTitulo_pagar_nota_entrada])
+) 
+go
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Alter table [TBNota_entrada] add  foreign key([FKCodigo_TBEmpresa]) references [TBEmpresa] ([PKCodigo_TBEmpresa])  on update no action on delete no action 
+go
+Alter table [TBItens_nota_entrada] add  foreign key([FKId_TBProduto]) references [TBProduto] ([PKId_TBProduto])  on update no action on delete no action 
+go
+Alter table [TBNota_entrada] add  foreign key([FKId_TBPlano_pagamento]) references [TBPlano_pagamento] ([PKId_TBPlano_pagamento])  on update no action on delete no action 
+go
+Alter table [TBTitulo_pagar_nota_entrada] add  foreign key([FKId_TBTitulo_pagar]) references [TBTitulo_pagar] ([PKId_TBTitulo_pagar])  on update no action on delete no action 
+go
+Alter table [TBItens_nota_entrada] add  foreign key([FKId_TBCfop]) references [TBCfop] ([PKId_TBCfop])  on update no action on delete no action 
+go
+Alter table [TBCfop_nota_entrada] add  foreign key([FKId_TBCfop]) references [TBCfop] ([PKId_TBCfop])  on update no action on delete no action 
+go
+Alter table [TBCfop_nota_entrada] add  foreign key([FKId_TBItens_nota_saida]) references [TBItens_nota_entrada] ([PKId_TBItens_nota_saida])  on update no action on delete no action 
+go
+Alter table [TBTitulo_pagar_nota_entrada] add  foreign key([FKId_TBItens_nota_saida]) references [TBItens_nota_entrada] ([PKId_TBItens_nota_saida])  on update no action on delete no action 
+go
+Alter table [TBItens_nota_entrada] add  foreign key([FKId_TBNota_entrada]) references [TBNota_entrada] ([PKId_TBNota_entrada])  on update no action on delete no action 
+go
+Alter table [TBImpostos_nota_entrada] add  foreign key([FKId_TBNota_entrada]) references [TBNota_entrada] ([PKId_TBNota_entrada])  on update no action on delete no action 
+go
+
+
+Set quoted_identifier on
+go
+
+
+
+
+
+
+
+
+
+
+
+
+Set quoted_identifier off
+go
+
+
+
+
+
+
+
+
+/* Roles permissions */
+
+
+
+
+
+/* Users permissions */
+
+
+
+
+
+

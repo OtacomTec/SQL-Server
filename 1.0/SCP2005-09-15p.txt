@@ -1,0 +1,77 @@
+/*
+   segunda-feira, 19 de setembro de 2005 19:09:15
+   User: sa
+   Server: ONLYTECH-02
+   Database: BDRetaguarda
+   Application: MS SQLEM - Data Tools
+*/
+
+BEGIN TRANSACTION
+SET QUOTED_IDENTIFIER ON
+SET TRANSACTION ISOLATION LEVEL SERIALIZABLE
+SET ARITHABORT ON
+SET NUMERIC_ROUNDABORT OFF
+SET CONCAT_NULL_YIELDS_NULL ON
+SET ANSI_NULLS ON
+SET ANSI_PADDING ON
+SET ANSI_WARNINGS ON
+COMMIT
+BEGIN TRANSACTION
+ALTER TABLE dbo.TBBanco_Fornecedor
+	DROP CONSTRAINT FK__TBBanco_F__FKId___687693BC
+GO
+COMMIT
+BEGIN TRANSACTION
+ALTER TABLE dbo.TBBanco_Fornecedor
+	DROP CONSTRAINT FK__TBBanco_F__FKCod__696AB7F5
+GO
+COMMIT
+BEGIN TRANSACTION
+CREATE TABLE dbo.Tmp_TBBanco_Fornecedor
+	(
+	PKId_TBBanco_fornecedor int NOT NULL IDENTITY (1, 1),
+	FKId_TBFornecedor int NOT NULL,
+	FKCodigo_TBBancos int NOT NULL,
+	DFAgencia_TBBanco_Fornecedor nvarchar(10) NOT NULL,
+	DFConta_TBBanco_Fornecedor nvarchar(20) NOT NULL,
+	DFFavorecido_TBBanco_fornecedor nvarchar(50) NULL
+	)  ON [PRIMARY]
+GO
+SET IDENTITY_INSERT dbo.Tmp_TBBanco_Fornecedor ON
+GO
+IF EXISTS(SELECT * FROM dbo.TBBanco_Fornecedor)
+	 EXEC('INSERT INTO dbo.Tmp_TBBanco_Fornecedor (PKId_TBBanco_fornecedor, FKId_TBFornecedor, FKCodigo_TBBancos, DFAgencia_TBBanco_Fornecedor, DFConta_TBBanco_Fornecedor, DFFavorecido_TBBanco_fornecedor)
+		SELECT PKId_TBBanco_fornecedor, FKId_TBFornecedor, FKCodigo_TBBancos, DFAgencia_TBBanco_Fornecedor, DFConta_TBBanco_Fornecedor, DFFavorecido_TBBanco_fornecedor FROM dbo.TBBanco_Fornecedor TABLOCKX')
+GO
+SET IDENTITY_INSERT dbo.Tmp_TBBanco_Fornecedor OFF
+GO
+DROP TABLE dbo.TBBanco_Fornecedor
+GO
+EXECUTE sp_rename N'dbo.Tmp_TBBanco_Fornecedor', N'TBBanco_Fornecedor', 'OBJECT'
+GO
+ALTER TABLE dbo.TBBanco_Fornecedor ADD CONSTRAINT
+	PK__TBBanco_Forneced__67826F83 PRIMARY KEY CLUSTERED 
+	(
+	PKId_TBBanco_fornecedor
+	) WITH FILLFACTOR = 90 ON [PRIMARY]
+
+GO
+ALTER TABLE dbo.TBBanco_Fornecedor WITH NOCHECK ADD CONSTRAINT
+	FK__TBBanco_F__FKCod__696AB7F5 FOREIGN KEY
+	(
+	FKCodigo_TBBancos
+	) REFERENCES dbo.TBBancos
+	(
+	PKCodigo_TBBancos
+	)
+GO
+ALTER TABLE dbo.TBBanco_Fornecedor WITH NOCHECK ADD CONSTRAINT
+	FK__TBBanco_F__FKId___687693BC FOREIGN KEY
+	(
+	FKId_TBFornecedor
+	) REFERENCES dbo.TBFornecedor
+	(
+	PKId_TBFornecedor
+	)
+GO
+COMMIT

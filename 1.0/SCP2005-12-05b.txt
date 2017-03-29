@@ -1,0 +1,216 @@
+/*
+   segunda-feira, 5 de dezembro de 2005 15:51:23
+   User: 
+   Server: ONLYTECH-02
+   Database: BDRetaguarda
+   Application: MS SQLEM - Data Tools
+*/
+BEGIN TRANSACTION
+
+SET QUOTED_IDENTIFIER ON
+SET TRANSACTION ISOLATION LEVEL SERIALIZABLE
+SET ARITHABORT ON
+SET NUMERIC_ROUNDABORT OFF
+SET CONCAT_NULL_YIELDS_NULL ON
+SET ANSI_NULLS ON
+SET ANSI_PADDING ON
+SET ANSI_WARNINGS ON
+
+ALTER TABLE dbo.TBNota_saida
+	DROP CONSTRAINT FK__TBNota_sa__FKCod__5F1F0650
+
+ALTER TABLE dbo.TBNota_saida
+	DROP CONSTRAINT FK__TBNota_sa__FKId___5B4E756C
+
+ALTER TABLE dbo.TBNota_saida
+	DROP CONSTRAINT FK__TBNota_sa__FKId___5A5A5133
+
+ALTER TABLE dbo.TBNota_saida
+	DROP CONSTRAINT FK__TBNota_sa__FKCod__5C4299A5
+
+ALTER TABLE dbo.TBNota_saida
+	DROP CONSTRAINT FK__TBNota_sa__FKCod__587208C1
+
+CREATE TABLE dbo.Tmp_TBNota_saida
+	(
+	PKId_TBNota_saida int NOT NULL IDENTITY (1, 1),
+	FKCodigo_TBEmpresa int NOT NULL,
+	FKId_TBVendedor int NOT NULL,
+	FKId_TBPlano_pagamento int NOT NULL,
+	FKCodigo_TBTabela_preco int NOT NULL,
+	FKCodigo_TBTransportadora int NOT NULL,
+	DFTipo_operacao_TBNota_saida int NOT NULL,
+	DFNumero_TBNota_saida int NOT NULL,
+	DFSerie_TBNota_saida nvarchar(3) NOT NULL,
+	DFTipo_emitente_TBNota_saida bit NOT NULL,
+	DFEmitente_TBNota_saida int NOT NULL,
+	DFTotal_itens_TBNota_saida money NOT NULL,
+	DFTotal_nota_TBNota_saida money NOT NULL,
+	DFTotal_nota_tabela_TBNota_saida money NOT NULL,
+	DFDesconto_especial_TBNota_saida money NULL,
+	DFDesconto_indenizacao_TBNota_saida money NULL,
+	DFData_Emissao_TBNota_saida smalldatetime NOT NULL,
+	DFData_Saida_TBNota_saida smalldatetime NOT NULL,
+	DFFaturista_TBNota_saida nvarchar(20) NOT NULL,
+	DFDigitador_TBNota_saida nvarchar(20) NOT NULL,
+	DFPrevisao_TBNota_saida bit NOT NULL,
+	DFValor_ipi_TBNota_saida money NULL,
+	DFDespesas_acessorias_TBNota_saida money NULL,
+	DFTotal_descontos_itens_TBNota_saida money NULL,
+	DFTotal_peso_liquido_TBNota_saida money NOT NULL,
+	DFTotal_peso_bruto_TBNota_saida money NOT NULL,
+	DFTotal_custo_medio_TBNota_saida money NOT NULL,
+	DFTotal_custo_real_TBNota_saida money NOT NULL,
+	DFTotal_custo_contabil_TBNota_saida money NOT NULL,
+	DFNumero_pedido_TBNota_saida int NOT NULL,
+	DFCancelado_TBNota_saida bit NULL,
+	DFMotivo_cancelamento_TBNota_saida nvarchar(50) NULL,
+	DFUsuario_cancelamento_TBNota_saida nvarchar(20) NULL,
+	DFIntegrado_fiscal_TBNota_saida bit NULL,
+	DFBase_calculo_subst_tributaria_TBNota_saida money NULL,
+	DFValor_subst_tributaria_TBNota_saida money NULL,
+	DFAbatimento_especial_TBNota_saida money NULL,
+	DFObservacao_TBNota_saida nvarchar(150) NULL,
+	DFVolume_TBNota_Saida nvarchar(50) NULL,
+	DFHora_Emissao_TBNota_saida nvarchar(8) NULL
+	)  ON [PRIMARY]
+
+SET IDENTITY_INSERT dbo.Tmp_TBNota_saida ON
+
+IF EXISTS(SELECT * FROM dbo.TBNota_saida)
+	 EXEC('INSERT INTO dbo.Tmp_TBNota_saida (PKId_TBNota_saida, FKCodigo_TBEmpresa, FKId_TBVendedor, FKId_TBPlano_pagamento, FKCodigo_TBTabela_preco, FKCodigo_TBTransportadora, DFTipo_operacao_TBNota_saida, DFNumero_TBNota_saida, DFSerie_TBNota_saida, DFTipo_emitente_TBNota_saida, DFEmitente_TBNota_saida, DFTotal_itens_TBNota_saida, DFTotal_nota_TBNota_saida, DFTotal_nota_tabela_TBNota_saida, DFDesconto_especial_TBNota_saida, DFDesconto_indenizacao_TBNota_saida, DFData_Emissao_TBNota_saida, DFData_Saida_TBNota_saida, DFFaturista_TBNota_saida, DFDigitador_TBNota_saida, DFPrevisao_TBNota_saida, DFValor_ipi_TBNota_saida, DFDespesas_acessorias_TBNota_saida, DFTotal_descontos_itens_TBNota_saida, DFTotal_peso_liquido_TBNota_saida, DFTotal_peso_bruto_TBNota_saida, DFTotal_custo_medio_TBNota_saida, DFTotal_custo_real_TBNota_saida, DFTotal_custo_contabil_TBNota_saida, DFNumero_pedido_TBNota_saida, DFCancelado_TBNota_saida, DFMotivo_cancelamento_TBNota_saida, DFUsuario_cancelamento_TBNota_saida, DFIntegrado_fiscal_TBNota_saida, DFBase_calculo_subst_tributaria_TBNota_saida, DFValor_subst_tributaria_TBNota_saida, DFAbatimento_especial_TBNota_saida, DFObservacao_TBNota_saida, DFVolume_TBNota_Saida, DFHora_Emissao_TBNota_saida)
+		SELECT PKId_TBNota_saida, FKCodigo_TBEmpresa, FKId_TBVendedor, FKId_TBPlano_pagamento, FKCodigo_TBTabela_preco, FKCodigo_TBTransportadora, DFTipo_operacao_TBNota_saida, DFNumero_TBNota_saida, DFSerie_TBNota_saida, DFTipo_emitente_TBNota_saida, DFEmitente_TBNota_saida, DFTotal_itens_TBNota_saida, DFTotal_nota_TBNota_saida, DFTotal_nota_tabela_TBNota_saida, DFDesconto_especial_TBNota_saida, DFDesconto_indenizacao_TBNota_saida, DFData_Emissao_TBNota_saida, DFData_Saida_TBNota_saida, DFFaturista_TBNota_saida, DFDigitador_TBNota_saida, DFPrevisao_TBNota_saida, DFValor_ipi_TBNota_saida, DFDespesas_acessorias_TBNota_saida, DFTotal_descontos_itens_TBNota_saida, DFTotal_peso_liquido_TBNota_saida, DFTotal_peso_bruto_TBNota_saida, DFTotal_custo_medio_TBNota_saida, DFTotal_custo_real_TBNota_saida, DFTotal_custo_contabil_TBNota_saida, DFNumero_pedido_TBNota_saida, DFCancelado_TBNota_saida, DFMotivo_cancelamento_TBNota_saida, DFUsuario_cancelamento_TBNota_saida, DFIntegrado_fiscal_TBNota_saida, DFBase_calculo_subst_tributaria_TBNota_saida, DFValor_subst_tributaria_TBNota_saida, DFAbatimento_especial_TBNota_saida, DFObservacao_TBNota_saida, DFVolume_TBNota_Saida, CONVERT(nvarchar(8), DFHora_Emissao_TBNota_saida) FROM dbo.TBNota_saida TABLOCKX')
+
+SET IDENTITY_INSERT dbo.Tmp_TBNota_saida OFF
+
+ALTER TABLE dbo.TBTitulo_nota_saida
+	DROP CONSTRAINT FK__TBTitulo___FKId___49D9D0A7
+
+ALTER TABLE dbo.TBCfop_nota_saida
+	DROP CONSTRAINT FK__TBCfop_no__FKId___61FB72FB
+
+ALTER TABLE dbo.TBItens_nota_saida
+	DROP CONSTRAINT FK__TBItens_n__FKId___61074EC2
+
+ALTER TABLE dbo.TBImpostos_nota_saida
+	DROP CONSTRAINT FK__TBImposto__FKId___60132A89
+
+ALTER TABLE dbo.TBPedido_devolucao
+	DROP CONSTRAINT FK__TBPedido___FKId___623B6A1D
+
+ALTER TABLE dbo.TBNota_devolucao
+	DROP CONSTRAINT FK__TBNota_de__FKId___632F8E56
+
+DROP TABLE dbo.TBNota_saida
+
+EXECUTE sp_rename N'dbo.Tmp_TBNota_saida', N'TBNota_saida', 'OBJECT'
+
+ALTER TABLE dbo.TBNota_saida ADD CONSTRAINT
+	PK__TBNota_saida__577DE488 PRIMARY KEY CLUSTERED 
+	(
+	PKId_TBNota_saida
+	) WITH FILLFACTOR = 90 ON [PRIMARY]
+
+
+CREATE NONCLUSTERED INDEX IX_TBNota_saida ON dbo.TBNota_saida
+	(
+	DFNumero_TBNota_saida
+	) ON [PRIMARY]
+
+ALTER TABLE dbo.TBNota_saida WITH NOCHECK ADD CONSTRAINT
+	FK__TBNota_sa__FKCod__587208C1 FOREIGN KEY
+	(
+	FKCodigo_TBEmpresa
+	) REFERENCES dbo.TBEmpresa
+	(
+	PKCodigo_TBEmpresa
+	)
+
+ALTER TABLE dbo.TBNota_saida WITH NOCHECK ADD CONSTRAINT
+	FK__TBNota_sa__FKCod__5C4299A5 FOREIGN KEY
+	(
+	FKCodigo_TBTransportadora
+	) REFERENCES dbo.TBTransportadora
+	(
+	PKCodigo_TBTransportadora
+	)
+
+ALTER TABLE dbo.TBNota_saida WITH NOCHECK ADD CONSTRAINT
+	FK__TBNota_sa__FKId___5A5A5133 FOREIGN KEY
+	(
+	FKId_TBVendedor
+	) REFERENCES dbo.TBVendedor
+	(
+	PKId_TBVendedor
+	)
+ALTER TABLE dbo.TBNota_saida WITH NOCHECK ADD CONSTRAINT
+	FK__TBNota_sa__FKId___5B4E756C FOREIGN KEY
+	(
+	FKId_TBPlano_pagamento
+	) REFERENCES dbo.TBPlano_pagamento
+	(
+	PKId_TBPlano_pagamento
+	)
+ALTER TABLE dbo.TBNota_saida WITH NOCHECK ADD CONSTRAINT
+	FK__TBNota_sa__FKCod__5F1F0650 FOREIGN KEY
+	(
+	FKCodigo_TBTabela_preco
+	) REFERENCES dbo.TBTabela_preco
+	(
+	PKCodigo_TBTabela_preco
+	)
+
+ALTER TABLE dbo.TBNota_devolucao WITH NOCHECK ADD CONSTRAINT
+	FK__TBNota_de__FKId___632F8E56 FOREIGN KEY
+	(
+	FKId_TBNota_saida
+	) REFERENCES dbo.TBNota_saida
+	(
+	PKId_TBNota_saida
+	)
+
+ALTER TABLE dbo.TBPedido_devolucao WITH NOCHECK ADD CONSTRAINT
+	FK__TBPedido___FKId___623B6A1D FOREIGN KEY
+	(
+	FKId_TBNota_saida
+	) REFERENCES dbo.TBNota_saida
+	(
+	PKId_TBNota_saida
+	)
+
+ALTER TABLE dbo.TBImpostos_nota_saida WITH NOCHECK ADD CONSTRAINT
+	FK__TBImposto__FKId___60132A89 FOREIGN KEY
+	(
+	FKId_TBNota_saida
+	) REFERENCES dbo.TBNota_saida
+	(
+	PKId_TBNota_saida
+	)
+
+ALTER TABLE dbo.TBItens_nota_saida WITH NOCHECK ADD CONSTRAINT
+	FK__TBItens_n__FKId___61074EC2 FOREIGN KEY
+	(
+	FKId_TBNota_saida
+	) REFERENCES dbo.TBNota_saida
+	(
+	PKId_TBNota_saida
+	)
+
+ALTER TABLE dbo.TBCfop_nota_saida WITH NOCHECK ADD CONSTRAINT
+	FK__TBCfop_no__FKId___61FB72FB FOREIGN KEY
+	(
+	FKId_TBNota_saida
+	) REFERENCES dbo.TBNota_saida
+	(
+	PKId_TBNota_saida
+	)
+
+ALTER TABLE dbo.TBTitulo_nota_saida WITH NOCHECK ADD CONSTRAINT
+	FK__TBTitulo___FKId___49D9D0A7 FOREIGN KEY
+	(
+	FKId_TBNota_saida
+	) REFERENCES dbo.TBNota_saida
+	(
+	PKId_TBNota_saida
+	)
+COMMIT TRANSACTION

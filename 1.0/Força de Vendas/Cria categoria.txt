@@ -1,0 +1,6 @@
+CREATE TABLE [dbo].[TBCategoria_palm](
+	[PKId_TBCategoria_palm] [int] NULL,
+	[DFDescricao_TBCategoria_palm] [nvarchar](40) NULL,
+	[DFData_atualizacao_portal] [smalldatetime] NULL,
+	[DFHora_atualizacao_portal] [smalldatetime] NULL
+) ON [PRIMARY]

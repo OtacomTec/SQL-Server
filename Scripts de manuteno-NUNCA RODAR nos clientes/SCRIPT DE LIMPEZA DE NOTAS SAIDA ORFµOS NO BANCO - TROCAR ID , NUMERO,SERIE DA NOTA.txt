@@ -1,0 +1,34 @@
+
+DELETE FROM TBCfop_nota_Saida
+WHERE TBCfop_nota_Saida.FKId_TBNota_Saida = ID_NOTA
+
+DELETE FROM TBImpostos_nota_Saida
+WHERE TBImpostos_nota_Saida.FKId_TBNota_Saida = ID_NOTA
+
+
+DELETE FROM TBTitulo_nota_saida
+WHERE TBTitulo_nota_saida.FKId_TBNota_Saida = ID_NOTA
+
+DELETE FROM TBTitulo_recebido
+WHERE TBTitulo_recebido.FKId_TBTitulo_receber = ID_TITULO
+
+DELETE FROM TBTitulo_receber
+WHERE TBTitulo_receber.DFNumero_documento_TBTitulo_receber = NUMERO_NOTA
+AND DFSerie_TBTitulo_receber = SERIE_NOTA
+
+DELETE FROM TBItens_nota_Saida
+WHERE TBItens_nota_Saida.FKId_TBNota_Saida = ID_NOTA
+
+DELETE FROM TBnota_Saida
+WHERE TBnota_Saida.PKId_TBNota_Saida = ID_NOTA
+
+
+----RODAR SEPARADO.......
+
+SELECT PKId_TBNota_Saida FROM TBNota_Saida
+WHERE TBNota_Saida.DFNumero_TBNota_Saida = NUMERO_NOTA
+AND TBNota_Saida.DFSerie_TBNota_Saida = SERIE_NOTA
+
+SELECT PKId_TBTitulo_receber FROM TBTitulo_receber
+WHERE TBTitulo_receber.DFNumero_documento_TBTitulo_receber = NUMERO_NOTA
+AND DFSerie_TBTitulo_receber = SERIE_NOTA

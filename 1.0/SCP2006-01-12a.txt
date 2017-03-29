@@ -1,0 +1,903 @@
+/*
+   segunda-feira, 9 de janeiro de 2006 12:00:53
+   User: sa
+   Server: ONLYTECH-02
+   Database: BDRetaguarda
+   Application: MS SQLEM - Data Tools
+*/
+
+BEGIN TRANSACTION
+/*
+ *** IDENTIFICAÇÃO DO SCRIPT ***
+
+ 1 - Apartir de 20/12/2005, fica expressamente proibida a criação de scripts sem que seja preenchido este cabeçalho
+ 2 - Obrigatoriamente necessário que este paragrafo seja inserido apos um BEGIN TRANSACTION
+ 3 - Obrigatoriamente o preenchimento das variaveis abaixo(@Nomenclatura,@Observacao,@Data)com valores correspondentes e condizentes
+ Att: Marcos
+
+*/
+
+--INICIO CABECALHO
+
+declare @Nomenclatura as nvarchar(20)
+declare @Observacao as nvarchar(100)
+declare @Data as SMALLDATETIME
+
+SET @Nomenclatura = 'SCP2006-01-12a'
+SET @Observacao = 'Aumento da Observacao do funcionário'
+SET @Data = CURRENT_TIMESTAMP
+
+
+---LIMPEZA DA TABELA
+DELETE FROM TBSCRIPT
+
+---INSERCAO DO REGISTRO
+INSERT INTO TBSCRIPT(DFNome_TBScript,DFObjetivo_TBScript,DFData_execucao_TBScript)
+VALUES(@Nomenclatura,@Observacao,@Data)
+
+---FIM CABECALHO
+
+SET QUOTED_IDENTIFIER ON
+SET TRANSACTION ISOLATION LEVEL SERIALIZABLE
+SET ARITHABORT ON
+SET NUMERIC_ROUNDABORT OFF
+SET CONCAT_NULL_YIELDS_NULL ON
+SET ANSI_NULLS ON
+SET ANSI_PADDING ON
+SET ANSI_WARNINGS ON
+
+
+ALTER TABLE dbo.TBFuncionario
+	DROP CONSTRAINT FK_TBFuncionario_TBBancos
+GO
+
+
+ALTER TABLE dbo.TBFuncionario
+	DROP CONSTRAINT FK__TBFuncion__FKCod__0E2EFAF4
+GO
+ALTER TABLE dbo.TBFuncionario
+	DROP CONSTRAINT FK__TBFuncion__FKCod__17B8652E
+GO
+
+ALTER TABLE dbo.TBFuncionario
+	DROP CONSTRAINT FK__TBFuncion__FKCod__0C46B282
+GO
+ALTER TABLE dbo.TBFuncionario
+	DROP CONSTRAINT FK__TBFuncion__FKCod__15D01CBC
+GO
+
+CREATE TABLE dbo.Tmp_TBFuncionario
+	(
+	PKCodigo_TBFuncionario int NOT NULL,
+	FKCodigo_TBEmpresa int NOT NULL,
+	DFNome_TBFuncionario nvarchar(40) NOT NULL,
+	DFEndereco_TBFuncionario nvarchar(40) NOT NULL,
+	DFNumero_TBFuncionario nvarchar(10) NULL,
+	DFComplemento_TBFuncionario nvarchar(20) NULL,
+	DFBairro_TBFuncionario nvarchar(30) NULL,
+	DFCep_TBFuncionario nvarchar(10) NOT NULL,
+	FKId_TBCidade_otica int NOT NULL,
+	DFData_Admissao_TBFuncionario smalldatetime NOT NULL,
+	FKCodigo_TBFuncao int NOT NULL,
+	DFCpf_TBFuncionario nvarchar(20) NULL,
+	DFRegistro_geral_TBFuncionario nvarchar(20) NULL,
+	DFOrgao_expedidor_TBFuncionario nvarchar(20) NULL,
+	DFEmite_recibo_TBFuncionario bit NOT NULL,
+	DFObservacao_TBFuncionario nvarchar(150) NULL,
+	DFPath_foto_TBFuncionario nvarchar(100) NULL,
+	DFData_nascimento_TBFuncionario smalldatetime NULL,
+	DFTitulo_eleitor_TBFuncionario nvarchar(20) NULL,
+	DFCarteira_Trabalho_TBFuncionario nvarchar(10) NULL,
+	DFSerie_TBFuncionario nvarchar(10) NULL,
+	DFSexo_TBFuncionario bit NULL,
+	DFNumero_CNH_TBFuncionario bigint NULL,
+	DFTipo_cnh_TBFuncionario char(2) NULL,
+	DFData_validade_cnh_TBFuncionario smalldatetime NULL,
+	DFNumero_pis_TBFuncionario bigint NULL,
+	DFAgencia_FGTS_TBFuncionario nvarchar(10) NULL,
+	DFConta_FGTS_TBFuncionario nvarchar(10) NULL,
+	DFPercentual_vale_transporte_TBFuncionario money NULL,
+	DFPercentual_comissao_TBFuncionario money NULL,
+	FKCodigo_TBBancos int NULL,
+	DFAgencia_recebimento_TBFuncionario nvarchar(10) NULL,
+	DFNumero_conta_recebimento_TBFuncionario nvarchar(10) NULL,
+	DFTipo_conta_TBFuncionario nvarchar(10) NULL,
+	DFNumero_registro_TBFuncionario nvarchar(10) NULL,
+	DFEstado_civil_TBFuncionario int NULL,
+	DFHora_entrada_TBFuncionario nvarchar(8) NULL,
+	DFHora_almoco_ida_TBFuncionario nvarchar(8) NULL,
+	DFHora_almoco_volta_TBFuncionario nvarchar(8) NULL,
+	DFHora_lanche_ida_TBFuncionario nvarchar(8) NULL,
+	DFHora_lanche_volta_TBFuncionario nvarchar(8) NULL,
+	DFHora_saida_TBFuncionario nvarchar(8) NULL,
+	DFCondutor_TBFuncionario bit NULL,
+	DFTerceirizado_TBFuncionario bit NULL,
+	DFId_Origem_terceirizado_TBFuncionario int NULL,
+	DFUf_habilitacao_TBFuncionario char(2) NULL,
+	DFCodigo_automacao_TBFuncionario bigint NULL,
+	DFHora_lanche_ida_2jornada_TBFuncionario nvarchar(8) NULL,
+	DFHora_lanche_volta_2jornada_TBFuncionario nvarchar(8) NULL,
+	DFSenha_TBFuncionario nvarchar(10) NULL,
+	DFMarcador_hora_TBFuncionario int NULL,
+	DFTolerancia_atraso_TBFuncionario int NULL,
+	DFUf_carteira_trabalho_TBFuncionario char(2) NULL,
+	DFTipo_horario_TBFuncionario int NULL,
+	DFPermite_alem_tolerancia_TBFuncionario bit NULL
+	)  ON [PRIMARY]
+GO
+IF EXISTS(SELECT * FROM dbo.TBFuncionario)
+	 EXEC('INSERT INTO dbo.Tmp_TBFuncionario (PKCodigo_TBFuncionario, FKCodigo_TBEmpresa, DFNome_TBFuncionario, DFEndereco_TBFuncionario, DFNumero_TBFuncionario, DFComplemento_TBFuncionario, DFBairro_TBFuncionario, DFCep_TBFuncionario, FKId_TBCidade_otica, DFData_Admissao_TBFuncionario, FKCodigo_TBFuncao, DFCpf_TBFuncionario, DFRegistro_geral_TBFuncionario, DFOrgao_expedidor_TBFuncionario, DFEmite_recibo_TBFuncionario, DFObservacao_TBFuncionario, DFPath_foto_TBFuncionario, DFData_nascimento_TBFuncionario, DFTitulo_eleitor_TBFuncionario, DFCarteira_Trabalho_TBFuncionario, DFSerie_TBFuncionario, DFSexo_TBFuncionario, DFNumero_CNH_TBFuncionario, DFTipo_cnh_TBFuncionario, DFData_validade_cnh_TBFuncionario, DFNumero_pis_TBFuncionario, DFAgencia_FGTS_TBFuncionario, DFConta_FGTS_TBFuncionario, DFPercentual_vale_transporte_TBFuncionario, DFPercentual_comissao_TBFuncionario, FKCodigo_TBBancos, DFAgencia_recebimento_TBFuncionario, DFNumero_conta_recebimento_TBFuncionario, DFTipo_conta_TBFuncionario, DFNumero_registro_TBFuncionario, DFEstado_civil_TBFuncionario, DFHora_entrada_TBFuncionario, DFHora_almoco_ida_TBFuncionario, DFHora_almoco_volta_TBFuncionario, DFHora_lanche_ida_TBFuncionario, DFHora_lanche_volta_TBFuncionario, DFHora_saida_TBFuncionario, DFCondutor_TBFuncionario, DFTerceirizado_TBFuncionario, DFId_Origem_terceirizado_TBFuncionario, DFUf_habilitacao_TBFuncionario, DFCodigo_automacao_TBFuncionario, DFHora_lanche_ida_2jornada_TBFuncionario, DFHora_lanche_volta_2jornada_TBFuncionario, DFSenha_TBFuncionario, DFMarcador_hora_TBFuncionario, DFTolerancia_atraso_TBFuncionario, DFUf_carteira_trabalho_TBFuncionario, DFTipo_horario_TBFuncionario, DFPermite_alem_tolerancia_TBFuncionario)
+		SELECT PKCodigo_TBFuncionario, FKCodigo_TBEmpresa, DFNome_TBFuncionario, DFEndereco_TBFuncionario, DFNumero_TBFuncionario, DFComplemento_TBFuncionario, DFBairro_TBFuncionario, DFCep_TBFuncionario, FKId_TBCidade_otica, DFData_Admissao_TBFuncionario, FKCodigo_TBFuncao, DFCpf_TBFuncionario, DFRegistro_geral_TBFuncionario, DFOrgao_expedidor_TBFuncionario, DFEmite_recibo_TBFuncionario, DFObservacao_TBFuncionario, DFPath_foto_TBFuncionario, DFData_nascimento_TBFuncionario, DFTitulo_eleitor_TBFuncionario, DFCarteira_Trabalho_TBFuncionario, DFSerie_TBFuncionario, DFSexo_TBFuncionario, DFNumero_CNH_TBFuncionario, DFTipo_cnh_TBFuncionario, DFData_validade_cnh_TBFuncionario, DFNumero_pis_TBFuncionario, DFAgencia_FGTS_TBFuncionario, DFConta_FGTS_TBFuncionario, DFPercentual_vale_transporte_TBFuncionario, DFPercentual_comissao_TBFuncionario, FKCodigo_TBBancos, DFAgencia_recebimento_TBFuncionario, DFNumero_conta_recebimento_TBFuncionario, DFTipo_conta_TBFuncionario, DFNumero_registro_TBFuncionario, DFEstado_civil_TBFuncionario, DFHora_entrada_TBFuncionario, DFHora_almoco_ida_TBFuncionario, DFHora_almoco_volta_TBFuncionario, DFHora_lanche_ida_TBFuncionario, DFHora_lanche_volta_TBFuncionario, DFHora_saida_TBFuncionario, DFCondutor_TBFuncionario, DFTerceirizado_TBFuncionario, DFId_Origem_terceirizado_TBFuncionario, DFUf_habilitacao_TBFuncionario, DFCodigo_automacao_TBFuncionario, DFHora_lanche_ida_2jornada_TBFuncionario, DFHora_lanche_volta_2jornada_TBFuncionario, DFSenha_TBFuncionario, DFMarcador_hora_TBFuncionario, DFTolerancia_atraso_TBFuncionario, DFUf_carteira_trabalho_TBFuncionario, DFTipo_horario_TBFuncionario, DFPermite_alem_tolerancia_TBFuncionario FROM dbo.TBFuncionario TABLOCKX')
+GO
+ALTER TABLE dbo.TBVale_funcionario
+	DROP CONSTRAINT FK__TBVale_fu__FKCod__2B4E5542
+GO
+ALTER TABLE dbo.TBReferencias_funcionario
+	DROP CONSTRAINT FK__TBReferen__FKCod__0F870A93
+GO
+ALTER TABLE dbo.TBReferencias_funcionario
+	DROP CONSTRAINT FK__TBReferen__FKCod__46D73F7D
+GO
+ALTER TABLE dbo.TBFuncionario_Exame_medico
+	DROP CONSTRAINT FK__TBFuncion__FKCod__470C49A7
+GO
+ALTER TABLE dbo.TBEscala_semanal_funcionario
+	DROP CONSTRAINT FK__TBEscala___FKCod__47614F62
+GO
+ALTER TABLE dbo.TBFuncionario_qualificacao
+	DROP CONSTRAINT FK__TBFuncion__FKCod__47CB63B6
+GO
+ALTER TABLE dbo.TBFuncionario_banco
+	DROP CONSTRAINT FK__TBFuncion__FKCod__48006DE0
+GO
+ALTER TABLE dbo.TBFuncionario_Exame_medico
+	DROP CONSTRAINT FK__TBFuncion__FKCod__48BF87EF
+GO
+ALTER TABLE dbo.TBFuncionario_referencia
+	DROP CONSTRAINT FK__TBFuncion__FKCod__48F49219
+GO
+ALTER TABLE dbo.TBFuncionario_banco
+	DROP CONSTRAINT FK__TBFuncion__FKCod__49B3AC28
+GO
+ALTER TABLE dbo.TBFuncionario_ocorrencia
+	DROP CONSTRAINT FK__TBFuncion__FKCod__49E8B652
+GO
+ALTER TABLE dbo.TBFuncionario_referencia
+	DROP CONSTRAINT FK__TBFuncion__FKCod__4AA7D061
+GO
+ALTER TABLE dbo.TBFuncionario_ocorrencia
+	DROP CONSTRAINT FK__TBFuncion__FKCod__4B9BF49A
+GO
+ALTER TABLE dbo.TBPonto_funcionario
+	DROP CONSTRAINT FK__TBPonto_f__FKCod__4C1B1787
+GO
+ALTER TABLE dbo.TBReferencias_funcionario
+	DROP CONSTRAINT FK__TBReferen__FKCod__10174366
+GO
+ALTER TABLE dbo.TBReferencias_funcionario
+	DROP CONSTRAINT FK__TBReferen__FKCod__19A0ADA0
+GO
+ALTER TABLE dbo.TBCondutor_veiculo
+	DROP CONSTRAINT FK__TBConduto__FKCod__2D2BB0BC
+GO
+ALTER TABLE dbo.TBVistoria_veiculo
+	DROP CONSTRAINT FK__TBVistori__FKCod__2E1FD4F5
+GO
+ALTER TABLE dbo.TBRevisao_veiculo
+	DROP CONSTRAINT FK__TBRevisao__FKCod__2F13F92E
+GO
+ALTER TABLE dbo.TBMulta_veiculo
+	DROP CONSTRAINT FK__TBMulta_v__FKCod__30081D67
+GO
+ALTER TABLE dbo.TBDependente_funcionario
+	DROP CONSTRAINT FK__TBDepende__FKCod__4238AEDF
+GO
+ALTER TABLE dbo.TBMovimento_pagamento
+	DROP CONSTRAINT FK__TBMovimen__FKCod__1C7D1A4B
+GO
+ALTER TABLE dbo.TBReferencias_funcionario
+	DROP CONSTRAINT FK__TBReferen__FKCod__5CFB8AC6
+GO
+ALTER TABLE dbo.TBFuncionario_qualificacao
+	DROP CONSTRAINT FK__TBFuncion__FKCod__5DEFAEFF
+GO
+ALTER TABLE dbo.TBFuncionario_Exame_medico
+	DROP CONSTRAINT FK__TBFuncion__FKCod__5EE3D338
+GO
+ALTER TABLE dbo.TBFuncionario_banco
+	DROP CONSTRAINT FK__TBFuncion__FKCod__5FD7F771
+GO
+ALTER TABLE dbo.TBFuncionario_referencia
+	DROP CONSTRAINT FK__TBFuncion__FKCod__60CC1BAA
+GO
+ALTER TABLE dbo.TBFuncionario_ocorrencia
+	DROP CONSTRAINT FK__TBFuncion__FKCod__61C03FE3
+GO
+ALTER TABLE dbo.TBReferencias_funcionario
+	DROP CONSTRAINT FK__TBReferen__FKCod__627F59F2
+GO
+ALTER TABLE dbo.TBFuncionario_qualificacao
+	DROP CONSTRAINT FK__TBFuncion__FKCod__63737E2B
+GO
+ALTER TABLE dbo.TBFuncionario_Exame_medico
+	DROP CONSTRAINT FK__TBFuncion__FKCod__6467A264
+GO
+ALTER TABLE dbo.TBFuncionario_banco
+	DROP CONSTRAINT FK__TBFuncion__FKCod__655BC69D
+GO
+ALTER TABLE dbo.TBFuncionario_referencia
+	DROP CONSTRAINT FK__TBFuncion__FKCod__664FEAD6
+GO
+ALTER TABLE dbo.TBFuncionario_ocorrencia
+	DROP CONSTRAINT FK__TBFuncion__FKCod__67440F0F
+GO
+ALTER TABLE dbo.TBAgenda_funcionario
+	DROP CONSTRAINT FK__TBAgenda___FKCod__0F231F2D
+GO
+ALTER TABLE dbo.TBAbastecimento_veiculo
+	DROP CONSTRAINT FK__TBAbastec__FKCod__71E0CDBC
+GO
+ALTER TABLE dbo.TBAgenda_funcionario
+	DROP CONSTRAINT FK__TBAgenda___FKCod__18AC8967
+GO
+ALTER TABLE dbo.TBReferencias_funcionario
+	DROP CONSTRAINT FK__TBReferen__FKCod__76BB5CC9
+GO
+ALTER TABLE dbo.TBFuncionario_qualificacao
+	DROP CONSTRAINT FK__TBFuncion__FKCod__77AF8102
+GO
+ALTER TABLE dbo.TBFuncionario_Exame_medico
+	DROP CONSTRAINT FK__TBFuncion__FKCod__78A3A53B
+GO
+ALTER TABLE dbo.TBFuncionario_banco
+	DROP CONSTRAINT FK__TBFuncion__FKCod__7997C974
+GO
+ALTER TABLE dbo.TBFuncionario_referencia
+	DROP CONSTRAINT FK__TBFuncion__FKCod__7A8BEDAD
+GO
+ALTER TABLE dbo.TBFuncionario_ocorrencia
+	DROP CONSTRAINT FK__TBFuncion__FKCod__7B8011E6
+GO
+ALTER TABLE dbo.TBFuncionario_qualificacao
+	DROP CONSTRAINT FK__TBFuncion__FKCod__107B2ECC
+GO
+ALTER TABLE dbo.TBFuncionario_Exame_medico
+	DROP CONSTRAINT FK__TBFuncion__FKCod__116F5305
+GO
+ALTER TABLE dbo.TBFuncionario_banco
+	DROP CONSTRAINT FK__TBFuncion__FKCod__1263773E
+GO
+ALTER TABLE dbo.TBFuncionario_referencia
+	DROP CONSTRAINT FK__TBFuncion__FKCod__13579B77
+GO
+ALTER TABLE dbo.TBFuncionario_ocorrencia
+	DROP CONSTRAINT FK__TBFuncion__FKCod__144BBFB0
+GO
+ALTER TABLE dbo.TBReferencias_funcionario
+	DROP CONSTRAINT FK__TBReferen__FKCod__2B2F2508
+GO
+ALTER TABLE dbo.TBFuncionario_qualificacao
+	DROP CONSTRAINT FK__TBFuncion__FKCod__2C234941
+GO
+ALTER TABLE dbo.TBFuncionario_Exame_medico
+	DROP CONSTRAINT FK__TBFuncion__FKCod__2D176D7A
+GO
+ALTER TABLE dbo.TBFuncionario_banco
+	DROP CONSTRAINT FK__TBFuncion__FKCod__2E0B91B3
+GO
+ALTER TABLE dbo.TBFuncionario_referencia
+	DROP CONSTRAINT FK__TBFuncion__FKCod__2EFFB5EC
+GO
+ALTER TABLE dbo.TBSalario_funcionario
+	DROP CONSTRAINT FK_TBSalario_funcionario_TBFuncionario
+GO
+ALTER TABLE dbo.TBFuncionario_ocorrencia
+	DROP CONSTRAINT FK__TBFuncion__FKCod__2FF3DA25
+GO
+ALTER TABLE dbo.TBReferencias_funcionario
+	DROP CONSTRAINT FK__TBReferen__FKCod__45240135
+GO
+ALTER TABLE dbo.TBFuncionario_qualificacao
+	DROP CONSTRAINT FK__TBFuncion__FKCod__4618256E
+GO
+ALTER TABLE dbo.TBEscala_funcionario
+	DROP CONSTRAINT FK__TBEscala___FKCod__466D2B29
+GO
+DROP TABLE dbo.TBFuncionario
+GO
+EXECUTE sp_rename N'dbo.Tmp_TBFuncionario', N'TBFuncionario', 'OBJECT'
+GO
+ALTER TABLE dbo.TBFuncionario ADD CONSTRAINT
+	PK__TBFuncionario__0599B4F3 PRIMARY KEY CLUSTERED 
+	(
+	PKCodigo_TBFuncionario
+	) WITH FILLFACTOR = 90 ON [PRIMARY]
+
+GO
+ALTER TABLE dbo.TBFuncionario WITH NOCHECK ADD CONSTRAINT
+	FK__TBFuncion__FKCod__0C46B282 FOREIGN KEY
+	(
+	FKCodigo_TBEmpresa
+	) REFERENCES dbo.TBEmpresa
+	(
+	PKCodigo_TBEmpresa
+	)
+GO
+ALTER TABLE dbo.TBFuncionario WITH NOCHECK ADD CONSTRAINT
+	FK__TBFuncion__FKCod__0E2EFAF4 FOREIGN KEY
+	(
+	FKCodigo_TBFuncao
+	) REFERENCES dbo.TBFuncao
+	(
+	PKCodigo_TBFuncao
+	)
+GO
+ALTER TABLE dbo.TBFuncionario WITH NOCHECK ADD CONSTRAINT
+	FK__TBFuncion__FKCod__15D01CBC FOREIGN KEY
+	(
+	FKCodigo_TBEmpresa
+	) REFERENCES dbo.TBEmpresa
+	(
+	PKCodigo_TBEmpresa
+	)
+GO
+ALTER TABLE dbo.TBFuncionario WITH NOCHECK ADD CONSTRAINT
+	FK__TBFuncion__FKCod__17B8652E FOREIGN KEY
+	(
+	FKCodigo_TBFuncao
+	) REFERENCES dbo.TBFuncao
+	(
+	PKCodigo_TBFuncao
+	)
+GO
+ALTER TABLE dbo.TBFuncionario WITH NOCHECK ADD CONSTRAINT
+	FK_TBFuncionario_TBBancos FOREIGN KEY
+	(
+	FKCodigo_TBBancos
+	) REFERENCES dbo.TBBancos
+	(
+	PKCodigo_TBBancos
+	)
+GO
+
+ALTER TABLE dbo.TBEscala_funcionario WITH NOCHECK ADD CONSTRAINT
+	FK__TBEscala___FKCod__466D2B29 FOREIGN KEY
+	(
+	FKCodigo_TBFuncionario
+	) REFERENCES dbo.TBFuncionario
+	(
+	PKCodigo_TBFuncionario
+	)
+GO
+
+ALTER TABLE dbo.TBSalario_funcionario WITH NOCHECK ADD CONSTRAINT
+	FK_TBSalario_funcionario_TBFuncionario FOREIGN KEY
+	(
+	FKCodigo_TBFuncionario
+	) REFERENCES dbo.TBFuncionario
+	(
+	PKCodigo_TBFuncionario
+	)
+GO
+
+ALTER TABLE dbo.TBAbastecimento_veiculo WITH NOCHECK ADD CONSTRAINT
+	FK__TBAbastec__FKCod__71E0CDBC FOREIGN KEY
+	(
+	FKCodigo_TBFuncionario
+	) REFERENCES dbo.TBFuncionario
+	(
+	PKCodigo_TBFuncionario
+	)
+GO
+
+ALTER TABLE dbo.TBAgenda_funcionario WITH NOCHECK ADD CONSTRAINT
+	FK__TBAgenda___FKCod__0F231F2D FOREIGN KEY
+	(
+	FKCodigo_TBFuncionario
+	) REFERENCES dbo.TBFuncionario
+	(
+	PKCodigo_TBFuncionario
+	)
+GO
+ALTER TABLE dbo.TBAgenda_funcionario WITH NOCHECK ADD CONSTRAINT
+	FK__TBAgenda___FKCod__18AC8967 FOREIGN KEY
+	(
+	FKCodigo_TBFuncionario
+	) REFERENCES dbo.TBFuncionario
+	(
+	PKCodigo_TBFuncionario
+	)
+GO
+
+ALTER TABLE dbo.TBMovimento_pagamento WITH NOCHECK ADD CONSTRAINT
+	FK__TBMovimen__FKCod__1C7D1A4B FOREIGN KEY
+	(
+	FKCodigo_TBFuncionario
+	) REFERENCES dbo.TBFuncionario
+	(
+	PKCodigo_TBFuncionario
+	)
+GO
+
+ALTER TABLE dbo.TBDependente_funcionario WITH NOCHECK ADD CONSTRAINT
+	FK__TBDepende__FKCod__4238AEDF FOREIGN KEY
+	(
+	FKCodigo_TBFuncionario
+	) REFERENCES dbo.TBFuncionario
+	(
+	PKCodigo_TBFuncionario
+	)
+GO
+
+ALTER TABLE dbo.TBMulta_veiculo WITH NOCHECK ADD CONSTRAINT
+	FK__TBMulta_v__FKCod__30081D67 FOREIGN KEY
+	(
+	FKCodigo_TBFuncionario
+	) REFERENCES dbo.TBFuncionario
+	(
+	PKCodigo_TBFuncionario
+	)
+GO
+
+ALTER TABLE dbo.TBRevisao_veiculo WITH NOCHECK ADD CONSTRAINT
+	FK__TBRevisao__FKCod__2F13F92E FOREIGN KEY
+	(
+	FKCodigo_TBFuncionario
+	) REFERENCES dbo.TBFuncionario
+	(
+	PKCodigo_TBFuncionario
+	)
+GO
+
+ALTER TABLE dbo.TBVistoria_veiculo WITH NOCHECK ADD CONSTRAINT
+	FK__TBVistori__FKCod__2E1FD4F5 FOREIGN KEY
+	(
+	FKCodigo_TBFuncionario
+	) REFERENCES dbo.TBFuncionario
+	(
+	PKCodigo_TBFuncionario
+	)
+GO
+
+ALTER TABLE dbo.TBCondutor_veiculo WITH NOCHECK ADD CONSTRAINT
+	FK__TBConduto__FKCod__2D2BB0BC FOREIGN KEY
+	(
+	FKCodigo_TBFuncionario
+	) REFERENCES dbo.TBFuncionario
+	(
+	PKCodigo_TBFuncionario
+	)
+GO
+
+ALTER TABLE dbo.TBPonto_funcionario WITH NOCHECK ADD CONSTRAINT
+	FK__TBPonto_f__FKCod__4C1B1787 FOREIGN KEY
+	(
+	FKCodigo_TBFuncionario
+	) REFERENCES dbo.TBFuncionario
+	(
+	PKCodigo_TBFuncionario
+	)
+GO
+
+ALTER TABLE dbo.TBFuncionario_ocorrencia WITH NOCHECK ADD CONSTRAINT
+	FK__TBFuncion__FKCod__144BBFB0 FOREIGN KEY
+	(
+	FKCodigo_TBFuncionario
+	) REFERENCES dbo.TBFuncionario
+	(
+	PKCodigo_TBFuncionario
+	)
+GO
+ALTER TABLE dbo.TBFuncionario_ocorrencia WITH NOCHECK ADD CONSTRAINT
+	FK__TBFuncion__FKCod__2FF3DA25 FOREIGN KEY
+	(
+	FKCodigo_TBFuncionario
+	) REFERENCES dbo.TBFuncionario
+	(
+	PKCodigo_TBFuncionario
+	)
+GO
+ALTER TABLE dbo.TBFuncionario_ocorrencia WITH NOCHECK ADD CONSTRAINT
+	FK__TBFuncion__FKCod__49E8B652 FOREIGN KEY
+	(
+	FKCodigo_TBFuncionario
+	) REFERENCES dbo.TBFuncionario
+	(
+	PKCodigo_TBFuncionario
+	)
+GO
+ALTER TABLE dbo.TBFuncionario_ocorrencia WITH NOCHECK ADD CONSTRAINT
+	FK__TBFuncion__FKCod__4B9BF49A FOREIGN KEY
+	(
+	FKCodigo_TBFuncionario
+	) REFERENCES dbo.TBFuncionario
+	(
+	PKCodigo_TBFuncionario
+	)
+GO
+ALTER TABLE dbo.TBFuncionario_ocorrencia WITH NOCHECK ADD CONSTRAINT
+	FK__TBFuncion__FKCod__61C03FE3 FOREIGN KEY
+	(
+	FKCodigo_TBFuncionario
+	) REFERENCES dbo.TBFuncionario
+	(
+	PKCodigo_TBFuncionario
+	)
+GO
+ALTER TABLE dbo.TBFuncionario_ocorrencia WITH NOCHECK ADD CONSTRAINT
+	FK__TBFuncion__FKCod__67440F0F FOREIGN KEY
+	(
+	FKCodigo_TBFuncionario
+	) REFERENCES dbo.TBFuncionario
+	(
+	PKCodigo_TBFuncionario
+	)
+GO
+ALTER TABLE dbo.TBFuncionario_ocorrencia WITH NOCHECK ADD CONSTRAINT
+	FK__TBFuncion__FKCod__7B8011E6 FOREIGN KEY
+	(
+	FKCodigo_TBFuncionario
+	) REFERENCES dbo.TBFuncionario
+	(
+	PKCodigo_TBFuncionario
+	)
+GO
+
+ALTER TABLE dbo.TBFuncionario_referencia WITH NOCHECK ADD CONSTRAINT
+	FK__TBFuncion__FKCod__13579B77 FOREIGN KEY
+	(
+	FKCodigo_TBFuncionario
+	) REFERENCES dbo.TBFuncionario
+	(
+	PKCodigo_TBFuncionario
+	)
+GO
+ALTER TABLE dbo.TBFuncionario_referencia WITH NOCHECK ADD CONSTRAINT
+	FK__TBFuncion__FKCod__2EFFB5EC FOREIGN KEY
+	(
+	FKCodigo_TBFuncionario
+	) REFERENCES dbo.TBFuncionario
+	(
+	PKCodigo_TBFuncionario
+	)
+GO
+ALTER TABLE dbo.TBFuncionario_referencia WITH NOCHECK ADD CONSTRAINT
+	FK__TBFuncion__FKCod__48F49219 FOREIGN KEY
+	(
+	FKCodigo_TBFuncionario
+	) REFERENCES dbo.TBFuncionario
+	(
+	PKCodigo_TBFuncionario
+	)
+GO
+ALTER TABLE dbo.TBFuncionario_referencia WITH NOCHECK ADD CONSTRAINT
+	FK__TBFuncion__FKCod__4AA7D061 FOREIGN KEY
+	(
+	FKCodigo_TBFuncionario
+	) REFERENCES dbo.TBFuncionario
+	(
+	PKCodigo_TBFuncionario
+	)
+GO
+ALTER TABLE dbo.TBFuncionario_referencia WITH NOCHECK ADD CONSTRAINT
+	FK__TBFuncion__FKCod__60CC1BAA FOREIGN KEY
+	(
+	FKCodigo_TBFuncionario
+	) REFERENCES dbo.TBFuncionario
+	(
+	PKCodigo_TBFuncionario
+	)
+GO
+ALTER TABLE dbo.TBFuncionario_referencia WITH NOCHECK ADD CONSTRAINT
+	FK__TBFuncion__FKCod__664FEAD6 FOREIGN KEY
+	(
+	FKCodigo_TBFuncionario
+	) REFERENCES dbo.TBFuncionario
+	(
+	PKCodigo_TBFuncionario
+	)
+GO
+ALTER TABLE dbo.TBFuncionario_referencia WITH NOCHECK ADD CONSTRAINT
+	FK__TBFuncion__FKCod__7A8BEDAD FOREIGN KEY
+	(
+	FKCodigo_TBFuncionario
+	) REFERENCES dbo.TBFuncionario
+	(
+	PKCodigo_TBFuncionario
+	)
+GO
+
+ALTER TABLE dbo.TBFuncionario_banco WITH NOCHECK ADD CONSTRAINT
+	FK__TBFuncion__FKCod__1263773E FOREIGN KEY
+	(
+	FKCodigo_TBFuncionario
+	) REFERENCES dbo.TBFuncionario
+	(
+	PKCodigo_TBFuncionario
+	)
+GO
+ALTER TABLE dbo.TBFuncionario_banco WITH NOCHECK ADD CONSTRAINT
+	FK__TBFuncion__FKCod__2E0B91B3 FOREIGN KEY
+	(
+	FKCodigo_TBFuncionario
+	) REFERENCES dbo.TBFuncionario
+	(
+	PKCodigo_TBFuncionario
+	)
+GO
+ALTER TABLE dbo.TBFuncionario_banco WITH NOCHECK ADD CONSTRAINT
+	FK__TBFuncion__FKCod__48006DE0 FOREIGN KEY
+	(
+	FKCodigo_TBFuncionario
+	) REFERENCES dbo.TBFuncionario
+	(
+	PKCodigo_TBFuncionario
+	)
+GO
+ALTER TABLE dbo.TBFuncionario_banco WITH NOCHECK ADD CONSTRAINT
+	FK__TBFuncion__FKCod__49B3AC28 FOREIGN KEY
+	(
+	FKCodigo_TBFuncionario
+	) REFERENCES dbo.TBFuncionario
+	(
+	PKCodigo_TBFuncionario
+	)
+GO
+ALTER TABLE dbo.TBFuncionario_banco WITH NOCHECK ADD CONSTRAINT
+	FK__TBFuncion__FKCod__5FD7F771 FOREIGN KEY
+	(
+	FKCodigo_TBFuncionario
+	) REFERENCES dbo.TBFuncionario
+	(
+	PKCodigo_TBFuncionario
+	)
+GO
+ALTER TABLE dbo.TBFuncionario_banco WITH NOCHECK ADD CONSTRAINT
+	FK__TBFuncion__FKCod__655BC69D FOREIGN KEY
+	(
+	FKCodigo_TBFuncionario
+	) REFERENCES dbo.TBFuncionario
+	(
+	PKCodigo_TBFuncionario
+	)
+GO
+ALTER TABLE dbo.TBFuncionario_banco WITH NOCHECK ADD CONSTRAINT
+	FK__TBFuncion__FKCod__7997C974 FOREIGN KEY
+	(
+	FKCodigo_TBFuncionario
+	) REFERENCES dbo.TBFuncionario
+	(
+	PKCodigo_TBFuncionario
+	)
+GO
+
+ALTER TABLE dbo.TBFuncionario_qualificacao WITH NOCHECK ADD CONSTRAINT
+	FK__TBFuncion__FKCod__107B2ECC FOREIGN KEY
+	(
+	FKCodigo_TBFuncionario
+	) REFERENCES dbo.TBFuncionario
+	(
+	PKCodigo_TBFuncionario
+	)
+GO
+ALTER TABLE dbo.TBFuncionario_qualificacao WITH NOCHECK ADD CONSTRAINT
+	FK__TBFuncion__FKCod__2C234941 FOREIGN KEY
+	(
+	FKCodigo_TBFuncionario
+	) REFERENCES dbo.TBFuncionario
+	(
+	PKCodigo_TBFuncionario
+	)
+GO
+ALTER TABLE dbo.TBFuncionario_qualificacao WITH NOCHECK ADD CONSTRAINT
+	FK__TBFuncion__FKCod__4618256E FOREIGN KEY
+	(
+	FKCodigo_TBFuncionario
+	) REFERENCES dbo.TBFuncionario
+	(
+	PKCodigo_TBFuncionario
+	)
+GO
+ALTER TABLE dbo.TBFuncionario_qualificacao WITH NOCHECK ADD CONSTRAINT
+	FK__TBFuncion__FKCod__47CB63B6 FOREIGN KEY
+	(
+	FKCodigo_TBFuncionario
+	) REFERENCES dbo.TBFuncionario
+	(
+	PKCodigo_TBFuncionario
+	)
+GO
+ALTER TABLE dbo.TBFuncionario_qualificacao WITH NOCHECK ADD CONSTRAINT
+	FK__TBFuncion__FKCod__5DEFAEFF FOREIGN KEY
+	(
+	FKCodigo_TBFuncionario
+	) REFERENCES dbo.TBFuncionario
+	(
+	PKCodigo_TBFuncionario
+	)
+GO
+ALTER TABLE dbo.TBFuncionario_qualificacao WITH NOCHECK ADD CONSTRAINT
+	FK__TBFuncion__FKCod__63737E2B FOREIGN KEY
+	(
+	FKCodigo_TBFuncionario
+	) REFERENCES dbo.TBFuncionario
+	(
+	PKCodigo_TBFuncionario
+	)
+GO
+ALTER TABLE dbo.TBFuncionario_qualificacao WITH NOCHECK ADD CONSTRAINT
+	FK__TBFuncion__FKCod__77AF8102 FOREIGN KEY
+	(
+	FKCodigo_TBFuncionario
+	) REFERENCES dbo.TBFuncionario
+	(
+	PKCodigo_TBFuncionario
+	)
+GO
+
+ALTER TABLE dbo.TBEscala_semanal_funcionario WITH NOCHECK ADD CONSTRAINT
+	FK__TBEscala___FKCod__47614F62 FOREIGN KEY
+	(
+	FKCodigo_TBFuncionario
+	) REFERENCES dbo.TBFuncionario
+	(
+	PKCodigo_TBFuncionario
+	)
+GO
+
+ALTER TABLE dbo.TBFuncionario_Exame_medico WITH NOCHECK ADD CONSTRAINT
+	FK__TBFuncion__FKCod__116F5305 FOREIGN KEY
+	(
+	FKCodigo_TBFuncionario
+	) REFERENCES dbo.TBFuncionario
+	(
+	PKCodigo_TBFuncionario
+	)
+GO
+ALTER TABLE dbo.TBFuncionario_Exame_medico WITH NOCHECK ADD CONSTRAINT
+	FK__TBFuncion__FKCod__2D176D7A FOREIGN KEY
+	(
+	FKCodigo_TBFuncionario
+	) REFERENCES dbo.TBFuncionario
+	(
+	PKCodigo_TBFuncionario
+	)
+GO
+ALTER TABLE dbo.TBFuncionario_Exame_medico WITH NOCHECK ADD CONSTRAINT
+	FK__TBFuncion__FKCod__470C49A7 FOREIGN KEY
+	(
+	FKCodigo_TBFuncionario
+	) REFERENCES dbo.TBFuncionario
+	(
+	PKCodigo_TBFuncionario
+	)
+GO
+ALTER TABLE dbo.TBFuncionario_Exame_medico WITH NOCHECK ADD CONSTRAINT
+	FK__TBFuncion__FKCod__48BF87EF FOREIGN KEY
+	(
+	FKCodigo_TBFuncionario
+	) REFERENCES dbo.TBFuncionario
+	(
+	PKCodigo_TBFuncionario
+	)
+GO
+ALTER TABLE dbo.TBFuncionario_Exame_medico WITH NOCHECK ADD CONSTRAINT
+	FK__TBFuncion__FKCod__5EE3D338 FOREIGN KEY
+	(
+	FKCodigo_TBFuncionario
+	) REFERENCES dbo.TBFuncionario
+	(
+	PKCodigo_TBFuncionario
+	)
+GO
+ALTER TABLE dbo.TBFuncionario_Exame_medico WITH NOCHECK ADD CONSTRAINT
+	FK__TBFuncion__FKCod__6467A264 FOREIGN KEY
+	(
+	FKCodigo_TBFuncionario
+	) REFERENCES dbo.TBFuncionario
+	(
+	PKCodigo_TBFuncionario
+	)
+GO
+ALTER TABLE dbo.TBFuncionario_Exame_medico WITH NOCHECK ADD CONSTRAINT
+	FK__TBFuncion__FKCod__78A3A53B FOREIGN KEY
+	(
+	FKCodigo_TBFuncionario
+	) REFERENCES dbo.TBFuncionario
+	(
+	PKCodigo_TBFuncionario
+	)
+GO
+
+ALTER TABLE dbo.TBReferencias_funcionario WITH NOCHECK ADD CONSTRAINT
+	FK__TBReferen__FKCod__0F870A93 FOREIGN KEY
+	(
+	FKCodigo_TBFuncionario
+	) REFERENCES dbo.TBFuncionario
+	(
+	PKCodigo_TBFuncionario
+	)
+GO
+ALTER TABLE dbo.TBReferencias_funcionario WITH NOCHECK ADD CONSTRAINT
+	FK__TBReferen__FKCod__2B2F2508 FOREIGN KEY
+	(
+	FKCodigo_TBFuncionario
+	) REFERENCES dbo.TBFuncionario
+	(
+	PKCodigo_TBFuncionario
+	)
+GO
+ALTER TABLE dbo.TBReferencias_funcionario WITH NOCHECK ADD CONSTRAINT
+	FK__TBReferen__FKCod__45240135 FOREIGN KEY
+	(
+	FKCodigo_TBFuncionario
+	) REFERENCES dbo.TBFuncionario
+	(
+	PKCodigo_TBFuncionario
+	)
+GO
+ALTER TABLE dbo.TBReferencias_funcionario WITH NOCHECK ADD CONSTRAINT
+	FK__TBReferen__FKCod__46D73F7D FOREIGN KEY
+	(
+	FKCodigo_TBFuncionario
+	) REFERENCES dbo.TBFuncionario
+	(
+	PKCodigo_TBFuncionario
+	)
+GO
+ALTER TABLE dbo.TBReferencias_funcionario WITH NOCHECK ADD CONSTRAINT
+	FK__TBReferen__FKCod__10174366 FOREIGN KEY
+	(
+	FKCodigo_TBFuncionario
+	) REFERENCES dbo.TBFuncionario
+	(
+	PKCodigo_TBFuncionario
+	)
+GO
+ALTER TABLE dbo.TBReferencias_funcionario WITH NOCHECK ADD CONSTRAINT
+	FK__TBReferen__FKCod__19A0ADA0 FOREIGN KEY
+	(
+	FKCodigo_TBFuncionario
+	) REFERENCES dbo.TBFuncionario
+	(
+	PKCodigo_TBFuncionario
+	)
+GO
+ALTER TABLE dbo.TBReferencias_funcionario WITH NOCHECK ADD CONSTRAINT
+	FK__TBReferen__FKCod__5CFB8AC6 FOREIGN KEY
+	(
+	FKCodigo_TBFuncionario
+	) REFERENCES dbo.TBFuncionario
+	(
+	PKCodigo_TBFuncionario
+	)
+GO
+ALTER TABLE dbo.TBReferencias_funcionario WITH NOCHECK ADD CONSTRAINT
+	FK__TBReferen__FKCod__627F59F2 FOREIGN KEY
+	(
+	FKCodigo_TBFuncionario
+	) REFERENCES dbo.TBFuncionario
+	(
+	PKCodigo_TBFuncionario
+	)
+GO
+ALTER TABLE dbo.TBReferencias_funcionario WITH NOCHECK ADD CONSTRAINT
+	FK__TBReferen__FKCod__76BB5CC9 FOREIGN KEY
+	(
+	FKCodigo_TBFuncionario
+	) REFERENCES dbo.TBFuncionario
+	(
+	PKCodigo_TBFuncionario
+	)
+GO
+
+ALTER TABLE dbo.TBVale_funcionario WITH NOCHECK ADD CONSTRAINT
+	FK__TBVale_fu__FKCod__2B4E5542 FOREIGN KEY
+	(
+	FKCodigo_TBFuncionario
+	) REFERENCES dbo.TBFuncionario
+	(
+	PKCodigo_TBFuncionario
+	)
+GO
+COMMIT

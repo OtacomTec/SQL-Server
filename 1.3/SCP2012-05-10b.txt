@@ -1,0 +1,246 @@
+USE BDRetaguarda
+
+BEGIN TRANSACTION
+
+/*
+ *** IDENTIFICAÇÃO DO SCRIPT ***
+
+ 1 - Apartir de 20/12/2005, fica expressamente proibida a criação de scripts sem que seja preenchido este cabeçalho
+ 2 - Obrigatoriamente necessário que este paragrafo seja inserido apos um BEGIN TRANSACTION
+ 3 - Obrigatoriamente o preenchimento das variaveis abaixo(@Nomenclatura,@Observacao,@Data)com valores correspondentes e condizentes
+ Att: Marcos
+
+*/
+
+--INICIO CABECALHO
+
+declare @Nomenclatura as nvarchar(20)
+declare @Observacao as nvarchar(100)
+declare @Data as SMALLDATETIME
+
+SET @Nomenclatura = 'SCP2012-05-10b'
+SET @Observacao = 'Cria tabelas do SAC'
+SET @Data = CURRENT_TIMESTAMP
+
+
+---LIMPEZA DA TABELA
+
+DELETE FROM TBSCRIPT
+
+---INSERCAO DO REGISTRO
+
+INSERT INTO BDRetaguarda.dbo.TBSCRIPT(DFNome_TBScript,DFObjetivo_TBScript,DFData_execucao_TBScript)
+VALUES(@Nomenclatura,@Observacao,@Data)
+
+---FIM CABECALHO
+
+Create table [TBCliente_externo_evento]
+(
+	[PKId_TBCliente_externo_vento] Integer NOT NULL IDENTITY (1, 1) NOT FOR REPLICATION,
+	[FKCodigo_TBStatus_eventos] Integer NOT NULL,
+	[FKId_TBCliente_externo] Integer NOT NULL,
+	[DFDescricao_TBCliente_externo_evento] Nvarchar(400) NULL,
+	[DFData_ocorrencia_TBCliente_externo_evento] Datetime NULL,
+	[DFHora_ocorrencia_TBCliente_externo_evento] Datetime NULL,
+Primary Key ([PKId_TBCliente_externo_vento])
+) 
+
+Create table [TBStatus_eventos]
+(
+	[PKCodigo_TBStatus_eventos] Integer NOT NULL,
+	[DFDescricao_TBStatus_eventos] Nvarchar(40) NULL,
+Primary Key ([PKCodigo_TBStatus_eventos])
+) 
+go
+
+Create table [TBCliente_evento]
+(
+	[PKId_TBCliente_evento] Integer NOT NULL IDENTITY (1, 1) NOT FOR REPLICATION,
+	[FKCodigo_TBStatus_eventos] Integer NOT NULL,
+	[FKId_TBCliente] Integer NOT NULL,
+	[DFDescricao_TBCliente_evento] Nvarchar(400) NULL,
+	[DFData_ocorrencia_TBCliente_evento] Datetime NULL,
+	[DFHora_ocorrencia_TBCliente_evento] Datetime NULL,
+Primary Key ([PKId_TBCliente_evento])
+) 
+go
+
+Create table [TBPesquisa]
+(
+	[PKId_TBPesquisa] Integer NOT NULL IDENTITY (1, 1) NOT FOR REPLICATION,
+	[IXCodigo_TBEmpresa] Integer NULL,
+	[FKCodigo_TBFunconario] Integer NULL,
+	[DFNome_TBPesquisa] Nvarchar(400) NULL,
+	[DFPublico_alvo] Nvarchar(400) NULL,
+	[DFObjetivo_final_TBPesquisa] Nvarchar(400) NULL,
+	[DFObservacao_TBPesquisa] Nvarchar(400) NULL,
+	[DFData_Inicial_vigencia_TBPesquisa] Datetime NULL,
+	[DFData_Final_vigencia_TBPesquisa] Datetime NULL,
+	[DFTipo_pesquisado_TBPesquisa] Integer NULL,
+Primary Key ([PKId_TBPesquisa])
+) 
+go
+
+Create table [TBPesquisa_topicos]
+(
+	[PKId_TBPesquisa_topicos] Integer NOT NULL IDENTITY (1, 1) NOT FOR REPLICATION,
+	[FKId_TBPesquisa] Integer NOT NULL,
+	[DFDescricao_topico] Nvarchar(4000) NULL,
+	[DFObservacao_TBPesquisa_topicos] Nvarchar(4000) NULL,
+Primary Key ([PKId_TBPesquisa_topicos])
+) 
+go
+
+Create table [TBPesquisa_topicos_resposta]
+(
+	[PKId_TBPesquisa_topicos_resposta] Integer NOT NULL IDENTITY (1, 1) NOT FOR REPLICATION,
+	[FKId_TBPesquisa_topicos] Integer NOT NULL,
+	[DFDescricao_TBPesquisa_topicos_resposta] Nvarchar(4000) NULL,
+Primary Key ([PKId_TBPesquisa_topicos_resposta])
+) 
+go
+
+Create table [TBPesquisa_topicos_opcoes]
+(
+	[PKId_TBPesquisa_topicos_opcoes] Integer NOT NULL IDENTITY (1, 1) NOT FOR REPLICATION,
+	[FKId_TBPesquisa_topicos] Integer NOT NULL,
+	[DFDescricao_opcao_TBPesquisa_topicos_opcoes] Nvarchar(400) NULL,
+Primary Key ([PKId_TBPesquisa_topicos_opcoes])
+) 
+go
+
+Create table [TBCliente_pesquisa]
+(
+	[PKId_TBCliente_pesquisa] Integer NOT NULL IDENTITY (1, 1) NOT FOR REPLICATION,
+	[FKId_TBPesquisa] Integer NOT NULL,
+	[DFId_Pesquisado_TBCliente_pesquisa] Integer NULL,
+Primary Key ([PKId_TBCliente_pesquisa])
+) 
+go
+
+Create table [TBEventos_sac]
+(
+	[PKId_TBEventos_sac] Integer NOT NULL IDENTITY (1, 1) NOT FOR REPLICATION,
+	[FKCodigo_TBStatus_eventos] Integer NOT NULL,
+	[FKCodigo_TBFuncionario] Integer NULL,
+	[IXCodigo_TBEmpresa] Integer NULL,
+	[DFData_TBEventos_sac] Datetime NULL,
+	[DFHora_TBEventos_sac] Datetime NULL,
+	[DFTipo_cliente_TBEventos_sac] Integer NULL,
+	[DFCliente_TBEventos_sac] Integer NULL,
+	[DFDescricao_TBEventos_sac] Nvarchar(4000) NULL,
+Primary Key ([PKId_TBEventos_sac])
+) 
+
+ALTER TABLE dbo.TBPesquisa ADD CONSTRAINT
+	FK_TBPesquisa_TBEmpresa FOREIGN KEY
+	(
+	IXCodigo_TBEmpresa
+	) REFERENCES dbo.TBEmpresa
+	(
+	PKCodigo_TBEmpresa
+	)
+ALTER TABLE dbo.TBPesquisa ADD CONSTRAINT
+	FK_TBPesquisa_TBFuncionario FOREIGN KEY
+	(
+	FKCodigo_TBFunconario
+	) REFERENCES dbo.TBFuncionario
+	(
+	PKCodigo_TBFuncionario
+	)
+
+ALTER TABLE dbo.TBCliente_pesquisa ADD CONSTRAINT
+	FK_TBCliente_pesquisa_TBPesquisa FOREIGN KEY
+	(
+	FKId_TBPesquisa
+	) REFERENCES dbo.TBPesquisa
+	(
+	PKId_TBPesquisa
+	)
+
+ALTER TABLE dbo.TBPesquisa_topicos ADD CONSTRAINT
+	FK_TBPesquisa_topicos_TBPesquisa FOREIGN KEY
+	(
+	FKId_TBPesquisa
+	) REFERENCES dbo.TBPesquisa
+	(
+	PKId_TBPesquisa
+	)
+ALTER TABLE dbo.TBPesquisa_topicos_opcoes ADD CONSTRAINT
+	FK_TBPesquisa_topicos_opcoes_TBPesquisa FOREIGN KEY
+	(
+	FKId_TBPesquisa_topicos
+	) REFERENCES dbo.TBPesquisa
+	(
+	PKId_TBPesquisa
+	)
+
+ALTER TABLE dbo.TBPesquisa_topicos_resposta ADD CONSTRAINT
+	FK_TBPesquisa_topicos_resposta_TBPesquisa FOREIGN KEY
+	(
+	FKId_TBPesquisa_topicos
+	) REFERENCES dbo.TBPesquisa
+	(
+	PKId_TBPesquisa
+	)
+
+ALTER TABLE dbo.TBCliente_evento ADD CONSTRAINT
+	FK_TBCliente_evento_TBStatus_eventos FOREIGN KEY
+	(
+	FKCodigo_TBStatus_eventos
+	) REFERENCES dbo.TBStatus_eventos
+	(
+	PKCodigo_TBStatus_eventos
+	)
+
+ALTER TABLE dbo.TBCliente_evento ADD CONSTRAINT
+	FK_TBCliente_evento_TBCliente FOREIGN KEY
+	(
+	FKId_TBCliente
+	) REFERENCES dbo.TBCliente
+	(
+	PKId_TBCliente
+	)
+ALTER TABLE dbo.TBCliente_externo_evento ADD CONSTRAINT
+	FK_TBCliente_externo_evento_TBCliente_externo FOREIGN KEY
+	(
+	FKId_TBCliente_externo
+	) REFERENCES dbo.TBCliente_externo
+	(
+	PKId_TBCliente_externo
+	)
+
+ALTER TABLE dbo.TBCliente_externo_evento ADD CONSTRAINT
+	FK_TBCliente_externo_evento_TBStatus_eventos FOREIGN KEY
+	(
+	FKCodigo_TBStatus_eventos
+	) REFERENCES dbo.TBStatus_eventos
+	(
+	PKCodigo_TBStatus_eventos
+	)
+ALTER TABLE dbo.TBEventos_sac ADD CONSTRAINT
+	FK_TBEventos_sac_TBStatus_eventos FOREIGN KEY
+	(
+	FKCodigo_TBStatus_eventos
+	) REFERENCES dbo.TBStatus_eventos
+	(
+	PKCodigo_TBStatus_eventos
+	)
+ALTER TABLE dbo.TBEventos_sac ADD CONSTRAINT
+	FK_TBEventos_sac_TBEmpresa FOREIGN KEY
+	(
+	IXCodigo_TBEmpresa
+	) REFERENCES dbo.TBEmpresa
+	(
+	PKCodigo_TBEmpresa
+	)
+ALTER TABLE dbo.TBEventos_sac ADD CONSTRAINT
+	FK_TBEventos_sac_TBFuncionario FOREIGN KEY
+	(
+	FKCodigo_TBFuncionario
+	) REFERENCES dbo.TBFuncionario
+	(
+	PKCodigo_TBFuncionario
+	)
+commit transaction
+

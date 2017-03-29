@@ -1,0 +1,21 @@
+
+CREATE TABLE [dbo].[TBPedido_palm](
+	[PKID_TBPedido_palm] [int] IDENTITY(1,1) NOT NULL,
+	[FKId_TBPlano_pagamento_palm] [int] NULL,
+	[DFEmitente_TBPedido] [int] NULL,
+	[DFTotal_itens_TBPedido] [money] NULL,
+	[DFTotal_pedido_TBPedido] [money] NULL,
+	[DFDesconto_especial_TBPedido] [money] NULL,
+	[DFDesconto_indenizacao_TBPedido] [money] NULL,
+	[DFData_Digitacao_TBPedido] [date] NULL,
+	[DFFaturado_TBPedido] [int] NULL,
+	[DFValor_ipi_TBPedido] [money] NULL,
+	[DFBloqueado_TBPedido] [int] NULL,
+	[DFDespesas_acessorias_TBPedido] [money] NULL,
+	[DFObservacao_TBPedido] [nvarchar](200) NULL,
+	[DFValor_Frete_TBPedido] [money] NULL,
+	[DFStatus__Integracao_TBPedido] [int] NULL,
+	[DFAcresimo_especial_TBPedido] [money] NULL,
+	[DFData_atualizacao_portal] [smalldatetime] NULL,
+	[DFHora_atualizacao_portal] [smalldatetime] NULL
+) ON [PRIMARY]

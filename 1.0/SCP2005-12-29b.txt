@@ -1,0 +1,92 @@
+update TBProduto
+set FKId_TBCategoria = 1
+
+update TBProduto
+set FKId_TBCores = 1
+
+update TBProduto
+set FKId_TBmodelo = 1
+
+update TBProduto
+set FKId_TBmaterial = 1
+
+
+
+BEGIN TRANSACTION
+/*
+ *** IDENTIFICAÇÃO DO SCRIPT ***
+
+ 1 - Apartir de 20/12/2005, fica expressamente proibida a criação de scripts sem que seja preenchido este cabeçalho
+ 2 - Obrigatoriamente necessário que este paragrafo seja inserido apos um BEGIN TRANSACTION
+ 3 - Obrigatoriamente o preenchimento das variaveis abaixo(@Nomenclatura,@Observacao,@Data)com valores correspondentes e condizentes
+ Att: Marcos
+
+*/
+
+--INICIO CABECALHO
+
+declare @Nomenclatura as nvarchar(20)
+declare @Observacao as nvarchar(100)
+declare @Data as SMALLDATETIME
+
+SET @Nomenclatura = 'SCP2005-12-29b'
+SET @Observacao = 'CRIANDO FK na tabela Produto'
+SET @Data = CURRENT_TIMESTAMP
+
+
+---LIMPEZA DA TABELA
+DELETE FROM TBSCRIPT
+
+---INSERCAO DO REGISTRO
+INSERT INTO TBSCRIPT(DFNome_TBScript,DFObjetivo_TBScript,DFData_execucao_TBScript)
+VALUES(@Nomenclatura,@Observacao,@Data)
+
+
+---FIM CABECALHO
+
+SET QUOTED_IDENTIFIER ON
+SET TRANSACTION ISOLATION LEVEL SERIALIZABLE
+SET ARITHABORT ON
+SET NUMERIC_ROUNDABORT OFF
+SET CONCAT_NULL_YIELDS_NULL ON
+SET ANSI_NULLS ON
+SET ANSI_PADDING ON
+SET ANSI_WARNINGS ON
+
+ALTER TABLE dbo.TBProduto ADD CONSTRAINT
+	FK_TBProduto_TBModelo FOREIGN KEY
+	(
+	FKId_TBModelo
+	) REFERENCES dbo.TBModelo
+	(
+	PKId_TBModelo
+	)
+GO
+ALTER TABLE dbo.TBProduto ADD CONSTRAINT
+	FK_TBProduto_TBCategoria FOREIGN KEY
+	(
+	FKId_TBCategoria
+	) REFERENCES dbo.TBCategoria
+	(
+	PKId_TBCategoria
+	)
+GO
+ALTER TABLE dbo.TBProduto ADD CONSTRAINT
+	FK_TBProduto_TBCores FOREIGN KEY
+	(
+	FKId_TBCores
+	) REFERENCES dbo.TBCores
+	(
+	PKId_TBCores
+	)
+GO
+ALTER TABLE dbo.TBProduto ADD CONSTRAINT
+	FK_TBProduto_TBMaterial FOREIGN KEY
+	(
+	FKId_TBMaterial
+	) REFERENCES dbo.TBMaterial
+	(
+	PKId_TBMaterial
+	)
+GO
+COMMIT

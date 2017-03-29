@@ -1,0 +1,138 @@
+BEGIN TRANSACTION
+/*
+ *** IDENTIFICAÇÃO DO SCRIPT ***
+
+ 1 - Apartir de 20/12/2005, fica expressamente proibida a criação de scripts sem que seja preenchido este cabeçalho
+ 2 - Obrigatoriamente necessário que este paragrafo seja inserido apos um BEGIN TRANSACTION
+ 3 - Obrigatoriamente o preenchimento das variaveis abaixo(@Nomenclatura,@Observacao,@Data)com valores correspondentes e condizentes
+ Att: Marcos
+
+*/
+
+--INICIO CABECALHO
+
+declare @Nomenclatura as nvarchar(20)
+declare @Observacao as nvarchar(100)
+declare @Data as SMALLDATETIME
+
+SET @Nomenclatura = 'SCP2006-02-03a'
+SET @Observacao = 'Gera Portal '
+SET @Data = CURRENT_TIMESTAMP
+
+
+---LIMPEZA DA TABELA
+
+DELETE FROM TBSCRIPT
+
+---INSERCAO DO REGISTRO
+INSERT INTO TBSCRIPT(DFNome_TBScript,DFObjetivo_TBScript,DFData_execucao_TBScript)
+VALUES(@Nomenclatura,@Observacao,@Data)
+
+---FIM CABECALHO
+
+SET QUOTED_IDENTIFIER ON
+SET TRANSACTION ISOLATION LEVEL SERIALIZABLE
+SET ARITHABORT ON
+SET NUMERIC_ROUNDABORT OFF
+SET CONCAT_NULL_YIELDS_NULL ON
+SET ANSI_NULLS ON
+SET ANSI_PADDING ON
+SET ANSI_WARNINGS ON
+
+/*
+Created		3/2/2006
+Modified		3/2/2006
+Project		
+Model			
+Company		
+Author		
+Version		
+Database		MS SQL 2000 
+*/
+
+Create table [TBCliente_portal]
+(
+	[PKId_TBCliente_portal] Integer NOT NULL,
+	[FKCodigo_TBRamo_atividade_portal] Integer NOT NULL,
+	[DFRazao_social_TBCliente_portal] Nvarchar(40) NULL,
+	[DFSenha_TBCliente_portal] Nvarchar(10) NULL,
+	[DFBloqueado_TBCliente_parcial] Bit NULL,
+Primary Key ([PKId_TBCliente_portal])
+) 
+go
+
+Create table [TBInsumo_portal]
+(
+	[PKCodigo_TBInsumo_portal] Integer NOT NULL,
+	[DFDescricao_TBInsumo_portal] Nvarchar(40) NULL,
+Primary Key ([PKCodigo_TBInsumo_portal])
+) 
+go
+
+Create table [TBFabricante_portal]
+(
+	[PKCodigo_TBFabricante_portal] Integer NOT NULL,
+	[DFDescricao_TBFabricante_portal] Nvarchar(40) NULL,
+Primary Key ([PKCodigo_TBFabricante_portal])
+) 
+go
+
+Create table [TBTriagem_portal]
+(
+	[PKId_TBTriagem_portal] Integer NOT NULL,
+	[FKCodigo_TBInsumo_portal] Integer NOT NULL,
+	[FKCodigo_TBFabricante_portal] Integer NOT NULL,
+	[FKId_TBCliente_portal] Integer NOT NULL,
+	[DFData_lancamento_TBTriagem_portal] Smalldatetime NULL,
+	[DFData_fabricacao_TBTriagem_portal] Smalldatetime NULL,
+	[DFLote_TBTriagem_portal] Nvarchar(20) NULL,
+	[DFMes_ano_competencia_TBTriagem_portal] Nvarchar(10) NULL,
+Primary Key ([PKId_TBTriagem_portal])
+) 
+go
+
+Create table [TBRamo_atividade_portal]
+(
+	[PKCodigo_TBRamo_atividade_portal] Integer NOT NULL,
+	[DFDescricao_TBRamo_atividade_portal] Nvarchar(40) NOT NULL,
+Primary Key ([PKCodigo_TBRamo_atividade_portal])
+) 
+go
+
+Create table [TBTriagem_resultado_portal]
+(
+	[PKId_TBTriagem_resultado_portal] Integer Identity NOT NULL,
+	[PKId_TBTriagem_portal] Integer NOT NULL,
+	[DFData_resultado_TBTriagem_resultado_portal] Smalldatetime NULL,
+	[DFResultado_DFData_resultado_TBTriagem_portal] Bit NULL,
+	[DFObservacao_TBTriagem_resultado_portal] Nvarchar(200) NULL,
+Primary Key ([PKId_TBTriagem_resultado_portal])
+) 
+go
+
+
+Alter table [TBTriagem_portal] add  foreign key([FKId_TBCliente_portal]) references [TBCliente_portal] ([PKId_TBCliente_portal])  on update no action on delete no action 
+go
+Alter table [TBTriagem_portal] add  foreign key([FKCodigo_TBInsumo_portal]) references [TBInsumo_portal] ([PKCodigo_TBInsumo_portal])  on update no action on delete no action 
+go
+Alter table [TBTriagem_portal] add  foreign key([FKCodigo_TBFabricante_portal]) references [TBFabricante_portal] ([PKCodigo_TBFabricante_portal])  on update no action on delete no action 
+go
+Alter table [TBTriagem_resultado_portal] add  foreign key([PKId_TBTriagem_portal]) references [TBTriagem_portal] ([PKId_TBTriagem_portal])  on update no action on delete no action 
+go
+Alter table [TBCliente_portal] add  foreign key([FKCodigo_TBRamo_atividade_portal]) references [TBRamo_atividade_portal] ([PKCodigo_TBRamo_atividade_portal])  on update no action on delete no action 
+go
+
+Set quoted_identifier on
+go
+
+
+Set quoted_identifier off
+go
+
+
+/* Roles permissions */
+
+/* Users permissions */
+
+COMMIT
+

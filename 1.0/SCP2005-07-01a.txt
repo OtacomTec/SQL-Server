@@ -1,0 +1,379 @@
+/*	VERIFICAR ESSA OBSERVACAO URGENTE !!! MUITO CUIDADO AO RODAR ESSE SCRIPT.
+
+	Esse script nunca consegue ser executado porque as constraints nao possuem nome. Portanto, quando 
+	for executar esse script observe a seguinte situacao. De um select para saber se o campo 
+	DFNUMERO_CONTRATO_TBCLIENTE esta preenchido. Caso nao esteja, basta executar a a query abaixo.
+
+	ALTER TABLE TBCLIENTE 
+		ALTER COLUMN DFNUMERO_CONTRATO_TBCLIENTE NVARCHAR (20) NULL 
+
+	Se o campo esitver preenchido, vc tera q remover as contraints de todos os relacionamentos do cliente 
+	antes de executar a query acima. Depois de executada, vc deveara criar as contraints novamente.
+
+   sexta-feira, 1 de julho de 2005 13:24:52
+   User: 
+   Server: ONLYTECH-02
+   Database: BDRetaguarda
+   Application: MS SQLEM - Data Tools
+*/
+
+BEGIN TRANSACTION
+SET QUOTED_IDENTIFIER ON
+SET TRANSACTION ISOLATION LEVEL SERIALIZABLE
+SET ARITHABORT ON
+SET NUMERIC_ROUNDABORT OFF
+SET CONCAT_NULL_YIELDS_NULL ON
+SET ANSI_NULLS ON
+SET ANSI_PADDING ON
+SET ANSI_WARNINGS ON
+COMMIT
+BEGIN TRANSACTION
+ALTER TABLE dbo.TBCliente
+	DROP CONSTRAINT FK__TBCliente__FkCod__3CF40B7E
+GO
+ALTER TABLE dbo.TBCliente
+	DROP CONSTRAINT FK__TBCliente__FkCod__671F4F74
+GO
+COMMIT
+BEGIN TRANSACTION
+ALTER TABLE dbo.TBCliente
+	DROP CONSTRAINT FK_TBCliente_TBPlano_pagamento1
+GO
+COMMIT
+BEGIN TRANSACTION
+ALTER TABLE dbo.TBCliente
+	DROP CONSTRAINT FK_TBCliente_TBRamo_atividade1
+GO
+COMMIT
+BEGIN TRANSACTION
+ALTER TABLE dbo.TBCliente
+	DROP CONSTRAINT FK_TBCliente_TBArea_venda
+GO
+COMMIT
+BEGIN TRANSACTION
+ALTER TABLE dbo.TBCliente
+	DROP CONSTRAINT FK_TBCliente_TBEmpresa
+GO
+COMMIT
+BEGIN TRANSACTION
+CREATE TABLE dbo.Tmp_TBCliente
+	(
+	PKId_TBCliente int NOT NULL IDENTITY (1, 1),
+	IXCodigo_TBEmpresa int NOT NULL,
+	IXCodigo_TBCliente int NOT NULL,
+	DFNome_TBCliente nvarchar(40) NOT NULL,
+	DFSexo_TBCliente bit NULL,
+	DFEndereco_TBCliente nvarchar(40) NOT NULL,
+	DFNumero_TBCliente nvarchar(10) NOT NULL,
+	DFComplemento_TBCliente nvarchar(20) NULL,
+	DFBairro_TBCliente nvarchar(30) NOT NULL,
+	DFTelefone_Fixo_TBCliente nvarchar(20) NULL,
+	DFTelefone_Celular_TBCliente nvarchar(20) NULL,
+	FKId_TBCidade_otica int NOT NULL,
+	DFCep_TBCliente nvarchar(10) NOT NULL,
+	DFCpf_TBCliente nvarchar(20) NULL,
+	DFRegistro_geral_TBCliente nvarchar(20) NULL,
+	DFOrgao_emissao_TBCliente nvarchar(10) NULL,
+	DFFiliacao_pai_TBCliente nvarchar(40) NULL,
+	DFFiliacao_mae_TBCliente nvarchar(40) NULL,
+	DFData_cadastro_TBCliente smalldatetime NOT NULL,
+	FkCodigo_TBStatus int NOT NULL,
+	DFColigada_TBCliente bit NULL,
+	DFEstado_civil_TBCliente int NULL,
+	DFData_aniversario_TBCliente smalldatetime NULL,
+	FKId_TBPlano_pagamento int NULL,
+	FKCodigo_TBRamo_atividade int NULL,
+	DFBloqueado_TBCliente bit NULL,
+	DFInativo_TBCliente bit NULL,
+	DFCobra_tarifa_TBCliente bit NULL,
+	DFFlexibiliza_preco_TBCliente bit NULL,
+	DFLimite_credito_TBCliente money NULL,
+	DFTolerancia_TBCliente int NULL,
+	DFTipo_pessoa_TBCliente bit NULL,
+	DFData_recadastramento_TBCliente smalldatetime NULL,
+	DFInscricao_estadual_TBCliente nvarchar(20) NULL,
+	FKCodigo_TBArea_venda int NULL,
+	DFHome_page_TBCliente nvarchar(50) NULL,
+	DFFlexibiliza_plano_TBCliente bit NULL,
+	DFObservacao_TBCliente nvarchar(200) NULL,
+	DFNome_Fantasia_TBCliente nvarchar(30) NULL,
+	DFEndereco_entrega_TBCliente nvarchar(40) NULL,
+	DFNumero_entrega_TBCliente nvarchar(10) NULL,
+	DFComplemento_entrega_TBCliente nvarchar(20) NULL,
+	DFBairro_entrega_TBCliente nvarchar(30) NULL,
+	FKId_entrega_TBCidade_otica int NULL,
+	DFCep_entrega_TBCliente nvarchar(10) NULL,
+	DFEndereco_cobranca_TBCliente nvarchar(40) NULL,
+	DFNumero_cobranca_TBCliente nvarchar(10) NULL,
+	DFComplemento_cobranca_TBCliente nvarchar(20) NULL,
+	DFBairro_cobranca_TBCliente nvarchar(30) NULL,
+	FKId_cobranca_TBCidade_otica int NULL,
+	DFCep_cobranca_TBCliente nvarchar(10) NULL,
+	DFTipo_entrega_TBCliente int NULL,
+	DFRecebe_visita_correios_TBCliente bit NULL,
+	DFDia_vencimento_TBCliente int NULL,
+	DFNumero_contrato_TBCliente nvarchar(20) NULL
+	)  ON [PRIMARY]
+GO
+SET IDENTITY_INSERT dbo.Tmp_TBCliente ON
+GO
+IF EXISTS(SELECT * FROM dbo.TBCliente)
+	 EXEC('INSERT INTO dbo.Tmp_TBCliente (PKId_TBCliente, IXCodigo_TBEmpresa, IXCodigo_TBCliente, DFNome_TBCliente, DFSexo_TBCliente, DFEndereco_TBCliente, DFNumero_TBCliente, DFComplemento_TBCliente, DFBairro_TBCliente, DFTelefone_Fixo_TBCliente, DFTelefone_Celular_TBCliente, FKId_TBCidade_otica, DFCep_TBCliente, DFCpf_TBCliente, DFRegistro_geral_TBCliente, DFOrgao_emissao_TBCliente, DFFiliacao_pai_TBCliente, DFFiliacao_mae_TBCliente, DFData_cadastro_TBCliente, FkCodigo_TBStatus, DFColigada_TBCliente, DFEstado_civil_TBCliente, DFData_aniversario_TBCliente, FKId_TBPlano_pagamento, FKCodigo_TBRamo_atividade, DFBloqueado_TBCliente, DFInativo_TBCliente, DFCobra_tarifa_TBCliente, DFFlexibiliza_preco_TBCliente, DFLimite_credito_TBCliente, DFTolerancia_TBCliente, DFTipo_pessoa_TBCliente, DFData_recadastramento_TBCliente, DFInscricao_estadual_TBCliente, FKCodigo_TBArea_venda, DFHome_page_TBCliente, DFFlexibiliza_plano_TBCliente, DFObservacao_TBCliente, DFNome_Fantasia_TBCliente, DFEndereco_entrega_TBCliente, DFNumero_entrega_TBCliente, DFComplemento_entrega_TBCliente, DFBairro_entrega_TBCliente, FKId_entrega_TBCidade_otica, DFCep_entrega_TBCliente, DFEndereco_cobranca_TBCliente, DFNumero_cobranca_TBCliente, DFComplemento_cobranca_TBCliente, DFBairro_cobranca_TBCliente, FKId_cobranca_TBCidade_otica, DFCep_cobranca_TBCliente, DFTipo_entrega_TBCliente, DFRecebe_visita_correios_TBCliente, DFDia_vencimento_TBCliente, DFNumero_contrato_TBCliente)
+		SELECT PKId_TBCliente, IXCodigo_TBEmpresa, IXCodigo_TBCliente, DFNome_TBCliente, DFSexo_TBCliente, DFEndereco_TBCliente, DFNumero_TBCliente, DFComplemento_TBCliente, DFBairro_TBCliente, DFTelefone_Fixo_TBCliente, DFTelefone_Celular_TBCliente, FKId_TBCidade_otica, DFCep_TBCliente, DFCpf_TBCliente, DFRegistro_geral_TBCliente, DFOrgao_emissao_TBCliente, DFFiliacao_pai_TBCliente, DFFiliacao_mae_TBCliente, DFData_cadastro_TBCliente, FkCodigo_TBStatus, DFColigada_TBCliente, DFEstado_civil_TBCliente, DFData_aniversario_TBCliente, FKId_TBPlano_pagamento, FKCodigo_TBRamo_atividade, DFBloqueado_TBCliente, DFInativo_TBCliente, DFCobra_tarifa_TBCliente, DFFlexibiliza_preco_TBCliente, DFLimite_credito_TBCliente, DFTolerancia_TBCliente, DFTipo_pessoa_TBCliente, DFData_recadastramento_TBCliente, DFInscricao_estadual_TBCliente, FKCodigo_TBArea_venda, DFHome_page_TBCliente, DFFlexibiliza_plano_TBCliente, DFObservacao_TBCliente, DFNome_Fantasia_TBCliente, DFEndereco_entrega_TBCliente, DFNumero_entrega_TBCliente, DFComplemento_entrega_TBCliente, DFBairro_entrega_TBCliente, FKId_entrega_TBCidade_otica, DFCep_entrega_TBCliente, DFEndereco_cobranca_TBCliente, DFNumero_cobranca_TBCliente, DFComplemento_cobranca_TBCliente, DFBairro_cobranca_TBCliente, FKId_cobranca_TBCidade_otica, DFCep_cobranca_TBCliente, DFTipo_entrega_TBCliente, DFRecebe_visita_correios_TBCliente, DFDia_vencimento_TBCliente, CONVERT(nvarchar(20), DFNumero_contrato_TBCliente) FROM dbo.TBCliente TABLOCKX')
+GO
+SET IDENTITY_INSERT dbo.Tmp_TBCliente OFF
+GO
+ALTER TABLE dbo.TBHistorico_transporte
+	DROP CONSTRAINT FK__TBHistori__FKId___2066B27B
+GO
+ALTER TABLE dbo.TBHistorico_transporte
+	DROP CONSTRAINT FK__TBHistori__FKId___346DAB28
+GO
+ALTER TABLE dbo.TBTitulo_receber
+	DROP CONSTRAINT FK_TBTitulo_receber_TBCliente
+GO
+ALTER TABLE dbo.TBCliente_Ocupacao
+	DROP CONSTRAINT FK__TBCliente__FKId___5C8290C7
+GO
+ALTER TABLE dbo.TBAdicionais_cliente
+	DROP CONSTRAINT FK__TBAdicion__FKId___61156916
+GO
+ALTER TABLE dbo.TBDependente
+	DROP CONSTRAINT FK__TBDepende__FKId___3A179ED3
+GO
+ALTER TABLE dbo.TBDependente
+	DROP CONSTRAINT FK__TBDepende__FKId___6442E2C9
+GO
+ALTER TABLE dbo.TBReceituario
+	DROP CONSTRAINT FK__TBReceitu__FKId___3B0BC30C
+GO
+ALTER TABLE dbo.TBReceituario
+	DROP CONSTRAINT FK__TBReceitu__FKId___65370702
+GO
+ALTER TABLE dbo.TBReferencia_cliente
+	DROP CONSTRAINT FK__TBReferen__FKId___39237A9A
+GO
+ALTER TABLE dbo.TBReferencia_cliente
+	DROP CONSTRAINT FK__TBReferen__FKId___634EBE90
+GO
+ALTER TABLE dbo.TBOcorrencias_cliente
+	DROP CONSTRAINT FK__TBOcorren__FKId___1CFC3D38
+GO
+ALTER TABLE dbo.TBVendedor_cliente
+	DROP CONSTRAINT FK__TBVendedo__FKId___08F5448B
+GO
+ALTER TABLE dbo.TBAgenda_cliente
+	DROP CONSTRAINT FK__TBAgenda___FKId___08012052
+GO
+DROP TABLE dbo.TBCliente
+GO
+EXECUTE sp_rename N'dbo.Tmp_TBCliente', N'TBCliente', 'OBJECT'
+GO
+ALTER TABLE dbo.TBCliente ADD CONSTRAINT
+	PK__TBCliente__1AD3FDA4 PRIMARY KEY CLUSTERED 
+	(
+	PKId_TBCliente
+	) WITH FILLFACTOR = 90 ON [PRIMARY]
+
+GO
+ALTER TABLE dbo.TBCliente WITH NOCHECK ADD CONSTRAINT
+	FK_TBCliente_TBEmpresa FOREIGN KEY
+	(
+	IXCodigo_TBEmpresa
+	) REFERENCES dbo.TBEmpresa
+	(
+	PKCodigo_TBEmpresa
+	)
+GO
+ALTER TABLE dbo.TBCliente WITH NOCHECK ADD CONSTRAINT
+	FK_TBCliente_TBArea_venda FOREIGN KEY
+	(
+	FKCodigo_TBArea_venda
+	) REFERENCES dbo.TBArea_venda
+	(
+	PKCodigo_TBArea_venda
+	)
+GO
+ALTER TABLE dbo.TBCliente WITH NOCHECK ADD CONSTRAINT
+	FK_TBCliente_TBRamo_atividade1 FOREIGN KEY
+	(
+	FKCodigo_TBRamo_atividade
+	) REFERENCES dbo.TBRamo_atividade
+	(
+	PKCodigo_TBRamo_atividade
+	)
+GO
+ALTER TABLE dbo.TBCliente WITH NOCHECK ADD CONSTRAINT
+	FK_TBCliente_TBPlano_pagamento1 FOREIGN KEY
+	(
+	FKId_TBPlano_pagamento
+	) REFERENCES dbo.TBPlano_pagamento
+	(
+	PKId_TBPlano_pagamento
+	)
+GO
+ALTER TABLE dbo.TBCliente WITH NOCHECK ADD CONSTRAINT
+	FK__TBCliente__FkCod__3CF40B7E FOREIGN KEY
+	(
+	FkCodigo_TBStatus
+	) REFERENCES dbo.TBStatus
+	(
+	PkCodigo_TBStatus
+	)
+GO
+ALTER TABLE dbo.TBCliente WITH NOCHECK ADD CONSTRAINT
+	FK__TBCliente__FkCod__671F4F74 FOREIGN KEY
+	(
+	FkCodigo_TBStatus
+	) REFERENCES dbo.TBStatus
+	(
+	PkCodigo_TBStatus
+	)
+GO
+COMMIT
+BEGIN TRANSACTION
+ALTER TABLE dbo.TBAgenda_cliente WITH NOCHECK ADD CONSTRAINT
+	FK__TBAgenda___FKId___08012052 FOREIGN KEY
+	(
+	FKId_TBCliente
+	) REFERENCES dbo.TBCliente
+	(
+	PKId_TBCliente
+	)
+GO
+COMMIT
+BEGIN TRANSACTION
+ALTER TABLE dbo.TBVendedor_cliente WITH NOCHECK ADD CONSTRAINT
+	FK__TBVendedo__FKId___08F5448B FOREIGN KEY
+	(
+	FKId_TBCliente
+	) REFERENCES dbo.TBCliente
+	(
+	PKId_TBCliente
+	)
+GO
+COMMIT
+BEGIN TRANSACTION
+ALTER TABLE dbo.TBOcorrencias_cliente WITH NOCHECK ADD CONSTRAINT
+	FK__TBOcorren__FKId___1CFC3D38 FOREIGN KEY
+	(
+	FKId_TBCliente
+	) REFERENCES dbo.TBCliente
+	(
+	PKId_TBCliente
+	)
+GO
+COMMIT
+BEGIN TRANSACTION
+ALTER TABLE dbo.TBReferencia_cliente WITH NOCHECK ADD CONSTRAINT
+	FK__TBReferen__FKId___39237A9A FOREIGN KEY
+	(
+	FKId_TBCliente
+	) REFERENCES dbo.TBCliente
+	(
+	PKId_TBCliente
+	)
+GO
+ALTER TABLE dbo.TBReferencia_cliente WITH NOCHECK ADD CONSTRAINT
+	FK__TBReferen__FKId___634EBE90 FOREIGN KEY
+	(
+	FKId_TBCliente
+	) REFERENCES dbo.TBCliente
+	(
+	PKId_TBCliente
+	)
+GO
+COMMIT
+BEGIN TRANSACTION
+ALTER TABLE dbo.TBReceituario WITH NOCHECK ADD CONSTRAINT
+	FK__TBReceitu__FKId___3B0BC30C FOREIGN KEY
+	(
+	FKId_TBCliente
+	) REFERENCES dbo.TBCliente
+	(
+	PKId_TBCliente
+	)
+GO
+ALTER TABLE dbo.TBReceituario WITH NOCHECK ADD CONSTRAINT
+	FK__TBReceitu__FKId___65370702 FOREIGN KEY
+	(
+	FKId_TBCliente
+	) REFERENCES dbo.TBCliente
+	(
+	PKId_TBCliente
+	)
+GO
+COMMIT
+BEGIN TRANSACTION
+ALTER TABLE dbo.TBDependente WITH NOCHECK ADD CONSTRAINT
+	FK__TBDepende__FKId___3A179ED3 FOREIGN KEY
+	(
+	FKId_TBCliente
+	) REFERENCES dbo.TBCliente
+	(
+	PKId_TBCliente
+	)
+GO
+ALTER TABLE dbo.TBDependente WITH NOCHECK ADD CONSTRAINT
+	FK__TBDepende__FKId___6442E2C9 FOREIGN KEY
+	(
+	FKId_TBCliente
+	) REFERENCES dbo.TBCliente
+	(
+	PKId_TBCliente
+	)
+GO
+COMMIT
+BEGIN TRANSACTION
+ALTER TABLE dbo.TBAdicionais_cliente WITH NOCHECK ADD CONSTRAINT
+	FK__TBAdicion__FKId___61156916 FOREIGN KEY
+	(
+	FKId_TBCliente
+	) REFERENCES dbo.TBCliente
+	(
+	PKId_TBCliente
+	)
+GO
+COMMIT
+BEGIN TRANSACTION
+ALTER TABLE dbo.TBCliente_Ocupacao WITH NOCHECK ADD CONSTRAINT
+	FK__TBCliente__FKId___5C8290C7 FOREIGN KEY
+	(
+	FKId_TBCliente
+	) REFERENCES dbo.TBCliente
+	(
+	PKId_TBCliente
+	)
+GO
+COMMIT
+BEGIN TRANSACTION
+ALTER TABLE dbo.TBTitulo_receber WITH NOCHECK ADD CONSTRAINT
+	FK_TBTitulo_receber_TBCliente FOREIGN KEY
+	(
+	FKId_TBCliente
+	) REFERENCES dbo.TBCliente
+	(
+	PKId_TBCliente
+	)
+GO
+COMMIT
+BEGIN TRANSACTION
+ALTER TABLE dbo.TBHistorico_transporte WITH NOCHECK ADD CONSTRAINT
+	FK__TBHistori__FKId___2066B27B FOREIGN KEY
+	(
+	FKId_TBCliente
+	) REFERENCES dbo.TBCliente
+	(
+	PKId_TBCliente
+	)
+GO
+ALTER TABLE dbo.TBHistorico_transporte WITH NOCHECK ADD CONSTRAINT
+	FK__TBHistori__FKId___346DAB28 FOREIGN KEY
+	(
+	FKId_TBCliente
+	) REFERENCES dbo.TBCliente
+	(
+	PKId_TBCliente
+	)
+GO
+COMMIT

@@ -1,0 +1,4 @@
+
+update Tbitens_nota_entrada_fiscal
+set DFBase_calculo_icms_TBItens_nota_entrada_fiscal = DFValor_total_TBItens_nota_entrada_fiscal
+from Tbitens_nota_entrada_fiscal

@@ -1,0 +1,21 @@
+BEGIN TRANSACTION
+ALTER TABLE TBVendedor ADD
+DFDescricao_palm_TBVendedor nvarchar(50) NULL,
+DFNumero_telefone_palm_TBVendedor nvarchar(50) NULL,
+DFServidor_pop_palm_TBVendedor nvarchar(50) NULL,
+DFServidor_smtp_palm_TBVendedor nvarchar(50) NULL,
+DFUsuario_login_palm_TBVendedor nvarchar(50) NULL,
+DFSenha_login_palm_TBVendedor nvarchar(50) NULL,
+DFUsuario_pop_palm_TBVendedor nvarchar(50) NULL,
+DFSenha_pop_palm_TBVendedor nvarchar(50) NULL,
+DFEmail_destino_palm_TBVendedor nvarchar(50) NULL,
+DFSequencia_palm_TBVendedor int,
+DFObservacao_TBVendedor nvarchar(50) NULL
+GO
+COMMIT
+GO
+BEGIN TRANSACTION
+ALTER TABLE TBCliente ADD
+DFNome_fantasia_TBcliente nvarchar(30) NULL
+go
+COMMIT

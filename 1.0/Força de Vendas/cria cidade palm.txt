@@ -1,0 +1,9 @@
+CREATE TABLE [dbo].[TBCidade_palm](
+	[PKID_TBCidade_palm] [int] NOT NULL,
+	[IXCodigo_Correios_TBCidade_palm] [int] NOT NULL,
+	[DFNome_TBCidade_palm] [nvarchar](50) NOT NULL,
+	[DFPais_TBCidade_palm] [nvarchar](2) NULL,
+	[DFUf_TBCidade_palm] [nvarchar](2) NULL,
+	[DFData_atualizacao_portal] [smalldatetime] NULL,
+	[DFHora_atualizacao_portal] [smalldatetime] NULL
+) ON [PRIMARY]

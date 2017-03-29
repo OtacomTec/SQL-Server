@@ -1,0 +1,4 @@
+update  dbo.TBCliente 
+set DFDia_vencimento_TBCliente = 0,
+DFNumero_contrato_TBCliente = 0
+

@@ -1,0 +1,152 @@
+BEGIN TRANSACTION
+/*
+ *** IDENTIFICAÇÃO DO SCRIPT ***
+
+ 1 - Apartir de 20/12/2005, fica expressamente proibida a criação de scripts sem que seja preenchido este cabeçalho
+ 2 - Obrigatoriamente necessário que este paragrafo seja inserido apos um BEGIN TRANSACTION
+ 3 - Obrigatoriamente o preenchimento das variaveis abaixo(@Nomenclatura,@Observacao,@Data)com valores correspondentes e condizentes
+ Att: Marcos
+
+*/
+
+--INICIO CABECALHO
+
+declare @Nomenclatura as nvarchar(20)
+declare @Observacao as nvarchar(100)
+declare @Data as SMALLDATETIME
+
+SET @Nomenclatura = 'SCP2014-09-12a'
+SET @Observacao = 'Cria Campos TBFuncionario'
+SET @Data = CURRENT_TIMESTAMP
+
+---LIMPEZA DA TABELA
+
+DELETE FROM TBSCRIPT
+
+---INSERCAO DO REGISTRO
+
+INSERT INTO BDRetaguarda.dbo.TBSCRIPT(DFNome_TBScript,DFObjetivo_TBScript,DFData_execucao_TBScript)
+VALUES(@Nomenclatura,@Observacao,@Data)
+
+---FIM CABECALHO\
+
+ALTER TABLE TBFuncionario ADD
+	DFGrau_instrucao_TBFuncionario int NULL,
+	DFTipo_Pagamento_TBFuncionario int NULL,
+	DFNaturalidade_TBFuncionario nvarchar(20) NULL,
+	DFTipo_Remuneracao_TBFuncionario int NULL,
+	DFForma_pagamento_TBFuncionario int NULL,
+	DFAprendiz_TBFuncionario int NULL,
+	DFRecebe_adiantamento_TBFuncionario bit NULL,
+	DFRecebe_13_salario_TBFuncionario bit NULL,
+	DFDeficiencia_fisica_TBFuncionario bit NULL,
+	DFQual_tipo_deficiencia_fisica_TBFuncionario nvarchar(50) NULL,
+	DFCor_cabelo_TBFuncionario int NULL,
+	DFRaca_cor_TBFuncionario int NULL,
+	DFCor_olhos_TBFuncionario int NULL,
+	DFAltura_TBFuncionario money NULL,
+	DFPeso_TBFuncionario money NULL,
+	DFSinai_visiveis_TBFuncionario nvarchar(200) NULL,
+	DFCaracteristicas_outras_TBFuncionario nvarchar(200) NULL,
+	DFCodigo_movimento_sefip_TBFuncionario nvarchar(20) NULL,
+	DFCodigo_movimento_caged_TBFuncionario nvarchar(20) NULL,
+	DFImposto_renda_TBFuncionario bit NULL,
+	DFOptante_fgts_TBFuncionario bit NULL,
+	DFData_opcao_fgts_TBFuncionario smalldatetime NULL,
+	DFData_retratacao_fgts_TBFuncionario smalldatetime NULL,
+	FKCodigo_TBBancos_fgts int NULL,
+	DFData_afastamento_gfip_TBFuncionario smalldatetime NULL,
+	DFCodigo_movimento_gfip_TBFuncionario int NULL,
+	DFIndicativo_recolhimento_gfip_TBFuncionario bit NULL,
+	FKCodigo_Categoria_gfip int NULL,
+	FKCodigo_Ocorrencia_gfip int NULL,
+	DFTipo_exercicio_experiencia_TBFuncionario int NULL,
+	DFData_inicio_exercicio_experiencia_TBFuncionario smalldatetime NULL,
+	DFData_fim_exercicio_experiencia_TBFuncionario smalldatetime NULL,
+	DFData_prorrogacao_exercicio_experiencia_TBFuncionario smalldatetime NULL,
+	DFTipo_admissao_RAIS_TBFuncionario int NULL,
+	DFTipo_afastamento_TBFuncionario int NULL,
+	DFData_inicio_afastamento_TBFuncionario smalldatetime NULL,
+	DFData_fim_afastamento_TBFuncionario smalldatetime NULL,
+	DFData_liberacao_INSS_TBFuncionario smalldatetime NULL,
+	DFData_alta_INSS_TBFuncionario smalldatetime NULL,
+	DFEmite_cartao_ponto_TBFuncionario bit NULL,
+	DFIntegracao_relogio_ponto_TBFuncionario bit NULL,
+	FKCodigo_TBMarcador_ponto int NULL,
+	DFZona_eleitoral_titulo_eleitor_TBFuncionario nvarchar(10) NULL,
+	DFNumero_certificado_reservista_TBFuncionario nvarchar(20) NULL,
+	DFCategoria_certificado_reservista_TBFuncionario nvarchar(20) NULL,
+	DFCadastro_pis_TBFuncionario int NULL,
+	DFData_cadastro_pis_TBFuncionario smalldatetime NULL,
+	FKCodigo_Banco_pis int NULL,
+	DFAgencia_pis_TBFuncionario nvarchar(10) NULL,
+	DFConta_pis_TBFuncionario nvarchar(30) NULL,
+	DFNumero_passaporte_TBFuncionario nvarchar(25) NULL,
+	DFCidade_emissor_passaporte_TBFuncionario nvarchar(30) NULL,
+	DFEstado_emissao_passaporte_TBFuncionario nvarchar(10) NULL,
+	DFPais_emissor_passaporte_TBFuncionario nvarchar(30) NULL,
+	DFData_emissao_passaporte_TBFuncionario smalldatetime NULL,
+	DFData_validade_passaporte_TBFuncionario smalldatetime NULL,
+	FKId_TBCidade_impressao_rg_TBFuncionario int NULL,
+	DFUf_impressao_rg_TBFuncionario nvarchar(2) NULL,
+	DFData_emissao_rg_TBFuncionario smalldatetime NULL,
+	DFData_validade_rg_TBFuncionario smalldatetime NULL,
+	DFDoador_orgaos_rg_TBFuncionario bit NULL,
+	DFNumero_cartao_SUS_TBFuncionario nvarchar(20) NULL,
+	DFData_emissao_cartao_SUS_TBFuncionario smalldatetime NULL,
+	DFAposentado_TBFuncionario bit NULL,
+	DFData_aposentadoria_TBFuncionario smalldatetime NULL,
+	DFTipo_aposentadoria_TBFuncionario int NULL,
+	DFNatureza_estagio_TBFuncionario int NULL,
+	DFNivel_estagio_TBFuncionario int NULL,
+	DFValor_bolsa_estagio_TBFuncionario money NULL,
+	DFArea_atuacao_estagio_TBFuncionario nvarchar(50) NULL,
+	DFSeguro_estagio_TBFuncionario bit NULL,
+	DFNumero_apolice_seguro_estagio_TBFuncionario nvarchar(30) NULL,
+	DFData_inicio_estagio_TBFuncionario smalldatetime NULL,
+	DFData_fim_estagio_TBFuncionario smalldatetime NULL,
+	DFNome_instituicao_ensino_estagio_TBFuncionario nvarchar(40) NULL,
+	DFCNPJ_instituicao_ensino_estagio_TBFuncionario nvarchar(20) NULL,
+	DFEndereco_instituicao_ensino_estagio_TBFuncionario nvarchar(40) NULL,
+	DFNumero_instituicao_ensino_estagio_TBFuncionario nvarchar(10) NULL,
+	DFComplemento_instituicao_ensino_estagio_TBFuncionario nvarchar(20) NULL,
+	DFBairro_instituicao_ensino_estagio_TBFuncionario nvarchar(30) NULL,
+	DFCep_instituicao_ensino_estagio_TBFuncionario nvarchar(10) NULL,
+	FKId_cidade_instituicao_ensino_estagio_TBFuncionario int NULL,
+	DFTelefone_instituicao_ensino_estagio_TBFuncionario nvarchar(20) NULL,
+	FKCodigo_TBFuncionario int NULL,
+	DFNome_agente_interacao_estagio_TBFuncionario nvarchar(40) NULL,
+	DFCNPJ_agente_interacao_estagio_TBFuncionario nvarchar(20) NULL,
+	DFEndereco_agente_interacao_estagio_TBFuncionario nvarchar(40) NULL,
+	DFNumero_agente_interacao_estagio_TBFuncionario nvarchar(10) NULL,
+	DFComplemento_agente_interacao_estagio_TBFuncionario nvarchar(20) NULL,
+	DFBairro_agente_interacao_estagio_TBFuncionario nvarchar(30) NULL,
+	DFCep_agente_interacao_estagio_TBFuncionario nvarchar(10) NULL,
+	FKId_cidade_agente_interacao_estagio_TBFuncionario int NULL,
+	DFTelefone_agente_interacao_estagio_TBFuncionario nvarchar(20) NULL,
+	DFContato_agente_interacao_estagio_TBFuncionario nvarchar(40) NULL,	
+	DFNumero_matricula_publico_TBFuncionario nvarchar(30) NULL,
+	DFNumero_concurso_publico_TBFuncionario nvarchar(20) NULL,
+	DFNumero_ato_afastamento_publico_TBFuncionario nvarchar(20) NULL,
+	DFData_afastamento_publico_TBFuncionario smalldatetime NULL,
+	DFNumero_diario_oficial_afastamento_publico_TBFuncionario nvarchar(20) NULL,
+	DFLei_autorizativa_contrato_publico_TBFuncionario nvarchar(30) NULL,
+	DFNumero_diario_oficial_contrato_publico_TBFuncionario nvarchar(20) NULL,
+	DFNumero_ato_contratacao_publico_TBFuncionario nvarchar(20) NULL,
+	DFData_recadastramento_publico_TBFuncionario smalldatetime NULL,
+	DFPercentual_cota_salario_familia_judicial_TBFuncionario money NULL,
+	DFBase_calculo_salario_familia_judicial_TBFuncionario money NULL,
+	DFPercentual_pensao_familia_judicial_TBFuncionario money NULL,
+	DFPercentual_pensao_ferias_familia_judicial_TBFuncionario money NULL,
+	DFPercentual_pensao_lucro_familia_judicial_TBFuncionario money NULL,
+	DFPercentual_pensao_13_familia_judicial_TBFuncionario money NULL,
+	DFPercentual_pensao_fgts_familia_judicial_TBFuncionario money NULL,
+	DFTeto_pensao_familia_judicial_TBFuncionario money NULL,
+	DFData_inicio_pensao_terceiros_familia_judicial_TBFuncionario smalldatetime NULL,
+	DFData_fim_pensao_terceiros_familia_judicial_TBFuncionario smalldatetime NULL,
+	DFNumero_calca_TBFuncionario nvarchar(10) NULL,
+	DFNumero_camisa_TBFuncionario nvarchar(10) NULL,
+	DFNumero_jaqueta_TBFuncionario nvarchar(10) NULL,
+	DFNumero_calcao_TBFuncionario nvarchar(10) NULL
+
+COMMIT TRANSACTION

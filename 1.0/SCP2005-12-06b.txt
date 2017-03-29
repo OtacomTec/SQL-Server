@@ -1,0 +1,150 @@
+/*
+Created		27/5/2003
+Modified		24/11/2005
+Project		Only Tech - ERP
+Model			Olt
+Company		Only Tech
+Author		Only Tech
+Version		1.0
+Database		MS SQL 2000 
+*/
+
+
+
+Create table [TBBaixa_funcionario]
+(
+	[PKId_TBBaixa_funcionario] Integer Identity NOT NULL,
+	[FKCodigo_TBFuncionario] Integer NOT NULL,
+	[DFData_demissao_TBBaixa_funcionario] Smalldatetime NULL,
+	[DFMotivo_TBBaixa_funcionario] Nvarchar(200) NULL,
+Primary Key ([PKId_TBBaixa_funcionario])
+) 
+go
+
+Create table [TBFuncionario_qualificacao]
+(
+	[PKId_TBFuncionario_qualificacao] Integer Identity NOT NULL,
+	[FKCodigo_TBFuncionario] Integer NOT NULL,
+	[DFNomenclatura_TBFuncionario_qualificacao] Nvarchar(40) NOT NULL,
+	[DFLocal_TBFuncionario_qualificacao] Nvarchar(40) NOT NULL,
+	[DFValidade_TBFuncionario_qualificacao] Smalldatetime NOT NULL,
+Primary Key ([PKId_TBFuncionario_qualificacao])
+) 
+go
+
+Create table [TBDepartamento]
+(
+	[PKCodigo_TBDepartamento] Char(10) NOT NULL,
+	[DFNome_TBDepartamento] Nvarchar(40) NOT NULL,
+Primary Key ([PKCodigo_TBDepartamento])
+) 
+go
+
+Create table [TBFuncionario_Exame_medico]
+(
+	[PKId_TBFuncionario_Exame_medico] Integer Identity NOT NULL,
+	[FKCodigo_TBFuncionario] Integer NOT NULL,
+	[DFNome_TBFuncionario_Exame_medico] Nvarchar(40) NULL,
+	[DFValidade_TBFuncionario_Exame_medico] Smalldatetime NOT NULL,
+Primary Key ([PKId_TBFuncionario_Exame_medico])
+) 
+go
+
+Create table [TBFuncionario_banco]
+(
+	[PKId_TBFuncionario_banco] Integer Identity NOT NULL,
+	[PKCodigo_TBBancos] Integer NOT NULL,
+	[FKCodigo_TBFuncionario] Integer NOT NULL,
+	[DFAgencia_TBFuncionario_banco] Nvarchar(10) NOT NULL,
+	[DFConta_TBFuncionario_banco] Nvarchar(20) NULL,
+	[DFFavorecido_TBFuncionario_banco] Nvarchar(50) NULL,
+	[DFConta_corrente_poupanca_TBFuncionario_banco] Bit NOT NULL,
+Primary Key ([PKId_TBFuncionario_banco])
+) 
+go
+
+Create table [TBFuncionario_referencia]
+(
+	[PKId_TBFuncionario_referencia] Integer Identity NOT NULL,
+	[FKCodigo_TBFuncionario] Integer NOT NULL,
+	[DFTrabalho_anterior_TBFuncionario_referencia] Nvarchar(40) NULL,
+	[DFFuncao_TBFuncionario_referencia] Nvarchar(20) NULL,
+	[DFSalario_TBFuncionario_referencia] Money NULL,
+	[DFData_admissao_TBFuncionario_referencia] Smalldatetime NOT NULL,
+	[DFData_demissao_TBFuncionario_referencia] Smalldatetime NOT NULL,
+Primary Key ([PKId_TBFuncionario_referencia])
+) 
+go
+
+Create table [TBFuncionario_ocorrencia]
+(
+	[PKId_TBFuncionario_ocorrencia] Integer Identity NOT NULL,
+	[FKCodigo_TBFuncionario] Integer NOT NULL,
+	[DFDescricao_TBFuncionario_ocorrencia] Nvarchar(100) NULL,
+	[DFAdvertencia_TBFuncionario_ocorrencia] Nvarchar(40) NULL,
+Primary Key ([PKId_TBFuncionario_ocorrencia])
+) 
+go
+
+Alter table [TBFuncionario_banco] add  foreign key([PKCodigo_TBBancos]) references [TBBancos] ([PKCodigo_TBBancos])  on update no action on delete no action 
+go
+Alter table [TBReferencias_funcionario] add  foreign key([FKCodigo_TBFuncionario]) references [TBFuncionario] ([PKCodigo_TBFuncionario])  on update no action on delete no action 
+go
+Alter table [TBBaixa_funcionario] add  foreign key([FKCodigo_TBFuncionario]) references [TBFuncionario] ([PKCodigo_TBFuncionario])  on update no action on delete no action 
+go
+Alter table [TBFuncionario_qualificacao] add  foreign key([FKCodigo_TBFuncionario]) references [TBFuncionario] ([PKCodigo_TBFuncionario])  on update no action on delete no action 
+go
+Alter table [TBFuncionario_Exame_medico] add  foreign key([FKCodigo_TBFuncionario]) references [TBFuncionario] ([PKCodigo_TBFuncionario])  on update no action on delete no action 
+go
+Alter table [TBFuncionario_banco] add  foreign key([FKCodigo_TBFuncionario]) references [TBFuncionario] ([PKCodigo_TBFuncionario])  on update no action on delete no action 
+go
+Alter table [TBFuncionario_referencia] add  foreign key([FKCodigo_TBFuncionario]) references [TBFuncionario] ([PKCodigo_TBFuncionario])  on update no action on delete no action 
+go
+Alter table [TBFuncionario_ocorrencia] add  foreign key([FKCodigo_TBFuncionario]) references [TBFuncionario] ([PKCodigo_TBFuncionario])  on update no action on delete no action 
+go
+
+Set quoted_identifier on
+go
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Set quoted_identifier off
+go
+
+
+
+
+
+
+
+
+/* Roles permissions */
+
+
+
+
+
+/* Users permissions */
+
+
+
+
+
+

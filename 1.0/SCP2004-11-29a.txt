@@ -1,0 +1,245 @@
+/*
+Created		27/5/2003
+Modified		6/12/2004
+Project		
+Model			
+Company		
+Author		
+Version		
+Database		MS SQL 2000 
+*/
+
+
+
+
+
+Create table [TBServico]
+(
+	[PKCodigo_TBServico] Integer NOT NULL,
+	[DFDescricao_TBServico] Nvarchar(40) NULL,
+Primary Key ([PKCodigo_TBServico])
+) 
+go
+
+Create table [TBParametros_plano_saude]
+(
+	[PKId_TBparametros_plano_saude] Integer Identity NOT NULL,
+	[FKCodigo_TBEmpresa] Integer NOT NULL,
+	[DFProximo_servico_TBParametros_plano_saude] Integer NULL,
+	[DFJuros_mora_TBParametros_plano_saude] Money NULL,
+	[DFMulta_atraso_TBParametros_plano_saude] Money NULL,
+	[DFProximo_plano_saude_TBParametros_plano_saude] Integer NULL,
+	[DFProximo_codigo_associado_TBParametros_plano_saude] Integer NULL,
+Primary Key ([PKId_TBparametros_plano_saude])
+) 
+go
+
+Create table [TBPlano_saude]
+(
+	[PKCodigo_TBplano_saude] Integer NOT NULL,
+	[FKCodigo_TBEmpresa] Integer NOT NULL,
+	[DFDescricao_TBPlano_saude] Nvarchar(50) NOT NULL,
+	[DFNumero_consultas_TBPlano_saude] Integer NOT NULL,
+	[DFTipo_internacao_TBPlano_saude] Integer NOT NULL,
+Primary Key ([PKCodigo_TBplano_saude])
+) 
+go
+
+Create table [TBPlano_saude_servico]
+(
+	[PKId_TBPlano_saude_servico] Integer Identity NOT NULL,
+	[FKCodigo_TBplano_saude] Integer NOT NULL,
+	[FKCodigo_TBServico] Integer NOT NULL,
+	[DFTempo_carencia_TBPlano_saude_servico] Integer NULL,
+	[DFNumero_anual_permitido_TBPlano_saude_servico] Integer NULL,
+Primary Key ([PKId_TBPlano_saude_servico])
+) 
+go
+
+Create table [TBAssociado]
+(
+	[PKCodigo_TBAssociado] Integer NOT NULL,
+	[FKCodigo_TBplano_saude] Integer NOT NULL,
+	[FKId_TBCidade_otica] Integer NOT NULL,
+	[FKCodigo_TBEmpresa] Integer NOT NULL,
+	[DFNome_TBAssociado] Nvarchar(50) NOT NULL,
+	[DFFiliacao_pai_TBAssociado] Nvarchar(50) NULL,
+	[DFFiliacao_mae_TBAssociado] Nvarchar(50) NULL,
+	[DFEndereco_TBAssociado] Nvarchar(50) NOT NULL,
+	[DFNumero_TBAssociado] Nvarchar(10) NULL,
+	[DFComplemento_TBAssociado] Nvarchar(20) NULL,
+	[DFBairro_TBAssociado] Nvarchar(30) NOT NULL,
+	[DFCep_TBAssociado] Nvarchar(20) NOT NULL,
+	[DFCpf_TBAssociado] Nvarchar(20) NOT NULL,
+	[DFRegistro_geral_TBAssociado] Nvarchar(20) NOT NULL,
+	[DFOrgao_expedidor_TBAssociado] Nvarchar(20) NOT NULL,
+	[DFData_expedicao_TBAssociado] Smalldatetime NOT NULL,
+	[DFData_validade_cartao_TBAssociado] Smalldatetime NOT NULL,
+	[DFData_cadastro_TBAssociado] Smalldatetime NOT NULL,
+	[DFData_nascimento_TBAssociado] Smalldatetime NOT NULL,
+	[DFEstado_civil_TBAssociado] Integer NOT NULL,
+	[DFSexo_TBAssociado] Bit NOT NULL,
+	[DFObservacao_TBAssociado] Nvarchar(50) NULL,
+	[DFPortador_diabetes_TBAssociado] Bit NOT NULL,
+	[DFPortador_doenca_endocrinologica_TBAssociado] Bit NOT NULL,
+	[DFPortador_cancer_TBAssociado] Bit NOT NULL,
+	[DFSexualmente_transmissiveis_TBAssociado] Bit NOT NULL,
+	[DFTratamento_quimico_TBAssociado] Bit NOT NULL,
+	[DFPortador_hernia_TBAssociado] Bit NOT NULL,
+	[DFDoenca_cardivascular_TBAssociado] Bit NOT NULL,
+	[DFHiper_tensao_arterial_TBAssociado] Bit NOT NULL,
+	[DFRespiratoria_TBAssociado] Bit NOT NULL,
+	[DFDoenca_ouvido_TBAssociado] Bit NOT NULL,
+	[DFDoenca_gastroenterologica_TBAssociado] Bit NOT NULL,
+	[DFDoenca_ortopedica_TBAssociado] Bit NOT NULL,
+	[DFHernia_disco_TBAssociado] Bit NOT NULL,
+	[DFDoenca_reumatica_TBAssociado] Bit NOT NULL,
+	[DFDoenca_Neurologica_TBAssociado] Bit NOT NULL,
+	[DFDoenca_psiquiatrica_TBAssociado] Bit NOT NULL,
+	[DFDoenca_sanguinea_TBAssociado] Bit NOT NULL,
+	[DFTransfusao_sangue_TBAssociado] Bit NOT NULL,
+	[DFDoenca_oftalmologica_TBAssociado] Bit NOT NULL,
+	[DFDoenca_ginecologica_TBAssociado] Bit NOT NULL,
+	[DFDoenca_urologica_TBAssociado] Bit NOT NULL,
+	[DFDeformidade_congenita_TBAssociado] Bit NOT NULL,
+	[DFVarizes_TBAssociado] Bit NOT NULL,
+	[DFProtese_TBAssociado] Bit NOT NULL,
+	[DFTransplante_TBAssociado] Bit NOT NULL,
+	[DFGravida_TBAssociado] Bit NOT NULL,
+	[DFDeficiencia_orgaos_TBAssociado] Bit NOT NULL,
+	[DFDoenca_nao_relacionada_TBAssociado] Bit NOT NULL,
+	[DFIndicacao_Tratamento_TBAssociado] Bit NOT NULL,
+	[DFIndicacao_cirurgia_TBAssociado] Bit NOT NULL,
+	[DFObservacao_declaracao_saude_TBAssociado] Nvarchar(400) NULL,
+Primary Key ([PKCodigo_TBAssociado])
+) 
+go
+
+Create table [TBAgenda_associado]
+(
+	[PKId_TBAgenda_associado] Integer Identity NOT NULL,
+	[FKId_TBAssociado] Integer NOT NULL,
+	[DFContato_TBAgenda_associado] Nvarchar(40) NOT NULL,
+	[DFTelefone_TBAgenda_associado] Nvarchar(20) NOT NULL,
+	[DFEmail_TBAgenda_associado] Nvarchar(50) NULL,
+Primary Key ([PKId_TBAgenda_associado])
+) 
+go
+
+Create table [TBDependentes_Associados]
+(
+	[PKId_TBDependentes_Associados] Integer Identity NOT NULL,
+	[FKCodigo_TBAssociado] Integer NOT NULL,
+	[DFNome_TBDependentes_Associados] Nvarchar(50) NOT NULL,
+	[DFGrau_parentesco_TBDependentes_Associados] Integer NOT NULL,
+	[DFSexo_TBDependentes_Associados] Bit NOT NULL,
+	[DFData_nascimento_TBDependentes_Associados] Smalldatetime NOT NULL,
+	[DFEstado_civil_TBDependentes_Associados] Integer NOT NULL,
+	[DFPortador_diabetes_TBDependentes_Associados] Bit NOT NULL,
+	[DFPortador_doenca_endocrinologica_TBDependentes_Associados] Bit NOT NULL,
+	[DFPortador_cancer_TBDependentes_Associados] Bit NOT NULL,
+	[DFSexualmente_transmissiveis_TBDependentes_Associados] Bit NOT NULL,
+	[DFTratamento_quimico_TBDependentes_Associados] Bit NOT NULL,
+	[DFPortador_hernia_TBDependentes_Associados] Bit NOT NULL,
+	[DFDoenca_cardivascular_TBDependentes_Associados] Bit NOT NULL,
+	[DFHiper_tensao_arterial_TBDependentes_Associados] Bit NOT NULL,
+	[DFRespiratoria_TBDependentes_Associados] Bit NOT NULL,
+	[DFDoenca_ouvido_TBDependentes_Associados] Bit NOT NULL,
+	[DFDoenca_gastroenterologica_TBDependentes_Associados] Bit NOT NULL,
+	[DFDoenca_ortopedica_TBDependentes_Associados] Bit NOT NULL,
+	[DFHernia_disco_TBDependentes_Associados] Bit NOT NULL,
+	[DFDoenca_reumatica_TBDependentes_Associados] Bit NOT NULL,
+	[DFDoenca_Neurologica_TBDependentes_Associados] Bit NOT NULL,
+	[DFDoenca_psiquiatrica_TBDependentes_Associados] Bit NOT NULL,
+	[DFDoenca_sanguinea_TBDependentes_Associados] Bit NOT NULL,
+	[DFTransfusao_sangue_TBDependentes_Associados] Bit NOT NULL,
+	[DFDoenca_oftalmologica_TBDependentes_Associados] Bit NOT NULL,
+	[DFDoenca_ginecologica_TBDependentes_Associados] Bit NOT NULL,
+	[DFDoenca_urologica_TBDependentes_Associados] Bit NOT NULL,
+	[DFDeformidade_congenita_TBDependentes_Associados] Bit NOT NULL,
+	[DFVarizes_TBDependentes_Associados] Bit NOT NULL,
+	[DFProtese_TBDependentes_Associados] Bit NOT NULL,
+	[DFTransplante_TBDependentes_Associados] Bit NOT NULL,
+	[DFGravida_TBDependentes_Associados] Bit NOT NULL,
+	[DFDeficiencia_orgaos_TBDependentes_Associados] Bit NOT NULL,
+	[DFDoenca_nao_relacionada_TBDependentes_Associados] Bit NOT NULL,
+	[DFIndicacao_Tratamento_TBDependentes_Associados] Bit NOT NULL,
+	[DFIndicacao_cirurgia_TBDependentes_Associados] Bit NOT NULL,
+	[DFObservacao_declaracao_saude_TBDependentes_Associados] Nvarchar(400) NULL,
+Primary Key ([PKId_TBDependentes_Associados])
+) 
+go
+
+
+
+
+
+
+
+
+
+
+
+Alter table [TBParametros_plano_saude] add  foreign key([FKCodigo_TBEmpresa]) references [TBEmpresa] ([PKCodigo_TBEmpresa])  on update no action on delete no action 
+go
+Alter table [TBPlano_saude] add  foreign key([FKCodigo_TBEmpresa]) references [TBEmpresa] ([PKCodigo_TBEmpresa])  on update no action on delete no action 
+go
+Alter table [TBAssociado] add  foreign key([FKCodigo_TBEmpresa]) references [TBEmpresa] ([PKCodigo_TBEmpresa])  on update no action on delete no action 
+go
+Alter table [TBPlano_saude_servico] add  foreign key([FKCodigo_TBServico]) references [TBServico] ([PKCodigo_TBServico])  on update no action on delete no action 
+go
+Alter table [TBPlano_saude_servico] add  foreign key([FKCodigo_TBplano_saude]) references [TBPlano_saude] ([PKCodigo_TBplano_saude])  on update no action on delete no action 
+go
+Alter table [TBAssociado] add  foreign key([FKCodigo_TBplano_saude]) references [TBPlano_saude] ([PKCodigo_TBplano_saude])  on update no action on delete no action 
+go
+Alter table [TBAgenda_associado] add  foreign key([FKId_TBAssociado]) references [TBAssociado] ([PKCodigo_TBAssociado])  on update no action on delete no action 
+go
+Alter table [TBDependentes_Associados] add  foreign key([FKCodigo_TBAssociado]) references [TBAssociado] ([PKCodigo_TBAssociado])  on update no action on delete no action 
+go
+
+
+Set quoted_identifier on
+go
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Set quoted_identifier off
+go
+
+
+
+
+
+
+
+
+/* Roles permissions */
+
+
+
+
+
+/* Users permissions */
+
+
+
+
+
+

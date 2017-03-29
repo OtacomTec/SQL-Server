@@ -1,0 +1,25 @@
+insert into tbplano_pagamento
+(IXCodigo_TBEmpresa, 
+IXCodigo_TBPlano_pagamento, 
+DFDescricao_TBPlano_pagamento,            
+DFModalidade_TBPlano_pagamento, 
+DFAcrescimo_desconto_TBPlano_pagamento, 
+DFPercentual_TBPlano_pagamento, 
+DFAtivo_inativo_TBPlano_pagamento, 
+DFValor_minimo_pedido_TBPlano_pagamento, 
+DFBaixa_Titulo_TBPlano_pagamento, 
+DFImprime_vencimento_TBPlano_pagamento  )
+select 
+400, 
+IXCodigo_TBPlano_pagamento, 
+DFDescricao_TBPlano_pagamento,            
+DFModalidade_TBPlano_pagamento, 
+DFAcrescimo_desconto_TBPlano_pagamento, 
+DFPercentual_TBPlano_pagamento, 
+DFAtivo_inativo_TBPlano_pagamento, 
+DFValor_minimo_pedido_TBPlano_pagamento, 
+DFBaixa_Titulo_TBPlano_pagamento, 
+DFImprime_vencimento_TBPlano_pagamento  
+from
+TBPlano_pagamento
+where IXCodigo_TBEmpresa = 100

@@ -1,0 +1,115 @@
+USE BDRetaguarda
+
+BEGIN TRANSACTION
+
+/*
+ *** IDENTIFICAÇÃO DO SCRIPT ***
+
+ 1 - Apartir de 20/12/2005, fica expressamente proibida a criação de scripts sem que seja preenchido este cabeçalho
+ 2 - Obrigatoriamente necessário que este paragrafo seja inserido apos um BEGIN TRANSACTION
+ 3 - Obrigatoriamente o preenchimento das variaveis abaixo(@Nomenclatura,@Observacao,@Data)com valores correspondentes e condizentes
+ Att: Marcos
+
+*/
+
+--INICIO CABECALHO
+
+declare @Nomenclatura as nvarchar(20)
+declare @Observacao as nvarchar(100)
+declare @Data as SMALLDATETIME
+
+SET @Nomenclatura = 'SCP2012-05-21b'
+SET @Observacao = 'CRIA TABELAS SAC'
+SET @Data = CURRENT_TIMESTAMP
+
+---LIMPEZA DA TABELA
+
+DELETE FROM TBSCRIPT
+
+---INSERCAO DO REGISTRO
+
+INSERT INTO BDRetaguarda.dbo.TBSCRIPT(DFNome_TBScript,DFObjetivo_TBScript,DFData_execucao_TBScript)
+VALUES(@Nomenclatura,@Observacao,@Data)
+
+---FIM CABECALHO
+
+Create table [TBParametros_Sac]
+(
+	[PKId_TBParametros_Sac]  [int] IDENTITY (1, 1) NOT NULL ,
+	[IXCodigo_TBEmpresa] Integer NULL,
+	[DFNumero_ligacoes_dia_usuario_prospects_TBParametros_sac] Integer NULL,
+	[DFPerc_visitas_agendadas_prospects_TBParametros_sac] Money NULL,
+	[DFDias_auditar_visita_agendada_prospects_TBParametros_Sac] Integer NULL,
+	[DFTempo_dias_resposta_sugestao_reclamacao_TBParametros_sac] Integer NULL,
+	[DFNumero_questionarios_aplicado_dia_pesquisa_TBParametros_sac] Integer NULL,
+	[DFRegistra_foto_portaria_TBParamentros_sac] Bit NULL,
+	[DFImprime_cracha_portaria_TBParametros_sac] Bit NULL,
+Primary Key ([PKId_TBParametros_Sac])
+) 
+
+Create table [TBAgenda_Usuario]
+(
+	[PKId_TBAgenda_Usuario] [int] IDENTITY (1, 1) NOT NULL ,
+	[FKId_TBCliente_externo] Integer NOT NULL,
+	[FKId_TBParametros_Sac] Integer NOT NULL,
+	[DFObservacao_TBAgenda_Usuario] Nvarchar(400) NULL,
+	[FKCodigo_TBUsuario] Integer NULL,
+Primary Key ([PKId_TBAgenda_Usuario])
+) 
+
+
+Create table [TBCalendario_cidade_sac]
+(
+	[PKId_TBCalendario_cidade_sac] [int] IDENTITY (1, 1) NOT NULL ,
+	[FKId_TBParametros_Sac] Integer NOT NULL,
+	[FKId_TBCidade_otica] Integer NOT NULL,
+	[DFObservacao_TBCalendario_cidade_sac] Nvarchar(400) NULL,
+	[DFData_TBCalendario_cidade_sac] Smalldatetime NULL,
+Primary Key ([PKId_TBCalendario_cidade_sac])
+) 
+
+ALTER TABLE dbo.TBAgenda_Usuario ADD CONSTRAINT
+	FK_TBAgenda_Usuario_TBCliente_externo FOREIGN KEY
+	(
+	FKId_TBCliente_externo
+	) REFERENCES dbo.TBCliente_externo
+	(
+	PKId_TBCliente_externo
+	)
+ALTER TABLE dbo.TBAgenda_Usuario ADD CONSTRAINT
+	FK_TBAgenda_Usuario_TBParametros_Sac FOREIGN KEY
+	(
+	FKId_TBParametros_Sac
+	) REFERENCES dbo.TBParametros_Sac
+	(
+	PKId_TBParametros_Sac
+	)
+ALTER TABLE dbo.TBAgenda_Usuario ADD CONSTRAINT
+	FK_TBAgenda_Usuario_TBUsuario FOREIGN KEY
+	(
+	FKCodigo_TBUsuario
+	) REFERENCES dbo.TBUsuario
+	(
+	PKCodigo_TBUsuario
+	)
+
+
+ALTER TABLE dbo.TBCalendario_cidade_sac ADD CONSTRAINT
+	FK_TBCalendario_cidade_sac_TBParametros_Sac FOREIGN KEY
+	(
+	FKId_TBParametros_Sac
+	) REFERENCES dbo.TBParametros_Sac
+	(
+	PKId_TBParametros_Sac
+	)
+ALTER TABLE dbo.TBCalendario_cidade_sac ADD CONSTRAINT
+	FK_TBCalendario_cidade_sac_TBCidade_otica FOREIGN KEY
+	(
+	FKId_TBCidade_otica
+	) REFERENCES dbo.TBCidade_otica
+	(
+	PKId_TBCidade_otica
+	)
+
+commit transaction
+

@@ -1,0 +1,103 @@
+/*
+Created		27/5/2003
+Modified		27/10/2005
+Project		Only Tech - ERP
+Model			Olt
+Company		Only Tech
+Author		Only Tech
+Version		1.0
+Database		MS SQL 2000 
+*/
+
+Create table [TBCheque]
+(
+	[PKId_TBCheque] Integer Identity NOT NULL,
+	[FKId_TBCliente] Integer NOT NULL,
+	[FKCodigo_TBEmpresa] Integer NOT NULL,
+	[FKCodigo_TBAlineas] Integer NOT NULL,
+	[FKCodigo_TBBancos] Integer NOT NULL,
+	[DFAgencia_TBcheque] Nvarchar(10) NULL,
+	[DFNumero_conta_TBCheque] Nvarchar(20) NULL,
+	[DFNumero_TBCheque] Integer NULL,
+	[DFValor_TBCheque] Money NOT NULL,
+	[DFData_emissao_TBCheque] Smalldatetime NOT NULL,
+	[DFData_vencimento_TBCheque] Smalldatetime NOT NULL,
+	[DFPlaca_TBCheque] Nvarchar(8) NULL,
+	[DFEmitente_TBCheque] Nvarchar(40) NULL,
+	[DFTelefone_contato_TBCheque] Nvarchar(20) NULL,
+	[DFCnpj_cpf_emitente_TBCheque] Nvarchar(20) NULL,
+	[DFCnpj_cpf_cliente_TBCheque] Nvarchar(20) NULL,
+Primary Key ([PKId_TBCheque])
+) 
+go
+
+Create table [TBCheque_Baixado]
+(
+	[PKId_TBCheque_Baixado] Integer NULL,
+	[FKId_TBCheque] Integer NOT NULL,
+	[DFData_Baixa_TBCheque_Baixado] Smalldatetime NULL,
+	[DFUsuario_TBCheque_Baixado] Nvarchar(20) NULL,
+	[DFObservacao_TBCheque_Baixado] Nvarchar(50) NULL,
+	[DFValor_TBCheque_Baixado] Money NULL,
+	[DFDiferenca_TBCheque_Baixado] Money NULL
+) 
+go
+
+
+Alter table [TBCheque] add  foreign key([FKCodigo_TBEmpresa]) references [TBEmpresa] ([PKCodigo_TBEmpresa])  on update no action on delete no action 
+go
+Alter table [TBCheque] add  foreign key([FKId_TBCliente]) references [TBCliente] ([PKId_TBCliente])  on update no action on delete no action 
+go
+Alter table [TBCheque] add  foreign key([FKCodigo_TBBancos]) references [TBBancos] ([PKCodigo_TBBancos])  on update no action on delete no action 
+go
+Alter table [TBCheque] add  foreign key([FKCodigo_TBAlineas]) references [TBAlineas] ([PKCodigo_TBAlineas])  on update no action on delete no action 
+go
+Alter table [TBCheque_Baixado] add  foreign key([FKId_TBCheque]) references [TBCheque] ([PKId_TBCheque])  on update no action on delete no action 
+go
+
+
+Set quoted_identifier on
+go
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Set quoted_identifier off
+go
+
+
+
+
+
+
+
+
+/* Roles permissions */
+
+
+
+
+
+/* Users permissions */
+
+
+
+
+
+

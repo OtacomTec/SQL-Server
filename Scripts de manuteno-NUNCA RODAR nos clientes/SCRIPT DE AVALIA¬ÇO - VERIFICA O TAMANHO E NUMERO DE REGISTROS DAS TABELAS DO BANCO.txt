@@ -1,0 +1,4 @@
+select object_name(id)as nome,rowcnt,dpages*8 as tamanho from sysindexes 
+where indid in (1,0) and objectproperty(id,'isusertable')=1 
+---order by rowcnt desc 
+order by nome asc 

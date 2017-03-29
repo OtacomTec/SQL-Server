@@ -1,0 +1,207 @@
+/*
+Created		27/5/2003
+Modified		13/2/2005
+Project		
+Model			
+Company		
+Author		
+Version		
+Database		MS SQL 2000 
+*/
+
+
+
+go
+
+Create table [TBCondutor_veiculo]
+(
+	[PKId_TBCondutor_veiculo] Integer Identity NOT NULL,
+	[FKCodigo_TBFuncionario] Integer NOT NULL,
+	[FKCodigo_TBVeiculo] Integer NOT NULL,
+	[DFData_Inicio_TBCondutor_veiculo] Smalldatetime NULL,
+	[DFKM_inicio_TBCondutor_veiculo] Integer NULL,
+	[DFData_final_TBCondutor_veiculo] Smalldatetime NULL,
+	[DFKm_final_TBCondutor_veiculo] Integer NULL,
+Primary Key ([PKId_TBCondutor_veiculo])
+) 
+go
+
+Create table [TBIpva_veiculo]
+(
+	[PKId_TBIpva_veiculo] Integer Identity NOT NULL,
+	[FKCodigo_TBVeiculo] Integer NOT NULL,
+	[DFValor_TBIpva_veiculo] Money NOT NULL,
+	[DFData_TBIpva_veiculo] Smalldatetime NULL,
+	[DFParcelado_TBIpva_veiculo] Bit NULL,
+Primary Key ([PKId_TBIpva_veiculo])
+) 
+go
+
+Create table [TBVistoria_veiculo]
+(
+	[PKId_TBVistoria_veiculo] Integer Identity NOT NULL,
+	[FKCodigo_TBFuncionario] Integer NOT NULL,
+	[FKCodigo_TBVeiculo] Integer NOT NULL,
+	[DFData_inicio_TBVistoria_veiculo] Smalldatetime NULL,
+	[DFData_final_TBVistoria_veiculo] Smalldatetime NULL,
+	[DFSeguro_ipva_TBVistoria_veiculo] Bit NULL,
+	[DFObservacao_TBVistoria_veiculo] Nvarchar(200) NULL,
+Primary Key ([PKId_TBVistoria_veiculo])
+) 
+go
+
+Create table [TBRevisao_veiculo]
+(
+	[PKId_TBRevisao_veiculo] Integer Identity NOT NULL,
+	[FKId_TBCidade_otica] Integer NOT NULL,
+	[FKCodigo_TBFuncionario] Integer NOT NULL,
+	[FKCodigo_TBVeiculo] Integer NOT NULL,
+	[DFData_TBRevisao_veiculo] Smalldatetime NULL,
+	[DFInterna_externa_TBRevisao_veiculo] Bit NULL,
+	[DFLocal_TBRevisao_veiculo] Nvarchar(50) NULL,
+	[DFEndereco_TBRevisao_veiculo] Nvarchar(40) NULL,
+	[DFNumero_TBRevisao_veiculo] Nvarchar(10) NULL,
+	[DFComplemento_TBRevisao_veiculo] Nvarchar(20) NULL,
+	[DFBairro_TBRevisao_veiculo] Nvarchar(30) NULL,
+	[DFObservacao_TBRevisao_veiculo] Nvarchar(200) NULL,
+	[DFCep_TBRevisao_veiculo] Nvarchar(10) NULL,
+Primary Key ([PKId_TBRevisao_veiculo])
+) 
+go
+
+Create table [TBSinistro_veiculo]
+(
+	[PKId_TBSinistro_veiculo] Integer Identity NOT NULL,
+	[FKCodigo_TBTipo_sinistro] Integer NOT NULL,
+	[FKCodigo_TBVeiculo] Integer NOT NULL,
+	[DFData_TBSinistro_veiculo] Smalldatetime NULL,
+	[DFValor_franquia_TBSinistro_veiculo] Money NULL,
+	[DFValor_reparo_TBSinistro_veiculo] Money NULL,
+	[DFValor_pago_TBSinistro_veiculo] Money NULL,
+	[DFKm_TBSinistro_veiculo] Integer NULL,
+	[DFLocalidade_TBSinistro_veiculo] Nvarchar(50) NULL,
+	[DFUF_TBSinistro_veiculo] Char(2) NULL,
+	[DFCulpabilidade_terceiro_condutor_TBSinistro_veiculo] Bit NULL,
+	[DFPerda_total_TBSinistro_veiculo] Bit NULL,
+Primary Key ([PKId_TBSinistro_veiculo])
+) 
+go
+
+Create table [TBMulta_veiculo]
+(
+	[PKId_TBMulta_veiculo] Integer Identity NOT NULL,
+	[FKCodigo_TBFuncionario] Integer NOT NULL,
+	[FKCodigo_TBTipo_infracao] Integer NOT NULL,
+	[FKCodigo_TBVeiculo] Integer NOT NULL,
+	[DFData_TBMulta_veiculo] Smalldatetime NOT NULL,
+	[DFVencimento_TBMulta_veiculo] Smalldatetime NOT NULL,
+	[DFOrgao_origem_TBMulta_veiculo] Nvarchar(30) NOT NULL,
+	[DFValor_TBMulta_veiculo] Money NOT NULL,
+	[DFLocalidade_TBMulta_veiculo] Nvarchar(50) NOT NULL,
+	[DFUf_TBMulta_veiculo] Char(2) NOT NULL,
+Primary Key ([PKId_TBMulta_veiculo])
+) 
+go
+
+Create table [TBRecurso_multa]
+(
+	[PKId_TBRecurso_multa] Integer Identity NOT NULL,
+	[FKId_TBMulta_veiculo] Integer NOT NULL,
+	[DFData_TBRecurso_multa] Smalldatetime NULL,
+	[DFSituacao_TBRecurso_multa] Integer NULL,
+	[DFNumero_protocologo_TBRecurso_multa] Nvarchar(30) NULL,
+	[DFJustificativa_TBRecurso_multa] Nvarchar(200) NULL,
+Primary Key ([PKId_TBRecurso_multa])
+) 
+go
+
+Create table [TBOcorrencia_veiculo]
+(
+	[PKId_TBOcorrencia_veiculo] Integer Identity NOT NULL,
+	[FKCodigo_TBFuncionario] Integer NOT NULL,
+	[FKCodigo_TBVeiculo] Integer NOT NULL,
+	[DFData_TBOcorrencia_veiculo] Smalldatetime NOT NULL,
+	[DFMotivo_TBOcorrencia_veiculo] Nvarchar(50) NOT NULL,
+	[DFObservacao_TBOcorrencia_veiculo] Nvarchar(200) NULL
+) 
+go
+
+
+
+Alter table [TBRevisao_veiculo] add  foreign key([FKId_TBCidade_otica]) references [TBCidade_otica] ([PKId_TBCidade_otica])  on update no action on delete no action 
+go
+Alter table [TBCondutor_veiculo] add  foreign key([FKCodigo_TBFuncionario]) references [TBFuncionario] ([PKCodigo_TBFuncionario])  on update no action on delete no action 
+go
+Alter table [TBVistoria_veiculo] add  foreign key([FKCodigo_TBFuncionario]) references [TBFuncionario] ([PKCodigo_TBFuncionario])  on update no action on delete no action 
+go
+Alter table [TBRevisao_veiculo] add  foreign key([FKCodigo_TBFuncionario]) references [TBFuncionario] ([PKCodigo_TBFuncionario])  on update no action on delete no action 
+go
+Alter table [TBMulta_veiculo] add  foreign key([FKCodigo_TBFuncionario]) references [TBFuncionario] ([PKCodigo_TBFuncionario])  on update no action on delete no action 
+go
+Alter table [TBOcorrencia_veiculo] add  foreign key([FKCodigo_TBFuncionario]) references [TBFuncionario] ([PKCodigo_TBFuncionario])  on update no action on delete no action 
+go
+Alter table [TBCondutor_veiculo] add  foreign key([FKCodigo_TBVeiculo]) references [TBVeiculo] ([PKCodigo_TBVeiculo])  on update no action on delete no action 
+go
+Alter table [TBIpva_veiculo] add  foreign key([FKCodigo_TBVeiculo]) references [TBVeiculo] ([PKCodigo_TBVeiculo])  on update no action on delete no action 
+go
+Alter table [TBVistoria_veiculo] add  foreign key([FKCodigo_TBVeiculo]) references [TBVeiculo] ([PKCodigo_TBVeiculo])  on update no action on delete no action 
+go
+Alter table [TBRevisao_veiculo] add  foreign key([FKCodigo_TBVeiculo]) references [TBVeiculo] ([PKCodigo_TBVeiculo])  on update no action on delete no action 
+go
+Alter table [TBSinistro_veiculo] add  foreign key([FKCodigo_TBVeiculo]) references [TBVeiculo] ([PKCodigo_TBVeiculo])  on update no action on delete no action 
+go
+Alter table [TBMulta_veiculo] add  foreign key([FKCodigo_TBVeiculo]) references [TBVeiculo] ([PKCodigo_TBVeiculo])  on update no action on delete no action 
+go
+Alter table [TBOcorrencia_veiculo] add  foreign key([FKCodigo_TBVeiculo]) references [TBVeiculo] ([PKCodigo_TBVeiculo])  on update no action on delete no action 
+go
+Alter table [TBSinistro_veiculo] add  foreign key([FKCodigo_TBTipo_sinistro]) references [TBTipo_sinistro] ([PKCodigo_TBTipo_sinistro])  on update no action on delete no action 
+go
+Alter table [TBRecurso_multa] add  foreign key([FKId_TBMulta_veiculo]) references [TBMulta_veiculo] ([PKId_TBMulta_veiculo])  on update no action on delete no action 
+go
+
+
+Set quoted_identifier on
+go
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Set quoted_identifier off
+go
+
+
+
+
+
+
+
+
+/* Roles permissions */
+
+
+
+
+
+/* Users permissions */
+
+
+
+
+
+

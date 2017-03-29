@@ -1,0 +1,42 @@
+/*
+   quinta-feira, 15 de setembro de 2005 12:22:49
+   User: sa
+   Server: ONLYTECH-02
+   Database: BDRetaguarda
+   Application: MS SQLEM - Data Tools
+*/
+
+BEGIN TRANSACTION
+SET QUOTED_IDENTIFIER ON
+SET TRANSACTION ISOLATION LEVEL SERIALIZABLE
+SET ARITHABORT ON
+SET NUMERIC_ROUNDABORT OFF
+SET CONCAT_NULL_YIELDS_NULL ON
+SET ANSI_NULLS ON
+SET ANSI_PADDING ON
+SET ANSI_WARNINGS ON
+COMMIT
+BEGIN TRANSACTION
+COMMIT
+BEGIN TRANSACTION
+COMMIT
+BEGIN TRANSACTION
+ALTER TABLE dbo.TBNota_entrada_fiscal ADD CONSTRAINT
+	FK_TBNota_entrada_fiscal_TBEmpresa FOREIGN KEY
+	(
+	FKCodigo_TBEmpresa
+	) REFERENCES dbo.TBEmpresa
+	(
+	PKCodigo_TBEmpresa
+	)
+GO
+ALTER TABLE dbo.TBNota_entrada_fiscal ADD CONSTRAINT
+	FK_TBNota_entrada_fiscal_TBPlano_pagamento FOREIGN KEY
+	(
+	FKId_TBPlano_pagamento
+	) REFERENCES dbo.TBPlano_pagamento
+	(
+	PKId_TBPlano_pagamento
+	)
+GO
+COMMIT

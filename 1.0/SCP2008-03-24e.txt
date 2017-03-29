@@ -1,0 +1,43 @@
+USE BDRetaguarda
+
+BEGIN TRANSACTION
+/*
+ *** IDENTIFICAÇÃO DO SCRIPT ***
+
+ 1 - Apartir de 20/12/2005, fica expressamente proibida a criação de scripts sem que seja preenchido este cabeçalho
+ 2 - Obrigatoriamente necessário que este paragrafo seja inserido apos um BEGIN TRANSACTION
+ 3 - Obrigatoriamente o preenchimento das variaveis abaixo(@Nomenclatura,@Observacao,@Data)com valores correspondentes e condizentes
+ Att: Marcos
+
+*/
+
+--INICIO CABECALHO
+
+declare @Nomenclatura as nvarchar(20)
+declare @Observacao as nvarchar(100)
+declare @Data as SMALLDATETIME
+
+SET @Nomenclatura = 'SCP2008-03-24e'
+SET @Observacao = 'Cria tabela TBSub_Divisao' 
+SET @Data = CURRENT_TIMESTAMP
+
+---LIMPEZA DA TABELA
+
+DELETE FROM TBSCRIPT
+
+---INSERCAO DO REGISTRO
+
+INSERT INTO BDRetaguarda.dbo.TBSCRIPT(DFNome_TBScript,DFObjetivo_TBScript,DFData_execucao_TBScript)
+VALUES(@Nomenclatura,@Observacao,@Data)
+
+---FIM CABECALHO
+
+CREATE TABLE [dbo].[TBSub_divisao] (
+	[PKCodigo_TBSub_divisao] [int] NOT NULL ,
+	[FKCodigo_TBDivisao] [int] NULL ,
+	[DFDescricao_TBSub_Divisao] [nvarchar] (40) COLLATE Latin1_General_CI_AS NULL 
+) ON [PRIMARY]
+GO
+
+COMMIT TRANSACTION
+

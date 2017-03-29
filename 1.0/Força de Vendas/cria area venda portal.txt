@@ -1,0 +1,7 @@
+
+CREATE TABLE [dbo].[TBArea_venda_palm](
+	[PKCodigo_TBArea_venda_palm] [int] IDENTITY(0,1) NOT NULL,
+	[DFNome_TBArea_venda_palm] [nvarchar](40) NULL,
+	[DFData_atualizacao_portal] [smalldatetime] NULL,
+	[DFHora_atualizacao_portal] [smalldatetime] NULL
+) ON [PRIMARY]

@@ -1,0 +1,75 @@
+/*
+Created		27/5/2003
+Modified		9/2/2005
+Project		
+Model			
+Company		
+Author		
+Version		
+Database		MS SQL 2000 
+*/
+
+
+
+go
+
+Create table [TBTipo_pneu]
+(
+	[PKCodigo_TBTipo_pneu] Integer NOT NULL,
+	[FKCodigo_TBFabricante] Integer NOT NULL,
+	[DFDesenho_TBTipo_pneu] Nvarchar(50) NOT NULL,
+	[DFDurabilidade_TBTipo_pneu] Integer NOT NULL,
+Primary Key ([PKCodigo_TBTipo_pneu])
+) 
+go
+
+
+
+
+Alter table [TBTipo_pneu] add  foreign key([FKCodigo_TBFabricante]) references [TBFabricante] ([PKCodigo_TBFabricante])  on update no action on delete no action 
+
+Set quoted_identifier on
+go
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Set quoted_identifier off
+go
+
+
+
+
+
+
+
+
+/* Roles permissions */
+
+
+
+
+
+/* Users permissions */
+
+
+
+
+
+

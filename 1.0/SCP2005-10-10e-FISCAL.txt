@@ -1,0 +1,74 @@
+/*
+   segunda-feira, 10 de outubro de 2005 19:47:41
+   User: sa
+   Server: ONLYTECH-02
+   Database: BDRetaguarda
+   Application: MS SQLEM - Data Tools
+*/
+
+BEGIN TRANSACTION
+SET QUOTED_IDENTIFIER ON
+SET TRANSACTION ISOLATION LEVEL SERIALIZABLE
+SET ARITHABORT ON
+SET NUMERIC_ROUNDABORT OFF
+SET CONCAT_NULL_YIELDS_NULL ON
+SET ANSI_NULLS ON
+SET ANSI_PADDING ON
+SET ANSI_WARNINGS ON
+COMMIT
+BEGIN TRANSACTION
+ALTER TABLE dbo.TBCfop_Nota_entrada_fiscal
+	DROP CONSTRAINT FK_TBCfop_Nota_entrada_fiscal_TBCfop
+GO
+COMMIT
+BEGIN TRANSACTION
+ALTER TABLE dbo.TBCfop_Nota_entrada_fiscal
+	DROP CONSTRAINT FK_TBCfop_Nota_entrada_fiscal_TBNota_entrada_fiscal
+GO
+COMMIT
+BEGIN TRANSACTION
+CREATE TABLE dbo.Tmp_TBCfop_Nota_entrada_fiscal
+	(
+	PKId_TBCfop_Nota_entrada_fiscal int NOT NULL IDENTITY (1, 1),
+	FKId_TBCfop int NOT NULL,
+	FKId_TBNota_entrada_fiscal int NOT NULL
+	)  ON [PRIMARY]
+GO
+SET IDENTITY_INSERT dbo.Tmp_TBCfop_Nota_entrada_fiscal ON
+GO
+IF EXISTS(SELECT * FROM dbo.TBCfop_Nota_entrada_fiscal)
+	 EXEC('INSERT INTO dbo.Tmp_TBCfop_Nota_entrada_fiscal (PKId_TBCfop_Nota_entrada_fiscal, FKId_TBCfop, FKId_TBNota_entrada_fiscal)
+		SELECT PKId_TBCfop_Nota_entrada_fiscal, FKId_TBCfop, FKId_TBNota_entrada_fiscal FROM dbo.TBCfop_Nota_entrada_fiscal TABLOCKX')
+GO
+SET IDENTITY_INSERT dbo.Tmp_TBCfop_Nota_entrada_fiscal OFF
+GO
+DROP TABLE dbo.TBCfop_Nota_entrada_fiscal
+GO
+EXECUTE sp_rename N'dbo.Tmp_TBCfop_Nota_entrada_fiscal', N'TBCfop_Nota_entrada_fiscal', 'OBJECT'
+GO
+ALTER TABLE dbo.TBCfop_Nota_entrada_fiscal ADD CONSTRAINT
+	PK_TBCfop_Nota_entrada_fiscal PRIMARY KEY CLUSTERED 
+	(
+	PKId_TBCfop_Nota_entrada_fiscal
+	) ON [PRIMARY]
+
+GO
+ALTER TABLE dbo.TBCfop_Nota_entrada_fiscal WITH NOCHECK ADD CONSTRAINT
+	FK_TBCfop_Nota_entrada_fiscal_TBNota_entrada_fiscal FOREIGN KEY
+	(
+	FKId_TBNota_entrada_fiscal
+	) REFERENCES dbo.TBNota_entrada_fiscal
+	(
+	PKId_TBNota_entrada_fiscal
+	)
+GO
+ALTER TABLE dbo.TBCfop_Nota_entrada_fiscal WITH NOCHECK ADD CONSTRAINT
+	FK_TBCfop_Nota_entrada_fiscal_TBCfop FOREIGN KEY
+	(
+	FKId_TBCfop
+	) REFERENCES dbo.TBCfop
+	(
+	PKId_TBCfop
+	)
+GO
+COMMIT

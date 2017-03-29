@@ -1,0 +1,113 @@
+/*
+Created		27/5/2003
+Modified		3/3/2005
+Project		
+Model			
+Company		
+Author		
+Version		
+Database		MS SQL 2000 
+*/
+
+
+go
+
+Create table [TBContrato_veiculo]
+(
+	[PKId_TBContrato_veiculo] Integer Identity NOT NULL,
+	[FKId_TBPlano_pagamento] Integer NOT NULL,
+	[FKCodigo_TBBancos] Integer NOT NULL,
+	[FKCodigo_TBTipo_taxa] Integer NOT NULL,
+	[FKCodigo_TBTipo_financiamento] Integer NOT NULL,
+	[DFNumero_TBContrato_veiculo] Integer NOT NULL,
+	[DFData_TBContrato_veiculo] Smalldatetime NOT NULL,
+	[DFData_inicio_TBContrato_veiculo] Smalldatetime NOT NULL,
+	[DFData_final_TBContrato_veiculo] Smalldatetime NOT NULL,
+	[DFValor_bem_TBContrato_veiculo] Money NOT NULL,
+	[DFvalor_entrada_TBContrato_veiculo] Money NULL,
+	[DFValor_Financiado_TBContrato_veiculo] Money NOT NULL,
+	[DFTempo_carencia_TBContrato_veiculo] Integer NULL,
+	[DFGarantia_TBContrato_veiculo] Nvarchar(200) NULL,
+	[DFObservacao_TBContrato_veiculo] Nvarchar(200) NULL,
+	[DFQuitado_TBContrato_veiculo] Bit NOT NULL,
+	[DFTaxa_operada_TBContrato_veiculo] Money NULL,
+Primary Key ([PKId_TBContrato_veiculo])
+) 
+go
+
+
+Create table [TBVeiculo_contrato]
+(
+	[PKId_TBVeiculo_contrato] Integer Identity NOT NULL,
+	[FKCodigo_TBVeiculo] Integer NOT NULL,
+	[FKId_TBContrato_veiculo] Integer NOT NULL,
+Primary Key ([PKId_TBVeiculo_contrato])
+) 
+go
+
+Create table [TBContrato_titulo_pagar]
+(
+	[PKId_TBContrato_titulo_pagar] Integer Identity NOT NULL,
+	[FKId_TBTitulo_pagar] Integer NOT NULL,
+	[FKId_TBContrato_veiculo] Integer NOT NULL,
+Primary Key ([PKId_TBContrato_titulo_pagar])
+) 
+go
+
+Alter table [TBContrato_veiculo] add  foreign key([FKId_TBPlano_pagamento]) references [TBPlano_pagamento] ([PKId_TBPlano_pagamento])  on update no action on delete no action 
+go
+Alter table [TBVeiculo_contrato] add  foreign key([FKId_TBContrato_veiculo]) references [TBContrato_veiculo] ([PKId_TBContrato_veiculo])  on update no action on delete no action 
+go
+Alter table [TBContrato_titulo_pagar] add  foreign key([FKId_TBContrato_veiculo]) references [TBContrato_veiculo] ([PKId_TBContrato_veiculo])  on update no action on delete no action 
+go
+Alter table [TBContrato_veiculo] add  foreign key([FKCodigo_TBTipo_taxa]) references [TBTipo_taxa] ([PKCodigo_TBTipo_taxa])  on update no action on delete no action 
+go
+Alter table [TBContrato_veiculo] add  foreign key([FKCodigo_TBTipo_financiamento]) references [TBTipo_financiamento] ([PKCodigo_TBTipo_financiamento])  on update no action on delete no action 
+go
+
+
+Set quoted_identifier on
+go
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Set quoted_identifier off
+go
+
+
+
+
+
+
+
+
+/* Roles permissions */
+
+
+
+
+
+/* Users permissions */
+
+
+
+
+
+

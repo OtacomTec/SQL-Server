@@ -1,0 +1,75 @@
+/*
+Created		27/5/2003
+Modified		13/4/2004
+Project		
+Model		
+Company		
+Author		
+Version		
+Database		MS SQL 2000 
+*/
+
+
+Create table [TBAgenda_pessoal] (
+	[PKCodigo_TBAgenda_pessoal] Integer NOT NULL,
+	[DFNome_TBAgenda_pessoal] Nvarchar(40) NOT NULL,
+	[DFEndereco_TBAgenda_pessoal] Nvarchar(40) NOT NULL,
+	[DFNumero_TBAgenda_pessoal] Nvarchar(10) NULL,
+	[DFComplemento_TBAgenda_pessoal] Nvarchar(20) NULL,
+	[DFBairro_TBAgenda_pessoal] Nvarchar(30) NULL,
+	[FKId_TBCidade_otica] Integer NOT NULL,
+	[DFCep_TBAgenda_pessoal] Nvarchar(10) NOT NULL,
+	[DFData_Aniversario_TBAgenda_pessoal] Smalldatetime NOT NULL,
+	[DFObservacao_TBAgenda_pessoal] Nvarchar(50) NULL,
+Primary Key ([PKCodigo_TBAgenda_pessoal])
+) 
+go
+
+
+
+
+
+
+
+
+Alter table [TBAgenda_pessoal] add  foreign key([FKId_TBCidade_otica]) references [TBCidade_otica] ([PKId_TBCidade_otica])  on update no action on delete no action 
+go
+
+
+Set quoted_identifier on
+go
+
+
+
+
+
+
+
+
+
+
+
+
+Set quoted_identifier off
+go
+
+
+
+
+
+
+
+
+/* Roles permissions */
+
+
+
+
+
+/* Users permissions */
+
+
+
+
+
+

@@ -1,0 +1,135 @@
+BEGIN TRANSACTION
+/*
+ *** IDENTIFICAÇÃO DO SCRIPT ***
+
+ 1 - Apartir de 20/12/2005, fica expressamente proibida a criação de scripts sem que seja preenchido este cabeçalho
+ 2 - Obrigatoriamente necessário que este paragrafo seja inserido apos um BEGIN TRANSACTION
+ 3 - Obrigatoriamente o preenchimento das variaveis abaixo(@Nomenclatura,@Observacao,@Data)com valores correspondentes e condizentes
+ Att: Marcos
+
+*/
+
+--INICIO CABECALHO
+
+declare @Nomenclatura as nvarchar(20)
+declare @Observacao as nvarchar(100)
+declare @Data as SMALLDATETIME
+
+SET @Nomenclatura = 'SCP2006-08-08c'
+SET @Observacao = 'Altera campo de data para nvarchar'
+SET @Data = CURRENT_TIMESTAMP
+
+
+---LIMPEZA DA TABELA
+
+DELETE FROM TBSCRIPT
+
+---INSERCAO DO REGISTRO
+
+INSERT INTO TBSCRIPT(DFNome_TBScript,DFObjetivo_TBScript,DFData_execucao_TBScript)
+VALUES(@Nomenclatura,@Observacao,@Data)
+
+---FIM CABECALHO
+
+/*
+Created		27/5/2003
+Modified		8/8/2006
+Project		Only Tech - ERP
+Model			Olt
+Company		Only Tech
+Author		Only Tech
+Version		1.0
+Database		MS SQL 2000 
+*/
+
+go
+
+CREATE TABLE dbo.Tmp_TBTriagem
+	(
+	PKId_TBTriagem int NOT NULL IDENTITY (1, 1),
+	FKCodigo_TBFabricante int NOT NULL,
+	FKCodigo_TBInsumo int NOT NULL,
+	FKId_TBCliente int NOT NULL,
+	DFData_lancamento_TBTriagem smalldatetime NULL,
+	DFData_fabricacao_TBTriagem nvarchar(50) NULL,
+	DFLote_TBTriagem nvarchar(20) NULL,
+	DFMes_ano_competencia_TBTriagem nvarchar(10) NULL,
+	DFIntegrado_TBTriagem bit NULL,
+	DFData_validade_TBTriagem nvarchar(50) NULL,
+	DFAno_competencia_TBTriagem nvarchar(10) NULL,
+	DFIntegrado_filiais_TBTriagem bit NULL,
+	DFIntegrado_portal_TBTriagem bit NULL,
+	DFData_alteracao_TBTriagem smalldatetime NULL,
+	DFCodigo_Identificador_TBTriagem int NULL
+	)  ON [PRIMARY]
+GO
+SET IDENTITY_INSERT dbo.Tmp_TBTriagem ON
+GO
+IF EXISTS(SELECT * FROM dbo.TBTriagem)
+	 EXEC('INSERT INTO dbo.Tmp_TBTriagem (PKId_TBTriagem, FKCodigo_TBFabricante, FKCodigo_TBInsumo, FKId_TBCliente, DFData_lancamento_TBTriagem, DFData_fabricacao_TBTriagem, DFLote_TBTriagem, DFMes_ano_competencia_TBTriagem, DFIntegrado_TBTriagem, DFData_validade_TBTriagem, DFAno_competencia_TBTriagem, DFIntegrado_filiais_TBTriagem, DFIntegrado_portal_TBTriagem, DFData_alteracao_TBTriagem, DFCodigo_Identificador_TBTriagem)
+		SELECT PKId_TBTriagem, FKCodigo_TBFabricante, FKCodigo_TBInsumo, FKId_TBCliente, CONVERT(smalldatetime, DFData_lancamento_TBTriagem), DFData_fabricacao_TBTriagem, DFLote_TBTriagem, DFMes_ano_competencia_TBTriagem, DFIntegrado_TBTriagem, CONVERT(nvarchar(50), DFData_validade_TBTriagem), DFAno_competencia_TBTriagem, DFIntegrado_filiais_TBTriagem, DFIntegrado_portal_TBTriagem, DFData_alteracao_TBTriagem, DFCodigo_Identificador_TBTriagem FROM dbo.TBTriagem TABLOCKX')
+GO
+SET IDENTITY_INSERT dbo.Tmp_TBTriagem OFF
+GO
+ALTER TABLE dbo.TBTriagem_resultado
+	DROP CONSTRAINT FK_TBTriagem_resultado_TBTriagem
+GO
+DROP TABLE dbo.TBTriagem
+GO
+EXECUTE sp_rename N'dbo.Tmp_TBTriagem', N'TBTriagem', 'OBJECT'
+GO
+ALTER TABLE dbo.TBTriagem ADD CONSTRAINT
+	PK__TBTriagem__45F8F534 PRIMARY KEY CLUSTERED 
+	(
+	PKId_TBTriagem
+	) WITH FILLFACTOR = 90 ON [PRIMARY]
+
+GO
+ALTER TABLE dbo.TBTriagem WITH NOCHECK ADD CONSTRAINT
+	FK__TBTriagem__FKId___48D561DF FOREIGN KEY
+	(
+	FKId_TBCliente
+	) REFERENCES dbo.TBCliente
+	(
+	PKId_TBCliente
+	)
+GO
+ALTER TABLE dbo.TBTriagem WITH NOCHECK ADD CONSTRAINT
+	FK__TBTriagem__FKCod__49C98618 FOREIGN KEY
+	(
+	FKCodigo_TBFabricante
+	) REFERENCES dbo.TBFabricante
+	(
+	PKCodigo_TBFabricante
+	)
+GO
+ALTER TABLE dbo.TBTriagem WITH NOCHECK ADD CONSTRAINT
+	FK__TBTriagem__FKCod__4ABDAA51 FOREIGN KEY
+	(
+	FKCodigo_TBInsumo
+	) REFERENCES dbo.TBInsumo
+	(
+	PKCodigo_TBInsumo
+	)
+GO
+
+ALTER TABLE dbo.TBTriagem_resultado WITH NOCHECK ADD CONSTRAINT
+	FK_TBTriagem_resultado_TBTriagem FOREIGN KEY
+	(
+	PKId_TBTriagem
+	) REFERENCES dbo.TBTriagem
+	(
+	PKId_TBTriagem
+	)
+GO
+
+
+
+
+
+
+
+
+COMMIT TRANSACTION
+
+

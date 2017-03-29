@@ -1,0 +1,99 @@
+/*
+   quinta-feira, 5 de maio de 2005 17:08:05
+   User: sa
+   Server: ONLYTECH-02
+   Database: BDRetaguarda
+   Application: MS SQLEM - Data Tools
+*/
+
+BEGIN TRANSACTION
+SET QUOTED_IDENTIFIER ON
+SET TRANSACTION ISOLATION LEVEL SERIALIZABLE
+SET ARITHABORT ON
+SET NUMERIC_ROUNDABORT OFF
+SET CONCAT_NULL_YIELDS_NULL ON
+SET ANSI_NULLS ON
+SET ANSI_PADDING ON
+SET ANSI_WARNINGS ON
+COMMIT
+BEGIN TRANSACTION
+ALTER TABLE dbo.TBSolicitacao_visita
+	DROP CONSTRAINT FK__TBSolicit__FKId___7E119A77
+GO
+COMMIT
+BEGIN TRANSACTION
+CREATE TABLE dbo.Tmp_TBSolicitacao_visita
+	(
+	PKId_TBSolicitacao_visita int NOT NULL IDENTITY (1, 1),
+	DFData_TBSolicitacao_visita smalldatetime NOT NULL,
+	DFHora_TBSolicitacao_visita nvarchar(10) NOT NULL,
+	DFContato_TBSolicitacao_visita nvarchar(40) NULL,
+	DFEndereco_TBSolicitacao_visita nvarchar(40) NOT NULL,
+	DFNumero_TBSolicitacao_visita nvarchar(10) NULL,
+	DFComplemento_TBSolicitacao_visita nvarchar(30) NULL,
+	DFBairro_TBSolicitacao_visita nvarchar(20) NULL,
+	FKId_TBCidade_otica int NOT NULL,
+	DFStatus_TBSolicitacao_visita int NOT NULL,
+	DFValor_Orcamento_TBSolicitacao_visita money NULL,
+	DFCondicao_pagamento_TBSolicitacao_visita nvarchar(100) NULL,
+	DFObservacao_TBSolicitacao_visita nvarchar(200) NULL,
+	DFCep_TBSolicitacao_visita nvarchar(10) NOT NULL
+	)  ON [PRIMARY]
+GO
+SET IDENTITY_INSERT dbo.Tmp_TBSolicitacao_visita ON
+GO
+IF EXISTS(SELECT * FROM dbo.TBSolicitacao_visita)
+	 EXEC('INSERT INTO dbo.Tmp_TBSolicitacao_visita (PKId_TBSolicitacao_visita, DFData_TBSolicitacao_visita, DFHora_TBSolicitacao_visita, DFContato_TBSolicitacao_visita, DFEndereco_TBSolicitacao_visita, DFNumero_TBSolicitacao_visita, DFComplemento_TBSolicitacao_visita, DFBairro_TBSolicitacao_visita, FKId_TBCidade_otica, DFStatus_TBSolicitacao_visita, DFValor_Orcamento_TBSolicitacao_visita, DFCondicao_pagamento_TBSolicitacao_visita, DFObservacao_TBSolicitacao_visita)
+		SELECT PKId_TBSolicitacao_visita, DFData_TBSolicitacao_visita, DFHora_TBSolicitacao_visita, DFContato_TBSolicitacao_visita, DFEndereco_TBSolicitacao_visita, DFNumero_TBSolicitacao_visita, DFComplemento_TBSolicitacao_visita, DFBairro_TBSolicitacao_visita, FKId_TBCidade_otica, DFStatus_TBSolicitacao_visita, DFValor_Orcamento_TBSolicitacao_visita, DFCondicao_pagamento_TBSolicitacao_visita, DFObservacao_TBSolicitacao_visita FROM dbo.TBSolicitacao_visita TABLOCKX')
+GO
+SET IDENTITY_INSERT dbo.Tmp_TBSolicitacao_visita OFF
+GO
+ALTER TABLE dbo.TBAtendimento_solicitacao_visita
+	DROP CONSTRAINT FK__TBAtendim__FKId___00EE0722
+GO
+ALTER TABLE dbo.TBAgenda_solicitacao_visita
+	DROP CONSTRAINT FK__TBAgenda___FKId___7FF9E2E9
+GO
+DROP TABLE dbo.TBSolicitacao_visita
+GO
+EXECUTE sp_rename N'dbo.Tmp_TBSolicitacao_visita', N'TBSolicitacao_visita', 'OBJECT'
+GO
+ALTER TABLE dbo.TBSolicitacao_visita ADD CONSTRAINT
+	PK__TBSolicitacao_vi__794CE55A PRIMARY KEY CLUSTERED 
+	(
+	PKId_TBSolicitacao_visita
+	) WITH FILLFACTOR = 90 ON [PRIMARY]
+
+GO
+ALTER TABLE dbo.TBSolicitacao_visita WITH NOCHECK ADD CONSTRAINT
+	FK__TBSolicit__FKId___7E119A77 FOREIGN KEY
+	(
+	FKId_TBCidade_otica
+	) REFERENCES dbo.TBCidade_otica
+	(
+	PKId_TBCidade_otica
+	)
+GO
+COMMIT
+BEGIN TRANSACTION
+ALTER TABLE dbo.TBAgenda_solicitacao_visita WITH NOCHECK ADD CONSTRAINT
+	FK__TBAgenda___FKId___7FF9E2E9 FOREIGN KEY
+	(
+	FKId_TBSolicitacao_visita
+	) REFERENCES dbo.TBSolicitacao_visita
+	(
+	PKId_TBSolicitacao_visita
+	)
+GO
+COMMIT
+BEGIN TRANSACTION
+ALTER TABLE dbo.TBAtendimento_solicitacao_visita WITH NOCHECK ADD CONSTRAINT
+	FK__TBAtendim__FKId___00EE0722 FOREIGN KEY
+	(
+	FKId_TBSolicitacao_visita
+	) REFERENCES dbo.TBSolicitacao_visita
+	(
+	PKId_TBSolicitacao_visita
+	)
+GO
+COMMIT

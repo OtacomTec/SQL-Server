@@ -1,0 +1,96 @@
+USE BDRetaguarda
+
+BEGIN TRANSACTION
+/*
+ *** IDENTIFICAÇÃO DO SCRIPT ***
+
+ 1 - Apartir de 20/12/2005, fica expressamente proibida a criação de scripts sem que seja preenchido este cabeçalho
+ 2 - Obrigatoriamente necessário que este paragrafo seja inserido apos um BEGIN TRANSACTION
+ 3 - Obrigatoriamente o preenchimento das variaveis abaixo(@Nomenclatura,@Observacao,@Data)com valores correspondentes e condizentes
+ Att: Marcos
+
+*/
+
+--INICIO CABECALHO
+
+declare @Nomenclatura as nvarchar(20)
+declare @Observacao as nvarchar(100)
+declare @Data as SMALLDATETIME
+
+SET @Nomenclatura = 'SCP2007-11-28a'
+SET @Observacao = 'Cria TAbela Solicitacao Compra' 
+SET @Data = CURRENT_TIMESTAMP
+
+---LIMPEZA DA TABELA
+
+DELETE FROM TBSCRIPT
+
+---INSERCAO DO REGISTRO
+
+INSERT INTO BDRetaguarda.dbo.TBSCRIPT(DFNome_TBScript,DFObjetivo_TBScript,DFData_execucao_TBScript)
+VALUES(@Nomenclatura,@Observacao,@Data)
+
+---FIM CABECALHO
+
+
+Create table [TBSolicitacao_compra]
+(
+	[PKId_TBSolicitacao_compra] Integer Identity NOT NULL,
+	[FKCodigo_TBEmpresa] Integer NOT NULL,
+	[FKCodigo_TBFuncionario] Integer NOT NULL,
+	[FKCodigo_TBDepartamento] Integer NOT NULL,
+	[DFData_entrada_TBSolicitacao_compra] Smalldatetime NULL,
+	[DFData_aprovacao_TBSolicitacao_compra] Smalldatetime NULL,
+	[DFData_encerramento_TBSolicitacao_compra] Smalldatetime NULL,
+	[DFObservacao_TBSolicitacao_compra] Nvarchar(500) NULL,
+Primary Key ([PKId_TBSolicitacao_compra])
+) 
+go
+
+Create table [TBItens_TBSolicitacao_compra]
+(
+	[PKId_TBItens_TBSolicitacao_compra] Integer Identity NOT NULL,
+	[FKId_TBSolicitacao_compra] Integer NOT NULL,
+	[FKId_TBProduto] Integer NOT NULL,
+	[DFQuantidade_TBItens_TBSolicitacao_compra] Money NULL,
+	[DFUnidade_TBItens_TBSolicitacao_compra] Nvarchar(3) NULL,
+Primary Key ([PKId_TBItens_TBSolicitacao_compra])
+) 
+go
+
+Alter table [TBSolicitacao_compra] add  foreign key([FKCodigo_TBEmpresa]) references [TBEmpresa] ([PKCodigo_TBEmpresa])  on update no action on delete no action 
+go
+Alter table [TBItens_TBSolicitacao_compra] add  foreign key([FKId_TBProduto]) references [TBProduto] ([PKId_TBProduto])  on update no action on delete no action 
+go
+Alter table [TBSolicitacao_compra] add  foreign key([FKCodigo_TBFuncionario]) references [TBFuncionario] ([PKCodigo_TBFuncionario])  on update no action on delete no action 
+go
+Alter table [TBSolicitacao_compra] add  foreign key([FKCodigo_TBDepartamento]) references [TBDepartamento] ([PKCodigo_TBDepartamento])  on update no action on delete no action 
+go
+Alter table [TBItens_TBSolicitacao_compra] add  foreign key([FKId_TBSolicitacao_compra]) references [TBSolicitacao_compra] ([PKId_TBSolicitacao_compra])  on update no action on delete no action 
+go
+
+
+Set quoted_identifier on
+go
+
+Set quoted_identifier off
+go
+
+/* Roles permissions */
+
+/* Users permissions */
+Set quoted_identifier on
+go
+
+Set quoted_identifier off
+go
+
+/* Roles permissions */
+
+/* Users permissions */
+
+go
+
+
+COMMIT TRANSACTION
+

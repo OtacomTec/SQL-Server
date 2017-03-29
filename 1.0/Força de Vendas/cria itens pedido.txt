@@ -1,0 +1,14 @@
+CREATE TABLE [dbo].[TBItens_pedido_palm](
+	[PKId_TBItens_pedido_palm] [int] IDENTITY(1,1) NOT NULL,
+	[FKId_TBPedido_palm] [int] NULL,
+	[FKId_TBProduto_palm] [int] NULL,
+	[DFQuantidade_TBItens_pedido_palm] [money] NULL,
+	[DFTipo_preco_TBItens_pedido_palm] [nvarchar](20) NULL,
+	[DFPercentual_desconto_TBItens_pedido_palm] [money] NULL,
+	[DFPreco_praticado_TBItens_pedido_palm] [money] NULL,
+	[DFValor_total_praticado_TBItens_pedido_palm] [money] NULL,
+	[DFUnidade_TBItens_pedido_palm] [nvarchar](3) NULL,
+	[DFStatus_Integracao_TBItens_pedido_palm] [int] NULL,
+	[DFData_atualizacao_portal] [smalldatetime] NULL,
+	[DFHora_atualizacao_portal] [smalldatetime] NULL
+) ON [PRIMARY]

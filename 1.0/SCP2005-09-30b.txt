@@ -1,0 +1,29 @@
+BEGIN TRANSACTION
+SET QUOTED_IDENTIFIER ON
+SET TRANSACTION ISOLATION LEVEL SERIALIZABLE
+SET ARITHABORT ON
+SET NUMERIC_ROUNDABORT OFF
+SET CONCAT_NULL_YIELDS_NULL ON
+SET ANSI_NULLS ON
+SET ANSI_PADDING ON
+SET ANSI_WARNINGS ON
+COMMIT
+BEGIN TRANSACTION
+CREATE TABLE dbo.TBTitulo_pagar_credito_cliente
+	(
+	PKId_TBTitulo_pagar_credito_cliente int NOT NULL,
+	FKCodigo_TBEmpresa int NOT NULL,
+	FKId_TBCliente int NOT NULL,
+	DFData_emissao_TBTitulo_pagar_credito_cliente smalldatetime NULL,
+	DFValor_TBTitulo_pagar_credito_cliente money NOT NULL,
+	DFObervacao_TBTitulo_pagar_credito_cliente nvarchar(200) NULL
+	)  ON [PRIMARY]
+GO
+ALTER TABLE dbo.TBTitulo_pagar_credito_cliente ADD CONSTRAINT
+	PK_TBTitulo_pagar_credito_cliente PRIMARY KEY CLUSTERED 
+	(
+	PKId_TBTitulo_pagar_credito_cliente
+	) ON [PRIMARY]
+
+GO
+COMMIT

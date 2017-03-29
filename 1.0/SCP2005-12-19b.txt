@@ -1,0 +1,151 @@
+/*
+Created		27/5/2003
+Modified		19/12/2005
+Project		Only Tech - ERP
+Model			Olt
+Company		Only Tech
+Author		Only Tech
+Version		1.0
+Database		MS SQL 2000 
+*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+CREATE TABLE TBInsumo
+	(
+	PKCodigo_TBInsumo int NOT NULL,
+	FKCodigo_TBFuncao_insumo int NOT NULL,
+	DFDescricao_TBInsumo nvarchar(100) NOT NULL,
+	DFNome_cientifico_TBInsumo nvarchar(100) NULL,
+	DFObservacao_TBInsumo nvarchar(300) NULL,
+	DFConservacao_TBInsumo nvarchar(150) NULL,
+	DFReferencia_biografica1_TBInsumo nvarchar(100) NULL,
+	DFReferencia_biografica2_TBInsumo nvarchar(100) NULL,
+	DFReferencia_biografica3_TBInsumo nvarchar(100) NULL,
+	DFReferencia_biografica4_TBInsumo nvarchar(100) NULL,
+	DFReferencia_biografica5_TBInsumo nvarchar(100) NULL,
+	DFTecnica_aplicada_TBInsumo varchar(6000) NULL,
+	DFIntegrado_TBInsumo bit NULL,
+	DFIntegrado_filiais_TBInsumo bit NULL,
+	DFIntegrado_portal_TBInsumo bit NULL,
+	DFData_alteracao_TBInsumo smalldatetime NULL,
+	DFCodigo_Identificador_TBInsumo int NULL
+	)  ON [PRIMARY]
+go
+
+Create table [TBFuncao_insumo]
+(
+	[PKCodigo_TBFuncao_insumo] Integer NOT NULL,
+	[DFDescricao_TBFuncao_insumo] Nvarchar(50) NULL,
+Primary Key ([PKCodigo_TBFuncao_insumo])
+) 
+go
+
+Create table [TBTipo_marcha]
+(
+	[PKCodigo_TBTipo_marcha] Integer NOT NULL,
+	[DFDescricao_TBTipo_marcha] Nvarchar(40) NOT NULL,
+	[DFDescricao_resumida_TBTipo_marcha] Nvarchar(10) NOT NULL,
+	[DFNumero_sequencial_TBTipo_marcha] Integer NOT NULL,
+Primary Key ([PKCodigo_TBTipo_marcha])
+) 
+go
+
+Create table [TBAnalise_Insumo]
+(
+	[PKId_TBAnalise_Insumo] Integer Identity NOT NULL,
+	[FKCodigo_TBInsumo] Integer NOT NULL,
+	[DFDescricao_TBAnalise_insumo] Nvarchar(50) NOT NULL,
+Primary Key ([PKId_TBAnalise_Insumo])
+) 
+go
+
+Create table [TBEspecificacao_analise_insumo]
+(
+	[PKId_TBEspecificacao_analise_insumo] Integer Identity NOT NULL,
+	[FKId_TBAnalise_Insumo] Integer NOT NULL,
+	[DFDescricao_TBEspecificacao_analise_insumo] Nvarchar(400) NOT NULL,
+Primary Key ([PKId_TBEspecificacao_analise_insumo])
+) 
+go
+
+
+
+
+
+
+
+
+
+
+
+
+
+Alter table [TBAnalise_Insumo] add  foreign key([FKCodigo_TBInsumo]) references [TBInsumo] ([PKCodigo_TBInsumo])  on update no action on delete no action 
+go
+Alter table [TBInsumo] add  foreign key([FKCodigo_TBFuncao_insumo]) references [TBFuncao_insumo] ([PKCodigo_TBFuncao_insumo])  on update no action on delete no action 
+go
+Alter table [TBEspecificacao_analise_insumo] add  foreign key([FKId_TBAnalise_Insumo]) references [TBAnalise_Insumo] ([PKId_TBAnalise_Insumo])  on update no action on delete no action 
+go
+
+
+Set quoted_identifier on
+go
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Set quoted_identifier off
+go
+
+
+
+
+
+
+
+
+/* Roles permissions */
+
+
+
+
+
+/* Users permissions */
+
+
+
+
+

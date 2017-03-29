@@ -1,0 +1,8 @@
+
+CREATE TABLE [dbo].[TBPlano_pagamento_palm](
+	[PKId_TBPlano_pagamento_palm] [int] IDENTITY (1, 1) NOT NULL,
+	[IXCodigo_TBPlano_pagamento_palm] [int] NULL,
+	[DFDescricao_TBPlano_pagamento_palm] [nvarchar](40) NULL,
+	[DFData_atualizacao_portal] [smalldatetime] NULL,
+	[DFHora_atualizacao_portal] [smalldatetime] NULL
+) ON [PRIMARY]

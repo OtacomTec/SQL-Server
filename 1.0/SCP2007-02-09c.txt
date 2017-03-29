@@ -1,0 +1,87 @@
+USE BDRetaguarda
+GO
+BEGIN TRANSACTION
+/*
+ *** IDENTIFICAÇÃO DO SCRIPT ***
+
+ 1 - Apartir de 20/12/2005, fica expressamente proibida a criação de scripts sem que seja preenchido este cabeçalho
+ 2 - Obrigatoriamente necessário que este paragrafo seja inserido apos um BEGIN TRANSACTION
+ 3 - Obrigatoriamente o preenchimento das variaveis abaixo(@Nomenclatura,@Observacao,@Data)com valores correspondentes e condizentes
+ Att: Marcos
+
+*/
+
+--INICIO CABECALHO
+
+declare @Nomenclatura as nvarchar(20)
+declare @Observacao as nvarchar(100)
+declare @Data as SMALLDATETIME
+
+SET @Nomenclatura = 'SCP2007-02-09c'
+SET @Observacao = 'Cria Tabela serir disciplina turno'
+SET @Data = CURRENT_TIMESTAMP
+
+
+---LIMPEZA DA TABELA
+
+DELETE FROM TBSCRIPT
+
+---INSERCAO DO REGISTRO
+INSERT INTO BDRetaguarda.dbo.TBSCRIPT(DFNome_TBScript,DFObjetivo_TBScript,DFData_execucao_TBScript)
+VALUES(@Nomenclatura,@Observacao,@Data)
+
+---FIM CABECALHO
+
+
+
+
+Create table [TBSerie]
+(
+	[PKCodigo_TBSerie] Integer NOT NULL,
+	[DFDescricao_TBSerie] Nvarchar(40) NULL,
+        [DFIntegrado_portal_TBSerie] bit NULL,
+	[DFIntegrado_filiais_TBSerie] bit NULL,
+	[DFData_alteracao_TBSerie] smalldatetime NULL,
+	[DFCodigo_Identificador_TBSerie] int NULL
+Primary Key ([PKCodigo_TBSerie])
+) 
+go
+
+Create table [TBTurno]
+(
+	[PKCodigo_TBTurno] Integer NOT NULL,
+	[DFDescricao_TBTurno] Nvarchar(40) NULL,
+        [DFIntegrado_portal_TBTurno] bit NULL,
+	[DFIntegrado_filiais_TBTurno] bit NULL,
+	[DFData_alteracao_TBTurno] smalldatetime NULL,
+	[DFCodigo_Identificador_TBTurno] int NULL
+Primary Key ([PKCodigo_TBTurno])
+) 
+go
+
+Create table [TBDisciplina]
+(
+	[PKCodigo_TBDisciplina] Integer NOT NULL,
+	[DFDescricao_TBDisciplina] Nvarchar(40) NULL,
+        [DFIntegrado_portal_TBDisciplina] bit NULL,
+	[DFIntegrado_filiais_TBDisciplina] bit NULL,
+	[DFData_alteracao_TBDisciplina] smalldatetime NULL,
+	[DFCodigo_Identificador_TBDisciplina] int NULL
+Primary Key ([PKCodigo_TBDisciplina])
+) 
+go
+
+Set quoted_identifier on
+go
+
+Set quoted_identifier off
+go
+
+/* Roles permissions */
+
+
+/* Users permissions */
+
+
+commit
+

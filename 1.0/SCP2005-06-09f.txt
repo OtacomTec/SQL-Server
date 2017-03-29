@@ -1,0 +1,2 @@
+update TBParametros_venda
+set DFCalcula_arredondamento_preco_tabela_TBParametros_venda = 0

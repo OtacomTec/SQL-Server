@@ -1,0 +1,65 @@
+/*
+Created		27/5/2003
+Modified		22/2/2004
+Project		
+Model		
+Company		
+Author		
+Version		
+Database		MS SQL 2000 
+*/
+
+
+
+
+Create table [TBBaixa_troca] (
+	[PKId_TBBaixa_troca] Integer Identity NOT NULL,
+	[FKId_TBTroca] Integer NOT NULL,
+	[DFData_baixa_TBBaixa_troca] Smalldatetime NULL,
+	[DFUsuario_TBBaixa_troca] Nvarchar(20) NULL,
+	[DFMotivo_TBBaixa_troca] Nvarchar(40) NULL,
+Primary Key ([PKId_TBBaixa_troca])
+) 
+go
+
+Alter table [TBBaixa_troca] add  foreign key([FKId_TBTroca]) references [TBTroca] ([PKId_TBTroca])  on update no action on delete no action 
+go
+
+
+Set quoted_identifier on
+go
+
+
+
+
+
+
+
+
+
+
+
+
+Set quoted_identifier off
+go
+
+
+
+
+
+
+
+
+/* Roles permissions */
+
+
+
+
+
+/* Users permissions */
+
+
+
+
+
+

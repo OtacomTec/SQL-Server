@@ -1,0 +1,58 @@
+/*
+   quinta-feira, 15 de setembro de 2005 14:28:16
+   User: sa
+   Server: ONLYTECH-02
+   Database: BDRetaguarda
+   Application: MS SQLEM - Data Tools
+*/
+
+BEGIN TRANSACTION
+SET QUOTED_IDENTIFIER ON
+SET TRANSACTION ISOLATION LEVEL SERIALIZABLE
+SET ARITHABORT ON
+SET NUMERIC_ROUNDABORT OFF
+SET CONCAT_NULL_YIELDS_NULL ON
+SET ANSI_NULLS ON
+SET ANSI_PADDING ON
+SET ANSI_WARNINGS ON
+COMMIT
+BEGIN TRANSACTION
+COMMIT
+BEGIN TRANSACTION
+COMMIT
+BEGIN TRANSACTION
+COMMIT
+BEGIN TRANSACTION
+CREATE NONCLUSTERED INDEX IX_TBItens_nota_entrada_fiscal ON dbo.TBItens_nota_entrada_fiscal
+	(
+	PKId_TBItens_nota_entrada_fiscal
+	) ON [PRIMARY]
+GO
+ALTER TABLE dbo.TBItens_nota_entrada_fiscal ADD CONSTRAINT
+	FK_TBItens_nota_entrada_fiscal_TBNota_entrada FOREIGN KEY
+	(
+	FKId_TBNota_entrada
+	) REFERENCES dbo.TBNota_entrada
+	(
+	PKId_TBNota_entrada
+	)
+GO
+ALTER TABLE dbo.TBItens_nota_entrada_fiscal ADD CONSTRAINT
+	FK_TBItens_nota_entrada_fiscal_TBProduto FOREIGN KEY
+	(
+	FKId_TBProduto
+	) REFERENCES dbo.TBProduto
+	(
+	PKId_TBProduto
+	)
+GO
+ALTER TABLE dbo.TBItens_nota_entrada_fiscal ADD CONSTRAINT
+	FK_TBItens_nota_entrada_fiscal_TBCfop FOREIGN KEY
+	(
+	FKId_TBCfop
+	) REFERENCES dbo.TBCfop
+	(
+	PKId_TBCfop
+	)
+GO
+COMMIT

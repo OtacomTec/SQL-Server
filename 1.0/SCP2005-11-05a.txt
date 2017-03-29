@@ -1,0 +1,83 @@
+/*
+Created		27/5/2003
+Modified		27/10/2005
+Project		Only Tech - ERP
+Model			Olt
+Company		Only Tech
+Author		Only Tech
+Version		1.0
+Database		MS SQL 2000 
+*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Create table [TBAlineas]
+(
+	[PKCodigo_TBAlineas] Integer NOT NULL,
+	[DFDescricao_TBAlineas] Nvarchar(50) NULL,
+	[DFDescricao_alerta_TBAlineas] Nvarchar(20) NULL,
+	[DFCritico_TBAlineas] Bit NULL,
+Primary Key ([PKCodigo_TBAlineas])
+) 
+go
+
+
+
+Set quoted_identifier on
+go
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Set quoted_identifier off
+go
+
+
+
+
+
+
+
+
+/* Roles permissions */
+
+
+
+
+
+/* Users permissions */
+
+
+

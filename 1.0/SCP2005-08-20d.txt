@@ -1,0 +1,95 @@
+/*
+Created		27/5/2003
+Modified		20/8/2005
+Project		Only Tech - ERP
+Model			Olt
+Company		Only Tech
+Author		Only Tech
+Version		1.0
+Database		MS SQL 2000 
+*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Create table [TBBomba]
+(
+	[PKCodigo_Bomba] Integer NOT NULL,
+	[DFDescricao_TBBomba] Nvarchar(20) NULL,
+	[DFNumero_bicos_TBBomba] Integer NULL,
+Primary Key ([PKCodigo_Bomba])
+) 
+go
+
+
+
+
+
+
+
+
+
+Alter table [TBBomba_bico] add  foreign key([FKCodigo_Bomba]) references [TBBomba] ([PKCodigo_Bomba])  on update no action on delete no action 
+go
+
+
+Set quoted_identifier on
+go
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Set quoted_identifier off
+go
+
+
+
+
+
+
+
+
+/* Roles permissions */
+
+
+
+
+
+/* Users permissions */
+
+
+
+
+
+

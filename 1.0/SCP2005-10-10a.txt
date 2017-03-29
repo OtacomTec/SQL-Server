@@ -1,0 +1,62 @@
+/*
+   segunda-feira, 10 de outubro de 2005 11:14:29
+   User: sa
+   Server: ONLYTECH-02
+   Database: BDRetaguarda
+   Application: MS SQLEM - Data Tools
+*/
+
+BEGIN TRANSACTION
+SET QUOTED_IDENTIFIER ON
+SET TRANSACTION ISOLATION LEVEL SERIALIZABLE
+SET ARITHABORT ON
+SET NUMERIC_ROUNDABORT OFF
+SET CONCAT_NULL_YIELDS_NULL ON
+SET ANSI_NULLS ON
+SET ANSI_PADDING ON
+SET ANSI_WARNINGS ON
+COMMIT
+BEGIN TRANSACTION
+ALTER TABLE dbo.TBImpostos_nota_entrada_fiscal
+	DROP CONSTRAINT FK_TBImpostos_nota_entrada_fiscal_TBNota_entrada_fiscal
+GO
+COMMIT
+BEGIN TRANSACTION
+CREATE TABLE dbo.Tmp_TBImpostos_nota_entrada_fiscal
+	(
+	PKId_TBImpostos_nota_entrada_fiscal int NOT NULL IDENTITY (1, 1),
+	FKId_TBNota_entrada_fiscal int NOT NULL,
+	DFAliquota_TBImpostos_nota_entrada_fiscal money NOT NULL,
+	DFBase_calculo_TBImpostos_nota_entrada_fiscal money NOT NULL,
+	DFValor_TBImpostos_nota_entrada_fiscal money NOT NULL
+	)  ON [PRIMARY]
+GO
+SET IDENTITY_INSERT dbo.Tmp_TBImpostos_nota_entrada_fiscal ON
+GO
+IF EXISTS(SELECT * FROM dbo.TBImpostos_nota_entrada_fiscal)
+	 EXEC('INSERT INTO dbo.Tmp_TBImpostos_nota_entrada_fiscal (PKId_TBImpostos_nota_entrada_fiscal, FKId_TBNota_entrada_fiscal, DFAliquota_TBImpostos_nota_entrada_fiscal, DFBase_calculo_TBImpostos_nota_entrada_fiscal, DFValor_TBImpostos_nota_entrada_fiscal)
+		SELECT PKId_TBImpostos_nota_entrada_fiscal, FKId_TBNota_entrada_fiscal, DFAliquota_TBImpostos_nota_entrada_fiscal, DFBase_calculo_TBImpostos_nota_entrada_fiscal, DFValor_TBImpostos_nota_entrada_fiscal FROM dbo.TBImpostos_nota_entrada_fiscal TABLOCKX')
+GO
+SET IDENTITY_INSERT dbo.Tmp_TBImpostos_nota_entrada_fiscal OFF
+GO
+DROP TABLE dbo.TBImpostos_nota_entrada_fiscal
+GO
+EXECUTE sp_rename N'dbo.Tmp_TBImpostos_nota_entrada_fiscal', N'TBImpostos_nota_entrada_fiscal', 'OBJECT'
+GO
+ALTER TABLE dbo.TBImpostos_nota_entrada_fiscal ADD CONSTRAINT
+	PK_TBImpostos_nota_entrada_fiscal PRIMARY KEY CLUSTERED 
+	(
+	PKId_TBImpostos_nota_entrada_fiscal
+	) ON [PRIMARY]
+
+GO
+ALTER TABLE dbo.TBImpostos_nota_entrada_fiscal WITH NOCHECK ADD CONSTRAINT
+	FK_TBImpostos_nota_entrada_fiscal_TBNota_entrada_fiscal FOREIGN KEY
+	(
+	FKId_TBNota_entrada_fiscal
+	) REFERENCES dbo.TBNota_entrada_fiscal
+	(
+	PKId_TBNota_entrada_fiscal
+	)
+GO
+COMMIT

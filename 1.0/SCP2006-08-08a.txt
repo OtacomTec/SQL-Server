@@ -1,0 +1,102 @@
+BEGIN TRANSACTION
+/*
+ *** IDENTIFICAÇÃO DO SCRIPT ***
+
+ 1 - Apartir de 20/12/2005, fica expressamente proibida a criação de scripts sem que seja preenchido este cabeçalho
+ 2 - Obrigatoriamente necessário que este paragrafo seja inserido apos um BEGIN TRANSACTION
+ 3 - Obrigatoriamente o preenchimento das variaveis abaixo(@Nomenclatura,@Observacao,@Data)com valores correspondentes e condizentes
+ Att: Marcos
+
+*/
+
+--INICIO CABECALHO
+
+declare @Nomenclatura as nvarchar(20)
+declare @Observacao as nvarchar(100)
+declare @Data as SMALLDATETIME
+
+SET @Nomenclatura = 'SCP2006-08-08a'
+SET @Observacao = 'Cria Tabela Encerrante'
+SET @Data = CURRENT_TIMESTAMP
+
+
+---LIMPEZA DA TABELA
+
+DELETE FROM TBSCRIPT
+
+---INSERCAO DO REGISTRO
+
+INSERT INTO TBSCRIPT(DFNome_TBScript,DFObjetivo_TBScript,DFData_execucao_TBScript)
+VALUES(@Nomenclatura,@Observacao,@Data)
+
+---FIM CABECALHO
+
+/*
+Created		27/5/2003
+Modified		8/8/2006
+Project		Only Tech - ERP
+Model			Olt
+Company		Only Tech
+Author		Only Tech
+Version		1.0
+Database		MS SQL 2000 
+*/
+
+go
+
+Create table [TBFechamento_caixa_produto_posto]
+(
+	[PKIdTBFechamento_caixa_produto_posto] Integer Identity NOT NULL,
+	[FKId_TBFechamento_caixa_posto] Integer NOT NULL,
+	[FKId_TBProduto] Integer NOT NULL,
+	[DFQuantidade_caixa_produto_posto] Money NULL,
+	[DFValor_unitario_TBFechamento_caixa_produto_posto] Money NULL,
+	[DFValor_Total_TBFechamento_caixa_produto_posto] Money NULL,
+	[DFIntegrado_portal_TBFechamento_caixa_produto_posto] Bit NULL,
+	[DFIntegrado_filiais_TBFechamento_caixa_produto_posto] Bit NULL,
+	[DFData_alteracao_TBFechamento_caixa_produto_posto] Smalldatetime NULL,
+	[DFCodigo_Identificador_TBFechamento_caixa_produto_posto] Integer NULL,
+Primary Key ([PKIdTBFechamento_caixa_produto_posto])
+) 
+go
+
+Create table [TBEncerrante_caixa_posto]
+(
+	[PKId_TBEncerrante_caixa_posto] Integer Identity NOT NULL,
+	[FKId_TBBomba_bico] Integer NOT NULL,
+	[FKId_TBFechamento_caixa_posto] Integer NOT NULL,
+	[DFEncerrante_inicial_TBEncerrante_caixa_posto] Money NOT NULL,
+	[DFEncerrante_final_TBEncerrante_caixa_posto] Money NOT NULL,
+	[DFAfericao_TBEncerrante_caixa_posto] Money NULL,
+	[DFQuantidade_DFEncerrante_inicial_TBEncerrante_caixa_posto] Money NOT NULL,
+	[DFValor_unitario_DFEncerrante_inicial_TBEncerrante_caixa_posto] Money NOT NULL,
+	[DFValor_total_TBEncerrante_caixa_posto] Money NULL,
+	[DFCusto_unitario_DFEncerrante_inicial_TBEncerrante_caixa_posto] Money NULL,
+Primary Key ([PKId_TBEncerrante_caixa_posto])
+) 
+go
+
+Alter table [TBFechamento_caixa_produto_posto] add  foreign key([FKId_TBProduto]) references [TBProduto] ([PKId_TBProduto])  on update no action on delete no action 
+go
+Alter table [TBFechamento_caixa_produto_posto] add  foreign key([FKId_TBFechamento_caixa_posto]) references [TBFechamento_caixa_posto] ([PKId_TBFechamento_caixa_posto])  on update no action on delete no action 
+go
+Alter table [TBEncerrante_caixa_posto] add  foreign key([FKId_TBFechamento_caixa_posto]) references [TBFechamento_caixa_posto] ([PKId_TBFechamento_caixa_posto])  on update no action on delete no action 
+go
+Alter table [TBEncerrante_caixa_posto] add  foreign key([FKId_TBBomba_bico]) references [TBBomba_bico] ([PKId_TBBomba_bico])  on update no action on delete no action 
+go
+
+
+Set quoted_identifier on
+go
+
+Set quoted_identifier off
+go
+
+/* Roles permissions */
+/* Users permissions */
+
+
+
+COMMIT TRANSACTION
+
+

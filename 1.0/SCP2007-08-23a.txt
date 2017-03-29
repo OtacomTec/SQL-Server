@@ -1,0 +1,176 @@
+USE BDRetaguarda
+
+BEGIN TRANSACTION
+/*
+ *** IDENTIFICAÇÃO DO SCRIPT ***
+
+ 1 - Apartir de 20/12/2005, fica expressamente proibida a criação de scripts sem que seja preenchido este cabeçalho
+ 2 - Obrigatoriamente necessário que este paragrafo seja inserido apos um BEGIN TRANSACTION
+ 3 - Obrigatoriamente o preenchimento das variaveis abaixo(@Nomenclatura,@Observacao,@Data)com valores correspondentes e condizentes
+ Att: Marcos
+
+*/
+
+--INICIO CABECALHO
+
+declare @Nomenclatura as nvarchar(20)
+declare @Observacao as nvarchar(100)
+declare @Data as SMALLDATETIME
+
+SET @Nomenclatura = 'SCP2007-08-23a'
+SET @Observacao = 'Cria Tabela de producao' 
+SET @Data = CURRENT_TIMESTAMP
+
+---LIMPEZA DA TABELA
+
+DELETE FROM TBSCRIPT
+
+---INSERCAO DO REGISTRO
+
+INSERT INTO BDRetaguarda.dbo.TBSCRIPT(DFNome_TBScript,DFObjetivo_TBScript,DFData_execucao_TBScript)
+VALUES(@Nomenclatura,@Observacao,@Data)
+
+---FIM CABECALHO
+
+/*
+Created		27/5/2003
+Modified		20/8/2007
+Project		Only Tech - ERP
+Model			Olt
+Company		Only Tech
+Author		Only Tech
+Version		1.0
+Database		MS SQL 2000 
+*/
+
+Create table [TBCentro_estoque]
+(
+	[PKid_TBCentro_estoque] Integer Identity NOT NULL,
+	[DF_Descricao_TBCentro_estoque] Nvarchar(40) NOT NULL,
+	[DFAtualiza_estoque_atual_TBCentro_estoque] Bit NULL,
+	[DFIntegrado_portal_TBCentro_estoque] Bit NULL,
+	[DFIntegrado_filiais_TBCentro_estoque] Bit NULL,
+	[DFData_alteracao_TBCentro_estoque] Smalldatetime NULL,
+	[DFCodigo_Identificador_TBCentro_estoque] Integer NULL,
+Primary Key ([PKid_TBCentro_estoque])
+) 
+go
+
+Create table [TBItens_ordem_producao]
+(
+	[PKId_TBItens_ordem_producao] Integer Identity NOT NULL,
+	[FKId_TBOrdem_producao] Integer NOT NULL,
+	[FKId_TBProduto] Integer NOT NULL,
+	[DFQuantidade_TBItens_ordem_producao] Money NULL,
+	[DFIntegrado_portal_TBItens_ordem_producao] Bit NULL,
+	[DFIntegrado_filiais_TBItens_ordem_producao] Bit NULL,
+	[DFData_alteracao_TBItens_ordem_producao] Smalldatetime NULL,
+	[DFCodigo_Identificador_TBItens_ordem_producao] Integer NULL,
+Primary Key ([PKId_TBItens_ordem_producao])
+) 
+go
+
+Create table [TBOrdem_producao]
+(
+	[PKId_TBOrdem_producao] Integer Identity NOT NULL,
+	[DFNumero_TBOrdem_producao] Nvarchar(10) NULL,
+	[DFData_TBOrdem_producao] Smalldatetime NULL,
+	[DFStatus_TBOrdem_producao] Bit NULL,
+	[DFIntegrado_portal_TBOrdem_producao] Bit NULL,
+	[DFIntegrado_filiais_TBOrdem_producao] Bit NULL,
+	[DFData_alteracao_TBOrdem_producao] Smalldatetime NULL,
+	[DFCodigo_Identificador_TBOrdem_producao] Integer NULL,
+Primary Key ([PKId_TBOrdem_producao])
+) 
+go
+
+Create table [TBEtapas_ordem_producao]
+(
+	[PKId_TBEtapas_ordem_producao] Integer Identity NOT NULL,
+	[FKid_TBCentro_estoque] Integer NOT NULL,
+	[FKId_TBItens_ordem_producao] Integer NOT NULL,
+	[DFUsuario_TBEtapas_ordem_producao] Nvarchar(50) NULL,
+	[DFData_TBEtapas_ordem_producao] Smalldatetime NULL,
+	[DFHora_TBEtapas_ordem_producao] Nvarchar(8) NULL,
+	[DFQuantidade_perda_TBEtapas_ordem_producao] Money NULL,
+	[DFQuantidade_entrada_TBEtapas_ordem_producao] Money NULL,
+	[DFQuantidade_saida_TBEtapas_ordem_producao] Money NULL,
+	[DFIntegrado_portal_TBEtapas_ordem_producao] Bit NULL,
+	[DFIntegrado_filiais_TBEtapas_ordem_producao] Bit NULL,
+	[DFData_alteracao_TBEtapas_ordem_producao] Smalldatetime NULL,
+	[DFCodigo_Identificador_TBEtapas_ordem_producao] Integer NULL,
+Primary Key ([PKId_TBEtapas_ordem_producao])
+) 
+go
+
+Create table [TBGrade_itens_producao]
+(
+	[PKId_TBGrade_itens_producao] Integer Identity NOT NULL,
+	[FKId_TBItens_ordem_producao] Integer NOT NULL,
+	[FKId_TBGrade_categoria] Integer NOT NULL,
+	[DFQuantidade_TBGrade_itens_producao] Money NULL,
+	[DFIntegrado_portal_TBGrade_itens_producao] Bit NULL,
+	[DFIntegrado_filiais_TBGrade_itens_producao] Bit NULL,
+	[DFData_alteracao_TBGrade_itens_producao] Smalldatetime NULL,
+	[DFCodigo_Identificador_TBGrade_itens_producao] Bit NULL,
+Primary Key ([PKId_TBGrade_itens_producao])
+) 
+go
+
+Create table [TBEstoque_centro_estoque]
+(
+	[PKId_TBEstoque_centro_estoque] Integer Identity NOT NULL,
+	[FKId_TBGrade_categoria] Integer NOT NULL,
+	[FKid_TBCentro_estoque] Integer NOT NULL,
+	[DFEstoque_TBEstoque_centro_estoque] Money NULL,
+	[DFIntegrado_portal_TBEstoque_centro_estoque] Bit NULL,
+	[DFIntegrado_filiais_TBEstoque_centro_estoque] Bit NULL,
+	[DFData_alteracao_TBEstoque_centro_estoque] Smalldatetime NULL,
+	[DFCodigo_Identificador_TBEstoque_centro_estoque] Integer NULL,
+Primary Key ([PKId_TBEstoque_centro_estoque])
+) 
+go
+
+Create table [TBGrade_etapas_ordem_producao]
+(
+	[PKId_TBGrade_etapas_ordem_producao] Integer Identity NOT NULL,
+	[FKId_TBEtapas_ordem_producao] Integer NOT NULL,
+	[DFQuantidade_perda_TBGrade_etapas_ordem_producao] Money NULL,
+	[DFQuantidade_entrada_TBGrade_etapas_ordem_producao] Money NULL,
+	[DFQuantidade_saida_TBGrade_etapas_ordem_producao] Money NULL,
+	[DFIntegrado_portal_TBGrade_etapas_ordem_producao] Bit NULL,
+	[DFIntegrado_filiais_TBGrade_etapas_ordem_producao] Bit NULL,
+	[DFData_alteracao_TBGrade_etapas_ordem_producao] Smalldatetime NULL,
+	[DFCodigo_Identificador_TBGrade_etapas_ordem_producao] Integer NULL,
+Primary Key ([PKId_TBGrade_etapas_ordem_producao])
+) 
+go
+
+Alter table [TBGrade_itens_producao] add  foreign key([FKId_TBGrade_categoria]) references [TBGrade_categoria] ([PKId_TBGrade_categoria])  on update no action on delete no action 
+go
+Alter table [TBEstoque_centro_estoque] add  foreign key([FKId_TBGrade_categoria]) references [TBGrade_categoria] ([PKId_TBGrade_categoria])  on update no action on delete no action 
+go
+Alter table [TBEstoque_centro_estoque] add  foreign key([FKid_TBCentro_estoque]) references [TBCentro_estoque] ([PKid_TBCentro_estoque])  on update no action on delete no action 
+go
+Alter table [TBEtapas_ordem_producao] add  foreign key([FKid_TBCentro_estoque]) references [TBCentro_estoque] ([PKid_TBCentro_estoque])  on update no action on delete no action 
+go
+Alter table [TBGrade_itens_producao] add  foreign key([FKId_TBItens_ordem_producao]) references [TBItens_ordem_producao] ([PKId_TBItens_ordem_producao])  on update no action on delete no action 
+go
+Alter table [TBEtapas_ordem_producao] add  foreign key([FKId_TBItens_ordem_producao]) references [TBItens_ordem_producao] ([PKId_TBItens_ordem_producao])  on update no action on delete no action 
+go
+Alter table [TBItens_ordem_producao] add  foreign key([FKId_TBOrdem_producao]) references [TBOrdem_producao] ([PKId_TBOrdem_producao])  on update no action on delete no action 
+go
+Alter table [TBGrade_etapas_ordem_producao] add  foreign key([FKId_TBEtapas_ordem_producao]) references [TBEtapas_ordem_producao] ([PKId_TBEtapas_ordem_producao])  on update no action on delete no action 
+go
+
+Set quoted_identifier on
+go
+Set quoted_identifier off
+go
+/* Roles permissions */
+/* Users permissions */
+
+
+
+COMMIT TRANSACTION
+

@@ -1,0 +1,10 @@
+select * from Tbnota_entrada_fiscal
+where dfnumero_Tbnota_entrada_fiscal = 233362
+
+
+select * from Tbitens_nota_entrada_fiscal
+where fkid_TBnota_entrada= 32138
+
+
+delete from Tbitens_nota_entrada_fiscal
+where Pkid_Tbitens_nota_entrada_fiscal = 96967

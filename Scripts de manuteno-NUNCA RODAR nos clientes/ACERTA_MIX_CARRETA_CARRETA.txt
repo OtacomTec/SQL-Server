@@ -1,0 +1,2 @@
+DELETE FROM TBMIX_VEICULO
+WHERE FKCodigo_carreta_TBVeiculo = FKCodigo_cavalo_TBVeiculo

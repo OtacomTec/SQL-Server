@@ -1,0 +1,11 @@
+update TBItens_nota_saida_fiscal
+set DFBase_calculo_icms_TBItens_nota_saida_fiscal = DFValor_total_item_TBItens_nota_saida_fiscal
+from TBItens_nota_saida_fiscal 
+where DFValor_total_icms_TBItens_nota_saida_fiscal > 0
+
+
+
+update TBItens_nota_saida_fiscal
+set DFBase_calculo_icms_TBItens_nota_saida_fiscal = DFValor_total_praticado_TBItens_nota_saida_fiscal
+from TBItens_nota_saida_fiscal 
+where DFValor_total_icms_TBItens_nota_saida_fiscal > 0

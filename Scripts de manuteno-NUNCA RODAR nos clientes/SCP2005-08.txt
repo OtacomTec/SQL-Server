@@ -1,0 +1,1322 @@
+BEGIN TRANSACTION
+SET QUOTED_IDENTIFIER ON
+SET TRANSACTION ISOLATION LEVEL SERIALIZABLE
+SET ARITHABORT ON
+SET NUMERIC_ROUNDABORT OFF
+SET CONCAT_NULL_YIELDS_NULL ON
+SET ANSI_NULLS ON
+SET ANSI_PADDING ON
+SET ANSI_WARNINGS ON
+COMMIT
+BEGIN TRANSACTION
+ALTER TABLE dbo.TBVendedor ADD
+	DFEndereco_TBVendedor nvarchar(40) NULL,
+	DFNumero_TBVendedor nvarchar(10) NULL,
+	DFComplemento_TBVendedor nvarchar(20) NULL,
+	DFBairro_TBVendedor nvarchar(30) NULL,
+	DFCep_TBVendedor nvarchar(10) NULL,
+	DFTipo_pessoa_TBVendedor bit NULL,
+	DFCnpj_cpf_TBVendedor nvarchar(20) NULL,
+	DFInscricao_estadual_rg_TBVendedor nvarchar(20) NULL,
+	FKId_TBCidade_otica int NULL
+GO
+COMMIT
+
+BEGIN TRANSACTION
+SET QUOTED_IDENTIFIER ON
+SET TRANSACTION ISOLATION LEVEL SERIALIZABLE
+SET ARITHABORT ON
+SET NUMERIC_ROUNDABORT OFF
+SET CONCAT_NULL_YIELDS_NULL ON
+SET ANSI_NULLS ON
+SET ANSI_PADDING ON
+SET ANSI_WARNINGS ON
+COMMIT
+BEGIN TRANSACTION
+COMMIT
+BEGIN TRANSACTION
+ALTER TABLE dbo.TBVendedor ADD CONSTRAINT
+	FK_TBVendedor_TBCidade_otica FOREIGN KEY
+	(
+	FKId_TBCidade_otica
+	) REFERENCES dbo.TBCidade_otica
+	(
+	PKId_TBCidade_otica
+	)
+GO
+COMMIT
+
+/*
+Created		27/5/2003
+Modified		2/8/2005
+Project		Only Tech - ERP
+Model			Olt
+Company		Only Tech
+Author		Only Tech
+Version		1.0
+Database		MS SQL 2000 
+*/
+
+
+
+Create table [TBAgenda_vendedor]
+(
+	[PKId_TBAgenda_vendedor] Integer Identity NOT NULL,
+	[FKId_TBVendedor] Integer NOT NULL,
+	[DFContato_TBAgenda_vendedor] Nvarchar(40) NOT NULL,
+	[DFTelefone_TBAgenda_vendedor] Nvarchar(20) NOT NULL,
+	[DFEmail_TBAgenda_vendedor] Nvarchar(50) NULL,
+Primary Key ([PKId_TBAgenda_vendedor])
+) 
+go
+
+Alter table [TBAgenda_vendedor] add  foreign key([FKId_TBVendedor]) references [TBVendedor] ([PKId_TBVendedor])  on update no action on delete no action 
+go
+
+
+Set quoted_identifier on
+go
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Set quoted_identifier off
+go
+
+
+
+
+
+
+
+
+/* Roles permissions */
+
+
+
+
+
+/* Users permissions */
+
+
+/*
+Created		27/5/2003
+Modified		2/8/2005
+Project		Only Tech - ERP
+Model			Olt
+Company		Only Tech
+Author		Only Tech
+Version		1.0
+Database		MS SQL 2000 
+*/
+
+
+Create table [TBBanco_vendedor]
+(
+	[PKId_TBBanco_vendedor] Integer Identity NOT NULL,
+	[FKId_TBVendedor] Integer NOT NULL,
+	[FKCodigo_TBBancos] Integer NOT NULL,
+	[DFAgencia_TBBanco_vendedor] Nvarchar(5) NOT NULL,
+	[DFConta_TBBanco_vendedor] Nvarchar(20) NOT NULL,
+	[DFFavorecido_TBBanco_vendedor] Nvarchar(50) NULL,
+Primary Key ([PKId_TBBanco_vendedor])
+) 
+go
+
+
+
+Alter table [TBBanco_vendedor] add  foreign key([FKId_TBVendedor]) references [TBVendedor] ([PKId_TBVendedor])  on update no action on delete no action 
+go
+
+
+Set quoted_identifier on
+go
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Set quoted_identifier off
+go
+
+
+
+
+
+
+
+
+/* Roles permissions */
+
+
+
+
+
+/* Users permissions */
+
+
+
+
+
+
+/*
+   segunda-feira, 8 de agosto de 2005 20:01:21
+   User: sa
+   Server: ONLYTECH-02
+   Database: BDRetaguarda
+   Application: MS SQLEM - Data Tools
+*/
+
+BEGIN TRANSACTION
+SET QUOTED_IDENTIFIER ON
+SET TRANSACTION ISOLATION LEVEL SERIALIZABLE
+SET ARITHABORT ON
+SET NUMERIC_ROUNDABORT OFF
+SET CONCAT_NULL_YIELDS_NULL ON
+SET ANSI_NULLS ON
+SET ANSI_PADDING ON
+SET ANSI_WARNINGS ON
+COMMIT
+BEGIN TRANSACTION
+ALTER TABLE dbo.TBParametros_ecf ADD
+	DFFinalizadora_cartao_afinidade_TBParametros_ecf int NULL
+GO
+COMMIT
+
+BEGIN TRANSACTION
+SET QUOTED_IDENTIFIER ON
+SET TRANSACTION ISOLATION LEVEL SERIALIZABLE
+SET ARITHABORT ON
+SET NUMERIC_ROUNDABORT OFF
+SET CONCAT_NULL_YIELDS_NULL ON
+SET ANSI_NULLS ON
+SET ANSI_PADDING ON
+SET ANSI_WARNINGS ON
+COMMIT
+BEGIN TRANSACTION
+ALTER TABLE dbo.TBOperacao_transporte ADD
+	DFUsuario_TBOperacao_transporte nvarchar(40) NULL
+GO
+COMMIT
+
+BEGIN TRANSACTION
+SET QUOTED_IDENTIFIER ON
+SET TRANSACTION ISOLATION LEVEL SERIALIZABLE
+SET ARITHABORT ON
+SET NUMERIC_ROUNDABORT OFF
+SET CONCAT_NULL_YIELDS_NULL ON
+SET ANSI_NULLS ON
+SET ANSI_PADDING ON
+SET ANSI_WARNINGS ON
+COMMIT
+BEGIN TRANSACTION
+ALTER TABLE dbo.TBAlocacao_pneu ADD
+	DFMotivo_TBAlocacao_pneu nvarchar(100) NULL
+GO
+COMMIT
+
+SET QUOTED_IDENTIFIER ON
+SET TRANSACTION ISOLATION LEVEL SERIALIZABLE
+SET ARITHABORT ON
+SET NUMERIC_ROUNDABORT OFF
+SET CONCAT_NULL_YIELDS_NULL ON
+SET ANSI_NULLS ON
+SET ANSI_PADDING ON
+SET ANSI_WARNINGS ON
+COMMIT
+BEGIN TRANSACTION
+ALTER TABLE dbo.TBAgenda_funcionario
+	DROP CONSTRAINT FK__TBAgenda___FKCod__0F231F2D
+GO
+ALTER TABLE dbo.TBAgenda_funcionario
+	DROP CONSTRAINT FK__TBAgenda___FKCod__18AC8967
+GO
+COMMIT
+BEGIN TRANSACTION
+CREATE TABLE dbo.Tmp_TBAgenda_funcionario
+	(
+	PKId_TBAgenda_funcionario int NOT NULL IDENTITY (1, 1),
+	FKCodigo_TBFuncionario int NOT NULL,
+	DFContato_TBAgenda_funcionario nvarchar(40) NOT NULL,
+	DFTelefone_TBAgenda_funcionario nvarchar(20) NOT NULL,
+	DFEmail_TBAgenda_funcionario nvarchar(50) NULL
+	)  ON [PRIMARY]
+GO
+SET IDENTITY_INSERT dbo.Tmp_TBAgenda_funcionario ON
+GO
+IF EXISTS(SELECT * FROM dbo.TBAgenda_funcionario)
+	 EXEC('INSERT INTO dbo.Tmp_TBAgenda_funcionario (PKId_TBAgenda_funcionario, FKCodigo_TBFuncionario, DFContato_TBAgenda_funcionario, DFTelefone_TBAgenda_funcionario, DFEmail_TBAgenda_funcionario)
+		SELECT PKId_TBAgenda_funcionario, FKCodigo_TBFuncionario, CONVERT(nvarchar(40), DFContato_TBAgenda_funcionario), DFTelefone_TBAgenda_funcionario, DFEmail_TBAgenda_funcionario FROM dbo.TBAgenda_funcionario TABLOCKX')
+GO
+SET IDENTITY_INSERT dbo.Tmp_TBAgenda_funcionario OFF
+GO
+DROP TABLE dbo.TBAgenda_funcionario
+GO
+EXECUTE sp_rename N'dbo.Tmp_TBAgenda_funcionario', N'TBAgenda_funcionario', 'OBJECT'
+GO
+ALTER TABLE dbo.TBAgenda_funcionario ADD CONSTRAINT
+	PK__TBAgenda_funcion__0781FD65 PRIMARY KEY CLUSTERED 
+	(
+	PKId_TBAgenda_funcionario
+	) WITH FILLFACTOR = 90 ON [PRIMARY]
+
+GO
+ALTER TABLE dbo.TBAgenda_funcionario WITH NOCHECK ADD CONSTRAINT
+	FK__TBAgenda___FKCod__0F231F2D FOREIGN KEY
+	(
+	FKCodigo_TBFuncionario
+	) REFERENCES dbo.TBFuncionario
+	(
+	PKCodigo_TBFuncionario
+	)
+GO
+ALTER TABLE dbo.TBAgenda_funcionario WITH NOCHECK ADD CONSTRAINT
+	FK__TBAgenda___FKCod__18AC8967 FOREIGN KEY
+	(
+	FKCodigo_TBFuncionario
+	) REFERENCES dbo.TBFuncionario
+	(
+	PKCodigo_TBFuncionario
+	)
+GO
+COMMIT
+
+BEGIN TRANSACTION
+SET QUOTED_IDENTIFIER ON
+SET TRANSACTION ISOLATION LEVEL SERIALIZABLE
+SET ARITHABORT ON
+SET NUMERIC_ROUNDABORT OFF
+SET CONCAT_NULL_YIELDS_NULL ON
+SET ANSI_NULLS ON
+SET ANSI_PADDING ON
+SET ANSI_WARNINGS ON
+COMMIT
+BEGIN TRANSACTION
+ALTER TABLE dbo.TBPneu ADD
+	DFVenda_TBPneu money NULL
+GO
+COMMIT
+
+update TBPneu
+set DFVenda_TBPneu = 0
+
+BEGIN TRANSACTION
+SET QUOTED_IDENTIFIER ON
+SET TRANSACTION ISOLATION LEVEL SERIALIZABLE
+SET ARITHABORT ON
+SET NUMERIC_ROUNDABORT OFF
+SET CONCAT_NULL_YIELDS_NULL ON
+SET ANSI_NULLS ON
+SET ANSI_PADDING ON
+SET ANSI_WARNINGS ON
+COMMIT
+BEGIN TRANSACTION
+ALTER TABLE dbo.TBParametros_ecf ADD
+	DFPerfil_varejo_TBParametros_ecf int NULL
+GO
+COMMIT
+
+/*
+Created		27/5/2003
+Modified		18/8/2005
+Project		Only Tech - ERP
+Model			Olt
+Company		Only Tech
+Author		Only Tech
+Version		1.0
+Database		MS SQL 2000 
+*/
+
+Create table [TBTanque]
+(
+	[PKId_TBTanque] Integer Identity NOT NULL,
+	[IXCodigo_TBEmpresa] Integer NOT NULL,
+	[IXCodigo_TBTanque] Integer NULL,
+	[DFDescricao_TBTanque] Nvarchar(40) NULL,
+	[DFCapacidade_TBTanque] Money NULL,
+Primary Key ([PKId_TBTanque])
+) 
+go
+
+Create table [TBBomba_bico]
+(
+	[PKId_TBBomba_bico] Integer Identity NOT NULL,
+	[FKId_TBProduto] Integer NOT NULL,
+	[FKId_TBTanque] Integer NOT NULL,
+	[IXCodigo_TBBomba_bico] Integer NULL,
+	[DFUltimo_encerrante_TBBomba_bico] Money NULL,
+	[DFNumero_maximo_encerrante_TBBomba_bico] Money NULL,
+        [DFTipo_preco_TBBomba_bico] int NULL,
+Primary Key ([PKId_TBBomba_bico])
+) 
+go
+
+go
+Alter table [TBTanque] add  foreign key([IXCodigo_TBEmpresa]) references [TBEmpresa] ([PKCodigo_TBEmpresa])  on update no action on delete no action 
+go
+Alter table [TBBomba_bico] add  foreign key([FKId_TBProduto]) references [TBProduto] ([PKId_TBProduto])  on update no action on delete no action 
+go
+Alter table [TBBomba_bico] add  foreign key([FKId_TBTanque]) references [TBTanque] ([PKId_TBTanque])  on update no action on delete no action 
+go
+
+
+Set quoted_identifier on
+go
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Set quoted_identifier off
+go
+
+
+
+
+
+
+
+
+/* Roles permissions */
+
+
+
+
+
+/* Users permissions */
+
+
+
+
+
+
+/*
+Created		27/5/2003
+Modified		18/8/2005
+Project		Only Tech - ERP
+Model			Olt
+Company		Only Tech
+Author		Only Tech
+Version		1.0
+Database		MS SQL 2000 
+*/
+
+
+go
+
+Create table [TBEncerrante]
+(
+	[PKId_TBEncerrante] Integer Identity NOT NULL,
+	[FKCodigo_TBPdv] Integer NOT NULL,
+	[FKCodigo_TBOperadores_ecf] Integer NOT NULL,
+	[DFData_TBEncerrante] Smalldatetime NOT NULL,
+	[DFHora_TBEncerrante] Nvarchar(10) NULL,
+	[DFAbertura_fechamento_TBEncerrante] Bit NULL,
+Primary Key ([PKId_TBEncerrante])
+) 
+go
+
+Create table [TBEncerrante_Bomba]
+(
+	[PKId_TBEncerrante_Bomba] Integer Identity NOT NULL,
+	[FKId_TBBomba_bico] Integer NOT NULL,
+	[FKId_TBEncerrante] Integer NOT NULL,
+	[DFEncerrante_TBEncerrante_Bomba] Money NOT NULL,
+Primary Key ([PKId_TBEncerrante_Bomba])
+) 
+go
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Alter table [TBEncerrante] add  foreign key([FKCodigo_TBOperadores_ecf]) references [TBOperadores_ecf] ([PKCodigo_TBOperadores_ecf])  on update no action on delete no action 
+go
+Alter table [TBEncerrante] add  foreign key([FKCodigo_TBPdv]) references [TBPdv] ([PKCodigo_TBPdv])  on update no action on delete no action 
+go
+Alter table [TBEncerrante_Bomba] add  foreign key([FKId_TBBomba_bico]) references [TBBomba_bico] ([PKId_TBBomba])  on update no action on delete no action 
+go
+Alter table [TBEncerrante_Bomba] add  foreign key([FKId_TBEncerrante]) references [TBEncerrante] ([PKId_TBEncerrante])  on update no action on delete no action 
+go
+
+
+Set quoted_identifier on
+go
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Set quoted_identifier off
+go
+
+
+
+
+
+
+
+
+/* Roles permissions */
+
+
+
+
+
+/* Users permissions */
+
+
+
+
+
+
+/*
+   sexta-feira, 19 de agosto de 2005 11:29:25
+   User: sa
+   Server: ONLYTECH-02
+   Database: BDRetaguarda
+   Application: MS SQLEM - Data Tools
+*/
+
+BEGIN TRANSACTION
+SET QUOTED_IDENTIFIER ON
+SET TRANSACTION ISOLATION LEVEL SERIALIZABLE
+SET ARITHABORT ON
+SET NUMERIC_ROUNDABORT OFF
+SET CONCAT_NULL_YIELDS_NULL ON
+SET ANSI_NULLS ON
+SET ANSI_PADDING ON
+SET ANSI_WARNINGS ON
+COMMIT
+BEGIN TRANSACTION
+COMMIT
+BEGIN TRANSACTION
+ALTER TABLE dbo.TBPdv ADD
+	IXCodigo_TBEmpresa int NULL
+GO
+ALTER TABLE dbo.TBPdv ADD CONSTRAINT
+	FK_TBPdv_TBEmpresa FOREIGN KEY
+	(
+	IXCodigo_TBEmpresa
+	) REFERENCES dbo.TBEmpresa
+	(
+	PKCodigo_TBEmpresa
+	)
+GO
+COMMIT
+
+/*
+   sexta-feira, 19 de agosto de 2005 11:33:41
+   User: sa
+   Server: ONLYTECH-02
+   Database: BDRetaguarda
+   Application: MS SQLEM - Data Tools
+*/
+
+BEGIN TRANSACTION
+SET QUOTED_IDENTIFIER ON
+SET TRANSACTION ISOLATION LEVEL SERIALIZABLE
+SET ARITHABORT ON
+SET NUMERIC_ROUNDABORT OFF
+SET CONCAT_NULL_YIELDS_NULL ON
+SET ANSI_NULLS ON
+SET ANSI_PADDING ON
+SET ANSI_WARNINGS ON
+COMMIT
+BEGIN TRANSACTION
+ALTER TABLE dbo.TBPdv ADD
+	DFCaminho_Impressora_Comum nvarchar(50) NULL
+GO
+COMMIT
+
+/*
+   sexta-feira, 19 de agosto de 2005 12:00:57
+   User: sa
+   Server: ONLYTECH-02
+   Database: BDRetaguarda
+   Application: MS SQLEM - Data Tools
+*/
+
+BEGIN TRANSACTION
+SET QUOTED_IDENTIFIER ON
+SET TRANSACTION ISOLATION LEVEL SERIALIZABLE
+SET ARITHABORT ON
+SET NUMERIC_ROUNDABORT OFF
+SET CONCAT_NULL_YIELDS_NULL ON
+SET ANSI_NULLS ON
+SET ANSI_PADDING ON
+SET ANSI_WARNINGS ON
+COMMIT
+BEGIN TRANSACTION
+COMMIT
+BEGIN TRANSACTION
+ALTER TABLE dbo.TBDia_operacao_pdv ADD
+	IXCodigo_TBEmpresa int NULL
+GO
+ALTER TABLE dbo.TBDia_operacao_pdv ADD CONSTRAINT
+	FK_TBDia_operacao_pdv_TBEmpresa FOREIGN KEY
+	(
+	IXCodigo_TBEmpresa
+	) REFERENCES dbo.TBEmpresa
+	(
+	PKCodigo_TBEmpresa
+	)
+GO
+COMMIT
+
+BEGIN TRANSACTION
+SET QUOTED_IDENTIFIER ON
+SET TRANSACTION ISOLATION LEVEL SERIALIZABLE
+SET ARITHABORT ON
+SET NUMERIC_ROUNDABORT OFF
+SET CONCAT_NULL_YIELDS_NULL ON
+SET ANSI_NULLS ON
+SET ANSI_PADDING ON
+SET ANSI_WARNINGS ON
+COMMIT
+BEGIN TRANSACTION
+ALTER TABLE dbo.TBSecao ADD
+	DFClassificacao_TBSecao nvarchar(20) NULL
+GO
+COMMIT
+
+/*
+   sábado, 20 de agosto de 2005 10:13:06
+   User: sa
+   Server: ONLYTECH-02
+   Database: BDRetaguarda
+   Application: MS SQLEM - Data Tools
+*/
+
+BEGIN TRANSACTION
+SET QUOTED_IDENTIFIER ON
+SET TRANSACTION ISOLATION LEVEL SERIALIZABLE
+SET ARITHABORT ON
+SET NUMERIC_ROUNDABORT OFF
+SET CONCAT_NULL_YIELDS_NULL ON
+SET ANSI_NULLS ON
+SET ANSI_PADDING ON
+SET ANSI_WARNINGS ON
+COMMIT
+BEGIN TRANSACTION
+ALTER TABLE dbo.TBParametros_ecf ADD
+	DFFinalizadora_fechamento_operador_TBParametros_ecf int NULL,
+	DFFinalizadora_fechamento_dia_TBParametros_ecf int NULL
+GO
+COMMIT
+
+BEGIN TRANSACTION
+SET QUOTED_IDENTIFIER ON
+SET TRANSACTION ISOLATION LEVEL SERIALIZABLE
+SET ARITHABORT ON
+SET NUMERIC_ROUNDABORT OFF
+SET CONCAT_NULL_YIELDS_NULL ON
+SET ANSI_NULLS ON
+SET ANSI_PADDING ON
+SET ANSI_WARNINGS ON
+COMMIT
+BEGIN TRANSACTION
+ALTER TABLE dbo.TBBomba_bico ADD
+	FKCodigo_Bomba int NULL
+GO
+COMMIT
+
+/*
+Created		27/5/2003
+Modified		20/8/2005
+Project		Only Tech - ERP
+Model			Olt
+Company		Only Tech
+Author		Only Tech
+Version		1.0
+Database		MS SQL 2000 
+*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Create table [TBBomba]
+(
+	[PKCodigo_Bomba] Integer NOT NULL,
+	[DFDescricao_TBBomba] Nvarchar(20) NULL,
+	[DFNumero_bicos_TBBomba] Integer NULL,
+Primary Key ([PKCodigo_Bomba])
+) 
+go
+
+
+
+
+
+
+
+
+
+Alter table [TBBomba_bico] add  foreign key([FKCodigo_Bomba]) references [TBBomba] ([PKCodigo_Bomba])  on update no action on delete no action 
+go
+
+
+Set quoted_identifier on
+go
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Set quoted_identifier off
+go
+
+
+
+
+
+
+
+
+/* Roles permissions */
+
+
+
+
+
+/* Users permissions */
+
+
+
+
+
+
+
+BEGIN TRANSACTION
+SET QUOTED_IDENTIFIER ON
+SET TRANSACTION ISOLATION LEVEL SERIALIZABLE
+SET ARITHABORT ON
+SET NUMERIC_ROUNDABORT OFF
+SET CONCAT_NULL_YIELDS_NULL ON
+SET ANSI_NULLS ON
+SET ANSI_PADDING ON
+SET ANSI_WARNINGS ON
+COMMIT
+BEGIN TRANSACTION
+ALTER TABLE dbo.TBOperacao_caixa ADD
+	DFNumero_Cupom_TBOperacao_caixa int NULL
+GO
+COMMIT
+
+BEGIN TRANSACTION
+SET QUOTED_IDENTIFIER ON
+SET TRANSACTION ISOLATION LEVEL SERIALIZABLE
+SET ARITHABORT ON
+SET NUMERIC_ROUNDABORT OFF
+SET CONCAT_NULL_YIELDS_NULL ON
+SET ANSI_NULLS ON
+SET ANSI_PADDING ON
+SET ANSI_WARNINGS ON
+COMMIT
+BEGIN TRANSACTION
+ALTER TABLE dbo.TBBomba ADD
+	IXCodigo_TBEmpresa int NULL
+GO
+COMMIT
+
+BEGIN TRANSACTION
+SET QUOTED_IDENTIFIER ON
+SET TRANSACTION ISOLATION LEVEL SERIALIZABLE
+SET ARITHABORT ON
+SET NUMERIC_ROUNDABORT OFF
+SET CONCAT_NULL_YIELDS_NULL ON
+SET ANSI_NULLS ON
+SET ANSI_PADDING ON
+SET ANSI_WARNINGS ON
+COMMIT
+BEGIN TRANSACTION
+COMMIT
+BEGIN TRANSACTION
+ALTER TABLE dbo.TBBomba ADD CONSTRAINT
+	FK_TBBomba_TBEmpresa FOREIGN KEY
+	(
+	IXCodigo_TBEmpresa
+	) REFERENCES dbo.TBEmpresa
+	(
+	PKCodigo_TBEmpresa
+	)
+GO
+COMMIT
+
+/*
+Created		27/5/2003
+Modified		25/8/2005
+Project		Only Tech - ERP
+Model			Olt
+Company		Only Tech
+Author		Only Tech
+Version		1.0
+Database		MS SQL 2000 
+*/
+
+
+
+
+Create table [TBVale_funcionario]
+(
+	[PKId_TBVale_funcionario] Integer Identity NOT NULL,
+	[FKId_TBFornecedor] Integer NOT NULL,
+	[FKCodigo_TBFuncionario] Integer NOT NULL,
+	[DFValor_TBVale_funcionario] Money NOT NULL,
+	[DFData_TBVale_funcionario] Integer NOT NULL,
+	[DFNumero_documento_TBVale_funcionario] Integer NOT NULL,
+	[DFMes_competencia_TBVale_funcionario] Integer NOT NULL,
+	[DFAno_competencia_TBVale_funcionario] Integer NOT NULL,
+	[DFMotivo_TBVale_funcionario] Nvarchar(100) NULL,
+	[DFObservacao_TBVale_funcionario] Nvarchar(100) NULL,
+	[DFData_pagamento_TBVale_funcionario] Smalldatetime NULL,
+Primary Key ([PKId_TBVale_funcionario])
+) 
+go
+
+
+
+
+
+Alter table [TBVale_funcionario] add  foreign key([FKId_TBFornecedor]) references [TBFornecedor] ([PKId_TBFornecedor])  on update no action on delete no action 
+go
+Alter table [TBVale_funcionario] add  foreign key([FKCodigo_TBFuncionario]) references [TBFuncionario] ([PKCodigo_TBFuncionario])  on update no action on delete no action 
+go
+Set quoted_identifier on
+go
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Set quoted_identifier off
+go
+
+
+
+
+
+
+
+
+/* Roles permissions */
+
+
+
+
+
+/* Users permissions */
+
+
+BEGIN TRANSACTION
+SET QUOTED_IDENTIFIER ON
+SET TRANSACTION ISOLATION LEVEL SERIALIZABLE
+SET ARITHABORT ON
+SET NUMERIC_ROUNDABORT OFF
+SET CONCAT_NULL_YIELDS_NULL ON
+SET ANSI_NULLS ON
+SET ANSI_PADDING ON
+SET ANSI_WARNINGS ON
+COMMIT
+BEGIN TRANSACTION
+ALTER TABLE dbo.TBBomba_bico
+	DROP CONSTRAINT FK__TBBomba_b__FKCod__1EBE612B
+GO
+ALTER TABLE dbo.TBBomba ADD
+	PKId_TBBomba int NOT NULL IDENTITY (1, 1)
+GO
+ALTER TABLE dbo.TBBomba
+	DROP CONSTRAINT PK__TBBomba__1DCA3CF2
+GO
+ALTER TABLE dbo.TBBomba ADD CONSTRAINT
+	PK__TBBomba__1DCA3CF2 PRIMARY KEY CLUSTERED 
+	(
+	PKId_TBBomba
+	) ON [PRIMARY]
+
+GO
+COMMIT
+BEGIN TRANSACTION
+COMMIT
+
+/*
+   sexta-feira, 26 de agosto de 2005 10:53:08
+   User: 
+   Server: ONLYTECH-02
+   Database: BDRetaguarda
+   Application: MS SQLEM - Data Tools
+*/
+
+BEGIN TRANSACTION
+SET QUOTED_IDENTIFIER ON
+SET TRANSACTION ISOLATION LEVEL SERIALIZABLE
+SET ARITHABORT ON
+SET NUMERIC_ROUNDABORT OFF
+SET CONCAT_NULL_YIELDS_NULL ON
+SET ANSI_NULLS ON
+SET ANSI_PADDING ON
+SET ANSI_WARNINGS ON
+COMMIT
+BEGIN TRANSACTION
+ALTER TABLE dbo.TBParametros_venda ADD
+	DFIdentificador_nota_TBParametro_venda int NULL
+GO
+COMMIT
+
+/*
+   sexta-feira, 26 de agosto de 2005 18:54:50
+   User: 
+   Server: ONLYTECH-02
+   Database: BDRetaguarda
+   Application: MS SQLEM - Data Tools
+*/
+
+BEGIN TRANSACTION
+SET QUOTED_IDENTIFIER ON
+SET TRANSACTION ISOLATION LEVEL SERIALIZABLE
+SET ARITHABORT ON
+SET NUMERIC_ROUNDABORT OFF
+SET CONCAT_NULL_YIELDS_NULL ON
+SET ANSI_NULLS ON
+SET ANSI_PADDING ON
+SET ANSI_WARNINGS ON
+COMMIT
+BEGIN TRANSACTION
+EXECUTE sp_rename N'dbo.TBBomba.PKCodigo_Bomba', N'Tmp_IXCodigo_Bomba', 'COLUMN'
+GO
+EXECUTE sp_rename N'dbo.TBBomba.Tmp_IXCodigo_Bomba', N'IXCodigo_Bomba', 'COLUMN'
+GO
+COMMIT
+
+/*
+   sexta-feira, 26 de agosto de 2005 19:14:46
+   User: 
+   Server: ONLYTECH-02
+   Database: BDRetaguarda
+   Application: MS SQLEM - Data Tools
+*/
+
+BEGIN TRANSACTION
+SET QUOTED_IDENTIFIER ON
+SET TRANSACTION ISOLATION LEVEL SERIALIZABLE
+SET ARITHABORT ON
+SET NUMERIC_ROUNDABORT OFF
+SET CONCAT_NULL_YIELDS_NULL ON
+SET ANSI_NULLS ON
+SET ANSI_PADDING ON
+SET ANSI_WARNINGS ON
+COMMIT
+BEGIN TRANSACTION
+ALTER TABLE dbo.TBBomba_bico
+	DROP CONSTRAINT FK__TBBomba__FKId_TB__040A6AEF
+GO
+COMMIT
+BEGIN TRANSACTION
+EXECUTE sp_rename N'dbo.TBBomba_bico.FKCodigo_Bomba', N'Tmp_FKId_TBBomba_2', 'COLUMN'
+GO
+EXECUTE sp_rename N'dbo.TBBomba_bico.Tmp_FKId_TBBomba_2', N'FKId_TBBomba', 'COLUMN'
+GO
+ALTER TABLE dbo.TBBomba_bico WITH NOCHECK ADD CONSTRAINT
+	FK__TBBomba__FKId_TB__040A6AEF FOREIGN KEY
+	(
+	FKId_TBProduto
+	) REFERENCES dbo.TBProduto
+	(
+	PKId_TBProduto
+	)
+GO
+COMMIT
+
+/*
+   sexta-feira, 26 de agosto de 2005 19:23:06
+   User: 
+   Server: ONLYTECH-02
+   Database: BDRetaguarda
+   Application: MS SQLEM - Data Tools
+*/
+
+BEGIN TRANSACTION
+SET QUOTED_IDENTIFIER ON
+SET TRANSACTION ISOLATION LEVEL SERIALIZABLE
+SET ARITHABORT ON
+SET NUMERIC_ROUNDABORT OFF
+SET CONCAT_NULL_YIELDS_NULL ON
+SET ANSI_NULLS ON
+SET ANSI_PADDING ON
+SET ANSI_WARNINGS ON
+COMMIT
+BEGIN TRANSACTION
+COMMIT
+BEGIN TRANSACTION
+ALTER TABLE dbo.TBBomba_bico ADD CONSTRAINT
+	FK_TBBomba_bico_TBBomba FOREIGN KEY
+	(
+	FKId_TBBomba
+	) REFERENCES dbo.TBBomba
+	(
+	PKId_TBBomba
+	)
+GO
+COMMIT
+
+/*
+   sexta-feira, 26 de agosto de 2005 19:25:54
+   User: 
+   Server: ONLYTECH-02
+   Database: BDRetaguarda
+   Application: MS SQLEM - Data Tools
+*/
+
+BEGIN TRANSACTION
+SET QUOTED_IDENTIFIER ON
+SET TRANSACTION ISOLATION LEVEL SERIALIZABLE
+SET ARITHABORT ON
+SET NUMERIC_ROUNDABORT OFF
+SET CONCAT_NULL_YIELDS_NULL ON
+SET ANSI_NULLS ON
+SET ANSI_PADDING ON
+SET ANSI_WARNINGS ON
+COMMIT
+BEGIN TRANSACTION
+COMMIT
+BEGIN TRANSACTION
+ALTER TABLE dbo.TBBomba_bico ADD CONSTRAINT
+	FK_TBBomba_bico_TBBomba FOREIGN KEY
+	(
+	FKId_TBBomba
+	) REFERENCES dbo.TBBomba
+	(
+	PKId_TBBomba
+	)
+GO
+COMMIT
+
+/*
+   sexta-feira, 26 de agosto de 2005 19:25:54
+   User: 
+   Server: ONLYTECH-02
+   Database: BDRetaguarda
+   Application: MS SQLEM - Data Tools
+*/
+
+BEGIN TRANSACTION
+SET QUOTED_IDENTIFIER ON
+SET TRANSACTION ISOLATION LEVEL SERIALIZABLE
+SET ARITHABORT ON
+SET NUMERIC_ROUNDABORT OFF
+SET CONCAT_NULL_YIELDS_NULL ON
+SET ANSI_NULLS ON
+SET ANSI_PADDING ON
+SET ANSI_WARNINGS ON
+COMMIT
+BEGIN TRANSACTION
+COMMIT
+BEGIN TRANSACTION
+ALTER TABLE dbo.TBBomba_bico ADD CONSTRAINT
+	FK_TBBomba_bico_TBBomba FOREIGN KEY
+	(
+	FKId_TBBomba
+	) REFERENCES dbo.TBBomba
+	(
+	PKId_TBBomba
+	)
+GO
+COMMIT
+
+/*
+   sexta-feira, 26 de agosto de 2005 19:31:11
+   User: 
+   Server: ONLYTECH-02
+   Database: BDRetaguarda
+   Application: MS SQLEM - Data Tools
+*/
+
+BEGIN TRANSACTION
+SET QUOTED_IDENTIFIER ON
+SET TRANSACTION ISOLATION LEVEL SERIALIZABLE
+SET ARITHABORT ON
+SET NUMERIC_ROUNDABORT OFF
+SET CONCAT_NULL_YIELDS_NULL ON
+SET ANSI_NULLS ON
+SET ANSI_PADDING ON
+SET ANSI_WARNINGS ON
+COMMIT
+BEGIN TRANSACTION
+COMMIT
+BEGIN TRANSACTION
+ALTER TABLE dbo.TBBomba_bico ADD CONSTRAINT
+	FK_TBBomba_bico_TBBomba FOREIGN KEY
+	(
+	FKId_TBBomba
+	) REFERENCES dbo.TBBomba
+	(
+	PKId_TBBomba
+	)
+GO
+COMMIT
+
+BEGIN TRANSACTION
+SET QUOTED_IDENTIFIER ON
+SET TRANSACTION ISOLATION LEVEL SERIALIZABLE
+SET ARITHABORT ON
+SET NUMERIC_ROUNDABORT OFF
+SET CONCAT_NULL_YIELDS_NULL ON
+SET ANSI_NULLS ON
+SET ANSI_PADDING ON
+SET ANSI_WARNINGS ON
+COMMIT
+BEGIN TRANSACTION
+ALTER TABLE dbo.TBPedagio_itinerario ADD
+	DFCobra_eixo_suspenso_TBPedagio_itinerario bit NULL
+GO
+COMMIT
+
+BEGIN TRANSACTION
+SET QUOTED_IDENTIFIER ON
+SET TRANSACTION ISOLATION LEVEL SERIALIZABLE
+SET ARITHABORT ON
+SET NUMERIC_ROUNDABORT OFF
+SET CONCAT_NULL_YIELDS_NULL ON
+SET ANSI_NULLS ON
+SET ANSI_PADDING ON
+SET ANSI_WARNINGS ON
+COMMIT
+BEGIN TRANSACTION
+CREATE TABLE dbo.TBSalario_funcionario
+	(
+	PKId_TBSalario_funcionario int NOT NULL IDENTITY (1, 1) NOT FOR REPLICATION,
+	DFValor_bruto_TBSalario_funcionario money NULL,
+	DFValor_liquido_TBSalario_funcionario money NULL,
+	DFValor_adicional_TBSalario_funcionario money NULL,
+	DFValor_ferias_TBSalario_funcionario money NULL,
+	DFValor_Decimo_terceiro_TBSalario_funcionario money NULL,
+	DFValor_Comissoes_TBSalario_funcionario money NULL,
+	DFValor_vale_TBSalario_funcionario money NULL,
+	DFMes_competencia_TBSalario_funcionario money NULL,
+	DFAno_competencia_TBSalario_funcionario money NULL,
+	DFValor_apagar_TBSalario_funcionario money NULL,
+	FKCodigo_TBFuncionario int NULL
+	)  ON [PRIMARY]
+GO
+ALTER TABLE dbo.TBSalario_funcionario ADD CONSTRAINT
+	PK_TBSalario_funcionario PRIMARY KEY CLUSTERED 
+	(
+	PKId_TBSalario_funcionario
+	) ON [PRIMARY]
+
+GO
+COMMIT
+
+BEGIN TRANSACTION
+SET QUOTED_IDENTIFIER ON
+SET TRANSACTION ISOLATION LEVEL SERIALIZABLE
+SET ARITHABORT ON
+SET NUMERIC_ROUNDABORT OFF
+SET CONCAT_NULL_YIELDS_NULL ON
+SET ANSI_NULLS ON
+SET ANSI_PADDING ON
+SET ANSI_WARNINGS ON
+COMMIT
+BEGIN TRANSACTION
+COMMIT
+BEGIN TRANSACTION
+ALTER TABLE dbo.TBSalario_funcionario ADD CONSTRAINT
+	FK_TBSalario_funcionario_TBFuncionario FOREIGN KEY
+	(
+	FKCodigo_TBFuncionario
+	) REFERENCES dbo.TBFuncionario
+	(
+	PKCodigo_TBFuncionario
+	)
+GO
+COMMIT
+
+/*
+   terça-feira, 30 de agosto de 2005 09:05:57
+   User: sa
+   Server: ONLYTECH-DADOS
+   Database: BDRetaguarda
+   Application: MS SQLEM - Data Tools
+*/
+
+BEGIN TRANSACTION
+SET QUOTED_IDENTIFIER ON
+SET TRANSACTION ISOLATION LEVEL SERIALIZABLE
+SET ARITHABORT ON
+SET NUMERIC_ROUNDABORT OFF
+SET CONCAT_NULL_YIELDS_NULL ON
+SET ANSI_NULLS ON
+SET ANSI_PADDING ON
+SET ANSI_WARNINGS ON
+COMMIT
+BEGIN TRANSACTION
+ALTER TABLE dbo.TBSalario_funcionario
+	DROP CONSTRAINT FK_TBSalario_funcionario_TBFuncionario
+GO
+COMMIT
+BEGIN TRANSACTION
+CREATE TABLE dbo.Tmp_TBSalario_funcionario
+	(
+	PKId_TBSalario_funcionario int NOT NULL IDENTITY (1, 1) NOT FOR REPLICATION,
+	DFValor_bruto_TBSalario_funcionario money NULL,
+	DFValor_liquido_TBSalario_funcionario money NULL,
+	DFValor_adicional_TBSalario_funcionario money NULL,
+	DFValor_ferias_TBSalario_funcionario money NULL,
+	DFValor_Decimo_terceiro_TBSalario_funcionario money NULL,
+	DFValor_Comissoes_TBSalario_funcionario money NULL,
+	DFValor_vale_TBSalario_funcionario money NULL,
+	DFMes_competencia_TBSalario_funcionario int NULL,
+	DFAno_competencia_TBSalario_funcionario int NULL,
+	DFValor_apagar_TBSalario_funcionario money NULL,
+	FKCodigo_TBFuncionario int NULL
+	)  ON [PRIMARY]
+GO
+SET IDENTITY_INSERT dbo.Tmp_TBSalario_funcionario ON
+GO
+IF EXISTS(SELECT * FROM dbo.TBSalario_funcionario)
+	 EXEC('INSERT INTO dbo.Tmp_TBSalario_funcionario (PKId_TBSalario_funcionario, DFValor_bruto_TBSalario_funcionario, DFValor_liquido_TBSalario_funcionario, DFValor_adicional_TBSalario_funcionario, DFValor_ferias_TBSalario_funcionario, DFValor_Decimo_terceiro_TBSalario_funcionario, DFValor_Comissoes_TBSalario_funcionario, DFValor_vale_TBSalario_funcionario, DFMes_competencia_TBSalario_funcionario, DFAno_competencia_TBSalario_funcionario, DFValor_apagar_TBSalario_funcionario, FKCodigo_TBFuncionario)
+		SELECT PKId_TBSalario_funcionario, DFValor_bruto_TBSalario_funcionario, DFValor_liquido_TBSalario_funcionario, DFValor_adicional_TBSalario_funcionario, DFValor_ferias_TBSalario_funcionario, DFValor_Decimo_terceiro_TBSalario_funcionario, DFValor_Comissoes_TBSalario_funcionario, DFValor_vale_TBSalario_funcionario, CONVERT(int, DFMes_competencia_TBSalario_funcionario), CONVERT(int, DFAno_competencia_TBSalario_funcionario), DFValor_apagar_TBSalario_funcionario, FKCodigo_TBFuncionario FROM dbo.TBSalario_funcionario TABLOCKX')
+GO
+SET IDENTITY_INSERT dbo.Tmp_TBSalario_funcionario OFF
+GO
+DROP TABLE dbo.TBSalario_funcionario
+GO
+EXECUTE sp_rename N'dbo.Tmp_TBSalario_funcionario', N'TBSalario_funcionario', 'OBJECT'
+GO
+ALTER TABLE dbo.TBSalario_funcionario ADD CONSTRAINT
+	PK_TBSalario_funcionario PRIMARY KEY CLUSTERED 
+	(
+	PKId_TBSalario_funcionario
+	) ON [PRIMARY]
+
+GO
+ALTER TABLE dbo.TBSalario_funcionario WITH NOCHECK ADD CONSTRAINT
+	FK_TBSalario_funcionario_TBFuncionario FOREIGN KEY
+	(
+	FKCodigo_TBFuncionario
+	) REFERENCES dbo.TBFuncionario
+	(
+	PKCodigo_TBFuncionario
+	)
+GO
+COMMIT
+
+
+
+
+

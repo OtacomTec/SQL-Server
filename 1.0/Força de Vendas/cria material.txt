@@ -1,0 +1,6 @@
+CREATE TABLE [dbo].[TBMaterial_controle_palm](
+	[PKId_TBMaterial_controle_palm] [int] NOT NULL,
+	[DFDescricao_TBMaterial_controle_pal] [nvarchar](40) NULL,
+	[DFData_atualizacao_portal] [smalldatetime] NULL,
+	[DFHora_atualizacao_portal] [smalldatetime] NULL
+) ON [PRIMARY]

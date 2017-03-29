@@ -1,0 +1,6 @@
+CREATE TABLE [dbo].[TBFaixa_comissao_vendedor_palm](
+	[PKCodigo_TBFaixa_comissao_vendedor_palm] [int] NOT NULL,
+	[DFPercentual_TBFaixa_comissao_vendedor_palm] [money] NULL,
+	[DFData_atualizacao_portal] [smalldatetime] NULL,
+	[DFHora_atualizacao_portal] [smalldatetime] NULL
+) ON [PRIMARY]

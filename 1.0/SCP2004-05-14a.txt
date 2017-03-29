@@ -1,0 +1,64 @@
+/*
+Created		27/5/2003
+Modified		13/5/2004
+Project		
+Model		
+Company		
+Author		
+Version		
+Database		MS SQL 2000 
+*/
+
+Create table [TBTitulo_nota_saida] (
+	[PKId_TBTitulo_nota_saida] Integer Identity NOT NULL,
+	[FKId_TBNota_saida] Integer NOT NULL,
+	[FKId_TBTitulo_receber] Integer NOT NULL,
+Primary Key ([PKId_TBTitulo_nota_saida])
+) 
+go
+
+
+
+Alter table [TBTitulo_nota_saida] add  foreign key([FKId_TBTitulo_receber]) references [TBTitulo_receber] ([PKId_TBTitulo_receber])  on update no action on delete no action 
+go
+Alter table [TBTitulo_nota_saida] add  foreign key([FKId_TBNota_saida]) references [TBNota_saida] ([PKId_TBNota_saida])  on update no action on delete no action 
+go
+
+
+Set quoted_identifier on
+go
+
+
+
+
+
+
+
+
+
+
+
+
+Set quoted_identifier off
+go
+
+
+
+
+
+
+
+
+/* Roles permissions */
+
+
+
+
+
+/* Users permissions */
+
+
+
+
+
+

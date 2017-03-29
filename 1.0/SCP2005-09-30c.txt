@@ -1,0 +1,35 @@
+/*
+   sexta-feira, 30 de setembro de 2005 10:45:57
+   User: 
+   Server: ONLYTECH-04
+   Database: BDRetaguarda
+   Application: MS SQLEM - Data Tools
+*/
+
+BEGIN TRANSACTION
+SET QUOTED_IDENTIFIER ON
+SET TRANSACTION ISOLATION LEVEL SERIALIZABLE
+SET ARITHABORT ON
+SET NUMERIC_ROUNDABORT OFF
+SET CONCAT_NULL_YIELDS_NULL ON
+SET ANSI_NULLS ON
+SET ANSI_PADDING ON
+SET ANSI_WARNINGS ON
+COMMIT
+BEGIN TRANSACTION
+CREATE TABLE dbo.TBTitulo_pago_credito_cliente
+	(
+	PKId_TBTitulo_pago_credito_cliente int NOT NULL,
+	FKId_TBTitulo_pagar_credito_cliente int NOT NULL,
+	DFData_pagamento_TBTitulo_pago_credito_cliente smalldatetime NULL,
+	DFBaixa_Caixa_banco_TBTitulo_pago_credito_cliente bit NULL
+	)  ON [PRIMARY]
+GO
+ALTER TABLE dbo.TBTitulo_pago_credito_cliente ADD CONSTRAINT
+	PK_TBTitulo_pago_credito_cliente PRIMARY KEY CLUSTERED 
+	(
+	PKId_TBTitulo_pago_credito_cliente
+	) ON [PRIMARY]
+
+GO
+COMMIT

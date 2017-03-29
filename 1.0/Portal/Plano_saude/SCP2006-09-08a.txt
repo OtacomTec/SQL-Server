@@ -1,0 +1,131 @@
+/*
+Created		8/9/2006
+Modified		8/9/2006
+Project		
+Model			
+Company		
+Author		
+Version		
+Database		MS SQL 2000 
+*/
+
+
+Create table [TBAssociado_portal]
+(
+	[PKId_TBAssociado_portal] Integer Identity NOT NULL,
+	[FKCodigo_TBplano_saude_portal] Integer NOT NULL,
+	[DFNome_TBAssociado_portal] Nvarchar(40) NULL,
+	[DFData_cadastro_TBAssociado_portal] Smalldatetime NULL,
+	[DFData_nascimento_TBAssociado_portal] Smalldatetime NULL,
+	[DFData_validade_cartao_TBAssociado_portal] Smalldatetime NULL,
+	[DFSexo_TBAssociado_portal] Bit NULL,
+	[DFFalecido_TBAssociado_portal] Bit NULL,
+	[DFChave_retaguarda_TBAssociado_portal] Integer NULL,
+Primary Key ([PKId_TBAssociado_portal])
+) 
+go
+
+Create table [TBPlano_saude_portal]
+(
+	[PKCodigo_TBPlano_saude_portal] Integer NOT NULL,
+	[DFDescricao_TBPlano_saude_portal] Nvarchar(40) NULL,
+	[DFNumero_consultas_TBPlano_saude_portal] Integer NULL,
+	[DFTipo_internacao_TBPlano_saude_portal] Integer NULL,
+	[DFNome_cartao_TBPlano_saude_portal] Nvarchar(40) NULL,
+	[DFServico_cartao_TBPlano_saude_portal] Nvarchar(40) NULL,
+	[DFCarencia_consulta_TBPlano_saude_portal] Integer NULL,
+	[DFCarencia_exame_simples_TBPlano_saude_portal] Integer NULL,
+	[DFCarencia_exame_complexo_TBPlano_saude_portal] Integer NULL,
+	[DFCarencia_internacao_TBPlano_saude_portal] Integer NULL,
+	[DFCarencia_obstetricia_TBPlano_saude_portal] Integer NULL,
+Primary Key ([PKCodigo_TBPlano_saude_portal])
+) 
+go
+
+Create table [TBDependentes_Associados_portal]
+(
+	[PKId_TBDependentes_Associados_portal] Integer Identity NOT NULL,
+	[FKId_TBAssociado_portal] Integer NOT NULL,
+	[DFNome_TBDependentes_Associados_portal] Nvarchar(40) NULL,
+	[DFData_nascimento_TBDependentes_Associados_portal] Smalldatetime NULL,
+	[DFFalecido_TBDependentes_Associados_portal] Bit NULL,
+	[DFSexo_TBDependentes_Associados_portal] Bit NULL,
+	[DFChave_retaguarda_TBDependentes_Associados_portal] Integer NULL,
+Primary Key ([PKId_TBDependentes_Associados_portal])
+) 
+go
+
+Create table [TBConveniados_portal]
+(
+	[PKCodigo_TBConveniados_portal] Integer NOT NULL,
+	[DFNome_TBConveniados_portal] Nvarchar(40) NULL,
+	[DFSenha_TBConveniados_portal] Nvarchar(10) NULL,
+Primary Key ([PKCodigo_TBConveniados_portal])
+) 
+go
+
+Create table [TBServico_portal]
+(
+	[PKCodigo_TBServico_portal] Integer NOT NULL,
+	[DFDescricao_TBServico_portal] Nvarchar(40) NULL,
+	[DFTipo_TBServico_portal] Integer NULL,
+Primary Key ([PKCodigo_TBServico_portal])
+) 
+go
+
+Create table [TBPlano_saude_servico_portal]
+(
+	[PKId_TBPlano_saude_servico_portal] Integer Identity NOT NULL,
+	[FKCodigo_TBServico_portal] Integer NOT NULL,
+	[FKCodigo_TBplano_saude_portal] Integer NOT NULL,
+	[DFChave_retaguarda_TBPlano_saude_servico_portal] Char(10) NULL,
+Primary Key ([PKId_TBPlano_saude_servico_portal])
+) 
+go
+
+Create table [TBAutorizacao_servico_portal]
+(
+	[PKId_TBAutorizacao_servico_portal] Integer Identity NOT NULL,
+	[FKCodigo_TBConveniados_portal] Integer NOT NULL,
+	[FKCodigo_TBServico_portal] Integer NOT NULL,
+	[FKId_TBAssociado_portal] Integer NOT NULL,
+	[DFTitular_dependente_TBAutorizacao_servico_portal] Bit NULL,
+	[DFCodigo_titular_dependente_TBAutorizacao_servico_portal] Integer NULL,
+	[DFChave_retaguarda_codigo_titular_dependente_TBAutorizacao_servico_portal] Integer NULL,
+	[DFMotivo_TBAutorizacao_servico_portal] Nvarchar(100) NULL,
+	[DFObservacao_TBAutorizacao_servico_portal] Nvarchar(100) NULL,
+	[DFData_TBAutorizacao_servico_portal] Smalldatetime NULL,
+	[DFUsuario_TBAutorizacao_servico_portal] Nvarchar(20) NULL,
+	[DFIntegrado_retaguarda_TBAutorizacao_servico_portal] Bit NULL,
+Primary Key ([PKId_TBAutorizacao_servico_portal])
+) 
+go
+
+Alter table [TBDependentes_Associados_portal] add  foreign key([FKId_TBAssociado_portal]) references [TBAssociado_portal] ([PKId_TBAssociado_portal])  on update no action on delete no action 
+go
+Alter table [TBAutorizacao_servico_portal] add  foreign key([FKId_TBAssociado_portal]) references [TBAssociado_portal] ([PKId_TBAssociado_portal])  on update no action on delete no action 
+go
+Alter table [TBAssociado_portal] add  foreign key([FKCodigo_TBplano_saude_portal]) references [TBPlano_saude_portal] ([PKCodigo_TBPlano_saude_portal])  on update no action on delete no action 
+go
+Alter table [TBPlano_saude_servico_portal] add  foreign key([FKCodigo_TBplano_saude_portal]) references [TBPlano_saude_portal] ([PKCodigo_TBPlano_saude_portal])  on update no action on delete no action 
+go
+Alter table [TBAutorizacao_servico_portal] add  foreign key([FKCodigo_TBConveniados_portal]) references [TBConveniados_portal] ([PKCodigo_TBConveniados_portal])  on update no action on delete no action 
+go
+Alter table [TBPlano_saude_servico_portal] add  foreign key([FKCodigo_TBServico_portal]) references [TBServico_portal] ([PKCodigo_TBServico_portal])  on update no action on delete no action 
+go
+Alter table [TBAutorizacao_servico_portal] add  foreign key([FKCodigo_TBServico_portal]) references [TBServico_portal] ([PKCodigo_TBServico_portal])  on update no action on delete no action 
+go
+
+
+Set quoted_identifier on
+go
+
+
+Set quoted_identifier off
+go
+
+
+/* Roles permissions */
+
+
+/* Users permissions */

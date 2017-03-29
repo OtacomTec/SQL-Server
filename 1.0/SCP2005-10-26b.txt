@@ -1,0 +1,98 @@
+/*
+   quarta-feira, 26 de outubro de 2005 18:21:31
+   User: sa
+   Server: ONLYTECH-02
+   Database: BDRetaguarda
+   Application: MS SQLEM - Data Tools
+*/
+
+BEGIN TRANSACTION
+SET QUOTED_IDENTIFIER ON
+SET TRANSACTION ISOLATION LEVEL SERIALIZABLE
+SET ARITHABORT ON
+SET NUMERIC_ROUNDABORT OFF
+SET CONCAT_NULL_YIELDS_NULL ON
+SET ANSI_NULLS ON
+SET ANSI_PADDING ON
+SET ANSI_WARNINGS ON
+COMMIT
+BEGIN TRANSACTION
+ALTER TABLE dbo.TBParametros_venda
+	DROP CONSTRAINT FK__TBParamet__IXCod__2BC97F7C
+GO
+ALTER TABLE dbo.TBParametros_venda
+	DROP CONSTRAINT FK__TBParamet__IXCod__55F4C372
+GO
+COMMIT
+BEGIN TRANSACTION
+CREATE TABLE dbo.Tmp_TBParametros_venda
+	(
+	PKId_TBParametros_venda int NOT NULL IDENTITY (1, 1) NOT FOR REPLICATION,
+	IXCodigo_TBEmpresa int NOT NULL,
+	DFHistorico_padrao_receita_TBParametros_venda int NOT NULL,
+	DFHistorico_padrao_orcamento_TBParametros_venda int NOT NULL,
+	DFHistorico_padrao_exclusao_receita_TBParametros_venda int NULL,
+	DFHistorico_padrao_exclusao_venda_TBParametros_venda int NULL,
+	DFNumero_tabela_vigente_TBParametros_venda int NULL,
+	DFBaixa_estoque_pedido_TBParametro_venda bit NULL,
+	DFLibera_produto_linha_venda_pedido_TBParametro_venda bit NULL,
+	DFLibera_vendedor_cliente_pedido_TBParametro_venda bit NULL,
+	DFLibera_digitacao_pedido_produto_sem_estoque_TBParametro_venda bit NULL,
+	DFMensagem_nota_fiscal_saida_TBParametro_venda nvarchar(250) NULL,
+	DFNumero_itens_nota_TBParametros_venda int NULL,
+	DFNumero_itens_orcamento_TBParametros_venda int NULL,
+	DFMensagem_titulo_TBParametro_venda nvarchar(200) NULL,
+	DFEmite_banco_TBParametros_venda bit NULL,
+	DFMult_moeda_TBParametros_venda bit NULL,
+	DFCalcula_preco_tabela_TBParametros_venda bit NULL,
+	DFCalcula_arredondamento_preco_tabela_TBParametros_venda bit NULL,
+	DFPerfil_faturamento_TBParametros_venda int NULL,
+	DFTipo_impressora_orcamento_balcao char(1) NULL,
+	DFLimite_desconto_venda_varejo_perc_TBParametros_venda int NULL,
+	DFTrava_manipulacao_valores_venda_varejo_TBParametros_venda bit NULL,
+	DFDesconto_Item_venda_varejo_TBParametros_venda bit NULL,
+	DFPraca_pagamento_titulo_TBParametro_venda nvarchar(100) NULL,
+	DFIdentificador_nota_TBParametro_venda int NULL,
+	DFLanca_volume_nota_TBParametro_venda bit NULL,
+	DFHistorico_padrao_baixa_crediario_TBParametros_venda int NULL,
+	DFHistorico_padrao_baixa_contas_pagar_TBParametros_venda int NULL
+	)  ON [PRIMARY]
+GO
+SET IDENTITY_INSERT dbo.Tmp_TBParametros_venda ON
+GO
+IF EXISTS(SELECT * FROM dbo.TBParametros_venda)
+	 EXEC('INSERT INTO dbo.Tmp_TBParametros_venda (PKId_TBParametros_venda, IXCodigo_TBEmpresa, DFHistorico_padrao_receita_TBParametros_venda, DFHistorico_padrao_orcamento_TBParametros_venda, DFHistorico_padrao_exclusao_receita_TBParametros_venda, DFHistorico_padrao_exclusao_venda_TBParametros_venda, DFNumero_tabela_vigente_TBParametros_venda, DFBaixa_estoque_pedido_TBParametro_venda, DFLibera_produto_linha_venda_pedido_TBParametro_venda, DFLibera_vendedor_cliente_pedido_TBParametro_venda, DFLibera_digitacao_pedido_produto_sem_estoque_TBParametro_venda, DFMensagem_nota_fiscal_saida_TBParametro_venda, DFNumero_itens_nota_TBParametros_venda, DFNumero_itens_orcamento_TBParametros_venda, DFMensagem_titulo_TBParametro_venda, DFEmite_banco_TBParametros_venda, DFMult_moeda_TBParametros_venda, DFCalcula_preco_tabela_TBParametros_venda, DFCalcula_arredondamento_preco_tabela_TBParametros_venda, DFPerfil_faturamento_TBParametros_venda, DFTipo_impressora_orcamento_balcao, DFLimite_desconto_venda_varejo_perc_TBParametros_venda, DFTrava_manipulacao_valores_venda_varejo_TBParametros_venda, DFDesconto_Item_venda_varejo_TBParametros_venda, DFPraca_pagamento_titulo_TBParametro_venda, DFIdentificador_nota_TBParametro_venda, DFLanca_volume_nota_TBParametro_venda, DFHistorico_padrao_baixa_crediario_TBParametros_venda, DFHistorico_padrao_baixa_contas_pagar_TBParametros_venda)
+		SELECT PKId_TBParametros_venda, IXCodigo_TBEmpresa, DFHistorico_padrao_receita_TBParametros_venda, DFHistorico_padrao_orcamento_TBParametros_venda, DFHistorico_padrao_exclusao_receita_TBParametros_venda, DFHistorico_padrao_exclusao_venda_TBParametros_venda, DFNumero_tabela_vigente_TBParametros_venda, DFBaixa_estoque_pedido_TBParametro_venda, DFLibera_produto_linha_venda_pedido_TBParametro_venda, DFLibera_vendedor_cliente_pedido_TBParametro_venda, DFLibera_digitacao_pedido_produto_sem_estoque_TBParametro_venda, DFMensagem_nota_fiscal_saida_TBParametro_venda, DFNumero_itens_nota_TBParametros_venda, DFNumero_itens_orcamento_TBParametros_venda, DFMensagem_titulo_TBParametro_venda, DFEmite_banco_TBParametros_venda, DFMult_moeda_TBParametros_venda, DFCalcula_preco_tabela_TBParametros_venda, DFCalcula_arredondamento_preco_tabela_TBParametros_venda, DFPerfil_faturamento_TBParametros_venda, DFTipo_impressora_orcamento_balcao, DFLimite_desconto_venda_varejo_perc_TBParametros_venda, DFTrava_manipulacao_valores_venda_varejo_TBParametros_venda, DFDesconto_Item_venda_varejo_TBParametros_venda, DFPraca_pagamento_titulo_TBParametro_venda, DFIdentificador_nota_TBParametro_venda, DFLanca_volume_nota_TBParametro_venda, DFHistorico_padrao_baixa_crediario_TBParametros_venda, DFHistorico_padrao_baixa_contas_pagar_TBParametros_venda FROM dbo.TBParametros_venda TABLOCKX')
+GO
+SET IDENTITY_INSERT dbo.Tmp_TBParametros_venda OFF
+GO
+DROP TABLE dbo.TBParametros_venda
+GO
+EXECUTE sp_rename N'dbo.Tmp_TBParametros_venda', N'TBParametros_venda', 'OBJECT'
+GO
+ALTER TABLE dbo.TBParametros_venda ADD CONSTRAINT
+	PK__TBParametros_ven__395884C4 PRIMARY KEY CLUSTERED 
+	(
+	PKId_TBParametros_venda
+	) WITH FILLFACTOR = 90 ON [PRIMARY]
+
+GO
+ALTER TABLE dbo.TBParametros_venda WITH NOCHECK ADD CONSTRAINT
+	FK__TBParamet__IXCod__2BC97F7C FOREIGN KEY
+	(
+	IXCodigo_TBEmpresa
+	) REFERENCES dbo.TBEmpresa
+	(
+	PKCodigo_TBEmpresa
+	)
+GO
+ALTER TABLE dbo.TBParametros_venda WITH NOCHECK ADD CONSTRAINT
+	FK__TBParamet__IXCod__55F4C372 FOREIGN KEY
+	(
+	IXCodigo_TBEmpresa
+	) REFERENCES dbo.TBEmpresa
+	(
+	PKCodigo_TBEmpresa
+	)
+GO
+COMMIT

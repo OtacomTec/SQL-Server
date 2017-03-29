@@ -1,0 +1,2 @@
+ALTER TABLE dbo.TBCupom ADD
+	DFNumero_serie_impressora_TBCupom nvarchar(25) NULL

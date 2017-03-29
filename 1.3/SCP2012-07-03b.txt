@@ -1,0 +1,57 @@
+USE BDRetaguarda
+
+BEGIN TRANSACTION
+
+/*
+ *** IDENTIFICAÇÃO DO SCRIPT ***
+
+ 1 - Apartir de 20/12/2005, fica expressamente proibida a criação de scripts sem que seja preenchido este cabeçalho
+ 2 - Obrigatoriamente necessário que este paragrafo seja inserido apos um BEGIN TRANSACTION
+ 3 - Obrigatoriamente o preenchimento das variaveis abaixo(@Nomenclatura,@Observacao,@Data)com valores correspondentes e condizentes
+ Att: Marcos
+
+*/
+
+--INICIO CABECALHO
+
+declare @Nomenclatura as nvarchar(20)
+declare @Observacao as nvarchar(100)
+declare @Data as SMALLDATETIME
+
+SET @Nomenclatura = 'SCP2012-07-03b'
+SET @Observacao = 'CRIA CAMPO NA TABELA TBApuracao_icms '
+SET @Data = CURRENT_TIMESTAMP
+
+---LIMPEZA DA TABELA
+
+DELETE FROM TBSCRIPT
+
+---INSERCAO DO REGISTRO
+
+INSERT INTO BDRetaguarda.dbo.TBSCRIPT(DFNome_TBScript,DFObjetivo_TBScript,DFData_execucao_TBScript)
+VALUES(@Nomenclatura,@Observacao,@Data)
+
+---FIM CABECALHO
+
+CREATE TABLE [TBApuracao_icms] (
+	[PKId_TBApuracao_icms] [int] IDENTITY (1, 1) NOT NULL ,
+	[DFData_inicial_TBApuracao_icms] [smalldatetime] NULL ,
+	[DFData_final_TBApuracao_icms] [smalldatetime] NULL ,
+	[DFValor_debito_TBApuracao_icms] [money] NULL ,
+	[DFValor_doc_ajuste_debito_TBApuracao_icms] [money] NULL ,
+	[DFValor_guias_ajuste_debito_TBApuracao_icms] [money] NULL ,
+	[DFValor_estorno_ajuste_credito_TBApuracao_icms] [money] NULL ,
+	[DFValor_credito_TBApuracao_icms] [money] NULL ,
+	[DFValor_doc_ajuste_credito_TBApuracao_icms] [money] NULL ,
+	[DFValor_guias_ajuste_credito_TBApuracao_icms] [money] NULL ,
+	[DFValor_estorno_ajuste_debito_TBApuracao_icms] [money] NULL ,
+	[DFValor_credor_anterior_TBApuracao_icms] [money] NULL ,
+	[DFValor_saldo_apurado_TBApuracao_icms] [money] NULL ,
+	[DFValor_total_deducoes_TBApuracao_icms] [money] NULL ,
+	[DFValor_icms_recolher_TBApuracao_icms] [money] NULL ,
+	[DFValor_saldo_credor_transportar_TBApuracao_icms] [money] NULL ,
+	[DFValor_extra_apuracao_TBApuracao_icms] [money] NULL 
+) ON [PRIMARY]
+
+commit transaction
+

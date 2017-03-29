@@ -1,0 +1,2 @@
+update  dbo.TBProduto 
+set DFPeso_variavel_TBProduto = 0

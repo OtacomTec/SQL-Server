@@ -1,0 +1,106 @@
+/*
+Created		27/5/2003
+Modified		4/5/2005
+Project		
+Model			
+Company		
+Author		
+Version		
+Database		MS SQL 2000 
+*/
+
+Create table [TBSolicitacao_visita]
+(
+	[PKId_TBSolicitacao_visita] Integer Identity NOT NULL,
+	[DFData_TBSolicitacao_visita] Smalldatetime NOT NULL,
+	[DFHora_TBSolicitacao_visita] Nvarchar(10) NOT NULL,
+	[DFContato_TBSolicitacao_visita] Nvarchar(40) NULL,
+	[DFEndereco_TBSolicitacao_visita] Nvarchar(40) NOT NULL,
+	[DFNumero_TBSolicitacao_visita] Nvarchar(10) NULL,
+	[DFComplemento_TBSolicitacao_visita] Nvarchar(30) NULL,
+	[DFBairro_TBSolicitacao_visita] Nvarchar(20) NULL,
+	[FKId_TBCidade_otica] Integer NOT NULL,
+	[DFStatus_TBSolicitacao_visita] Integer NOT NULL,
+	[DFValor_Orcamento_TBSolicitacao_visita] Money NULL,
+	[DFCondicao_pagamento_TBSolicitacao_visita] Nvarchar(100) NULL,
+	[DFObservacao_TBSolicitacao_visita] Nvarchar(200) NULL,
+Primary Key ([PKId_TBSolicitacao_visita])
+) 
+go
+
+Create table [TBAgenda_solicitacao_visita]
+(
+	[PKId_TBAgenda_solicitacao_visita] Integer Identity NOT NULL,
+	[FKId_TBSolicitacao_visita] Integer NOT NULL,
+	[DFContato_TBAgenda_solicitacao_visita] Nvarchar(40) NULL,
+	[DFTelefone_TBAgenda_solicitacao_visita] Nvarchar(20) NULL,
+Primary Key ([PKId_TBAgenda_solicitacao_visita])
+) 
+go
+
+Create table [TBAtendimento_solicitacao_visita]
+(
+	[PKId_TBAtendimento_solicitacao_visita] Integer Identity NOT NULL,
+	[FKId_TBVendedor] Integer NOT NULL,
+	[FKId_TBSolicitacao_visita] Integer NOT NULL,
+	[DFData_previsao_TBAtendimento_solicitacao_visita] Smalldatetime NULL,
+	[DFData_atendimento_TBAtendimento_solicitacao_visita] Smalldatetime NULL,
+	[DFMotivo_TBAtendimento_solicitacao_visita] Nvarchar(200) NULL,
+Primary Key ([PKId_TBAtendimento_solicitacao_visita])
+) 
+go
+Alter table [TBSolicitacao_visita] add  foreign key([FKId_TBCidade_otica]) references [TBCidade_otica] ([PKId_TBCidade_otica])  on update no action on delete no action 
+go
+Alter table [TBAtendimento_solicitacao_visita] add  foreign key([FKId_TBVendedor]) references [TBVendedor] ([PKId_TBVendedor])  on update no action on delete no action 
+go
+Alter table [TBAgenda_solicitacao_visita] add  foreign key([FKId_TBSolicitacao_visita]) references [TBSolicitacao_visita] ([PKId_TBSolicitacao_visita])  on update no action on delete no action 
+go
+Alter table [TBAtendimento_solicitacao_visita] add  foreign key([FKId_TBSolicitacao_visita]) references [TBSolicitacao_visita] ([PKId_TBSolicitacao_visita])  on update no action on delete no action 
+go
+
+
+Set quoted_identifier on
+go
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Set quoted_identifier off
+go
+
+
+
+
+
+
+
+
+/* Roles permissions */
+
+
+
+
+
+/* Users permissions */
+
+
+
+
+
+

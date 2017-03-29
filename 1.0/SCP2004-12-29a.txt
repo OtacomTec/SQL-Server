@@ -1,0 +1,96 @@
+/*
+Created		27/5/2003
+Modified		28/12/2004
+Project		
+Model			
+Company		
+Author		
+Version		
+Database		MS SQL 2000 
+*/
+
+
+
+Create table [TBContrato_plano_saude]
+(
+	[PKCodigo_TBContrato_plano_saude] Integer NOT NULL,
+	[FKId_TBVendedor] Integer NOT NULL,
+	[FKCodigo_TBplano_saude] Integer NOT NULL,
+	[FKId_TBTabela_plano_saude] Integer NOT NULL,
+	[FKCodigo_TBAssociado] Integer NOT NULL,
+	[DFDia_vencimento_TBContrato_plano_saude] Integer NOT NULL,
+	[DFData_TBContrato_plano_saude] Smalldatetime NOT NULL,
+	[DFValor_calculado_TBContrato_plano_saude] Money NOT NULL,
+	[DFDesconto_TBContarto_plano_saude] Money NULL,
+	[DFValor_liquido_TBContrato_plano_saude] Money NULL,
+Primary Key ([PKCodigo_TBContrato_plano_saude])
+) 
+go
+
+
+
+
+
+
+
+
+
+
+
+
+
+Alter table [TBContrato_plano_saude] add  foreign key([FKId_TBVendedor]) references [TBVendedor] ([PKId_TBVendedor])  on update no action on delete no action 
+go
+Alter table [TBContrato_plano_saude] add  foreign key([FKCodigo_TBplano_saude]) references [TBPlano_saude] ([PKCodigo_TBplano_saude])  on update no action on delete no action 
+go
+Alter table [TBContrato_plano_saude] add  foreign key([FKCodigo_TBAssociado]) references [TBAssociado] ([PKCodigo_TBAssociado])  on update no action on delete no action 
+go
+Alter table [TBContrato_plano_saude] add  foreign key([FKId_TBTabela_plano_saude]) references [TBTabela_plano_saude] ([PKId_TBTabela_plano_saude])  on update no action on delete no action 
+go
+
+
+Set quoted_identifier on
+go
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Set quoted_identifier off
+go
+
+
+
+
+
+
+
+
+/* Roles permissions */
+
+
+
+
+
+/* Users permissions */
+
+
+
+
+
+

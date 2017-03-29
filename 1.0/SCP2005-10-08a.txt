@@ -1,0 +1,66 @@
+/*
+   sábado, 8 de outubro de 2005 16:25:20
+   User: sa
+   Server: ONLYTECH-02
+   Database: BDRetaguarda
+   Application: MS SQLEM - Data Tools
+*/
+
+BEGIN TRANSACTION
+SET QUOTED_IDENTIFIER ON
+SET TRANSACTION ISOLATION LEVEL SERIALIZABLE
+SET ARITHABORT ON
+SET NUMERIC_ROUNDABORT OFF
+SET CONCAT_NULL_YIELDS_NULL ON
+SET ANSI_NULLS ON
+SET ANSI_PADDING ON
+SET ANSI_WARNINGS ON
+COMMIT
+BEGIN TRANSACTION
+CREATE TABLE dbo.Tmp_TBItens_nota_saida_fiscal
+	(
+	PKId_TBItens_nota_saida_fiscal int NOT NULL IDENTITY (1, 1),
+	FKId_TBnota_saida_fiscal int NOT NULL,
+	FKId_TBProduto int NOT NULL,
+	FKId_TBCfop int NOT NULL,
+	DFCst1_TBItens_nota_saida_fiscal char(1) NOT NULL,
+	DFCst2_TBItens_nota_saida_fiscal char(2) NOT NULL,
+	DFQuantidade_TBItens_nota_saida_fiscal money NOT NULL,
+	DFTipo_preco_TBItens_nota_saida_fiscal int NOT NULL,
+	DFPreco_tabela_TBItens_nota_saida_fiscal money NOT NULL,
+	DFPercentual_desconto_TBItens_nota_saida_fiscal money NOT NULL,
+	DFPreco_praticado_TBItens_nota_saida_fiscal money NOT NULL,
+	DFValor_total_tabela_TBItens_nota_saida_fiscal money NOT NULL,
+	DFValor_total_praticado_TBItens_nota_saida_fiscal money NOT NULL,
+	DFPercentual_icms_TBItens_nota_saida_fiscal money NOT NULL,
+	DFValor_total_icms_TBItens_nota_saida_fiscal money NOT NULL,
+	DFUnidade_TBItens_nota_saida_fiscal char(3) NOT NULL,
+	DFCusto_real_TBItens_nota_saida_fiscal money NOT NULL,
+	DFCusto_contabil_TBItens_nota_saida_fiscal money NOT NULL,
+	DFCusto_medio_TBItens_nota_saida_fiscal money NOT NULL,
+	DFPeso_liquido_TBItens_nota_saida_fiscal money NOT NULL,
+	DFPeso_bruto_TBItens_nota_saida_fiscal money NOT NULL,
+	DFQuantidade_baixa_estoque_TBItens_nota_saida_fiscal money NOT NULL,
+	DFValor_total_item_TBItens_nota_saida_fiscal money NOT NULL,
+	FKId_TBVendedor int NULL,
+	DFDivisor_Baixa_Estoque_TBItens_nota_saida_fiscal int NULL,
+	DFBase_calculo_icms_TBItens_nota_saida_fiscal money NULL,
+	DFBase_calculo_subst_tributaria_TBItens_nota_saida_fiscal money NULL,
+	DFValor_subst_tributaria_TBItens_nota_saida_fiscal money NULL,
+	DFValor_conta_corrente_vendedor_TBItens_nota_saida_fiscal money NULL,
+	DFEntrega_TBItens_nota_saida_fiscal int NULL
+	)  ON [PRIMARY]
+GO
+SET IDENTITY_INSERT dbo.Tmp_TBItens_nota_saida_fiscal ON
+GO
+IF EXISTS(SELECT * FROM dbo.TBItens_nota_saida_fiscal)
+	 EXEC('INSERT INTO dbo.Tmp_TBItens_nota_saida_fiscal (PKId_TBItens_nota_saida_fiscal, FKId_TBnota_saida_fiscal, FKId_TBProduto, FKId_TBCfop, DFCst1_TBItens_nota_saida_fiscal, DFCst2_TBItens_nota_saida_fiscal, DFQuantidade_TBItens_nota_saida_fiscal, DFTipo_preco_TBItens_nota_saida_fiscal, DFPreco_tabela_TBItens_nota_saida_fiscal, DFPercentual_desconto_TBItens_nota_saida_fiscal, DFPreco_praticado_TBItens_nota_saida_fiscal, DFValor_total_tabela_TBItens_nota_saida_fiscal, DFValor_total_praticado_TBItens_nota_saida_fiscal, DFPercentual_icms_TBItens_nota_saida_fiscal, DFValor_total_icms_TBItens_nota_saida_fiscal, DFUnidade_TBItens_nota_saida_fiscal, DFCusto_real_TBItens_nota_saida_fiscal, DFCusto_contabil_TBItens_nota_saida_fiscal, DFCusto_medio_TBItens_nota_saida_fiscal, DFPeso_liquido_TBItens_nota_saida_fiscal, DFPeso_bruto_TBItens_nota_saida_fiscal, DFQuantidade_baixa_estoque_TBItens_nota_saida_fiscal, DFValor_total_item_TBItens_nota_saida_fiscal, FKId_TBVendedor, DFDivisor_Baixa_Estoque_TBItens_nota_saida_fiscal, DFBase_calculo_icms_TBItens_nota_saida_fiscal, DFBase_calculo_subst_tributaria_TBItens_nota_saida_fiscal, DFValor_subst_tributaria_TBItens_nota_saida_fiscal, DFValor_conta_corrente_vendedor_TBItens_nota_saida_fiscal, DFEntrega_TBItens_nota_saida_fiscal)
+		SELECT PKId_TBItens_nota_saida_fiscal, FKId_TBnota_saida_fiscal, FKId_TBProduto, FKId_TBCfop, DFCst1_TBItens_nota_saida_fiscal, DFCst2_TBItens_nota_saida_fiscal, DFQuantidade_TBItens_nota_saida_fiscal, DFTipo_preco_TBItens_nota_saida_fiscal, DFPreco_tabela_TBItens_nota_saida_fiscal, DFPercentual_desconto_TBItens_nota_saida_fiscal, DFPreco_praticado_TBItens_nota_saida_fiscal, DFValor_total_tabela_TBItens_nota_saida_fiscal, DFValor_total_praticado_TBItens_nota_saida_fiscal, DFPercentual_icms_TBItens_nota_saida_fiscal, DFValor_total_icms_TBItens_nota_saida_fiscal, DFUnidade_TBItens_nota_saida_fiscal, DFCusto_real_TBItens_nota_saida_fiscal, DFCusto_contabil_TBItens_nota_saida_fiscal, DFCusto_medio_TBItens_nota_saida_fiscal, DFPeso_liquido_TBItens_nota_saida_fiscal, DFPeso_bruto_TBItens_nota_saida_fiscal, DFQuantidade_baixa_estoque_TBItens_nota_saida_fiscal, DFValor_total_item_TBItens_nota_saida_fiscal, FKId_TBVendedor, DFDivisor_Baixa_Estoque_TBItens_nota_saida_fiscal, DFBase_calculo_icms_TBItens_nota_saida_fiscal, DFBase_calculo_subst_tributaria_TBItens_nota_saida_fiscal, DFValor_subst_tributaria_TBItens_nota_saida_fiscal, DFValor_conta_corrente_vendedor_TBItens_nota_saida_fiscal, DFEntrega_TBItens_nota_saida_fiscal FROM dbo.TBItens_nota_saida_fiscal TABLOCKX')
+GO
+SET IDENTITY_INSERT dbo.Tmp_TBItens_nota_saida_fiscal OFF
+GO
+DROP TABLE dbo.TBItens_nota_saida_fiscal
+GO
+EXECUTE sp_rename N'dbo.Tmp_TBItens_nota_saida_fiscal', N'TBItens_nota_saida_fiscal', 'OBJECT'
+GO
+COMMIT

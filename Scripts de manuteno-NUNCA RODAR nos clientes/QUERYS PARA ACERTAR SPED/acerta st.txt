@@ -1,0 +1,13 @@
+update   Tbitens_nota_saida_fiscal
+set DFBase_calculo_subst_tributaria_TBItens_nota_saida_fiscal = DFBase_calculo_subst_tributaria_TBItens_pedido,
+DFValor_subst_tributaria_TBItens_nota_saida_fiscal = DFValor_subst_tributaria_TBItens_pedido
+from Tbitens_nota_saida_fiscal
+inner join Tbnota_saida_fiscal
+On fkid_tbnota_saida_fiscal = pkid_tbnota_saida_fiscal
+inner join Tbitens_pedido
+on Tbitens_nota_saida_fiscal.fkid_tbproduto = Tbitens_pedido.fkid_tbproduto
+where dfnumero_pedido_Tbnota_saida_fiscal = fkid_tbPedido
+
+
+
+

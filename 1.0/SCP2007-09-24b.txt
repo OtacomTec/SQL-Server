@@ -1,0 +1,88 @@
+USE BDRetaguarda
+
+BEGIN TRANSACTION
+/*
+ *** IDENTIFICAÇÃO DO SCRIPT ***
+
+ 1 - Apartir de 20/12/2005, fica expressamente proibida a criação de scripts sem que seja preenchido este cabeçalho
+ 2 - Obrigatoriamente necessário que este paragrafo seja inserido apos um BEGIN TRANSACTION
+ 3 - Obrigatoriamente o preenchimento das variaveis abaixo(@Nomenclatura,@Observacao,@Data)com valores correspondentes e condizentes
+ Att: Marcos
+
+*/
+
+--INICIO CABECALHO
+
+declare @Nomenclatura as nvarchar(20)
+declare @Observacao as nvarchar(100)
+declare @Data as SMALLDATETIME
+
+SET @Nomenclatura = 'SCP2007-09-24b'
+SET @Observacao = 'Cria tabela Itens transferencia deposito' 
+SET @Data = CURRENT_TIMESTAMP
+
+---LIMPEZA DA TABELA
+
+DELETE FROM TBSCRIPT
+
+---INSERCAO DO REGISTRO
+
+INSERT INTO BDRetaguarda.dbo.TBSCRIPT(DFNome_TBScript,DFObjetivo_TBScript,DFData_execucao_TBScript)
+VALUES(@Nomenclatura,@Observacao,@Data)
+
+---FIM CABECALHO
+
+Create table [TBTransferencia_deposito]
+(
+	[PKId_TBTransferencia_deposito] Integer Identity NOT NULL,
+	[FKId_saida_TBEnderecamento_estoque] Integer NOT NULL,
+	[FKId_entrada_TBEnderecamento_estoque] Integer NOT NULL,
+	[FKCodigo_TBSeparador] Integer NOT NULL,
+	[FKCodigo_conferente_TBSeparador] Integer NOT NULL,
+	[DFData_TBTransferencia_deposito] Smalldatetime NULL,
+Primary Key ([PKId_TBTransferencia_deposito])
+) 
+go
+
+Create table [TBItens_transferencia_deposito]
+(
+	[PKId_TBItens_transferencia_deposito] Integer Identity NOT NULL,
+	[FKId_TBProduto] Integer NOT NULL,
+	[FKId_TBTransferencia_deposito] Integer NOT NULL,
+	[DFQuantidade_TBItens_transferencia_deposito] Money NULL,
+	[DFLote_TBItens_transferencia_deposito] Nvarchar(20) NULL,
+	[DFData_fabricacao_TBItens_transferencia_deposito] Smalldatetime NULL,
+	[DFData_validade_TBItens_transferencia_deposito] Smalldatetime NULL,
+Primary Key ([PKId_TBItens_transferencia_deposito])
+) 
+go
+
+
+
+Alter table [TBItens_transferencia_deposito] add  foreign key([FKId_TBProduto]) references [TBProduto] ([PKId_TBProduto])  on update no action on delete no action 
+go
+Alter table [TBTransferencia_deposito] add  foreign key([FKCodigo_TBSeparador]) references [TBSeparador] ([PKCodigo_TBSeparador])  on update no action on delete no action 
+go
+Alter table [TBTransferencia_deposito] add  foreign key([FKCodigo_conferente_TBSeparador]) references [TBSeparador] ([PKCodigo_TBSeparador])  on update no action on delete no action 
+go
+Alter table [TBTransferencia_deposito] add  foreign key([FKId_saida_TBEnderecamento_estoque]) references [TBEnderecamento_estoque] ([PKid_TBEnderecamento_estoque])  on update no action on delete no action 
+go
+Alter table [TBTransferencia_deposito] add  foreign key([FKId_entrada_TBEnderecamento_estoque]) references [TBEnderecamento_estoque] ([PKid_TBEnderecamento_estoque])  on update no action on delete no action 
+go
+Alter table [TBItens_transferencia_deposito] add  foreign key([FKId_TBTransferencia_deposito]) references [TBTransferencia_deposito] ([PKId_TBTransferencia_deposito])  on update no action on delete no action 
+go
+
+
+Set quoted_identifier on
+go
+Set quoted_identifier off
+go
+
+/* Roles permissions */
+
+
+go
+
+
+COMMIT TRANSACTION
+

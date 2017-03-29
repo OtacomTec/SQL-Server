@@ -1,0 +1,35 @@
+BEGIN TRANSACTION
+SET QUOTED_IDENTIFIER ON
+SET TRANSACTION ISOLATION LEVEL SERIALIZABLE
+SET ARITHABORT ON
+SET NUMERIC_ROUNDABORT OFF
+SET CONCAT_NULL_YIELDS_NULL ON
+SET ANSI_NULLS ON
+SET ANSI_PADDING ON
+SET ANSI_WARNINGS ON
+COMMIT
+BEGIN TRANSACTION
+ALTER TABLE dbo.TBFuncionario ADD
+	DFSexo_TBFuncionario bit NULL,
+	DFNumero_CNH_TBFuncionario int NULL,
+	DFTipo_cnh_TBFuncionario char(2) NULL,
+	DFData_validade_cnh_TBFuncionario smalldatetime NULL,
+	DFNumero_pis_TBFuncionario int NULL,
+	DFAgencia_FGTS_TBFuncionario nvarchar(10) NULL,
+	DFConta_FGTS_TBFuncionario nvarchar(10) NULL,
+	DFPercentual_vale_transporte_TBFuncionario money NULL,
+	DFPercentual_comissao_TBFuncionario money NULL,
+	FKCodigo_TBBancos int NULL,
+	DFAgencia_recebimento_TBFuncionario nvarchar(10) NULL,
+	DFNumero_conta_recebimento_TBFuncionario nvarchar(10) NULL,
+	DFTipo_conta_TBFuncionario nvarchar(10) NULL,
+	DFNumero_registro_TBFuncionario nvarchar(10) NULL,
+	DFEstado_civil_TBFuncionario int NULL,
+	DFHora_entrada_TBFuncionario nvarchar(8) NULL,
+	DFHora_almoco_ida_TBFuncionario nvarchar(8) NULL,
+	DFHora_almoco_volta_TBFuncionario nvarchar(8) NULL,
+	DFHora_lanche_ida_TBFuncionario nvarchar(8) NULL,
+	DFHora_lanche_volta_TBFuncionario nvarchar(8) NULL,
+	DFHora_saida_TBFuncionario nvarchar(8) NULL
+GO
+COMMIT

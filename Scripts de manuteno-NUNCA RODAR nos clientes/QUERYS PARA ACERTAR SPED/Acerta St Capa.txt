@@ -1,0 +1,16 @@
+Select
+Fkid_Tbnota_saida_fiscal,
+Sum (DFBase_calculo_subst_tributaria_TBItens_nota_saida_fiscal) As BAse_st,
+Sum (DFValor_subst_tributaria_TBItens_nota_saida_fiscal) As Valor_st
+into acerta_st_saida
+from  Tbitens_nota_saida_fiscal
+inner join Tbnota_saida_fiscal
+On fkid_tbnota_saida_fiscal = pkid_tbnota_saida_fiscal
+group by Fkid_Tbnota_saida_fiscal
+
+Update  tbnota_saida_fiscal
+set DFBase_calculo_subst_tributaria_TBNota_saida_fiscal = BAse_st,
+DFValor_subst_tributaria_TBNota_saida_fiscal = Valor_st
+from  tbnota_saida_fiscal
+inner join acerta_st_saida
+on Fkid_Tbnota_saida_fiscal = pkid_Tbnota_saida_fiscal

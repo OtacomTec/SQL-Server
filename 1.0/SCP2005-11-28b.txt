@@ -1,0 +1,24 @@
+/*
+   segunda-feira, 28 de novembro de 2005 13:48:06
+   User: sa
+   Server: ONLYTECH-02
+   Database: BDRetaguarda
+   Application: MS SQLEM - Data Tools
+*/
+
+BEGIN TRANSACTION
+SET QUOTED_IDENTIFIER ON
+SET TRANSACTION ISOLATION LEVEL SERIALIZABLE
+SET ARITHABORT ON
+SET NUMERIC_ROUNDABORT OFF
+SET CONCAT_NULL_YIELDS_NULL ON
+SET ANSI_NULLS ON
+SET ANSI_PADDING ON
+SET ANSI_WARNINGS ON
+COMMIT
+BEGIN TRANSACTION
+EXECUTE sp_rename N'dbo.TBFuncionario.DFUf_cnh_TBFuncionario', N'Tmp_DFUf_carteira_trabalho_TBFuncionario', 'COLUMN'
+GO
+EXECUTE sp_rename N'dbo.TBFuncionario.Tmp_DFUf_carteira_trabalho_TBFuncionario', N'DFUf_carteira_trabalho_TBFuncionario', 'COLUMN'
+GO
+COMMIT

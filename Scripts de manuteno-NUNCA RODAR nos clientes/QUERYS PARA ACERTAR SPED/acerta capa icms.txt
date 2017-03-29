@@ -1,0 +1,16 @@
+Select
+Fkid_Tbnota_saida_fiscal,
+Sum (DFValor_total_item_TBItens_nota_saida_fiscal) As BAse_icms,
+Sum (DFValor_total_icms_TBItens_nota_saida_fiscal) As Valor_icms
+into acerta_st_saida_icms
+from  Tbitens_nota_saida_fiscal
+inner join Tbnota_saida_fiscal
+On fkid_tbnota_saida_fiscal = pkid_tbnota_saida_fiscal
+group by Fkid_Tbnota_saida_fiscal
+
+Update  tbnota_saida_fiscal
+set  DFBase_calculo_icms_TBNota_saida_fiscal = BAse_icms,
+DFValor_icms_TBNota_saida_fiscal = Valor_icms
+from  tbnota_saida_fiscal
+inner join acerta_st_saida_icms
+on Fkid_Tbnota_saida_fiscal = pkid_Tbnota_saida_fiscal

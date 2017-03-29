@@ -1,0 +1,6 @@
+CREATE TABLE [dbo].[TBCliente_Produtos_Top5_palm](
+	[FKCodigo_TBProduto_palm_TBCliente_Produtos_Top5_palm] [int] NOT NULL,
+	[DFValor_Vendido_TBCliente_Produtos_Top5_palm] [money] NULL,
+	[FKCodigo_TBCliente_palm] [int] NULL,
+	[FKCodigo_TBProduto_palm] [int] NULL
+) ON [PRIMARY]

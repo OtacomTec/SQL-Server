@@ -1,0 +1,81 @@
+/*
+Created		27/5/2003
+Modified		28/4/2005
+Project		
+Model			
+Company		
+Author		
+Version		
+Database		MS SQL 2000 
+*/
+
+
+
+Create table [TBCotacao_moeda]
+(
+	[PKId_TBCotacao_moeda] Integer Identity NOT NULL,
+	[FKCodigo_TBMoeda] Integer NOT NULL,
+	[DFData_TBCotacao_moeda] Smalldatetime NULL,
+	[DFValor_TBCotacao_moeda] Money NULL,
+Primary Key ([PKId_TBCotacao_moeda])
+) 
+go
+
+
+
+
+
+
+
+
+
+
+Alter table [TBCotacao_moeda] add  foreign key([FKCodigo_TBMoeda]) references [TBMoeda] ([PKCodigo_TBMoeda])  on update no action on delete no action 
+go
+
+
+Set quoted_identifier on
+go
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Set quoted_identifier off
+go
+
+
+
+
+
+
+
+
+/* Roles permissions */
+
+
+
+
+
+/* Users permissions */
+
+
+
+
+
+

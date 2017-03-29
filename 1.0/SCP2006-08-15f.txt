@@ -1,0 +1,214 @@
+BEGIN TRANSACTION
+/*
+ *** IDENTIFICAÇÃO DO SCRIPT ***
+
+ 1 - Apartir de 20/12/2005, fica expressamente proibida a criação de scripts sem que seja preenchido este cabeçalho
+ 2 - Obrigatoriamente necessário que este paragrafo seja inserido apos um BEGIN TRANSACTION
+ 3 - Obrigatoriamente o preenchimento das variaveis abaixo(@Nomenclatura,@Observacao,@Data)com valores correspondentes e condizentes
+ Att: Marcos
+
+*/
+
+--INICIO CABECALHO
+
+declare @Nomenclatura as nvarchar(20)
+declare @Observacao as nvarchar(100)
+declare @Data as SMALLDATETIME
+
+SET @Nomenclatura = 'SCP2006-08-15f'
+SET @Observacao = 'Cria Tabelas Comandas'
+SET @Data = CURRENT_TIMESTAMP
+
+---LIMPEZA DA TABELA
+
+DELETE FROM TBSCRIPT
+
+---INSERCAO DO REGISTRO
+
+INSERT INTO TBSCRIPT(DFNome_TBScript,DFObjetivo_TBScript,DFData_execucao_TBScript)
+VALUES(@Nomenclatura,@Observacao,@Data)
+
+---FIM CABECALHO
+
+/*
+Created		27/5/2003
+Modified		15/8/2006
+Project		Only Tech - ERP
+Model			Olt
+Company		Only Tech
+Author		Only Tech
+Version		1.0
+Database		MS SQL 2000 
+*/
+
+/*
+Created		27/5/2003
+Modified		15/8/2006
+Project		Only Tech - ERP
+Model			Olt
+Company		Only Tech
+Author		Only Tech
+Version		1.0
+Database		MS SQL 2000 
+*/
+
+Create table [TBComanda]
+(
+	[PKId_TBComanda] Integer Identity NOT NULL,
+	[FKId_TBMesa_balcao] Integer NOT NULL,
+	[FKId_TBVendedor] Integer NOT NULL,
+	[DFData_dia_trabalho_TBComanda] Smalldatetime NULL,
+	[DFData_abertura_TBComanda] Smalldatetime NULL,
+	[DFHora_abertura_TBComanda] Nvarchar(10) NULL,
+	[DFData_fechamento_TBComanda] Smalldatetime NULL,
+	[DFHora_fechamento_TBComanda] Smalldatetime NULL,
+	[DFNumero_cupom_TBComanda] Integer NULL,
+	[DFNumero_TBComanda] Integer NULL,
+	[DFNumero_pessoas_TBComanda] Integer NULL,
+	[DFTaxa_servico_TBComanda] Money NULL,
+	[DFCouver_pessoa_TBComanda] Money NULL,
+	[DFStatus_fechado_TBComanda] Bit NULL,
+	[DFObservacao_linha1_TBComanda] Nvarchar(40) NULL,
+	[DFObservacao_linha2_TBComanda] Nvarchar(40) NULL,
+	[DFIntegrado_portal_TBComanda] Bit NULL,
+	[DFIntegrado_filiais_TBComanda] Bit NULL,
+	[DFData_alteracao_TBComanda] Smalldatetime NULL,
+	[DFCodigo_Identificador_TBComanda] Integer NULL,
+Primary Key ([PKId_TBComanda])
+) 
+go
+
+Create table [TBItens_comanda]
+(
+	[PKId_TBItens_comanda] Integer Identity NOT NULL,
+	[FKId_TBComanda] Integer NOT NULL,
+	[FKId_TBProduto] Integer NOT NULL,
+	[DFQuantidade_TBItens_comanda] Money NULL,
+	[DFPreco_TBItens_comanda] Money NULL,
+	[DFValor_total_TBItens_comanda] Money NULL,
+	[DFIntegrado_portal_TBItens_comanda] Bit NULL,
+	[DFIntegrado_filiais_TBItens_comanda] Bit NULL,
+	[DFData_alteracao_TBItens_comanda] Smalldatetime NULL,
+	[DFCodigo_Identificador_TBItens_comanda] Integer NULL,
+Primary Key ([PKId_TBItens_comanda])
+) 
+go
+
+Create table [TBParametro_comanda]
+(
+	[PKId_TBParametro_comanda] Integer Identity NOT NULL,
+	[DFNumero_mesas_TBParametro_comanda] Integer NULL,
+	[DFNumero_balcao_TBParametro_comanda] Integer NULL,
+	[DFDia_trabalho_TBParametro_comanda] Smalldatetime NULL,
+	[DFMensagem_linha1_TBParametro_comanda] Nvarchar(40) NULL,
+	[DFMensagem_linha2_TBParametro_comanda] Nvarchar(40) NULL,
+	[DFMensagem_linha3_TBParametro_comanda] Nvarchar(40) NULL,
+	[DFMensagem_linha4_TBParametro_comanda] Nvarchar(40) NULL,
+	[DFTaxa_servico_TBParametro_comanda] Money NULL,
+	[DFTaxa_couver_pessoa_TBParametro_comanda] Money NULL,
+	[DFIntegrado_portal_TBParametro_comanda] Bit NULL,
+	[DFIntegrado_filiais_TBParametro_comanda] Bit NULL,
+	[DFData_alteracao_TBParametro_comanda] Smalldatetime NULL,
+	[DFCodigo_Identificador_TBParametro_comanda] Integer NULL,
+Primary Key ([PKId_TBParametro_comanda])
+) 
+go
+
+Create table [TBMesa_balcao]
+(
+	[PKId_TBMesa_balcao] Integer Identity NOT NULL,
+	[DFNumero_TBMesa_balcao] Integer NULL,
+	[DFDelivery_mesa_balcao_TBMesa_balcao] Integer NULL,
+	[DFStatus_TBMesa_balcao] Integer NULL,
+	[DFIntegrado_portal_TBMesa_balcao] Bit NULL,
+	[DFIntegrado_filiais_TBMesa_balcao] Bit NULL,
+	[DFData_alteracao_TBMesa_balcao] Smalldatetime NULL,
+	[DFCodigo_Identificador_TBMesa_balcao] Integer NULL,
+Primary Key ([PKId_TBMesa_balcao])
+) 
+go
+
+Create table [TBDelivery_comanda]
+(
+	[PKId_TBDelivery_comanda] Integer Identity NOT NULL,
+	[FKId_TBComanda] Integer NOT NULL,
+	[FKId_TBCliente] Integer NOT NULL,
+	[FKCodigo_TBTransportadora] Integer NOT NULL,
+	[FKCodigo_TBArea_venda] Integer NOT NULL,
+	[DFTroco_para_TBDelivery_comanda] Money NULL,
+	[DFPonto_referencia_TBDelivery_comanda] Nchar(40) NULL,
+	[DFIntegrado_portal_TBDelivery_comanda] Bit NULL,
+	[DFIntegrado_filiais_TBDelivery_comanda] Bit NULL,
+	[DFData_alteracao_TBDelivery_comanda] Smalldatetime NULL,
+	[DFCodigo_Identificador_TBDelivery_comanda] Integer NULL,
+Primary Key ([PKId_TBDelivery_comanda])
+) 
+go
+
+Create table [TBOperacao_comanda]
+(
+	[PKId_TBOperacao_comanda] Integer Identity NOT NULL,
+	[FKCodigo_TBOperadores_ecf] Integer NOT NULL,
+	[FKId_TBFinalizadora] Integer NOT NULL,
+	[DFData_TBOperacao_comanda] Smalldatetime NULL,
+	[DFHora_TBOperacao_comanda] Nvarchar(10) NULL,
+	[DFValor_TBOperacao_comanda] Money NULL,
+	[DFObservacao_TBOperacao_comanda] Nvarchar(100) NULL,
+	[FKId_TBComanda] Integer NULL,
+Primary Key ([PKId_TBOperacao_comanda])
+) 
+go
+
+Alter table [TBItens_comanda] add  foreign key([FKId_TBProduto]) references [TBProduto] ([PKId_TBProduto])  on update no action on delete no action 
+go
+Alter table [TBDelivery_comanda] add  foreign key([FKId_TBCliente]) references [TBCliente] ([PKId_TBCliente])  on update no action on delete no action 
+go
+Alter table [TBComanda] add  foreign key([FKId_TBVendedor]) references [TBVendedor] ([PKId_TBVendedor])  on update no action on delete no action 
+go
+Alter table [TBDelivery_comanda] add  foreign key([FKCodigo_TBTransportadora]) references [TBTransportadora] ([PKCodigo_TBTransportadora])  on update no action on delete no action 
+go
+Alter table [TBDelivery_comanda] add  foreign key([FKCodigo_TBArea_venda]) references [TBArea_venda] ([PKCodigo_TBArea_venda])  on update no action on delete no action 
+go
+Alter table [TBOperacao_comanda] add  foreign key([FKCodigo_TBOperadores_ecf]) references [TBOperadores_ecf] ([PKCodigo_TBOperadores_ecf])  on update no action on delete no action 
+go
+Alter table [TBOperacao_comanda] add  foreign key([FKId_TBFinalizadora]) references [TBFinalizadora] ([PKId_TBFinalizadora])  on update no action on delete no action 
+go
+Alter table [TBItens_comanda] add  foreign key([FKId_TBComanda]) references [TBComanda] ([PKId_TBComanda])  on update no action on delete no action 
+go
+Alter table [TBDelivery_comanda] add  foreign key([FKId_TBComanda]) references [TBComanda] ([PKId_TBComanda])  on update no action on delete no action 
+go
+Alter table [TBComanda] add  foreign key([FKId_TBMesa_balcao]) references [TBMesa_balcao] ([PKId_TBMesa_balcao])  on update no action on delete no action 
+go
+
+Set quoted_identifier on
+go
+Set quoted_identifier off
+go
+
+/* Roles permissions */
+
+/* Users permissions */
+
+
+
+
+
+
+
+
+
+Set quoted_identifier on
+go
+
+Set quoted_identifier off
+go
+
+/* Roles permissions */
+
+/* Users permissions */
+
+
+
+COMMIT TRANSACTION
+
+

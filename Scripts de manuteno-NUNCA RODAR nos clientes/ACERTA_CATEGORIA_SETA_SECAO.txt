@@ -1,0 +1,16 @@
+INSERT INTO TBCategoria 
+(DFDescricao_TBCategoria,
+DFSigla_TBCategoria,
+DFData_cadastro_TBCategoria,
+DFData_alteracao_TBCategoria) 
+VALUES('GERAL',
+'GER',
+'20060418',
+'20060418') 
+
+UPDATE TBSecao SET FKId_TBCategoria = '1'
+
+
+INSERT INTO TBModelo (DFDescricao_TBModelo,DFSigla_TBModelo) SELECT 'GERAL','GER' 
+INSERT INTO TBMaterial (DFDescricao_TBMaterial,DFSigla_TBMaterial) SELECT 'GERAL','GER' 
+INSERT INTO TBCores (DFDescricao_TBCores,DFSigla_TBCores) SELECT 'GERAL','GER' 

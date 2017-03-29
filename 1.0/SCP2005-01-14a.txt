@@ -1,0 +1,130 @@
+/*
+Created		27/5/2003
+Modified		14/1/2005
+Project		
+Model			
+Company		
+Author		
+Version		
+Database		MS SQL 2000 
+*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Create table [TBOperadores_ecf]
+(
+	[PKCodigo_TBOperadores_ecf] Integer NOT NULL,
+	[DFNome_TBOperadores_ecf] Nvarchar(50) NULL,
+	[DFNivel_TBOperadores_ecf] Integer NULL,
+	[DFNumero_cartao_TBOperadores_ecf] Integer NULL,
+	[DFSenha_TBOperadores_ecf] Nvarchar(10) NULL,
+Primary Key ([PKCodigo_TBOperadores_ecf])
+) 
+go
+
+Create table [TBPdv]
+(
+	[PKCofigo_TBPdv] Integer NOT NULL,
+	[FKCodigo_TBImpressoras_ecf] Integer NOT NULL,
+	[DFNumero_ecf_TBPdv] Integer NULL,
+Primary Key ([PKCofigo_TBPdv])
+) 
+go
+
+Create table [TBImpressoras_ecf]
+(
+	[PKCodigo_TBImpressoras_ecf] Integer NOT NULL,
+	[DFNome_TBImpressoras_ecf] Nvarchar(40) NULL,
+	[DFVersao_TBImpressoras_ecf] Nvarchar(20) NULL,
+Primary Key ([PKCodigo_TBImpressoras_ecf])
+) 
+go
+
+Create table [TBParametros_ecf]
+(
+	[PKCodigo_TBParametros_ecf] Integer NOT NULL,
+	[DFTipo_quantidade_TBParametros_ecf] Char(1) NULL,
+	[DFNumero_decimais_TBParametros_ecf] Integer NULL,
+	[DFTipo_desconto_TBParametros_ecf] Char(1) NULL,
+	[DFCodigo_inicial_peso_variavel_TBParametros_ecf] Integer NULL,
+	[DFPreco_peso_balanca_TBParametros_ecf] Bit NULL,
+Primary Key ([PKCodigo_TBParametros_ecf])
+) 
+go
+
+
+
+
+
+
+
+
+
+
+
+
+Alter table [TBPdv] add  foreign key([FKCodigo_TBImpressoras_ecf]) references [TBImpressoras_ecf] ([PKCodigo_TBImpressoras_ecf])  on update no action on delete no action 
+go
+
+
+Set quoted_identifier on
+go
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Set quoted_identifier off
+go
+
+
+
+
+
+
+
+
+/* Roles permissions */
+
+
+
+
+
+/* Users permissions */
+
+
+
+
+
+

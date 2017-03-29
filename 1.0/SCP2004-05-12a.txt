@@ -1,0 +1,48 @@
+/*
+Created		27/5/2003
+Modified		11/5/2004
+Project		
+Model		
+Company		
+Author		
+Version		
+Database		MS SQL 2000 
+*/
+
+
+
+Create table [TBConta_corrente] (
+	[PkId_TBConta_corrente] Integer Identity NOT NULL,
+	[FKCodigo_TBBancos] Integer NOT NULL,
+	[DFAgencia_TBConta_corrente] Nvarchar(4) NULL,
+	[DFNumero_contaTBConta_corrente] Nvarchar(10) NOT NULL,
+	[DFDigito_conta_TBConta_corrente] Nvarchar(2) NULL,
+	[DFCarteira_TBConta_corrente] Nvarchar(3) NULL,
+	[DFProximo_nosso_numero_TBConta_corrente] Nvarchar(20) NOT NULL,
+Primary Key ([PkId_TBConta_corrente])
+) 
+go
+
+
+Alter table [TBConta_corrente] add  foreign key([FKCodigo_TBBancos]) references [TBBancos] ([PKCodigo_TBBancos])  on update no action on delete no action 
+go
+
+
+Set quoted_identifier on
+go
+
+
+
+Set quoted_identifier off
+go
+
+
+
+
+/* Roles permissions */
+
+
+/* Users permissions */
+
+
+

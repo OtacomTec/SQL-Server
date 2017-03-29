@@ -1,0 +1,11 @@
+CREATE TABLE [dbo].[TBCliente_visita_palm](
+	[PKId_TBCliente_visita_palm] [int]IDENTITY (1, 1) NOT NULL,
+	[FKCodigo_TBCliente_palm] [int] NULL,
+	[FKCodigo_TBVendedor_palm] [int] NULL,
+	[DFTipo_visita_TBCliente_visita_palm] [int] NULL,
+	[DFDia_visita_TBCliente_visita_palm] [int] NULL,
+	[DFSequencia_TBCliente_visita_palm] [int] NULL,
+        [DFSub_Sequencia_TBCliente_visita_palm] [nvarchar](2) NULL,
+	[DFData_atualizacao_TBCliente_visita_palm] [smalldatetime] NULL,
+	[DFHora_atualizacao_TBCliente_visita_palm] [smalldatetime] NULL
+) ON [PRIMARY]

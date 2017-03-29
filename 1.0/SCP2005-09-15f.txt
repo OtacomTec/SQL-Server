@@ -1,0 +1,64 @@
+/*
+   quinta-feira, 15 de setembro de 2005 14:05:18
+   User: sa
+   Server: ONLYTECH-02
+   Database: BDRetaguarda
+   Application: MS SQLEM - Data Tools
+*/
+
+BEGIN TRANSACTION
+SET QUOTED_IDENTIFIER ON
+SET TRANSACTION ISOLATION LEVEL SERIALIZABLE
+SET ARITHABORT ON
+SET NUMERIC_ROUNDABORT OFF
+SET CONCAT_NULL_YIELDS_NULL ON
+SET ANSI_NULLS ON
+SET ANSI_PADDING ON
+SET ANSI_WARNINGS ON
+COMMIT
+BEGIN TRANSACTION
+COMMIT
+BEGIN TRANSACTION
+COMMIT
+BEGIN TRANSACTION
+COMMIT
+BEGIN TRANSACTION
+COMMIT
+BEGIN TRANSACTION
+ALTER TABLE dbo.TBItens_nota_saida_fiscal ADD CONSTRAINT
+	FK_TBItens_nota_saida_fiscal_TBNota_saida FOREIGN KEY
+	(
+	FKId_TBnota_saida_fiscal
+	) REFERENCES dbo.TBNota_saida
+	(
+	PKId_TBNota_saida
+	)
+GO
+ALTER TABLE dbo.TBItens_nota_saida_fiscal ADD CONSTRAINT
+	FK_TBItens_nota_saida_fiscal_TBProduto FOREIGN KEY
+	(
+	FKId_TBProduto
+	) REFERENCES dbo.TBProduto
+	(
+	PKId_TBProduto
+	)
+GO
+ALTER TABLE dbo.TBItens_nota_saida_fiscal ADD CONSTRAINT
+	FK_TBItens_nota_saida_fiscal_TBCfop FOREIGN KEY
+	(
+	FKId_TBCfop
+	) REFERENCES dbo.TBCfop
+	(
+	PKId_TBCfop
+	)
+GO
+ALTER TABLE dbo.TBItens_nota_saida_fiscal ADD CONSTRAINT
+	FK_TBItens_nota_saida_fiscal_TBVendedor FOREIGN KEY
+	(
+	FKId_TBVendedor
+	) REFERENCES dbo.TBVendedor
+	(
+	PKId_TBVendedor
+	)
+GO
+COMMIT

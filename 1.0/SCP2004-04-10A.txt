@@ -1,0 +1,140 @@
+/*
+Created		27/5/2003
+Modified		10/4/2004
+Project		
+Model		
+Company		
+Author		
+Version		
+Database		MS SQL 2000 
+*/
+
+
+
+
+
+
+
+
+
+Create table [TBFuncao] (
+	[PKCodigo_TBFuncao] Integer NOT NULL,
+	[DFDescricao_TBFuncao] Nvarchar(50) NOT NULL,
+	[DFTipo_formulario_TBFuncao] Integer NULL,
+Primary Key ([PKCodigo_TBFuncao])
+) 
+go
+
+Create table [TBFuncionario] (
+	[PKCodigo_TBFuncionario] Integer NOT NULL,
+	[FKCodigo_TBEmpresa] Integer NOT NULL,
+	[DFNome_TBFuncionario] Nvarchar(40) NOT NULL,
+	[DFEndereco_TBFuncionario] Nvarchar(40) NOT NULL,
+	[DFNumero_TBFuncionario] Nvarchar(10) NULL,
+	[DFComplemento_TBFuncionario] Nvarchar(20) NULL,
+	[DFBairro_TBFuncionario] Nvarchar(30) NULL,
+	[DFCep_TBFuncionario] Nvarchar(10) NOT NULL,
+	[FKId_TBCidade_otica] Integer NOT NULL,
+	[DFData_Admissao_TBFuncionario] Smalldatetime NOT NULL,
+	[FKCodigo_TBFuncao] Integer NOT NULL,
+	[DFCpf_TBFuncionario] Nvarchar(20) NULL,
+	[DFRegistro_geral_TBFuncionario] Nvarchar(20) NULL,
+	[DFOrgao_expedidor_TBFuncionario] Nvarchar(20) NULL,
+	[DFEmite_recibo_TBFuncionario] Bit NOT NULL,
+	[DFObservacao_TBFuncionario] Nvarchar(50) NULL,
+	[DFPath_foto_TBFuncionario] Nvarchar(100) NULL,
+Primary Key ([PKCodigo_TBFuncionario])
+) 
+go
+
+Create table [TBAgenda_funcionario] (
+	[PKId_TBAgenda_funcionario] Integer Identity NOT NULL,
+	[FKCodigo_TBFuncionario] Integer NOT NULL,
+	[DFContato_TBAgenda_funcionario] Integer NOT NULL,
+	[DFTelefone_TBAgenda_funcionario] Nvarchar(20) NOT NULL,
+	[DFEmail_TBAgenda_funcionario] Nvarchar(50) NULL,
+Primary Key ([PKId_TBAgenda_funcionario])
+) 
+go
+
+Create table [TBReferencias_funcionario] (
+	[PKId_TBReferencias_funcionarios] Integer Identity NOT NULL,
+	[FKCodigo_TBFuncionario] Integer NOT NULL,
+	[DFEmpresa_anterior_TBReferencias_funcionario] Nvarchar(50) NOT NULL,
+	[DFFuncao_TBReferencias_funcionario] Nvarchar(50) NULL,
+	[DFData_admissao_TBReferencias_funcionario] Smalldatetime NOT NULL,
+	[DFData_demissao_TBReferencias_funcionario] Smalldatetime NOT NULL,
+Primary Key ([PKId_TBReferencias_funcionarios])
+) 
+go
+
+Create table [TBParametros_funcionarios] (
+	[PFKCodigo_TBEmpresa] Integer NOT NULL,
+	[DFMensagem_TBParametros_funcionario] Nvarchar(100) NULL,
+Primary Key ([PFKCodigo_TBEmpresa])
+) 
+go
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+go
+Alter table [TBFuncionario] add  foreign key([FKCodigo_TBEmpresa]) references [TBEmpresa] ([PKCodigo_TBEmpresa])  on update no action on delete no action 
+go
+Alter table [TBParametros_funcionarios] add  foreign key([PFKCodigo_TBEmpresa]) references [TBEmpresa] ([PKCodigo_TBEmpresa])  on update no action on delete no action 
+go
+Alter table [TBFuncionario] add  foreign key([FKCodigo_TBFuncao]) references [TBFuncao] ([PKCodigo_TBFuncao])  on update no action on delete no action 
+go
+Alter table [TBAgenda_funcionario] add  foreign key([FKCodigo_TBFuncionario]) references [TBFuncionario] ([PKCodigo_TBFuncionario])  on update no action on delete no action 
+go
+Alter table [TBReferencias_funcionario] add  foreign key([FKCodigo_TBFuncionario]) references [TBFuncionario] ([PKCodigo_TBFuncionario])  on update no action on delete no action 
+go
+
+
+Set quoted_identifier on
+go
+
+
+
+
+
+
+
+
+
+
+
+
+Set quoted_identifier off
+go
+
+
+
+
+
+
+
+
+/* Roles permissions */
+
+
+
+
+
+/* Users permissions */
+
+
+
+
+
+

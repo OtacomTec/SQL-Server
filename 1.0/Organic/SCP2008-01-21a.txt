@@ -1,0 +1,94 @@
+/*
+Created		27/5/2003
+Modified		23/8/2007
+Project		Only Tech - ERP
+Model			Olt
+Company		Only Tech
+Author		Only Tech
+Version		1.0
+Database		MS SQL 2000 
+*/
+
+
+BEGIN TRANSACTION
+/*
+ *** IDENTIFICAÇÃO DO SCRIPT ***
+
+ 1 - Apartir de 20/12/2005, fica expressamente proibida a criação de scripts sem que seja preenchido este cabeçalho
+ 2 - Obrigatoriamente necessário que este paragrafo seja inserido apos um BEGIN TRANSACTION
+ 3 - Obrigatoriamente o preenchimento das variaveis abaixo(@Nomenclatura,@Observacao,@Data)com valores correspondentes e condizentes
+ Att: Marcos
+
+*/
+
+--INICIO CABECALHO
+
+declare @Nomenclatura as nvarchar(20)
+declare @Observacao as nvarchar(100)
+declare @Data as SMALLDATETIME
+
+SET @Nomenclatura = 'SCP2007-09-20b'
+SET @Observacao = 'Cria  tabela de fatores ' 
+SET @Data = CURRENT_TIMESTAMP
+
+---LIMPEZA DA TABELA
+
+DELETE FROM TBSCRIPT
+
+---INSERCAO DO REGISTRO
+
+INSERT INTO BDRetaguarda.dbo.TBSCRIPT(DFNome_TBScript,DFObjetivo_TBScript,DFData_execucao_TBScript)
+VALUES(@Nomenclatura,@Observacao,@Data)
+
+---FIM CABECALHO
+
+
+/*
+Created		27/5/2003
+Modified		23/8/2007
+Project		Only Tech - ERP
+Model			Olt
+Company		Only Tech
+Author		Only Tech
+Version		1.0
+Database		MS SQL 2000 
+*/
+
+
+Create table [TBParametros_producao]
+(
+	[PKId_TBParametros_producao] Integer Identity NOT NULL,
+	[FKCodigo_TBEmpresa] Integer NOT NULL,
+	[FKid_TBCentro_estoque_origem_requisicao] Integer NULL,
+	[FKid_TBCentro_estoque_destino_requisicao] Integer NULL,
+	[FKCodigo_origem_requisicao_TBSeparador] Integer NULL,
+	[FKCodigo_destino_requisicao_TBSeparador] Integer NULL,
+	[DFPegada_media_concha_TBParametros_producao] Money NULL,
+	[DFPegada_media_topping_TBParametros_producao] Money NULL,
+	[DFMargem_seguranca_requisicao_TBParametros_producao] Money NULL,
+	[DFMargem_compra_requisicao_TBParametros_producao] Money NULL,
+	[FKid_TBCentro_estoque_origem_producao] Integer NULL,
+	[FKid_TBCentro_estoque_destino_producao] Integer NULL,
+	[FKCodigo_origem_producao_TBSeparador] Integer NULL,
+	[FKCodigo_destino_producao_TBSeparador] Integer NULL,
+Primary Key ([PKId_TBParametros_producao])
+) 
+go
+
+go
+Alter table [TBParametros_producao] add  foreign key([FKCodigo_TBEmpresa]) references [TBEmpresa] ([PKCodigo_TBEmpresa])  on update no action on delete no action 
+go
+
+Set quoted_identifier on
+go
+
+
+Set quoted_identifier off
+go
+
+/* Roles permissions */
+
+/* Users permissions */
+
+COMMIT TRANSACTION
+

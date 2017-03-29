@@ -1,0 +1,41 @@
+/*
+   quarta-feira, 7 de dezembro de 2005 12:43:42
+   User: sa
+   Server: ONLYTECH-02
+   Database: BDRetaguarda
+   Application: MS SQLEM - Data Tools
+*/
+
+BEGIN TRANSACTION
+SET QUOTED_IDENTIFIER ON
+SET TRANSACTION ISOLATION LEVEL SERIALIZABLE
+SET ARITHABORT ON
+SET NUMERIC_ROUNDABORT OFF
+SET CONCAT_NULL_YIELDS_NULL ON
+SET ANSI_NULLS ON
+SET ANSI_PADDING ON
+SET ANSI_WARNINGS ON
+COMMIT
+BEGIN TRANSACTION
+CREATE TABLE dbo.Tmp_TBDepartamento
+	(
+	PKCodigo_TBDepartamento int NOT NULL,
+	DFNome_TBDepartamento nvarchar(40) NOT NULL
+	)  ON [PRIMARY]
+GO
+IF EXISTS(SELECT * FROM dbo.TBDepartamento)
+	 EXEC('INSERT INTO dbo.Tmp_TBDepartamento (PKCodigo_TBDepartamento, DFNome_TBDepartamento)
+		SELECT CONVERT(int, PKCodigo_TBDepartamento), DFNome_TBDepartamento FROM dbo.TBDepartamento TABLOCKX')
+GO
+DROP TABLE dbo.TBDepartamento
+GO
+EXECUTE sp_rename N'dbo.Tmp_TBDepartamento', N'TBDepartamento', 'OBJECT'
+GO
+ALTER TABLE dbo.TBDepartamento ADD CONSTRAINT
+	PK__TBDepartamento__7D534BBF PRIMARY KEY CLUSTERED 
+	(
+	PKCodigo_TBDepartamento
+	) ON [PRIMARY]
+
+GO
+COMMIT

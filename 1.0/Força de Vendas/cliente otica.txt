@@ -1,0 +1,18 @@
+CREATE TABLE [dbo].[TBCliente_media_anual_palm](
+	[FKCodigo_TBCliente_TBCliente_media_anual_palm] [int] NULL,
+	[DFValor_Jan_TBCliente_media_anual_palm] [money] NULL,
+	[DFValor_Fev_TBCliente_media_anual_palm] [money] NULL,
+	[DFValor_Mar_TBCliente_media_anual_palm] [money] NULL,
+	[DFValor_Abr_TBCliente_media_anual_palm] [money] NULL,
+	[DFValor_Mai_TBCliente_media_anual_palm] [money] NULL,
+	[DFValor_Jun_TBCliente_media_anual_palm] [money] NULL,
+	[DFValor_Jul_TBCliente_media_anual_palm] [money] NULL,
+	[DFValor_Ago_TBCliente_media_anual_palm] [money] NULL,
+	[DFValor_Set_TBCliente_media_anual_palm] [money] NULL,
+	[DFValor_Out_TBCliente_media_anual_palm] [money] NULL,
+	[DFValor_Nov_TBCliente_media_anual_palm] [money] NULL,
+	[DFValor_Dez_TBCliente_media_anual_palm] [money] NULL,
+	[FKCodigo_TBCliente_palm] [int] NULL,
+	[DFData_atualizacao_portal] [smalldatetime] NULL,
+	[DFHora_atualizacao_portal] [smalldatetime] NULL
+) ON [PRIMARY]

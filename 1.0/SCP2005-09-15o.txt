@@ -1,0 +1,40 @@
+/*
+   quinta-feira, 15 de setembro de 2005 15:41:38
+   User: sa
+   Server: ONLYTECH-02
+   Database: BDRetaguarda
+   Application: MS SQLEM - Data Tools
+*/
+
+BEGIN TRANSACTION
+SET QUOTED_IDENTIFIER ON
+SET TRANSACTION ISOLATION LEVEL SERIALIZABLE
+SET ARITHABORT ON
+SET NUMERIC_ROUNDABORT OFF
+SET CONCAT_NULL_YIELDS_NULL ON
+SET ANSI_NULLS ON
+SET ANSI_PADDING ON
+SET ANSI_WARNINGS ON
+COMMIT
+BEGIN TRANSACTION
+COMMIT
+BEGIN TRANSACTION
+ALTER TABLE dbo.TBCfop_Nota_entrada_fiscal
+	DROP CONSTRAINT FK_TBCfop_Nota_entrada_fiscal_TBNota_entrada
+GO
+COMMIT
+BEGIN TRANSACTION
+EXECUTE sp_rename N'dbo.TBCfop_Nota_entrada_fiscal.FKId_TBNota_entrada', N'Tmp_FKId_TBNota_entrada_fiscal_120', 'COLUMN'
+GO
+EXECUTE sp_rename N'dbo.TBCfop_Nota_entrada_fiscal.Tmp_FKId_TBNota_entrada_fiscal_120', N'FKId_TBNota_entrada_fiscal', 'COLUMN'
+GO
+ALTER TABLE dbo.TBCfop_Nota_entrada_fiscal ADD CONSTRAINT
+	FK_TBCfop_Nota_entrada_fiscal_TBNota_entrada_fiscal FOREIGN KEY
+	(
+	FKId_TBNota_entrada_fiscal
+	) REFERENCES dbo.TBNota_entrada_fiscal
+	(
+	PKId_TBNota_entrada_fiscal
+	)
+GO
+COMMIT

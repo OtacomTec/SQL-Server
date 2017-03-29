@@ -1,0 +1,73 @@
+/*
+Created		27/5/2003
+Modified		2/8/2005
+Project		Only Tech - ERP
+Model			Olt
+Company		Only Tech
+Author		Only Tech
+Version		1.0
+Database		MS SQL 2000 
+*/
+
+
+
+Create table [TBAgenda_vendedor]
+(
+	[PKId_TBAgenda_vendedor] Integer Identity NOT NULL,
+	[FKId_TBVendedor] Integer NOT NULL,
+	[DFContato_TBAgenda_vendedor] Nvarchar(40) NOT NULL,
+	[DFTelefone_TBAgenda_vendedor] Nvarchar(20) NOT NULL,
+	[DFEmail_TBAgenda_vendedor] Nvarchar(50) NULL,
+Primary Key ([PKId_TBAgenda_vendedor])
+) 
+go
+
+Alter table [TBAgenda_vendedor] add  foreign key([FKId_TBVendedor]) references [TBVendedor] ([PKId_TBVendedor])  on update no action on delete no action 
+go
+
+
+Set quoted_identifier on
+go
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Set quoted_identifier off
+go
+
+
+
+
+
+
+
+
+/* Roles permissions */
+
+
+
+
+
+/* Users permissions */
+
+
+
+
+
+

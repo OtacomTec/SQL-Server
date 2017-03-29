@@ -1,0 +1,24 @@
+/*
+   quarta-feira, 5 de outubro de 2005 17:18:59
+   User: sa
+   Server: ONLYTECH-02
+   Database: BDRetaguarda
+   Application: MS SQLEM - Data Tools
+*/
+
+BEGIN TRANSACTION
+SET QUOTED_IDENTIFIER ON
+SET TRANSACTION ISOLATION LEVEL SERIALIZABLE
+SET ARITHABORT ON
+SET NUMERIC_ROUNDABORT OFF
+SET CONCAT_NULL_YIELDS_NULL ON
+SET ANSI_NULLS ON
+SET ANSI_PADDING ON
+SET ANSI_WARNINGS ON
+COMMIT
+BEGIN TRANSACTION
+EXECUTE sp_rename N'dbo.TBTitulo_pago_credito_cliente.DFValor_diferencaTBTitulo_pago_credito_cliente', N'Tmp_DFValor_diferenca_TBTitulo_pago_credito_cliente', 'COLUMN'
+GO
+EXECUTE sp_rename N'dbo.TBTitulo_pago_credito_cliente.Tmp_DFValor_diferenca_TBTitulo_pago_credito_cliente', N'DFValor_diferenca_TBTitulo_pago_credito_cliente', 'COLUMN'
+GO
+COMMIT

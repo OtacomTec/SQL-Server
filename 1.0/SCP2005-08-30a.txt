@@ -1,0 +1,69 @@
+/*
+   terça-feira, 30 de agosto de 2005 09:05:57
+   User: sa
+   Server: ONLYTECH-DADOS
+   Database: BDRetaguarda
+   Application: MS SQLEM - Data Tools
+*/
+
+BEGIN TRANSACTION
+SET QUOTED_IDENTIFIER ON
+SET TRANSACTION ISOLATION LEVEL SERIALIZABLE
+SET ARITHABORT ON
+SET NUMERIC_ROUNDABORT OFF
+SET CONCAT_NULL_YIELDS_NULL ON
+SET ANSI_NULLS ON
+SET ANSI_PADDING ON
+SET ANSI_WARNINGS ON
+COMMIT
+BEGIN TRANSACTION
+ALTER TABLE dbo.TBSalario_funcionario
+	DROP CONSTRAINT FK_TBSalario_funcionario_TBFuncionario
+GO
+COMMIT
+BEGIN TRANSACTION
+CREATE TABLE dbo.Tmp_TBSalario_funcionario
+	(
+	PKId_TBSalario_funcionario int NOT NULL IDENTITY (1, 1) NOT FOR REPLICATION,
+	DFValor_bruto_TBSalario_funcionario money NULL,
+	DFValor_liquido_TBSalario_funcionario money NULL,
+	DFValor_adicional_TBSalario_funcionario money NULL,
+	DFValor_ferias_TBSalario_funcionario money NULL,
+	DFValor_Decimo_terceiro_TBSalario_funcionario money NULL,
+	DFValor_Comissoes_TBSalario_funcionario money NULL,
+	DFValor_vale_TBSalario_funcionario money NULL,
+	DFMes_competencia_TBSalario_funcionario int NULL,
+	DFAno_competencia_TBSalario_funcionario int NULL,
+	DFValor_apagar_TBSalario_funcionario money NULL,
+	FKCodigo_TBFuncionario int NULL
+	)  ON [PRIMARY]
+GO
+SET IDENTITY_INSERT dbo.Tmp_TBSalario_funcionario ON
+GO
+IF EXISTS(SELECT * FROM dbo.TBSalario_funcionario)
+	 EXEC('INSERT INTO dbo.Tmp_TBSalario_funcionario (PKId_TBSalario_funcionario, DFValor_bruto_TBSalario_funcionario, DFValor_liquido_TBSalario_funcionario, DFValor_adicional_TBSalario_funcionario, DFValor_ferias_TBSalario_funcionario, DFValor_Decimo_terceiro_TBSalario_funcionario, DFValor_Comissoes_TBSalario_funcionario, DFValor_vale_TBSalario_funcionario, DFMes_competencia_TBSalario_funcionario, DFAno_competencia_TBSalario_funcionario, DFValor_apagar_TBSalario_funcionario, FKCodigo_TBFuncionario)
+		SELECT PKId_TBSalario_funcionario, DFValor_bruto_TBSalario_funcionario, DFValor_liquido_TBSalario_funcionario, DFValor_adicional_TBSalario_funcionario, DFValor_ferias_TBSalario_funcionario, DFValor_Decimo_terceiro_TBSalario_funcionario, DFValor_Comissoes_TBSalario_funcionario, DFValor_vale_TBSalario_funcionario, CONVERT(int, DFMes_competencia_TBSalario_funcionario), CONVERT(int, DFAno_competencia_TBSalario_funcionario), DFValor_apagar_TBSalario_funcionario, FKCodigo_TBFuncionario FROM dbo.TBSalario_funcionario TABLOCKX')
+GO
+SET IDENTITY_INSERT dbo.Tmp_TBSalario_funcionario OFF
+GO
+DROP TABLE dbo.TBSalario_funcionario
+GO
+EXECUTE sp_rename N'dbo.Tmp_TBSalario_funcionario', N'TBSalario_funcionario', 'OBJECT'
+GO
+ALTER TABLE dbo.TBSalario_funcionario ADD CONSTRAINT
+	PK_TBSalario_funcionario PRIMARY KEY CLUSTERED 
+	(
+	PKId_TBSalario_funcionario
+	) ON [PRIMARY]
+
+GO
+ALTER TABLE dbo.TBSalario_funcionario WITH NOCHECK ADD CONSTRAINT
+	FK_TBSalario_funcionario_TBFuncionario FOREIGN KEY
+	(
+	FKCodigo_TBFuncionario
+	) REFERENCES dbo.TBFuncionario
+	(
+	PKCodigo_TBFuncionario
+	)
+GO
+COMMIT

@@ -1,0 +1,2 @@
+update TBPneu
+set DFVenda_TBPneu = 0

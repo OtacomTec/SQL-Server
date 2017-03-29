@@ -1,0 +1,4 @@
+delete from TBItens_tabela_preco
+delete from TBItens_nota_entrada
+delete from TBEstado_icms
+delete from tbproduto

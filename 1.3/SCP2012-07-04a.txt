@@ -1,0 +1,83 @@
+USE BDRetaguarda
+
+BEGIN TRANSACTION
+
+/*
+ *** IDENTIFICAÇÃO DO SCRIPT ***
+
+ 1 - Apartir de 20/12/2005, fica expressamente proibida a criação de scripts sem que seja preenchido este cabeçalho
+ 2 - Obrigatoriamente necessário que este paragrafo seja inserido apos um BEGIN TRANSACTION
+ 3 - Obrigatoriamente o preenchimento das variaveis abaixo(@Nomenclatura,@Observacao,@Data)com valores correspondentes e condizentes
+ Att: Marcos
+
+*/
+
+--INICIO CABECALHO
+
+declare @Nomenclatura as nvarchar(20)
+declare @Observacao as nvarchar(100)
+declare @Data as SMALLDATETIME
+
+SET @Nomenclatura = 'SCP2012-07-04a'
+SET @Observacao = 'CRIA CAMPO NA TABELA TBNota_entrada_fiscal'
+SET @Data = CURRENT_TIMESTAMP
+
+---LIMPEZA DA TABELA
+
+DELETE FROM TBSCRIPT
+
+---INSERCAO DO REGISTRO
+
+INSERT INTO BDRetaguarda.dbo.TBSCRIPT(DFNome_TBScript,DFObjetivo_TBScript,DFData_execucao_TBScript)
+VALUES(@Nomenclatura,@Observacao,@Data)
+
+---FIM CABECALHO
+
+ALTER TABLE dbo.TBNota_entrada ADD
+DFTipo_frete_TBNota_entrada int NULL
+
+ALTER TABLE dbo.TBNota_entrada_fiscal ADD
+DFTipo_frete_TBNota_entrada_fiscal int NULL
+
+ALTER TABLE dbo.TBNota_entrada ADD
+DFValor_pis_TBNota_entrada money NULL,
+DFValor_cofins_TBNota_entrada money NULL,
+DFValor_pis_retido_TBNota_entrada money NULL,
+DFValor_cofins_retido_TBNota_entrada money NULL
+
+ALTER TABLE dbo.TBNota_entrada_fiscal ADD
+DFValor_pis_TBNota_entrada_fiscal money NULL,
+DFValor_cofins_TBNota_entrada_fiscal money NULL,
+DFValor_pis_retido_TBNota_entrada_fiscal money NULL,
+DFValor_cofins_retido_TBNota_entrada_fiscal money NULL
+
+ALTER TABLE dbo.TBNota_saida_fiscal ADD
+DFChave_acesso_nfe_TBnota_saida_fiscal nvarchar(60) NULL,
+DFNumero_protocolo_nfe_TBnota_saida_fiscal nvarchar(60) NULL
+
+ALTER TABLE dbo.TBNota_saida_fiscal ADD
+DFBase_calculo_icms_TBNota_saida_fiscal money NULL,
+DFValor_icms_TBNota_saida_fiscal money NULL
+
+ALTER TABLE dbo.TBNota_saida ADD
+DFValor_pis_TBNota_saida money NULL,
+DFValor_cofins_TBNota_saida money NULL,
+DFValor_pis_retido_TBNota_entrada money NULL,
+DFValor_cofins_retido_TBNota_saida money NULL
+
+
+ALTER TABLE dbo.TBNota_saida_fiscal ADD
+DFValor_pis_TBNota_saida_fiscal money NULL,
+DFValor_cofins_TBNota_saida_fiscal money NULL,
+DFValor_pis_retido_TBNota_saida_fiscal money NULL,
+DFValor_cofins_retido_TBNota_saida_fiscal money NULL
+
+
+ALTER TABLE dbo.TBNota_entrada ADD
+DFTipo_pagamento_TBNota_entrada int NULL
+
+ALTER TABLE dbo.TBNota_entrada_fiscal ADD
+DFTipo_pagamento_TBNota_entrada_fiscal int NULL
+
+commit transaction
+

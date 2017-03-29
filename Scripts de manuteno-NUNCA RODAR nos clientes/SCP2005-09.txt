@@ -1,0 +1,1741 @@
+/*
+   quinta-feira, 1 de setembro de 2005 21:18:52
+   User: sa
+   Server: ONLYTECH-02
+   Database: BDRetaguarda
+   Application: MS SQLEM - Data Tools
+*/
+
+BEGIN TRANSACTION
+SET QUOTED_IDENTIFIER ON
+SET TRANSACTION ISOLATION LEVEL SERIALIZABLE
+SET ARITHABORT ON
+SET NUMERIC_ROUNDABORT OFF
+SET CONCAT_NULL_YIELDS_NULL ON
+SET ANSI_NULLS ON
+SET ANSI_PADDING ON
+SET ANSI_WARNINGS ON
+COMMIT
+BEGIN TRANSACTION
+ALTER TABLE dbo.TBVale_funcionario
+	DROP CONSTRAINT FK__TBVale_fu__FKCod__5020B295
+GO
+COMMIT
+BEGIN TRANSACTION
+ALTER TABLE dbo.TBVale_funcionario
+	DROP CONSTRAINT FK__TBVale_fu__FKId___4F2C8E5C
+GO
+COMMIT
+BEGIN TRANSACTION
+CREATE TABLE dbo.Tmp_TBVale_funcionario
+	(
+	PKId_TBVale_funcionario int NOT NULL IDENTITY (1, 1),
+	FKId_TBFornecedor int NOT NULL,
+	FKCodigo_TBFuncionario int NOT NULL,
+	DFValor_TBVale_funcionario money NOT NULL,
+	DFData_TBVale_funcionario smalldatetime NOT NULL,
+	DFNumero_documento_TBVale_funcionario int NOT NULL,
+	DFMes_competencia_TBVale_funcionario int NOT NULL,
+	DFAno_competencia_TBVale_funcionario int NOT NULL,
+	DFMotivo_TBVale_funcionario nvarchar(100) NULL,
+	DFObservacao_TBVale_funcionario nvarchar(100) NULL,
+	DFData_pagamento_TBVale_funcionario smalldatetime NULL
+	)  ON [PRIMARY]
+GO
+SET IDENTITY_INSERT dbo.Tmp_TBVale_funcionario ON
+GO
+IF EXISTS(SELECT * FROM dbo.TBVale_funcionario)
+	 EXEC('INSERT INTO dbo.Tmp_TBVale_funcionario (PKId_TBVale_funcionario, FKId_TBFornecedor, FKCodigo_TBFuncionario, DFValor_TBVale_funcionario, DFData_TBVale_funcionario, DFNumero_documento_TBVale_funcionario, DFMes_competencia_TBVale_funcionario, DFAno_competencia_TBVale_funcionario, DFMotivo_TBVale_funcionario, DFObservacao_TBVale_funcionario, DFData_pagamento_TBVale_funcionario)
+		SELECT PKId_TBVale_funcionario, FKId_TBFornecedor, FKCodigo_TBFuncionario, DFValor_TBVale_funcionario, CONVERT(smalldatetime, DFData_TBVale_funcionario), DFNumero_documento_TBVale_funcionario, DFMes_competencia_TBVale_funcionario, DFAno_competencia_TBVale_funcionario, DFMotivo_TBVale_funcionario, DFObservacao_TBVale_funcionario, DFData_pagamento_TBVale_funcionario FROM dbo.TBVale_funcionario TABLOCKX')
+GO
+SET IDENTITY_INSERT dbo.Tmp_TBVale_funcionario OFF
+GO
+DROP TABLE dbo.TBVale_funcionario
+GO
+EXECUTE sp_rename N'dbo.Tmp_TBVale_funcionario', N'TBVale_funcionario', 'OBJECT'
+GO
+ALTER TABLE dbo.TBVale_funcionario ADD CONSTRAINT
+	PK__TBVale_funcionar__4E386A23 PRIMARY KEY CLUSTERED 
+	(
+	PKId_TBVale_funcionario
+	) ON [PRIMARY]
+
+GO
+ALTER TABLE dbo.TBVale_funcionario WITH NOCHECK ADD CONSTRAINT
+	FK__TBVale_fu__FKId___4F2C8E5C FOREIGN KEY
+	(
+	FKId_TBFornecedor
+	) REFERENCES dbo.TBFornecedor
+	(
+	PKId_TBFornecedor
+	)
+GO
+ALTER TABLE dbo.TBVale_funcionario WITH NOCHECK ADD CONSTRAINT
+	FK__TBVale_fu__FKCod__5020B295 FOREIGN KEY
+	(
+	FKCodigo_TBFuncionario
+	) REFERENCES dbo.TBFuncionario
+	(
+	PKCodigo_TBFuncionario
+	)
+GO
+COMMIT
+
+/*
+   quinta-feira, 1 de setembro de 2005 22:01:57
+   User: sa
+   Server: ONLYTECH-02
+   Database: BDRetaguarda
+   Application: MS SQLEM - Data Tools
+*/
+
+BEGIN TRANSACTION
+SET QUOTED_IDENTIFIER ON
+SET TRANSACTION ISOLATION LEVEL SERIALIZABLE
+SET ARITHABORT ON
+SET NUMERIC_ROUNDABORT OFF
+SET CONCAT_NULL_YIELDS_NULL ON
+SET ANSI_NULLS ON
+SET ANSI_PADDING ON
+SET ANSI_WARNINGS ON
+COMMIT
+BEGIN TRANSACTION
+ALTER TABLE dbo.TBParametros_gerais ADD
+	DFCaminho_impressora_via_porta_TBParametros_gerais nvarchar(50) NULL
+GO
+COMMIT
+
+/*
+   quarta-feira, 7 de setembro de 2005 15:22:02
+   User: 
+   Server: ONLYTECH-04
+   Database: BDRetaguarda
+   Application: MS SQLEM - Data Tools
+*/
+
+BEGIN TRANSACTION
+SET QUOTED_IDENTIFIER ON
+SET TRANSACTION ISOLATION LEVEL SERIALIZABLE
+SET ARITHABORT ON
+SET NUMERIC_ROUNDABORT OFF
+SET CONCAT_NULL_YIELDS_NULL ON
+SET ANSI_NULLS ON
+SET ANSI_PADDING ON
+SET ANSI_WARNINGS ON
+COMMIT
+BEGIN TRANSACTION
+ALTER TABLE dbo.TBTitulo_recebido ADD
+	DFPagamento_caixa_banco_TBTitulo_recebido bit NULL,
+	DFObservacao_TBTitulo_recebido nvarchar(200) NULL
+GO
+COMMIT
+
+/*
+   quinta-feira, 8 de setembro de 2005 00:53:22
+   User: sa
+   Server: ONLYTECH-02
+   Database: BDRetaguarda
+   Application: MS SQLEM - Data Tools
+*/
+
+BEGIN TRANSACTION
+SET QUOTED_IDENTIFIER ON
+SET TRANSACTION ISOLATION LEVEL SERIALIZABLE
+SET ARITHABORT ON
+SET NUMERIC_ROUNDABORT OFF
+SET CONCAT_NULL_YIELDS_NULL ON
+SET ANSI_NULLS ON
+SET ANSI_PADDING ON
+SET ANSI_WARNINGS ON
+COMMIT
+BEGIN TRANSACTION
+ALTER TABLE dbo.TBPlano_pagamento ADD
+	DFBaixa_Titulo_TBPlano_pagamento bit NULL
+GO
+COMMIT
+
+BEGIN TRANSACTION
+SET QUOTED_IDENTIFIER ON
+SET TRANSACTION ISOLATION LEVEL SERIALIZABLE
+SET ARITHABORT ON
+SET NUMERIC_ROUNDABORT OFF
+SET CONCAT_NULL_YIELDS_NULL ON
+SET ANSI_NULLS ON
+SET ANSI_PADDING ON
+SET ANSI_WARNINGS ON
+COMMIT
+BEGIN TRANSACTION
+ALTER TABLE dbo.TBParametros_venda ADD
+	DFLanca_volume_nota_TBParametro_venda bit NULL
+GO
+COMMIT
+
+/*
+   sexta-feira, 9 de setembro de 2005 11:38:23
+   User: 
+   Server: ONLYTECH-05
+   Database: BDRetaguarda
+   Application: MS SQLEM - Data Tools
+*/
+
+BEGIN TRANSACTION
+SET QUOTED_IDENTIFIER ON
+SET TRANSACTION ISOLATION LEVEL SERIALIZABLE
+SET ARITHABORT ON
+SET NUMERIC_ROUNDABORT OFF
+SET CONCAT_NULL_YIELDS_NULL ON
+SET ANSI_NULLS ON
+SET ANSI_PADDING ON
+SET ANSI_WARNINGS ON
+COMMIT
+BEGIN TRANSACTION
+ALTER TABLE dbo.TBVale_funcionario
+	DROP CONSTRAINT FK__TBVale_fu__FKCod__2B4E5542
+GO
+COMMIT
+BEGIN TRANSACTION
+ALTER TABLE dbo.TBVale_funcionario
+	DROP CONSTRAINT FK__TBVale_fu__FKId___2A5A3109
+GO
+COMMIT
+BEGIN TRANSACTION
+CREATE TABLE dbo.Tmp_TBVale_funcionario
+	(
+	PKId_TBVale_funcionario int NOT NULL IDENTITY (1, 1),
+	FKId_TBFornecedor int NOT NULL,
+	FKCodigo_TBFuncionario int NOT NULL,
+	DFValor_TBVale_funcionario money NOT NULL,
+	DFData_TBVale_funcionario smalldatetime NOT NULL,
+	DFNumero_documento_TBVale_funcionario int NOT NULL,
+	DFMes_competencia_TBVale_funcionario int NOT NULL,
+	DFAno_competencia_TBVale_funcionario int NOT NULL,
+	DFMotivo_TBVale_funcionario nvarchar(100) NULL,
+	DFObservacao_TBVale_funcionario nvarchar(200) NULL,
+	DFData_pagamento_TBVale_funcionario smalldatetime NULL
+	)  ON [PRIMARY]
+GO
+SET IDENTITY_INSERT dbo.Tmp_TBVale_funcionario ON
+GO
+IF EXISTS(SELECT * FROM dbo.TBVale_funcionario)
+	 EXEC('INSERT INTO dbo.Tmp_TBVale_funcionario (PKId_TBVale_funcionario, FKId_TBFornecedor, FKCodigo_TBFuncionario, DFValor_TBVale_funcionario, DFData_TBVale_funcionario, DFNumero_documento_TBVale_funcionario, DFMes_competencia_TBVale_funcionario, DFAno_competencia_TBVale_funcionario, DFMotivo_TBVale_funcionario, DFObservacao_TBVale_funcionario, DFData_pagamento_TBVale_funcionario)
+		SELECT PKId_TBVale_funcionario, FKId_TBFornecedor, FKCodigo_TBFuncionario, DFValor_TBVale_funcionario, DFData_TBVale_funcionario, DFNumero_documento_TBVale_funcionario, DFMes_competencia_TBVale_funcionario, DFAno_competencia_TBVale_funcionario, DFMotivo_TBVale_funcionario, DFObservacao_TBVale_funcionario, DFData_pagamento_TBVale_funcionario FROM dbo.TBVale_funcionario TABLOCKX')
+GO
+SET IDENTITY_INSERT dbo.Tmp_TBVale_funcionario OFF
+GO
+DROP TABLE dbo.TBVale_funcionario
+GO
+EXECUTE sp_rename N'dbo.Tmp_TBVale_funcionario', N'TBVale_funcionario', 'OBJECT'
+GO
+ALTER TABLE dbo.TBVale_funcionario ADD CONSTRAINT
+	PK__TBVale_funcionar__29660CD0 PRIMARY KEY CLUSTERED 
+	(
+	PKId_TBVale_funcionario
+	) ON [PRIMARY]
+
+GO
+ALTER TABLE dbo.TBVale_funcionario WITH NOCHECK ADD CONSTRAINT
+	FK__TBVale_fu__FKId___2A5A3109 FOREIGN KEY
+	(
+	FKId_TBFornecedor
+	) REFERENCES dbo.TBFornecedor
+	(
+	PKId_TBFornecedor
+	)
+GO
+ALTER TABLE dbo.TBVale_funcionario WITH NOCHECK ADD CONSTRAINT
+	FK__TBVale_fu__FKCod__2B4E5542 FOREIGN KEY
+	(
+	FKCodigo_TBFuncionario
+	) REFERENCES dbo.TBFuncionario
+	(
+	PKCodigo_TBFuncionario
+	)
+GO
+COMMIT
+
+/*
+   sexta-feira, 9 de setembro de 2005 11:38:23
+   User: 
+   Server: ONLYTECH-05
+   Database: BDRetaguarda
+   Application: MS SQLEM - Data Tools
+*/
+
+BEGIN TRANSACTION
+SET QUOTED_IDENTIFIER ON
+SET TRANSACTION ISOLATION LEVEL SERIALIZABLE
+SET ARITHABORT ON
+SET NUMERIC_ROUNDABORT OFF
+SET CONCAT_NULL_YIELDS_NULL ON
+SET ANSI_NULLS ON
+SET ANSI_PADDING ON
+SET ANSI_WARNINGS ON
+COMMIT
+BEGIN TRANSACTION
+ALTER TABLE dbo.TBVale_funcionario
+	DROP CONSTRAINT FK__TBVale_fu__FKCod__2B4E5542
+GO
+COMMIT
+BEGIN TRANSACTION
+ALTER TABLE dbo.TBVale_funcionario
+	DROP CONSTRAINT FK__TBVale_fu__FKId___2A5A3109
+GO
+COMMIT
+BEGIN TRANSACTION
+CREATE TABLE dbo.Tmp_TBVale_funcionario
+	(
+	PKId_TBVale_funcionario int NOT NULL IDENTITY (1, 1),
+	FKId_TBFornecedor int NOT NULL,
+	FKCodigo_TBFuncionario int NOT NULL,
+	DFValor_TBVale_funcionario money NOT NULL,
+	DFData_TBVale_funcionario smalldatetime NOT NULL,
+	DFNumero_documento_TBVale_funcionario int NOT NULL,
+	DFMes_competencia_TBVale_funcionario int NOT NULL,
+	DFAno_competencia_TBVale_funcionario int NOT NULL,
+	DFMotivo_TBVale_funcionario nvarchar(100) NULL,
+	DFObservacao_TBVale_funcionario nvarchar(200) NULL,
+	DFData_pagamento_TBVale_funcionario smalldatetime NULL
+	)  ON [PRIMARY]
+GO
+SET IDENTITY_INSERT dbo.Tmp_TBVale_funcionario ON
+GO
+IF EXISTS(SELECT * FROM dbo.TBVale_funcionario)
+	 EXEC('INSERT INTO dbo.Tmp_TBVale_funcionario (PKId_TBVale_funcionario, FKId_TBFornecedor, FKCodigo_TBFuncionario, DFValor_TBVale_funcionario, DFData_TBVale_funcionario, DFNumero_documento_TBVale_funcionario, DFMes_competencia_TBVale_funcionario, DFAno_competencia_TBVale_funcionario, DFMotivo_TBVale_funcionario, DFObservacao_TBVale_funcionario, DFData_pagamento_TBVale_funcionario)
+		SELECT PKId_TBVale_funcionario, FKId_TBFornecedor, FKCodigo_TBFuncionario, DFValor_TBVale_funcionario, DFData_TBVale_funcionario, DFNumero_documento_TBVale_funcionario, DFMes_competencia_TBVale_funcionario, DFAno_competencia_TBVale_funcionario, DFMotivo_TBVale_funcionario, DFObservacao_TBVale_funcionario, DFData_pagamento_TBVale_funcionario FROM dbo.TBVale_funcionario TABLOCKX')
+GO
+SET IDENTITY_INSERT dbo.Tmp_TBVale_funcionario OFF
+GO
+DROP TABLE dbo.TBVale_funcionario
+GO
+EXECUTE sp_rename N'dbo.Tmp_TBVale_funcionario', N'TBVale_funcionario', 'OBJECT'
+GO
+ALTER TABLE dbo.TBVale_funcionario ADD CONSTRAINT
+	PK__TBVale_funcionar__29660CD0 PRIMARY KEY CLUSTERED 
+	(
+	PKId_TBVale_funcionario
+	) ON [PRIMARY]
+
+GO
+ALTER TABLE dbo.TBVale_funcionario WITH NOCHECK ADD CONSTRAINT
+	FK__TBVale_fu__FKId___2A5A3109 FOREIGN KEY
+	(
+	FKId_TBFornecedor
+	) REFERENCES dbo.TBFornecedor
+	(
+	PKId_TBFornecedor
+	)
+GO
+ALTER TABLE dbo.TBVale_funcionario WITH NOCHECK ADD CONSTRAINT
+	FK__TBVale_fu__FKCod__2B4E5542 FOREIGN KEY
+	(
+	FKCodigo_TBFuncionario
+	) REFERENCES dbo.TBFuncionario
+	(
+	PKCodigo_TBFuncionario
+	)
+GO
+COMMIT
+BEGIN TRANSACTION
+SET QUOTED_IDENTIFIER ON
+SET TRANSACTION ISOLATION LEVEL SERIALIZABLE
+SET ARITHABORT ON
+SET NUMERIC_ROUNDABORT OFF
+SET CONCAT_NULL_YIELDS_NULL ON
+SET ANSI_NULLS ON
+SET ANSI_PADDING ON
+SET ANSI_WARNINGS ON
+COMMIT
+BEGIN TRANSACTION
+ALTER TABLE dbo.TBNota_saida ADD
+	DFVolume_TBNota_Saida int NULL
+GO
+COMMIT
+
+/*
+   segunda-feira, 12 de setembro de 2005 10:33:47
+   User: 
+   Server: ONLYTECH-05
+   Database: BDRetaguarda
+   Application: MS SQLEM - Data Tools
+*/
+
+BEGIN TRANSACTION
+SET QUOTED_IDENTIFIER ON
+SET TRANSACTION ISOLATION LEVEL SERIALIZABLE
+SET ARITHABORT ON
+SET NUMERIC_ROUNDABORT OFF
+SET CONCAT_NULL_YIELDS_NULL ON
+SET ANSI_NULLS ON
+SET ANSI_PADDING ON
+SET ANSI_WARNINGS ON
+COMMIT
+BEGIN TRANSACTION
+ALTER TABLE dbo.TBBanco_Fornecedor
+	DROP CONSTRAINT FK__TBBanco_F__FKCod__696AB7F5
+GO
+COMMIT
+BEGIN TRANSACTION
+ALTER TABLE dbo.TBBanco_Fornecedor
+	DROP CONSTRAINT FK__TBBanco_F__FKId___687693BC
+GO
+COMMIT
+BEGIN TRANSACTION
+CREATE TABLE dbo.Tmp_TBBanco_Fornecedor
+	(
+	PKId_TBBanco_fornecedor int NOT NULL IDENTITY (1, 1),
+	FKId_TBFornecedor int NOT NULL,
+	FKCodigo_TBBancos int NOT NULL,
+	DFAgencia_TBBanco_Fornecedor nvarchar(6) NOT NULL,
+	DFConta_TBBanco_Fornecedor nvarchar(20) NOT NULL,
+	DFFavorecido_TBBanco_fornecedor nvarchar(50) NULL
+	)  ON [PRIMARY]
+GO
+SET IDENTITY_INSERT dbo.Tmp_TBBanco_Fornecedor ON
+GO
+IF EXISTS(SELECT * FROM dbo.TBBanco_Fornecedor)
+	 EXEC('INSERT INTO dbo.Tmp_TBBanco_Fornecedor (PKId_TBBanco_fornecedor, FKId_TBFornecedor, FKCodigo_TBBancos, DFAgencia_TBBanco_Fornecedor, DFConta_TBBanco_Fornecedor, DFFavorecido_TBBanco_fornecedor)
+		SELECT PKId_TBBanco_fornecedor, FKId_TBFornecedor, FKCodigo_TBBancos, DFAgencia_TBBanco_Fornecedor, DFConta_TBBanco_Fornecedor, DFFavorecido_TBBanco_fornecedor FROM dbo.TBBanco_Fornecedor TABLOCKX')
+GO
+SET IDENTITY_INSERT dbo.Tmp_TBBanco_Fornecedor OFF
+GO
+DROP TABLE dbo.TBBanco_Fornecedor
+GO
+EXECUTE sp_rename N'dbo.Tmp_TBBanco_Fornecedor', N'TBBanco_Fornecedor', 'OBJECT'
+GO
+ALTER TABLE dbo.TBBanco_Fornecedor ADD CONSTRAINT
+	PK__TBBanco_Forneced__67826F83 PRIMARY KEY CLUSTERED 
+	(
+	PKId_TBBanco_fornecedor
+	) ON [PRIMARY]
+
+GO
+ALTER TABLE dbo.TBBanco_Fornecedor WITH NOCHECK ADD CONSTRAINT
+	FK__TBBanco_F__FKId___687693BC FOREIGN KEY
+	(
+	FKId_TBFornecedor
+	) REFERENCES dbo.TBFornecedor
+	(
+	PKId_TBFornecedor
+	)
+GO
+ALTER TABLE dbo.TBBanco_Fornecedor WITH NOCHECK ADD CONSTRAINT
+	FK__TBBanco_F__FKCod__696AB7F5 FOREIGN KEY
+	(
+	FKCodigo_TBBancos
+	) REFERENCES dbo.TBBancos
+	(
+	PKCodigo_TBBancos
+	)
+GO
+COMMIT
+
+/*
+   segunda-feira, 12 de setembro de 2005 11:17:00
+   User: sa
+   Server: ONLYTECH-02
+   Database: BDRetaguarda
+   Application: MS SQLEM - Data Tools
+*/
+
+BEGIN TRANSACTION
+SET QUOTED_IDENTIFIER ON
+SET TRANSACTION ISOLATION LEVEL SERIALIZABLE
+SET ARITHABORT ON
+SET NUMERIC_ROUNDABORT OFF
+SET CONCAT_NULL_YIELDS_NULL ON
+SET ANSI_NULLS ON
+SET ANSI_PADDING ON
+SET ANSI_WARNINGS ON
+COMMIT
+BEGIN TRANSACTION
+ALTER TABLE dbo.TBProduto ADD
+	DFClassificacao_fiscal_TBProduto nvarchar(50) NULL
+GO
+COMMIT
+
+BEGIN TRANSACTION
+SET QUOTED_IDENTIFIER ON
+SET TRANSACTION ISOLATION LEVEL SERIALIZABLE
+SET ARITHABORT ON
+SET NUMERIC_ROUNDABORT OFF
+SET CONCAT_NULL_YIELDS_NULL ON
+SET ANSI_NULLS ON
+SET ANSI_PADDING ON
+SET ANSI_WARNINGS ON
+COMMIT
+BEGIN TRANSACTION
+ALTER TABLE dbo.TBParametros_venda ADD
+	DFHistorico_padrao_baixa_crediario_TBParametros_venda int NULL,
+	DFHistorico_padrao_baixa_contas_pagar_TBParametros_venda int NULL
+GO
+COMMIT
+
+if exists (select * from dbo.sysobjects where id = object_id(N'[dbo].[TBNota_saida_fiscal]') and OBJECTPROPERTY(id, N'IsUserTable') = 1)
+drop table [dbo].[TBNota_saida_fiscal]
+GO
+
+CREATE TABLE [dbo].[TBNota_saida_fiscal] (
+	[PKId_TBNota_saida_fiscal] [int] IDENTITY (1, 1) NOT FOR REPLICATION  NOT NULL ,
+	[FKCodigo_TBEmpresa] [int] NOT NULL ,
+	[FKId_TBVendedor] [int] NOT NULL ,
+	[FKId_TBPlano_pagamento] [int] NOT NULL ,
+	[FKCodigo_TBTabela_preco] [int] NOT NULL ,
+	[FKCodigo_TBTransportadora] [int] NOT NULL ,
+	[DFTipo_operacao__TBNota_saida_fiscal] [int] NOT NULL ,
+	[DFNumero_TBNota_saida_fiscal] [int] NOT NULL ,
+	[DFSerie_TBNota_saida_fiscal] [nvarchar] (3) COLLATE Latin1_General_CI_AS NOT NULL ,
+	[DFTipo_emitente_TBNota_saida_fiscal] [bit] NOT NULL ,
+	[DFEmitente_TBNota_saida_fiscal] [int] NOT NULL ,
+	[DFTotal_itens_TBNota_saida_fiscal] [money] NOT NULL ,
+	[DFTotal_nota_TBNota_saida_fiscal] [money] NOT NULL ,
+	[DFTotal_nota_tabela_TBNota_saida_fiscal] [money] NOT NULL ,
+	[DFDesconto_especial__TBNota_saida_fiscal] [money] NULL ,
+	[DFDesconto_indenizacao_TBNota_saida_fiscal] [money] NULL ,
+	[DFData_Emissao_TBNota_saida_fiscal] [smalldatetime] NOT NULL ,
+	[DFData_Saida_TBNota_saida_fiscal] [smalldatetime] NOT NULL ,
+	[DFFaturista_TBNota_saida_fiscal] [nvarchar] (20) COLLATE Latin1_General_CI_AS NOT NULL ,
+	[DFDigitado_TBNota_saida_fiscal] [nvarchar] (20) COLLATE Latin1_General_CI_AS NOT NULL ,
+	[DFPrevisao_TBNota_saida_fiscal] [bit] NOT NULL ,
+	[DFValor_ipi_TBNota_saida_fiscal] [money] NULL ,
+	[DFDespesas_acessorias_TBNota_saida_fiscal] [money] NULL ,
+	[DFTotal_descontos_itens_TBNota_saida_fiscal] [money] NULL ,
+	[DFTotal_peso_liquido_TBNota_saida_fiscal] [money] NOT NULL ,
+	[DFTotal_peso_bruto_TBNota_saida_fiscal] [money] NOT NULL ,
+	[DFTotal_custo_medio_TBNota_saida_fiscal] [money] NOT NULL ,
+	[DFTotal_custo_real_TBNota_saida_fiscal] [money] NOT NULL ,
+	[DFTotal_custo_contabil_TBNota_saida_fiscal] [money] NOT NULL ,
+	[DFNumero_pedido_TBNota_saida_fiscal] [int] NOT NULL ,
+	[DFCancelado_TBNota_saida_fiscal] [bit] NULL ,
+	[DFMotivo_cancelamento_TBNota_saida_fiscal] [nvarchar] (50) COLLATE Latin1_General_CI_AS NULL ,
+	[DFUsuario_cancelamento_TBNota_saida_fiscal] [nvarchar] (20) COLLATE Latin1_General_CI_AS NULL ,
+	[DFIntegrado_fiscal_TBNota_saida_fiscal] [bit] NULL ,
+	[DFBase_calculo_subst_tributaria_TBNota_saida_fiscal] [money] NULL ,
+	[DFValor_subst_tributaria_TBNota_saida_fiscal] [money] NULL ,
+	[DFAbatimento_especial_TBNota_saida_fiscal] [money] NULL ,
+	[DFObservacao_TBNota_saida_fiscal] [nvarchar] (150) COLLATE Latin1_General_CI_AS NULL ,
+	[DFVolume_TBNota_saida_fiscal] [nvarchar] (50) COLLATE Latin1_General_CI_AS NULL 
+) ON [PRIMARY]
+GO
+
+/*
+   quinta-feira, 15 de setembro de 2005 12:12:25
+   User: sa
+   Server: ONLYTECH-02
+   Database: BDRetaguarda
+   Application: MS SQLEM - Data Tools
+*/
+
+BEGIN TRANSACTION
+SET QUOTED_IDENTIFIER ON
+SET TRANSACTION ISOLATION LEVEL SERIALIZABLE
+SET ARITHABORT ON
+SET NUMERIC_ROUNDABORT OFF
+SET CONCAT_NULL_YIELDS_NULL ON
+SET ANSI_NULLS ON
+SET ANSI_PADDING ON
+SET ANSI_WARNINGS ON
+COMMIT
+BEGIN TRANSACTION
+ALTER TABLE dbo.TBNota_saida_fiscal
+	DROP CONSTRAINT FK_TBNota_saida_fiscal_TBTransportadora
+GO
+COMMIT
+BEGIN TRANSACTION
+ALTER TABLE dbo.TBNota_saida_fiscal
+	DROP CONSTRAINT FK_TBNota_saida_fiscal_TBTabela_preco
+GO
+COMMIT
+BEGIN TRANSACTION
+ALTER TABLE dbo.TBNota_saida_fiscal
+	DROP CONSTRAINT FK_TBNota_saida_fiscal_TBPlano_pagamento
+GO
+COMMIT
+BEGIN TRANSACTION
+ALTER TABLE dbo.TBNota_saida_fiscal
+	DROP CONSTRAINT FK_TBNota_saida_fiscal_TBVendedor
+GO
+COMMIT
+BEGIN TRANSACTION
+ALTER TABLE dbo.TBNota_saida_fiscal
+	DROP CONSTRAINT FK_TBNota_saida_fiscal_TBEmpresa
+GO
+COMMIT
+BEGIN TRANSACTION
+ALTER TABLE dbo.TBNota_saida_fiscal ADD CONSTRAINT
+	FK_TBNota_saida_fiscal_TBEmpresa1 FOREIGN KEY
+	(
+	FKCodigo_TBEmpresa
+	) REFERENCES dbo.TBEmpresa
+	(
+	PKCodigo_TBEmpresa
+	)
+GO
+ALTER TABLE dbo.TBNota_saida_fiscal ADD CONSTRAINT
+	FK_TBNota_saida_fiscal_TBVendedor1 FOREIGN KEY
+	(
+	FKId_TBVendedor
+	) REFERENCES dbo.TBVendedor
+	(
+	PKId_TBVendedor
+	)
+GO
+ALTER TABLE dbo.TBNota_saida_fiscal ADD CONSTRAINT
+	FK_TBNota_saida_fiscal_TBPlano_pagamento1 FOREIGN KEY
+	(
+	FKId_TBPlano_pagamento
+	) REFERENCES dbo.TBPlano_pagamento
+	(
+	PKId_TBPlano_pagamento
+	)
+GO
+ALTER TABLE dbo.TBNota_saida_fiscal ADD CONSTRAINT
+	FK_TBNota_saida_fiscal_TBTabela_preco1 FOREIGN KEY
+	(
+	FKCodigo_TBTabela_preco
+	) REFERENCES dbo.TBTabela_preco
+	(
+	PKCodigo_TBTabela_preco
+	)
+GO
+ALTER TABLE dbo.TBNota_saida_fiscal ADD CONSTRAINT
+	FK_TBNota_saida_fiscal_TBTransportadora1 FOREIGN KEY
+	(
+	FKCodigo_TBTransportadora
+	) REFERENCES dbo.TBTransportadora
+	(
+	PKCodigo_TBTransportadora
+	)
+GO
+COMMIT
+
+if exists (select * from dbo.sysobjects where id = object_id(N'[dbo].[TBNota_entrada_fiscal]') and OBJECTPROPERTY(id, N'IsUserTable') = 1)
+drop table [dbo].[TBNota_entrada_fiscal]
+GO
+
+CREATE TABLE [dbo].[TBNota_entrada_fiscal] (
+	[PKId_TBNota_entrada_fiscal] [int] NOT NULL ,
+	[FKCodigo_TBEmpresa] [int] NOT NULL ,
+	[FKId_TBPlano_pagamento] [int] NOT NULL ,
+	[DFTipo_operacao_TBNota_entrada_fiscal] [int] NOT NULL ,
+	[DFNumero_TBNota_entrada_fiscal] [int] NOT NULL ,
+	[DFSerie_TBNota_entrada_fiscal] [nchar] (3) COLLATE Latin1_General_CI_AS NOT NULL ,
+	[DFTipo_emitente_TBNota_entrada_fiscal] [bit] NOT NULL ,
+	[DFEmitente_TBNota_entrada_fiscal] [int] NOT NULL ,
+	[DFTotal_itens_TBNota_entrada_fiscal] [money] NOT NULL ,
+	[DFTotal_nota_TBNota_entrada_fiscal] [money] NOT NULL ,
+	[DFDesconto_especial_TBNota_entrada_fiscal] [money] NULL ,
+	[DFDesconto_indenizacao_TBNota_entrada_fiscal] [money] NULL ,
+	[DFData_emissao_TBNota_entrada_fiscal] [smalldatetime] NOT NULL ,
+	[DFData_entrada_TBNota_entrada_fiscal] [smalldatetime] NOT NULL ,
+	[DFData_lancamento_TBNota_entrada_fiscal] [smalldatetime] NULL ,
+	[DFDigitador_TBNota_entrada_fiscal] [nvarchar] (20) COLLATE Latin1_General_CI_AS NOT NULL ,
+	[DFPrevisao_TBNota_entrada_fiscal] [bit] NOT NULL ,
+	[DFValor_ipi_TBNota_entrada_fiscal] [money] NULL ,
+	[DFDespesas_acessorias_TBNota_entrada_fiscal] [money] NULL ,
+	[DFValor_frete_TBNota_entrada_fiscal] [money] NULL ,
+	[DFTotal_descontos_itens_TBNota_entrada_fiscal] [money] NULL ,
+	[DFTotal_peso_liquido_TBNota_entrada_fiscal] [money] NOT NULL ,
+	[DFTotal_peso_bruto_TBNota_entrada_fiscal] [money] NOT NULL ,
+	[DFNumero_pedido_TBNota_entrada_fiscal] [int] NOT NULL ,
+	[DFIntegrado_fiscal_TBNota_entrada_fiscal] [bit] NOT NULL ,
+	[DFValor_seguro_TBNota_entrada_fiscal] [money] NULL ,
+	[DFBase_calculo_icms_TBNota_entrada_fiscal] [money] NULL ,
+	[DFValor_icms_TBNota_entrada_fiscal] [money] NULL ,
+	[DFFator_vendor_TBNota_entrada_fiscal] [money] NULL ,
+	[DFPercentual_desconto_antecipacao_TBNota_entrada_fiscal] [money] NULL ,
+	[DFBase_calculo_subst_tributaria_TBNota_entrada_fiscal] [money] NULL ,
+	[DFValor_subst_tributaria_TBNota_entrada_fiscal] [money] NULL ,
+	[DFAbatimento_especial_TBNota_entrada_fiscal] [money] NULL ,
+	[DFDiferido_TBNota_entrada_fiscal] [money] NULL ,
+	[DFValor_frete_conhecimento_TBNota_entrada_fiscal] [money] NULL 
+) ON [PRIMARY]
+GO
+
+/*
+   quinta-feira, 15 de setembro de 2005 12:22:49
+   User: sa
+   Server: ONLYTECH-02
+   Database: BDRetaguarda
+   Application: MS SQLEM - Data Tools
+*/
+
+BEGIN TRANSACTION
+SET QUOTED_IDENTIFIER ON
+SET TRANSACTION ISOLATION LEVEL SERIALIZABLE
+SET ARITHABORT ON
+SET NUMERIC_ROUNDABORT OFF
+SET CONCAT_NULL_YIELDS_NULL ON
+SET ANSI_NULLS ON
+SET ANSI_PADDING ON
+SET ANSI_WARNINGS ON
+COMMIT
+BEGIN TRANSACTION
+COMMIT
+BEGIN TRANSACTION
+COMMIT
+BEGIN TRANSACTION
+ALTER TABLE dbo.TBNota_entrada_fiscal ADD CONSTRAINT
+	FK_TBNota_entrada_fiscal_TBEmpresa FOREIGN KEY
+	(
+	FKCodigo_TBEmpresa
+	) REFERENCES dbo.TBEmpresa
+	(
+	PKCodigo_TBEmpresa
+	)
+GO
+ALTER TABLE dbo.TBNota_entrada_fiscal ADD CONSTRAINT
+	FK_TBNota_entrada_fiscal_TBPlano_pagamento FOREIGN KEY
+	(
+	FKId_TBPlano_pagamento
+	) REFERENCES dbo.TBPlano_pagamento
+	(
+	PKId_TBPlano_pagamento
+	)
+GO
+COMMIT
+
+if exists (select * from dbo.sysobjects where id = object_id(N'[dbo].[TBItens_nota_saida_fiscal]') and OBJECTPROPERTY(id, N'IsUserTable') = 1)
+drop table [dbo].[TBItens_nota_saida_fiscal]
+GO
+
+CREATE TABLE [dbo].[TBItens_nota_saida_fiscal] (
+	[PKId_TBItens_nota_saida_fiscal] [int] NOT NULL ,
+	[FKId_TBnota_saida_fiscal] [int] NOT NULL ,
+	[FKId_TBProduto] [int] NOT NULL ,
+	[FKId_TBCfop] [int] NOT NULL ,
+	[DFCst1_TBItens_nota_saida_fiscal] [char] (1) COLLATE Latin1_General_CI_AS NOT NULL ,
+	[DFCst2_TBItens_nota_saida_fiscal] [char] (2) COLLATE Latin1_General_CI_AS NOT NULL ,
+	[DFQuantidade_TBItens_nota_saida_fiscal] [money] NOT NULL ,
+	[DFTipo_preco_TBItens_nota_saida_fiscal] [int] NOT NULL ,
+	[DFPreco_tabela_TBItens_nota_saida_fiscal] [money] NOT NULL ,
+	[DFPercentual_desconto_TBItens_nota_saida_fiscal] [money] NOT NULL ,
+	[DFPreco_praticado_TBItens_nota_saida_fiscal] [money] NOT NULL ,
+	[DFValor_total_tabela_TBItens_nota_saida_fiscal] [money] NOT NULL ,
+	[DFValor_total_praticado_TBItens_nota_saida_fiscal] [money] NOT NULL ,
+	[DFPercentual_icms_TBItens_nota_saida_fiscal] [money] NOT NULL ,
+	[DFValor_total_icms_TBItens_nota_saida_fiscal] [money] NOT NULL ,
+	[DFUnidade_TBItens_nota_saida_fiscal] [char] (3) COLLATE Latin1_General_CI_AS NOT NULL ,
+	[DFCusto_real_TBItens_nota_saida_fiscal] [money] NOT NULL ,
+	[DFCusto_contabil_TBItens_nota_saida_fiscal] [money] NOT NULL ,
+	[DFCusto_medio_TBItens_nota_saida_fiscal] [money] NOT NULL ,
+	[DFPeso_liquido_TBItens_nota_saida_fiscal] [money] NOT NULL ,
+	[DFPeso_bruto_TBItens_nota_saida_fiscal] [money] NOT NULL ,
+	[DFQuantidade_baixa_estoque_TBItens_nota_saida_fiscal] [money] NOT NULL ,
+	[DFValor_total_item_TBItens_nota_saida_fiscal] [money] NOT NULL ,
+	[FKId_TBVendedor] [int] NULL ,
+	[DFDivisor_Baixa_Estoque_TBItens_nota_saida_fiscal] [int] NULL ,
+	[DFBase_calculo_icms_TBItens_nota_saida_fiscal] [money] NULL ,
+	[DFBase_calculo_subst_tributaria_TBItens_nota_saida_fiscal] [money] NULL ,
+	[DFValor_subst_tributaria_TBItens_nota_saida_fiscal] [money] NULL ,
+	[DFValor_conta_corrente_vendedor_TBItens_nota_saida_fiscal] [money] NULL ,
+	[DFEntrega_TBItens_nota_saida_fiscal] [int] NULL 
+) ON [PRIMARY]
+GO
+
+/*
+   quinta-feira, 15 de setembro de 2005 14:05:18
+   User: sa
+   Server: ONLYTECH-02
+   Database: BDRetaguarda
+   Application: MS SQLEM - Data Tools
+*/
+
+BEGIN TRANSACTION
+SET QUOTED_IDENTIFIER ON
+SET TRANSACTION ISOLATION LEVEL SERIALIZABLE
+SET ARITHABORT ON
+SET NUMERIC_ROUNDABORT OFF
+SET CONCAT_NULL_YIELDS_NULL ON
+SET ANSI_NULLS ON
+SET ANSI_PADDING ON
+SET ANSI_WARNINGS ON
+COMMIT
+BEGIN TRANSACTION
+COMMIT
+BEGIN TRANSACTION
+COMMIT
+BEGIN TRANSACTION
+COMMIT
+BEGIN TRANSACTION
+COMMIT
+BEGIN TRANSACTION
+ALTER TABLE dbo.TBItens_nota_saida_fiscal ADD CONSTRAINT
+	FK_TBItens_nota_saida_fiscal_TBNota_saida FOREIGN KEY
+	(
+	FKId_TBnota_saida_fiscal
+	) REFERENCES dbo.TBNota_saida
+	(
+	PKId_TBNota_saida
+	)
+GO
+ALTER TABLE dbo.TBItens_nota_saida_fiscal ADD CONSTRAINT
+	FK_TBItens_nota_saida_fiscal_TBProduto FOREIGN KEY
+	(
+	FKId_TBProduto
+	) REFERENCES dbo.TBProduto
+	(
+	PKId_TBProduto
+	)
+GO
+ALTER TABLE dbo.TBItens_nota_saida_fiscal ADD CONSTRAINT
+	FK_TBItens_nota_saida_fiscal_TBCfop FOREIGN KEY
+	(
+	FKId_TBCfop
+	) REFERENCES dbo.TBCfop
+	(
+	PKId_TBCfop
+	)
+GO
+ALTER TABLE dbo.TBItens_nota_saida_fiscal ADD CONSTRAINT
+	FK_TBItens_nota_saida_fiscal_TBVendedor FOREIGN KEY
+	(
+	FKId_TBVendedor
+	) REFERENCES dbo.TBVendedor
+	(
+	PKId_TBVendedor
+	)
+GO
+COMMIT
+
+/*
+   quinta-feira, 15 de setembro de 2005 14:14:51
+   User: sa
+   Server: ONLYTECH-02
+   Database: BDRetaguarda
+   Application: MS SQLEM - Data Tools
+*/
+
+BEGIN TRANSACTION
+SET QUOTED_IDENTIFIER ON
+SET TRANSACTION ISOLATION LEVEL SERIALIZABLE
+SET ARITHABORT ON
+SET NUMERIC_ROUNDABORT OFF
+SET CONCAT_NULL_YIELDS_NULL ON
+SET ANSI_NULLS ON
+SET ANSI_PADDING ON
+SET ANSI_WARNINGS ON
+COMMIT
+BEGIN TRANSACTION
+CREATE TABLE dbo.Tmp_TBItens_nota_entrada_fiscal
+	(
+	PKId_TBItens_nota_entrada_fiscal int NOT NULL IDENTITY (1, 1),
+	FKId_TBNota_entrada int NOT NULL,
+	FKId_TBProduto int NOT NULL,
+	FKId_TBCfop int NOT NULL,
+	DFCst1_TBItens_nota_entrada_fiscal char(1) NOT NULL,
+	DFCst2_TBItens_nota_entrada_fiscal char(2) NOT NULL,
+	DFQuantidade_TBItens_nota_entrada_fiscal money NOT NULL,
+	DFPreco_TBItens_nota_entrada_fiscal money NOT NULL,
+	DFPercentual_desconto_TBItens_nota_entrada_fiscal money NOT NULL,
+	DFValor_desconto_TBItens_nota_entrada_fiscal money NULL,
+	DFValor_total_TBItens_nota_entrada_fiscal money NULL,
+	DFPercentual_icms_TBItens_nota_entrada_fiscal money NULL,
+	DFValor_total_icms_TBItens_nota_entrada_fiscal money NULL,
+	DFPercentual_ipi_TBItens_nota_entrada_fiscal money NOT NULL,
+	DFValor_total_ipi_TBItens_nota_entrada_fiscal money NOT NULL,
+	DFUnidade_TBItens_nota_entrada_fiscal char(3) NOT NULL,
+	DFCusto_real_TBItens_nota_entrada_fiscal money NOT NULL,
+	DFCusto_contabil_TBItens_nota_entrada_fiscal money NOT NULL,
+	DFCusto_medio_TBItens_nota_entrada_fiscal money NOT NULL,
+	DFPeso_liquido_TBItens_nota_entrada_fiscal money NOT NULL,
+	DFPeso_bruto_TBItens_nota_entrada_fiscal money NOT NULL,
+	DFQuantidade_lancamento_estoque_TBItens_nota_entrada_fiscal money NOT NULL,
+	DFDivisor_movimenta_estoque_TBItens_nota_entrada_fiscal money NULL
+	)  ON [PRIMARY]
+GO
+SET IDENTITY_INSERT dbo.Tmp_TBItens_nota_entrada_fiscal ON
+GO
+IF EXISTS(SELECT * FROM dbo.TBItens_nota_entrada_fiscal)
+	 EXEC('INSERT INTO dbo.Tmp_TBItens_nota_entrada_fiscal (PKId_TBItens_nota_entrada_fiscal, FKId_TBNota_entrada, FKId_TBProduto, FKId_TBCfop, DFCst1_TBItens_nota_entrada_fiscal, DFCst2_TBItens_nota_entrada_fiscal, DFQuantidade_TBItens_nota_entrada_fiscal, DFPreco_TBItens_nota_entrada_fiscal, DFPercentual_desconto_TBItens_nota_entrada_fiscal, DFValor_desconto_TBItens_nota_entrada_fiscal, DFValor_total_TBItens_nota_entrada_fiscal, DFPercentual_icms_TBItens_nota_entrada_fiscal, DFValor_total_icms_TBItens_nota_entrada_fiscal, DFPercentual_ipi_TBItens_nota_entrada_fiscal, DFValor_total_ipi_TBItens_nota_entrada_fiscal, DFUnidade_TBItens_nota_entrada_fiscal, DFCusto_real_TBItens_nota_entrada_fiscal, DFCusto_contabil_TBItens_nota_entrada_fiscal, DFCusto_medio_TBItens_nota_entrada_fiscal, DFPeso_liquido_TBItens_nota_entrada_fiscal, DFPeso_bruto_TBItens_nota_entrada_fiscal, DFQuantidade_lancamento_estoque_TBItens_nota_entrada_fiscal, DFDivisor_movimenta_estoque_TBItens_nota_entrada_fiscal)
+		SELECT PKId_TBItens_nota_entrada, FKId_TBNota_entrada, FKId_TBProduto, FKId_TBCfop, DFCst1_TBItens_nota_entrada, DFCst2_TBItens_nota_entrada, DFQuantidade_TBItens_nota_entrada, DFPreco_TBItens_nota_entrada, DFPercentual_desconto_TBItens_nota_entrada, DFValor_desconto_TBItens_nota_entrada, DFValor_total_TBItens_nota_entrada, DFPercentual_icms_TBItens_nota_entrada, DFValor_total_icms_TBItens_nota_entrada, DFPercentual_ipi_TBItens_nota_entrada, DFValor_total_ipi_TBItens_nota_entrada, DFUnidade_TBItens_nota_entrada, DFCusto_real_TBItens_nota_entrada, DFCusto_contabil_TBItens_nota_entrada, DFCusto_medio_TBItens_nota_entrada, DFPeso_liquido_TBItens_nota_entrada, DFPeso_bruto_TBItens_nota_entrada, DFQuantidade_lancamento_estoque_TBItens_nota_entrada, DFDivisor_movimenta_estoque_TBItens_nota_entrada FROM dbo.TBItens_nota_entrada_fiscal TABLOCKX')
+GO
+SET IDENTITY_INSERT dbo.Tmp_TBItens_nota_entrada_fiscal OFF
+GO
+DROP TABLE dbo.TBItens_nota_entrada_fiscal
+GO
+EXECUTE sp_rename N'dbo.Tmp_TBItens_nota_entrada_fiscal', N'TBItens_nota_entrada_fiscal', 'OBJECT'
+GO
+ALTER TABLE dbo.TBItens_nota_entrada_fiscal ADD CONSTRAINT
+	PK_TBItens_nota_entrada_fiscal PRIMARY KEY CLUSTERED 
+	(
+	PKId_TBItens_nota_entrada_fiscal
+	) ON [PRIMARY]
+
+GO
+COMMIT
+
+/*
+   quinta-feira, 15 de setembro de 2005 14:28:16
+   User: sa
+   Server: ONLYTECH-02
+   Database: BDRetaguarda
+   Application: MS SQLEM - Data Tools
+*/
+
+BEGIN TRANSACTION
+SET QUOTED_IDENTIFIER ON
+SET TRANSACTION ISOLATION LEVEL SERIALIZABLE
+SET ARITHABORT ON
+SET NUMERIC_ROUNDABORT OFF
+SET CONCAT_NULL_YIELDS_NULL ON
+SET ANSI_NULLS ON
+SET ANSI_PADDING ON
+SET ANSI_WARNINGS ON
+COMMIT
+BEGIN TRANSACTION
+COMMIT
+BEGIN TRANSACTION
+COMMIT
+BEGIN TRANSACTION
+COMMIT
+BEGIN TRANSACTION
+CREATE NONCLUSTERED INDEX IX_TBItens_nota_entrada_fiscal ON dbo.TBItens_nota_entrada_fiscal
+	(
+	PKId_TBItens_nota_entrada_fiscal
+	) ON [PRIMARY]
+GO
+ALTER TABLE dbo.TBItens_nota_entrada_fiscal ADD CONSTRAINT
+	FK_TBItens_nota_entrada_fiscal_TBNota_entrada FOREIGN KEY
+	(
+	FKId_TBNota_entrada
+	) REFERENCES dbo.TBNota_entrada
+	(
+	PKId_TBNota_entrada
+	)
+GO
+ALTER TABLE dbo.TBItens_nota_entrada_fiscal ADD CONSTRAINT
+	FK_TBItens_nota_entrada_fiscal_TBProduto FOREIGN KEY
+	(
+	FKId_TBProduto
+	) REFERENCES dbo.TBProduto
+	(
+	PKId_TBProduto
+	)
+GO
+ALTER TABLE dbo.TBItens_nota_entrada_fiscal ADD CONSTRAINT
+	FK_TBItens_nota_entrada_fiscal_TBCfop FOREIGN KEY
+	(
+	FKId_TBCfop
+	) REFERENCES dbo.TBCfop
+	(
+	PKId_TBCfop
+	)
+GO
+COMMIT
+
+if exists (select * from dbo.sysobjects where id = object_id(N'[dbo].[TBCfop_nota_saida_fiscal]') and OBJECTPROPERTY(id, N'IsUserTable') = 1)
+drop table [dbo].[TBCfop_nota_saida_fiscal]
+GO
+
+CREATE TABLE [dbo].[TBCfop_nota_saida_fiscal] (
+	[PKId_TBCfop_nota_saida_fiscal] [int] IDENTITY (1, 1) NOT NULL ,
+	[FKId_TBCfop] [int] NOT NULL ,
+	[FKId_TBNota_saida_fiscal] [int] NOT NULL 
+) ON [PRIMARY]
+GO
+
+/*
+   quinta-feira, 15 de setembro de 2005 14:38:19
+   User: sa
+   Server: ONLYTECH-02
+   Database: BDRetaguarda
+   Application: MS SQLEM - Data Tools
+*/
+
+BEGIN TRANSACTION
+SET QUOTED_IDENTIFIER ON
+SET TRANSACTION ISOLATION LEVEL SERIALIZABLE
+SET ARITHABORT ON
+SET NUMERIC_ROUNDABORT OFF
+SET CONCAT_NULL_YIELDS_NULL ON
+SET ANSI_NULLS ON
+SET ANSI_PADDING ON
+SET ANSI_WARNINGS ON
+COMMIT
+BEGIN TRANSACTION
+COMMIT
+BEGIN TRANSACTION
+COMMIT
+BEGIN TRANSACTION
+ALTER TABLE dbo.TBCfop_nota_saida_fiscal ADD CONSTRAINT
+	FK_TBCfop_nota_saida_fiscal_TBCfop FOREIGN KEY
+	(
+	FKId_TBCfop
+	) REFERENCES dbo.TBCfop
+	(
+	PKId_TBCfop
+	)
+GO
+ALTER TABLE dbo.TBCfop_nota_saida_fiscal ADD CONSTRAINT
+	FK_TBCfop_nota_saida_fiscal_TBNota_saida FOREIGN KEY
+	(
+	FKId_TBNota_saida_fiscal
+	) REFERENCES dbo.TBNota_saida
+	(
+	PKId_TBNota_saida
+	)
+GO
+COMMIT
+if exists (select * from dbo.sysobjects where id = object_id(N'[dbo].[TBCfop_Nota_entrada_fiscal]') and OBJECTPROPERTY(id, N'IsUserTable') = 1)
+drop table [dbo].[TBCfop_Nota_entrada_fiscal]
+GO
+
+CREATE TABLE [dbo].[TBCfop_Nota_entrada_fiscal] (
+	[PKId_TBCfop_Nota_entrada_fiscal] [int] NOT NULL ,
+	[FKId_TBCfop] [int] NOT NULL ,
+	[FKId_TBNota_entrada] [int] NOT NULL 
+) ON [PRIMARY]
+GO
+
+/*
+   quinta-feira, 15 de setembro de 2005 14:44:41
+   User: sa
+   Server: ONLYTECH-02
+   Database: BDRetaguarda
+   Application: MS SQLEM - Data Tools
+*/
+
+BEGIN TRANSACTION
+SET QUOTED_IDENTIFIER ON
+SET TRANSACTION ISOLATION LEVEL SERIALIZABLE
+SET ARITHABORT ON
+SET NUMERIC_ROUNDABORT OFF
+SET CONCAT_NULL_YIELDS_NULL ON
+SET ANSI_NULLS ON
+SET ANSI_PADDING ON
+SET ANSI_WARNINGS ON
+COMMIT
+BEGIN TRANSACTION
+COMMIT
+BEGIN TRANSACTION
+COMMIT
+BEGIN TRANSACTION
+ALTER TABLE dbo.TBCfop_Nota_entrada_fiscal ADD CONSTRAINT
+	FK_TBCfop_Nota_entrada_fiscal_TBCfop FOREIGN KEY
+	(
+	FKId_TBCfop
+	) REFERENCES dbo.TBCfop
+	(
+	PKId_TBCfop
+	)
+GO
+ALTER TABLE dbo.TBCfop_Nota_entrada_fiscal ADD CONSTRAINT
+	FK_TBCfop_Nota_entrada_fiscal_TBNota_entrada FOREIGN KEY
+	(
+	FKId_TBNota_entrada
+	) REFERENCES dbo.TBNota_entrada
+	(
+	PKId_TBNota_entrada
+	)
+GO
+COMMIT
+
+if exists (select * from dbo.sysobjects where id = object_id(N'[dbo].[TBImpostos_nota_saida_fiscal]') and OBJECTPROPERTY(id, N'IsUserTable') = 1)
+drop table [dbo].[TBImpostos_nota_saida_fiscal]
+GO
+
+CREATE TABLE [dbo].[TBImpostos_nota_saida_fiscal] (
+	[PKId_TBImpostos_nota_saida] [int] IDENTITY (1, 1) NOT NULL ,
+	[FKId_TBNota_saida] [int] NOT NULL ,
+	[DFAliquota_TBImpostos_nota_saida] [money] NOT NULL ,
+	[DFBase_calculo_TBImpostos_nota_saida] [money] NOT NULL ,
+	[DFValor_TBImpostos_nota_saida] [money] NOT NULL 
+) ON [PRIMARY]
+GO
+
+/*
+   quinta-feira, 15 de setembro de 2005 15:39:37
+   User: sa
+   Server: ONLYTECH-02
+   Database: BDRetaguarda
+   Application: MS SQLEM - Data Tools
+*/
+
+BEGIN TRANSACTION
+SET QUOTED_IDENTIFIER ON
+SET TRANSACTION ISOLATION LEVEL SERIALIZABLE
+SET ARITHABORT ON
+SET NUMERIC_ROUNDABORT OFF
+SET CONCAT_NULL_YIELDS_NULL ON
+SET ANSI_NULLS ON
+SET ANSI_PADDING ON
+SET ANSI_WARNINGS ON
+COMMIT
+BEGIN TRANSACTION
+COMMIT
+BEGIN TRANSACTION
+COMMIT
+BEGIN TRANSACTION
+ALTER TABLE dbo.TBImpostos_nota_saida_fiscal ADD CONSTRAINT
+	FK_TBImpostos_nota_saida_fiscal_TBNota_saida FOREIGN KEY
+	(
+	FKId_TBNota_saida
+	) REFERENCES dbo.TBNota_saida
+	(
+	PKId_TBNota_saida
+	)
+GO
+ALTER TABLE dbo.TBImpostos_nota_saida_fiscal ADD CONSTRAINT
+	FK_TBImpostos_nota_saida_fiscal_TBNota_saida_fiscal FOREIGN KEY
+	(
+	FKId_TBNota_saida
+	) REFERENCES dbo.TBNota_saida_fiscal
+	(
+	PKId_TBNota_saida_fiscal
+	)
+GO
+COMMIT
+
+/*
+   quinta-feira, 15 de setembro de 2005 15:41:38
+   User: sa
+   Server: ONLYTECH-02
+   Database: BDRetaguarda
+   Application: MS SQLEM - Data Tools
+*/
+
+BEGIN TRANSACTION
+SET QUOTED_IDENTIFIER ON
+SET TRANSACTION ISOLATION LEVEL SERIALIZABLE
+SET ARITHABORT ON
+SET NUMERIC_ROUNDABORT OFF
+SET CONCAT_NULL_YIELDS_NULL ON
+SET ANSI_NULLS ON
+SET ANSI_PADDING ON
+SET ANSI_WARNINGS ON
+COMMIT
+BEGIN TRANSACTION
+COMMIT
+BEGIN TRANSACTION
+ALTER TABLE dbo.TBCfop_Nota_entrada_fiscal
+	DROP CONSTRAINT FK_TBCfop_Nota_entrada_fiscal_TBNota_entrada
+GO
+COMMIT
+BEGIN TRANSACTION
+EXECUTE sp_rename N'dbo.TBCfop_Nota_entrada_fiscal.FKId_TBNota_entrada', N'Tmp_FKId_TBNota_entrada_fiscal_120', 'COLUMN'
+GO
+EXECUTE sp_rename N'dbo.TBCfop_Nota_entrada_fiscal.Tmp_FKId_TBNota_entrada_fiscal_120', N'FKId_TBNota_entrada_fiscal', 'COLUMN'
+GO
+ALTER TABLE dbo.TBCfop_Nota_entrada_fiscal ADD CONSTRAINT
+	FK_TBCfop_Nota_entrada_fiscal_TBNota_entrada_fiscal FOREIGN KEY
+	(
+	FKId_TBNota_entrada_fiscal
+	) REFERENCES dbo.TBNota_entrada_fiscal
+	(
+	PKId_TBNota_entrada_fiscal
+	)
+GO
+COMMIT
+
+/*
+   quinta-feira, 15 de setembro de 2005 15:43:32
+   User: sa
+   Server: ONLYTECH-02
+   Database: BDRetaguarda
+   Application: MS SQLEM - Data Tools
+*/
+
+BEGIN TRANSACTION
+SET QUOTED_IDENTIFIER ON
+SET TRANSACTION ISOLATION LEVEL SERIALIZABLE
+SET ARITHABORT ON
+SET NUMERIC_ROUNDABORT OFF
+SET CONCAT_NULL_YIELDS_NULL ON
+SET ANSI_NULLS ON
+SET ANSI_PADDING ON
+SET ANSI_WARNINGS ON
+COMMIT
+BEGIN TRANSACTION
+COMMIT
+BEGIN TRANSACTION
+ALTER TABLE dbo.TBCfop_nota_saida_fiscal
+	DROP CONSTRAINT FK_TBCfop_nota_saida_fiscal_TBNota_saida
+GO
+COMMIT
+BEGIN TRANSACTION
+ALTER TABLE dbo.TBCfop_nota_saida_fiscal ADD CONSTRAINT
+	FK_TBCfop_nota_saida_fiscal_TBNota_saida_fiscal FOREIGN KEY
+	(
+	FKId_TBNota_saida_fiscal
+	) REFERENCES dbo.TBNota_saida_fiscal
+	(
+	PKId_TBNota_saida_fiscal
+	)
+GO
+COMMIT
+
+/*
+   quinta-feira, 15 de setembro de 2005 15:47:12
+   User: sa
+   Server: ONLYTECH-02
+   Database: BDRetaguarda
+   Application: MS SQLEM - Data Tools
+*/
+
+BEGIN TRANSACTION
+SET QUOTED_IDENTIFIER ON
+SET TRANSACTION ISOLATION LEVEL SERIALIZABLE
+SET ARITHABORT ON
+SET NUMERIC_ROUNDABORT OFF
+SET CONCAT_NULL_YIELDS_NULL ON
+SET ANSI_NULLS ON
+SET ANSI_PADDING ON
+SET ANSI_WARNINGS ON
+COMMIT
+BEGIN TRANSACTION
+COMMIT
+BEGIN TRANSACTION
+ALTER TABLE dbo.TBItens_nota_entrada_fiscal
+	DROP CONSTRAINT FK_TBItens_nota_entrada_fiscal_TBNota_entrada
+GO
+COMMIT
+BEGIN TRANSACTION
+ALTER TABLE dbo.TBItens_nota_entrada_fiscal ADD CONSTRAINT
+	FK_TBItens_nota_entrada_fiscal_TBNota_entrada_fiscal FOREIGN KEY
+	(
+	FKId_TBNota_entrada
+	) REFERENCES dbo.TBNota_entrada_fiscal
+	(
+	PKId_TBNota_entrada_fiscal
+	)
+GO
+COMMIT
+
+/*
+   quinta-feira, 15 de setembro de 2005 15:49:11
+   User: sa
+   Server: ONLYTECH-02
+   Database: BDRetaguarda
+   Application: MS SQLEM - Data Tools
+*/
+
+BEGIN TRANSACTION
+SET QUOTED_IDENTIFIER ON
+SET TRANSACTION ISOLATION LEVEL SERIALIZABLE
+SET ARITHABORT ON
+SET NUMERIC_ROUNDABORT OFF
+SET CONCAT_NULL_YIELDS_NULL ON
+SET ANSI_NULLS ON
+SET ANSI_PADDING ON
+SET ANSI_WARNINGS ON
+COMMIT
+BEGIN TRANSACTION
+COMMIT
+BEGIN TRANSACTION
+ALTER TABLE dbo.TBItens_nota_saida_fiscal
+	DROP CONSTRAINT FK_TBItens_nota_saida_fiscal_TBNota_saida
+GO
+COMMIT
+BEGIN TRANSACTION
+ALTER TABLE dbo.TBItens_nota_saida_fiscal ADD CONSTRAINT
+	FK_TBItens_nota_saida_fiscal_TBNota_saida_fiscal FOREIGN KEY
+	(
+	FKId_TBnota_saida_fiscal
+	) REFERENCES dbo.TBNota_saida_fiscal
+	(
+	PKId_TBNota_saida_fiscal
+	)
+GO
+COMMIT
+
+/*
+   quinta-feira, 15 de setembro de 2005 15:52:51
+   User: sa
+   Server: ONLYTECH-02
+   Database: BDRetaguarda
+   Application: MS SQLEM - Data Tools
+*/
+
+BEGIN TRANSACTION
+SET QUOTED_IDENTIFIER ON
+SET TRANSACTION ISOLATION LEVEL SERIALIZABLE
+SET ARITHABORT ON
+SET NUMERIC_ROUNDABORT OFF
+SET CONCAT_NULL_YIELDS_NULL ON
+SET ANSI_NULLS ON
+SET ANSI_PADDING ON
+SET ANSI_WARNINGS ON
+COMMIT
+BEGIN TRANSACTION
+COMMIT
+BEGIN TRANSACTION
+ALTER TABLE dbo.TBImpostos_nota_saida_fiscal
+	DROP CONSTRAINT FK_TBImpostos_nota_saida_fiscal_TBNota_saida
+GO
+COMMIT
+BEGIN TRANSACTION
+EXECUTE sp_rename N'dbo.TBImpostos_nota_saida_fiscal.PKId_TBImpostos_nota_saida', N'Tmp_PKId_TBImpostos_nota_saida_fiscal_122', 'COLUMN'
+GO
+EXECUTE sp_rename N'dbo.TBImpostos_nota_saida_fiscal.FKId_TBNota_saida', N'Tmp_FKId_TBNota_saida_fiscal_123', 'COLUMN'
+GO
+EXECUTE sp_rename N'dbo.TBImpostos_nota_saida_fiscal.DFAliquota_TBImpostos_nota_saida', N'Tmp_DFAliquota_TBImpostos_nota_saida_fiscal_124', 'COLUMN'
+GO
+EXECUTE sp_rename N'dbo.TBImpostos_nota_saida_fiscal.DFBase_calculo_TBImpostos_nota_saida', N'Tmp_DFBase_calculo_TBImpostos_nota_saida_fiscal_125', 'COLUMN'
+GO
+EXECUTE sp_rename N'dbo.TBImpostos_nota_saida_fiscal.DFValor_TBImpostos_nota_saida', N'Tmp_DFValor_TBImpostos_nota_saida_fiscal_126', 'COLUMN'
+GO
+EXECUTE sp_rename N'dbo.TBImpostos_nota_saida_fiscal.Tmp_PKId_TBImpostos_nota_saida_fiscal_122', N'PKId_TBImpostos_nota_saida_fiscal', 'COLUMN'
+GO
+EXECUTE sp_rename N'dbo.TBImpostos_nota_saida_fiscal.Tmp_FKId_TBNota_saida_fiscal_123', N'FKId_TBNota_saida_fiscal', 'COLUMN'
+GO
+EXECUTE sp_rename N'dbo.TBImpostos_nota_saida_fiscal.Tmp_DFAliquota_TBImpostos_nota_saida_fiscal_124', N'DFAliquota_TBImpostos_nota_saida_fiscal', 'COLUMN'
+GO
+EXECUTE sp_rename N'dbo.TBImpostos_nota_saida_fiscal.Tmp_DFBase_calculo_TBImpostos_nota_saida_fiscal_125', N'DFBase_calculo_TBImpostos_nota_saida_fiscal', 'COLUMN'
+GO
+EXECUTE sp_rename N'dbo.TBImpostos_nota_saida_fiscal.Tmp_DFValor_TBImpostos_nota_saida_fiscal_126', N'DFValor_TBImpostos_nota_saida_fiscal', 'COLUMN'
+GO
+ALTER TABLE dbo.TBImpostos_nota_saida_fiscal ADD CONSTRAINT
+	FK_TBImpostos_nota_saida_fiscal_TBNota_saida_fiscal1 FOREIGN KEY
+	(
+	FKId_TBNota_saida_fiscal
+	) REFERENCES dbo.TBNota_saida_fiscal
+	(
+	PKId_TBNota_saida_fiscal
+	)
+GO
+COMMIT
+
+if exists (select * from dbo.sysobjects where id = object_id(N'[dbo].[TBImpostos_nota_entrada_fiscal]') and OBJECTPROPERTY(id, N'IsUserTable') = 1)
+drop table [dbo].[TBImpostos_nota_entrada_fiscal]
+GO
+
+CREATE TABLE [dbo].[TBImpostos_nota_entrada_fiscal] (
+	[PKId_TBImpostos_nota_entrada_fiscal] [int] NOT NULL ,
+	[FKId_TBNota_entrada_fiscal] [int] NOT NULL ,
+	[DFAliquota_TBImpostos_nota_entrada_fiscal] [money] NOT NULL ,
+	[DFBase_calculo_TBImpostos_nota_entrada_fiscal] [money] NOT NULL ,
+	[DFValor_TBImpostos_nota_entrada_fiscal] [money] NOT NULL 
+) ON [PRIMARY]
+GO
+
+/*
+   sexta-feira, 16 de setembro de 2005 10:57:27
+   User: sa
+   Server: ONLYTECH-02
+   Database: BDRetaguarda
+   Application: MS SQLEM - Data Tools
+*/
+
+BEGIN TRANSACTION
+SET QUOTED_IDENTIFIER ON
+SET TRANSACTION ISOLATION LEVEL SERIALIZABLE
+SET ARITHABORT ON
+SET NUMERIC_ROUNDABORT OFF
+SET CONCAT_NULL_YIELDS_NULL ON
+SET ANSI_NULLS ON
+SET ANSI_PADDING ON
+SET ANSI_WARNINGS ON
+COMMIT
+BEGIN TRANSACTION
+ALTER TABLE dbo.TBItens_pedido ADD
+	DFLocal_Baixa_Estoque int NULL
+GO
+COMMIT
+
+/*
+   sexta-feira, 16 de setembro de 2005 15:35:33
+   User: sa
+   Server: ONLYTECH-02
+   Database: BDRetaguarda
+   Application: MS SQLEM - Data Tools
+*/
+
+BEGIN TRANSACTION
+SET QUOTED_IDENTIFIER ON
+SET TRANSACTION ISOLATION LEVEL SERIALIZABLE
+SET ARITHABORT ON
+SET NUMERIC_ROUNDABORT OFF
+SET CONCAT_NULL_YIELDS_NULL ON
+SET ANSI_NULLS ON
+SET ANSI_PADDING ON
+SET ANSI_WARNINGS ON
+COMMIT
+BEGIN TRANSACTION
+EXECUTE sp_rename N'dbo.TBItens_pedido.DFLocal_Baixa_Estoque', N'Tmp_DFLocal_Baixa_Estoque_TBitens_pedido', 'COLUMN'
+GO
+EXECUTE sp_rename N'dbo.TBItens_pedido.Tmp_DFLocal_Baixa_Estoque_TBitens_pedido', N'DFLocal_Baixa_Estoque_TBitens_pedido', 'COLUMN'
+GO
+COMMIT
+
+/*
+   sexta-feira, 16 de setembro de 2005 15:37:17
+   User: sa
+   Server: ONLYTECH-02
+   Database: BDRetaguarda
+   Application: MS SQLEM - Data Tools
+*/
+
+BEGIN TRANSACTION
+SET QUOTED_IDENTIFIER ON
+SET TRANSACTION ISOLATION LEVEL SERIALIZABLE
+SET ARITHABORT ON
+SET NUMERIC_ROUNDABORT OFF
+SET CONCAT_NULL_YIELDS_NULL ON
+SET ANSI_NULLS ON
+SET ANSI_PADDING ON
+SET ANSI_WARNINGS ON
+COMMIT
+BEGIN TRANSACTION
+ALTER TABLE dbo.TBItens_nota_saida ADD
+	DFLocal_Baixa_Estoque_TBItens_nota_saida int NULL
+GO
+COMMIT
+
+BEGIN TRANSACTION
+SET QUOTED_IDENTIFIER ON
+SET TRANSACTION ISOLATION LEVEL SERIALIZABLE
+SET ARITHABORT ON
+SET NUMERIC_ROUNDABORT OFF
+SET CONCAT_NULL_YIELDS_NULL ON
+SET ANSI_NULLS ON
+SET ANSI_PADDING ON
+SET ANSI_WARNINGS ON
+COMMIT
+BEGIN TRANSACTION
+ALTER TABLE dbo.TBParametros_fiscais ADD
+	DFContato_sintegra_TBParametros_fiscais nvarchar(40) NULL,
+	DFTelefone_TBParametros_fiscais nvarchar(12) NULL
+GO
+COMMIT
+
+/*
+   segunda-feira, 19 de setembro de 2005 16:13:52
+   User: sa
+   Server: ONLYTECH-02
+   Database: BDRetaguarda
+   Application: MS SQLEM - Data Tools
+*/
+
+BEGIN TRANSACTION
+SET QUOTED_IDENTIFIER ON
+SET TRANSACTION ISOLATION LEVEL SERIALIZABLE
+SET ARITHABORT ON
+SET NUMERIC_ROUNDABORT OFF
+SET CONCAT_NULL_YIELDS_NULL ON
+SET ANSI_NULLS ON
+SET ANSI_PADDING ON
+SET ANSI_WARNINGS ON
+COMMIT
+BEGIN TRANSACTION
+ALTER TABLE dbo.TBNota_entrada_fiscal
+	DROP CONSTRAINT FK_TBNota_entrada_fiscal_TBPlano_pagamento
+GO
+COMMIT
+BEGIN TRANSACTION
+COMMIT
+
+/*
+   segunda-feira, 19 de setembro de 2005 18:55:46
+   User: 
+   Server: (local)
+   Database: BDRetaguarda
+   Application: MS SQLEM - Data Tools
+*/
+
+BEGIN TRANSACTION
+SET QUOTED_IDENTIFIER ON
+SET TRANSACTION ISOLATION LEVEL SERIALIZABLE
+SET ARITHABORT ON
+SET NUMERIC_ROUNDABORT OFF
+SET CONCAT_NULL_YIELDS_NULL ON
+SET ANSI_NULLS ON
+SET ANSI_PADDING ON
+SET ANSI_WARNINGS ON
+COMMIT
+BEGIN TRANSACTION
+ALTER TABLE dbo.TBConta_corrente
+	DROP CONSTRAINT FK__TBConta_c__FKCod__3F5C4234
+GO
+COMMIT
+BEGIN TRANSACTION
+CREATE TABLE dbo.Tmp_TBConta_corrente
+	(
+	PkId_TBConta_corrente int NOT NULL IDENTITY (1, 1),
+	FKCodigo_TBBancos int NOT NULL,
+	DFAgencia_TBConta_corrente nvarchar(10) NULL,
+	DFNumero_contaTBConta_corrente nvarchar(10) NOT NULL,
+	DFDigito_conta_TBConta_corrente nvarchar(2) NULL,
+	DFCarteira_TBConta_corrente nvarchar(3) NULL,
+	DFProximo_nosso_numero_TBConta_corrente nvarchar(20) NOT NULL,
+	DFValor_tarifa_cobranca_TBConta_corrente money NULL,
+	DFPath_arquivo_remessa_TBConta_corrente nvarchar(100) NULL,
+	DFPath_arquivo_retorno_TBConta_corrente nvarchar(100) NULL,
+	DFCalcula_nosso_numero_TBConta_corrente bit NULL
+	)  ON [PRIMARY]
+GO
+SET IDENTITY_INSERT dbo.Tmp_TBConta_corrente ON
+GO
+IF EXISTS(SELECT * FROM dbo.TBConta_corrente)
+	 EXEC('INSERT INTO dbo.Tmp_TBConta_corrente (PkId_TBConta_corrente, FKCodigo_TBBancos, DFAgencia_TBConta_corrente, DFNumero_contaTBConta_corrente, DFDigito_conta_TBConta_corrente, DFCarteira_TBConta_corrente, DFProximo_nosso_numero_TBConta_corrente, DFValor_tarifa_cobranca_TBConta_corrente, DFPath_arquivo_remessa_TBConta_corrente, DFPath_arquivo_retorno_TBConta_corrente, DFCalcula_nosso_numero_TBConta_corrente)
+		SELECT PkId_TBConta_corrente, FKCodigo_TBBancos, DFAgencia_TBConta_corrente, DFNumero_contaTBConta_corrente, DFDigito_conta_TBConta_corrente, DFCarteira_TBConta_corrente, DFProximo_nosso_numero_TBConta_corrente, DFValor_tarifa_cobranca_TBConta_corrente, DFPath_arquivo_remessa_TBConta_corrente, DFPath_arquivo_retorno_TBConta_corrente, DFCalcula_nosso_numero_TBConta_corrente FROM dbo.TBConta_corrente TABLOCKX')
+GO
+SET IDENTITY_INSERT dbo.Tmp_TBConta_corrente OFF
+GO
+DROP TABLE dbo.TBConta_corrente
+GO
+EXECUTE sp_rename N'dbo.Tmp_TBConta_corrente', N'TBConta_corrente', 'OBJECT'
+GO
+ALTER TABLE dbo.TBConta_corrente ADD CONSTRAINT
+	PK__TBConta_corrente__3E681DFB PRIMARY KEY CLUSTERED 
+	(
+	PkId_TBConta_corrente
+	) ON [PRIMARY]
+
+GO
+ALTER TABLE dbo.TBConta_corrente WITH NOCHECK ADD CONSTRAINT
+	FK__TBConta_c__FKCod__3F5C4234 FOREIGN KEY
+	(
+	FKCodigo_TBBancos
+	) REFERENCES dbo.TBBancos
+	(
+	PKCodigo_TBBancos
+	)
+GO
+COMMIT
+
+/*
+   segunda-feira, 19 de setembro de 2005 19:09:15
+   User: sa
+   Server: ONLYTECH-02
+   Database: BDRetaguarda
+   Application: MS SQLEM - Data Tools
+*/
+
+BEGIN TRANSACTION
+SET QUOTED_IDENTIFIER ON
+SET TRANSACTION ISOLATION LEVEL SERIALIZABLE
+SET ARITHABORT ON
+SET NUMERIC_ROUNDABORT OFF
+SET CONCAT_NULL_YIELDS_NULL ON
+SET ANSI_NULLS ON
+SET ANSI_PADDING ON
+SET ANSI_WARNINGS ON
+COMMIT
+BEGIN TRANSACTION
+ALTER TABLE dbo.TBBanco_Fornecedor
+	DROP CONSTRAINT FK__TBBanco_F__FKId___687693BC
+GO
+COMMIT
+BEGIN TRANSACTION
+ALTER TABLE dbo.TBBanco_Fornecedor
+	DROP CONSTRAINT FK__TBBanco_F__FKCod__696AB7F5
+GO
+COMMIT
+BEGIN TRANSACTION
+CREATE TABLE dbo.Tmp_TBBanco_Fornecedor
+	(
+	PKId_TBBanco_fornecedor int NOT NULL IDENTITY (1, 1),
+	FKId_TBFornecedor int NOT NULL,
+	FKCodigo_TBBancos int NOT NULL,
+	DFAgencia_TBBanco_Fornecedor nvarchar(10) NOT NULL,
+	DFConta_TBBanco_Fornecedor nvarchar(20) NOT NULL,
+	DFFavorecido_TBBanco_fornecedor nvarchar(50) NULL
+	)  ON [PRIMARY]
+GO
+SET IDENTITY_INSERT dbo.Tmp_TBBanco_Fornecedor ON
+GO
+IF EXISTS(SELECT * FROM dbo.TBBanco_Fornecedor)
+	 EXEC('INSERT INTO dbo.Tmp_TBBanco_Fornecedor (PKId_TBBanco_fornecedor, FKId_TBFornecedor, FKCodigo_TBBancos, DFAgencia_TBBanco_Fornecedor, DFConta_TBBanco_Fornecedor, DFFavorecido_TBBanco_fornecedor)
+		SELECT PKId_TBBanco_fornecedor, FKId_TBFornecedor, FKCodigo_TBBancos, DFAgencia_TBBanco_Fornecedor, DFConta_TBBanco_Fornecedor, DFFavorecido_TBBanco_fornecedor FROM dbo.TBBanco_Fornecedor TABLOCKX')
+GO
+SET IDENTITY_INSERT dbo.Tmp_TBBanco_Fornecedor OFF
+GO
+DROP TABLE dbo.TBBanco_Fornecedor
+GO
+EXECUTE sp_rename N'dbo.Tmp_TBBanco_Fornecedor', N'TBBanco_Fornecedor', 'OBJECT'
+GO
+ALTER TABLE dbo.TBBanco_Fornecedor ADD CONSTRAINT
+	PK__TBBanco_Forneced__67826F83 PRIMARY KEY CLUSTERED 
+	(
+	PKId_TBBanco_fornecedor
+	) WITH FILLFACTOR = 90 ON [PRIMARY]
+
+GO
+ALTER TABLE dbo.TBBanco_Fornecedor WITH NOCHECK ADD CONSTRAINT
+	FK__TBBanco_F__FKCod__696AB7F5 FOREIGN KEY
+	(
+	FKCodigo_TBBancos
+	) REFERENCES dbo.TBBancos
+	(
+	PKCodigo_TBBancos
+	)
+GO
+ALTER TABLE dbo.TBBanco_Fornecedor WITH NOCHECK ADD CONSTRAINT
+	FK__TBBanco_F__FKId___687693BC FOREIGN KEY
+	(
+	FKId_TBFornecedor
+	) REFERENCES dbo.TBFornecedor
+	(
+	PKId_TBFornecedor
+	)
+GO
+COMMIT
+
+/*
+   segunda-feira, 19 de setembro de 2005 19:11:13
+   User: 
+   Server: (local)
+   Database: BDRetaguarda
+   Application: MS SQLEM - Data Tools
+*/
+
+BEGIN TRANSACTION
+SET QUOTED_IDENTIFIER ON
+SET TRANSACTION ISOLATION LEVEL SERIALIZABLE
+SET ARITHABORT ON
+SET NUMERIC_ROUNDABORT OFF
+SET CONCAT_NULL_YIELDS_NULL ON
+SET ANSI_NULLS ON
+SET ANSI_PADDING ON
+SET ANSI_WARNINGS ON
+COMMIT
+BEGIN TRANSACTION
+ALTER TABLE dbo.TBBanco_vendedor
+	DROP CONSTRAINT FK__TBBanco_v__FKId___12ECBBCC
+GO
+COMMIT
+BEGIN TRANSACTION
+CREATE TABLE dbo.Tmp_TBBanco_vendedor
+	(
+	PKId_TBBanco_vendedor int NOT NULL IDENTITY (1, 1),
+	FKId_TBVendedor int NOT NULL,
+	FKCodigo_TBBancos int NOT NULL,
+	DFAgencia_TBBanco_vendedor nvarchar(10) NOT NULL,
+	DFConta_TBBanco_vendedor nvarchar(20) NOT NULL,
+	DFFavorecido_TBBanco_vendedor nvarchar(50) NULL
+	)  ON [PRIMARY]
+GO
+SET IDENTITY_INSERT dbo.Tmp_TBBanco_vendedor ON
+GO
+IF EXISTS(SELECT * FROM dbo.TBBanco_vendedor)
+	 EXEC('INSERT INTO dbo.Tmp_TBBanco_vendedor (PKId_TBBanco_vendedor, FKId_TBVendedor, FKCodigo_TBBancos, DFAgencia_TBBanco_vendedor, DFConta_TBBanco_vendedor, DFFavorecido_TBBanco_vendedor)
+		SELECT PKId_TBBanco_vendedor, FKId_TBVendedor, FKCodigo_TBBancos, DFAgencia_TBBanco_vendedor, DFConta_TBBanco_vendedor, DFFavorecido_TBBanco_vendedor FROM dbo.TBBanco_vendedor TABLOCKX')
+GO
+SET IDENTITY_INSERT dbo.Tmp_TBBanco_vendedor OFF
+GO
+DROP TABLE dbo.TBBanco_vendedor
+GO
+EXECUTE sp_rename N'dbo.Tmp_TBBanco_vendedor', N'TBBanco_vendedor', 'OBJECT'
+GO
+ALTER TABLE dbo.TBBanco_vendedor ADD CONSTRAINT
+	PK__TBBanco_vendedor__11F89793 PRIMARY KEY CLUSTERED 
+	(
+	PKId_TBBanco_vendedor
+	) ON [PRIMARY]
+
+GO
+ALTER TABLE dbo.TBBanco_vendedor WITH NOCHECK ADD CONSTRAINT
+	FK__TBBanco_v__FKId___12ECBBCC FOREIGN KEY
+	(
+	FKId_TBVendedor
+	) REFERENCES dbo.TBVendedor
+	(
+	PKId_TBVendedor
+	)
+GO
+COMMIT
+
+/*
+   quinta-feira, 22 de setembro de 2005 09:47:40
+   User: sa
+   Server: ONLYTECH-02
+   Database: BDRetaguarda
+   Application: MS SQLEM - Data Tools
+*/
+
+BEGIN TRANSACTION
+SET QUOTED_IDENTIFIER ON
+SET TRANSACTION ISOLATION LEVEL SERIALIZABLE
+SET ARITHABORT ON
+SET NUMERIC_ROUNDABORT OFF
+SET CONCAT_NULL_YIELDS_NULL ON
+SET ANSI_NULLS ON
+SET ANSI_PADDING ON
+SET ANSI_WARNINGS ON
+COMMIT
+BEGIN TRANSACTION
+ALTER TABLE dbo.TBPdv ADD
+	DFFinaliza_venda_direto bit NULL
+GO
+COMMIT
+
+/*
+   quinta-feira, 22 de setembro de 2005 11:32:10
+   User: sa
+   Server: ONLYTECH-02
+   Database: BDRetaguarda
+   Application: MS SQLEM - Data Tools
+*/
+
+BEGIN TRANSACTION
+SET QUOTED_IDENTIFIER ON
+SET TRANSACTION ISOLATION LEVEL SERIALIZABLE
+SET ARITHABORT ON
+SET NUMERIC_ROUNDABORT OFF
+SET CONCAT_NULL_YIELDS_NULL ON
+SET ANSI_NULLS ON
+SET ANSI_PADDING ON
+SET ANSI_WARNINGS ON
+COMMIT
+BEGIN TRANSACTION
+CREATE TABLE dbo.Tmp_TBHIstorico_transporte_roteiro
+	(
+	PKId_TBHIstorico_transporte_roteiro int NOT NULL IDENTITY (1, 1),
+	FKId_TBHIstorico_transporte int NOT NULL,
+	FKCodigo_TBItinerario int NOT NULL,
+	FKCodigo_TBDestinatario int NOT NULL,
+	DFPedagio_custear_receber_ratear_TBHIstorico_transporte_roteiro int NOT NULL,
+	DFIcms_custear_ratear_TBHIstorico_transporte_roteiro bit NOT NULL,
+	DFValor_frete_kg_lt_TBHIstorico_transporte_roteiro nvarchar(20) NULL,
+	DFPaga_pedagio_eixo_suspenso_TBHIstorico_transporte_roteiro bit NULL
+	)  ON [PRIMARY]
+GO
+SET IDENTITY_INSERT dbo.Tmp_TBHIstorico_transporte_roteiro ON
+GO
+IF EXISTS(SELECT * FROM dbo.TBHIstorico_transporte_roteiro)
+	 EXEC('INSERT INTO dbo.Tmp_TBHIstorico_transporte_roteiro (PKId_TBHIstorico_transporte_roteiro, FKId_TBHIstorico_transporte, FKCodigo_TBItinerario, FKCodigo_TBDestinatario, DFPedagio_custear_receber_ratear_TBHIstorico_transporte_roteiro, DFIcms_custear_ratear_TBHIstorico_transporte_roteiro, DFValor_frete_kg_lt_TBHIstorico_transporte_roteiro, DFPaga_pedagio_eixo_suspenso_TBHIstorico_transporte_roteiro)
+		SELECT PKId_TBHIstorico_transporte_roteiro, FKId_TBHIstorico_transporte, FKCodigo_TBItinerario, FKCodigo_TBDestinatario, DFPedagio_custear_receber_ratear_TBHIstorico_transporte_roteiro, DFIcms_custear_ratear_TBHIstorico_transporte_roteiro, CONVERT(nvarchar(20), DFValor_frete_kg_lt_TBHIstorico_transporte_roteiro), DFPaga_pedagio_eixo_suspenso_TBHIstorico_transporte_roteiro FROM dbo.TBHIstorico_transporte_roteiro TABLOCKX')
+GO
+SET IDENTITY_INSERT dbo.Tmp_TBHIstorico_transporte_roteiro OFF
+GO
+ALTER TABLE dbo.TBOperacao_transporte
+	DROP CONSTRAINT FK__TBOperaca__FKId___2713B00A
+GO
+ALTER TABLE dbo.TBOperacao_transporte
+	DROP CONSTRAINT FK__TBOperaca__FKId___3B1AA8B7
+GO
+DROP TABLE dbo.TBHIstorico_transporte_roteiro
+GO
+EXECUTE sp_rename N'dbo.Tmp_TBHIstorico_transporte_roteiro', N'TBHIstorico_transporte_roteiro', 'OBJECT'
+GO
+ALTER TABLE dbo.TBHIstorico_transporte_roteiro ADD CONSTRAINT
+	PK__TBHIstorico_tran__1C962197 PRIMARY KEY CLUSTERED 
+	(
+	PKId_TBHIstorico_transporte_roteiro
+	) WITH FILLFACTOR = 90 ON [PRIMARY]
+
+
+--O PROXIMO É O ULTIMO COPIADO PARA O TXT MENSAL - SCP2005-09-22b
+
+GO
+COMMIT
+BEGIN TRANSACTION
+ALTER TABLE dbo.TBOperacao_transporte WITH NOCHECK ADD CONSTRAINT
+	FK__TBOperaca__FKId___2713B00A FOREIGN KEY
+	(
+	FKId_TBHIstorico_transporte_roteiro
+	) REFERENCES dbo.TBHIstorico_transporte_roteiro
+	(
+	PKId_TBHIstorico_transporte_roteiro
+	)
+GO
+ALTER TABLE dbo.TBOperacao_transporte WITH NOCHECK ADD CONSTRAINT
+	FK__TBOperaca__FKId___3B1AA8B7 FOREIGN KEY
+	(
+	FKId_TBHIstorico_transporte_roteiro
+	) REFERENCES dbo.TBHIstorico_transporte_roteiro
+	(
+	PKId_TBHIstorico_transporte_roteiro
+	)
+GO
+COMMIT

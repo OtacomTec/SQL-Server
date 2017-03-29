@@ -1,0 +1,2 @@
+
+Alter table dbo.TBItens_tabela_preco add  foreign key([FKCodigo_TBMoeda]) references [TBMoeda] ([PKCodigo_TBMoeda ])  on update no action on delete no action 

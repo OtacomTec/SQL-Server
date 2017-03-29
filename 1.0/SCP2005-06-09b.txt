@@ -1,0 +1,2 @@
+update TBItens_pedido 
+set dFValor_cotacao_dia_TBItens_pedido = 1

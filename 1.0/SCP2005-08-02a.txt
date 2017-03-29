@@ -1,0 +1,23 @@
+BEGIN TRANSACTION
+SET QUOTED_IDENTIFIER ON
+SET TRANSACTION ISOLATION LEVEL SERIALIZABLE
+SET ARITHABORT ON
+SET NUMERIC_ROUNDABORT OFF
+SET CONCAT_NULL_YIELDS_NULL ON
+SET ANSI_NULLS ON
+SET ANSI_PADDING ON
+SET ANSI_WARNINGS ON
+COMMIT
+BEGIN TRANSACTION
+ALTER TABLE dbo.TBVendedor ADD
+	DFEndereco_TBVendedor nvarchar(40) NULL,
+	DFNumero_TBVendedor nvarchar(10) NULL,
+	DFComplemento_TBVendedor nvarchar(20) NULL,
+	DFBairro_TBVendedor nvarchar(30) NULL,
+	DFCep_TBVendedor nvarchar(10) NULL,
+	DFTipo_pessoa_TBVendedor bit NULL,
+	DFCnpj_cpf_TBVendedor nvarchar(20) NULL,
+	DFInscricao_estadual_rg_TBVendedor nvarchar(20) NULL,
+	FKId_TBCidade_otica int NULL
+GO
+COMMIT

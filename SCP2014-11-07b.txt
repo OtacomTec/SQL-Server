@@ -1,0 +1,54 @@
+USE BDRetaguarda
+
+BEGIN TRANSACTION
+
+/*
+ *** IDENTIFICAÇÃO DO SCRIPT ***
+
+ 1 - Apartir de 20/12/2005, fica expressamente proibida a criação de scripts sem que seja preenchido este cabeçalho
+ 2 - Obrigatoriamente necessário que este paragrafo seja inserido apos um BEGIN TRANSACTION
+ 3 - Obrigatoriamente o preenchimento das variaveis abaixo(@Nomenclatura,@Observacao,@Data)com valores correspondentes e condizentes
+ Att: Marcos
+
+*/
+
+--INICIO CABECALHO
+
+declare @Nomenclatura as nvarchar(20)
+declare @Observacao as nvarchar(100)
+declare @Data as SMALLDATETIME
+
+SET @Nomenclatura = 'SCP2014-11-07b'
+SET @Observacao = 'Cria campo TBParametros_hora_homem_hr_conforme'
+SET @Data = CURRENT_TIMESTAMP
+
+
+---LIMPEZA DA TABELA
+
+DELETE FROM TBSCRIPT
+
+---INSERCAO DO REGISTRO
+
+INSERT INTO BDRetaguarda.dbo.TBSCRIPT(DFNome_TBScript,DFObjetivo_TBScript,DFData_execucao_TBScript)
+VALUES(@Nomenclatura,@Observacao,@Data)
+
+---FIM CABECALHO
+
+CREATE TABLE TBParametros_hora_homem_hr_conforme (
+	PKId_TBParametros_hora_homem_hr_conforme [int] IDENTITY(1,1) NOT NULL,
+	DFFaixa_inicio_TBParametros_hora_homem_hr_conforme [money] NULL,
+	DFFaixa_fim_TBParametros_hora_homem_hr_conforme [money] NULL,
+	DFCor_TBParametros_hora_homem_hr_conforme [nvarchar](50) NULL,
+	DFR_TBParametros_hora_homem_hr_conforme [int] NULL,
+	DFG_TBParametros_hora_homem_hr_conforme [int] NULL,
+	DFB_TBParametros_hora_homem_hr_conforme [int] NULL,
+	FKCodigo_TBEmpresa [int] NULL,
+ CONSTRAINT PK_TBParametros_hora_homem_hr_conforme PRIMARY KEY CLUSTERED 
+(
+	PKId_TBParametros_hora_homem_hr_conforme ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, FILLFACTOR = 90) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+commit transaction
+

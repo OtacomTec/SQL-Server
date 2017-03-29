@@ -1,0 +1,80 @@
+/*
+Created		13/3/2007
+Modified		13/3/2007
+Project		
+Model			
+Company		
+Author		
+Version		
+Database		MS SQL 2000 
+*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Create table [TBAlunos_portal]
+(
+	[PKCodigo_TBAluno_portal] Integer NOT NULL,
+	[FKCodigo_TBCurso_portal] Integer NOT NULL,
+	[DFChave_retaguarda_TBAlunos_portal] Integer NULL,
+	[DFNome_TBAlunos_portal] Nvarchar(40) NULL,
+	[DFSenha_TBAlunos_portal] Nvarchar(20) NULL,
+Primary Key ([PKCodigo_TBAluno_portal])
+) 
+go
+
+Create table [TBCurso_portal]
+(
+	[PKCodigo_TBCurso_portal] Integer NOT NULL,
+	[DFDescricao_TBCurso_portal] Nvarchar(200) NULL,
+	[DFNome_reduzido_TBCurso_portal] Nvarchar(40) NULL,
+Primary Key ([PKCodigo_TBCurso_portal])
+) 
+go
+
+
+
+
+
+
+
+
+
+
+
+
+
+Alter table [TBAlunos_portal] add  foreign key([FKCodigo_TBCurso_portal]) references [TBCurso_portal] ([PKCodigo_TBCurso_portal])  on update no action on delete no action 
+go
+
+
+Set quoted_identifier on
+go
+
+
+
+
+
+
+
+
+
+
+
+
+Set quoted_identifier off
+go

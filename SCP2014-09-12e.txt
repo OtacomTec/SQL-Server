@@ -1,0 +1,49 @@
+BEGIN TRANSACTION
+/*
+ *** IDENTIFICAÇÃO DO SCRIPT ***
+
+ 1 - Apartir de 20/12/2005, fica expressamente proibida a criação de scripts sem que seja preenchido este cabeçalho
+ 2 - Obrigatoriamente necessário que este paragrafo seja inserido apos um BEGIN TRANSACTION
+ 3 - Obrigatoriamente o preenchimento das variaveis abaixo(@Nomenclatura,@Observacao,@Data)com valores correspondentes e condizentes
+ Att: Marcos
+
+*/
+
+--INICIO CABECALHO
+
+declare @Nomenclatura as nvarchar(20)
+declare @Observacao as nvarchar(100)
+declare @Data as SMALLDATETIME
+
+SET @Nomenclatura = 'SCP2014-09-12e'
+SET @Observacao = 'Cria Tabela TBPlano_contas_funcionario'
+SET @Data = CURRENT_TIMESTAMP
+
+---LIMPEZA DA TABELA
+
+DELETE FROM TBSCRIPT
+
+---INSERCAO DO REGISTRO
+
+INSERT INTO BDRetaguarda.dbo.TBSCRIPT(DFNome_TBScript,DFObjetivo_TBScript,DFData_execucao_TBScript)
+VALUES(@Nomenclatura,@Observacao,@Data)
+
+---FIM CABECALHO\
+
+CREATE TABLE dbo.TBFuncionario_plano_contas
+	(
+	TBPKId_TBFuncionario_plano_contas int NOT NULL IDENTITY (1, 1),
+	FKCodigo_TBFuncionario int NULL,
+	FKId_TBPlano_contas int NULL,
+	DFCodigo_identificador_TBFuncionario_plano_contas int NULL,
+	DFIntegrado_filiais_TBFuncionario_plano_contas int NULL
+	)  ON [PRIMARY]
+GO
+ALTER TABLE dbo.TBFuncionario_plano_contas ADD CONSTRAINT
+	PK_TBFuncionario_plano_contas PRIMARY KEY CLUSTERED 
+	(
+	TBPKId_TBFuncionario_plano_contas
+	) WITH( STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+
+GO
+COMMIT TRANSACTION

@@ -1,0 +1,152 @@
+/*
+Created		27/05/2003
+Modified		09/05/2005
+Project		
+Model			
+Company		
+Author		
+Version		
+Database		MS SQL 2000 
+*/
+
+
+Create table [TBHistorico_transporte]
+(
+	[PKId_TBHistorico_transporte] Integer Identity NOT NULL,
+	[FKId_TBCliente] Integer NOT NULL,
+	[DFValor_diaria_TBHistorico_transporte] Money NOT NULL,
+	[DFCustear_receber_diaria_TBHistorico_transporte] Bit NOT NULL,
+	[DFObservacao_TBHistorico_transporte] Nvarchar(200) NULL,
+Primary Key ([PKId_TBHistorico_transporte])
+) 
+go
+
+Create table [TBHIstorico_transporte_roteiro]
+(
+	[PKId_TBHIstorico_transporte_roteiro] Integer Identity NOT NULL,
+	[FKId_TBHIstorico_transporte] Integer NOT NULL,
+	[FKCodigo_TBItinerario] Integer NOT NULL,
+	[FKCodigo_TBDestinatario] Integer NOT NULL,
+	[DFPedagio_custear_receber_ratear_TBHIstorico_transporte_roteiro] Integer NOT NULL,
+	[DFIcms_custear_ratear_TBHIstorico_transporte_roteiro] Bit NOT NULL,
+	[DFValor_frete_kg_lt_TBHIstorico_transporte_roteiro] Money NOT NULL,
+Primary Key ([PKId_TBHIstorico_transporte_roteiro])
+) 
+go
+
+Create table [TBOperacao_transporte]
+(
+	[PKId_TBOperacao_transporte] Integer Identity NOT NULL,
+	[FKCodigo_TBEmpresa] Integer NOT NULL,
+	[FKId_TBHIstorico_transporte_roteiro] Integer NOT NULL,
+	[FKCodigo_TBVeiculo] Integer NOT NULL,
+	[DFCodigo_carreta_TBOperacao_transporte] Integer NOT NULL,
+	[FKCodigo_TBFuncionario] Integer NOT NULL,
+	[FKCodigo_TBNatureza_transporte] Integer NOT NULL,
+	[FKCodigo_TBEspecie_transporte] Integer NOT NULL,
+	[DFDesvio_rota_TBOperacao_transporte] Money NOT NULL,
+	[DFConsignatario_TBOperacao_transporte] Bit NOT NULL,
+	[DFStatus_TBOperacao_transporte] Bit NOT NULL,
+	[DFLiberado_TBOperacao_transporte] Bit NOT NULL,
+	[DFData_emissao_TBOperacao_transporte] Smalldatetime NOT NULL,
+	[DFValor_comissao_TBOperacao_transporte] Money NOT NULL,
+	[DFNumero_conhecimento_frete_TBOperacao_transporte] Integer NOT NULL,
+	[DFTipo_transporte_TBOperacao_transporte] Integer NOT NULL,
+	[DFUnidade_TBOperacao_transporte] Nvarchar(3) NOT NULL,
+	[DFNumero_nota_TBOperacao_transporte] Nvarchar(30) NOT NULL,
+	[DFValor_nota_TBOperacao_transporte] Money NOT NULL,
+	[DFPeso_TBOperacao_transporte] Money NOT NULL,
+	[DFData_chegada_origem_TBOperacao_transporte] Smalldatetime NULL,
+	[DFHora_chegada_origem_TBOperacao_transporte] Nvarchar(8) NULL,
+	[DFData_saida_origem_TBOperacao_transporte] Smalldatetime NULL,
+	[DFHora_saida_origem_TBOperacao_transporte] Nvarchar(8) NULL,
+	[DFKm_origem_TBOperacao_transporte] Money NOT NULL,
+	[DFNumero_diarias_origem_TBOperacao_transporte] Integer NULL,
+	[DFData_chegada_destino_TBOperacao_transporte] Smalldatetime NULL,
+	[DFHora_chegada_destino_TBOperacao_transporte] Nvarchar(8) NULL,
+	[DFData_saida_destino_TBOperacao_transporte] Smalldatetime NULL,
+	[DFHora_saida_destino_TBOperacao_transporte] Nvarchar(8) NULL,
+	[DFKm_destino_TBOperacao_transporte] Money NOT NULL,
+	[DFNumero_diarias_destino_TBOperacao_transporte] Integer NOT NULL,
+	[DFPercentual_icms_TBOperacao_transporte] Money NOT NULL,
+	[TBValor_icms_TBOperacao_transporte] Money NOT NULL,
+	[DFCustear_receber_icms_TBOperacao_transporte] Bit NOT NULL,
+	[DFValor_pedagio_TBOperacao_transporte] Money NOT NULL,
+	[DFCustear_receber_ratear_pedagio_TBOperacao_transporte] Integer NOT NULL,
+	[DFComissionar_diaria_TBOperacao_transporte] Bit NOT NULL,
+	[DFCustear_receber_diaria_TBOPeracao_transporte] Bit NOT NULL,
+	[DFValor_total_diaria_TBOpercao_transporte] Money NOT NULL,
+	[DFValor_frete_TBOperacao_transporte] Money NOT NULL,
+	[DFValor_frete_liquido_TBOperacao_transporte] Money NOT NULL,
+	[DFValor_frete_receber_TBOperacao_transporte] Money NOT NULL,
+	[DFObservacao_TBOPeracao_transporte] Nvarchar(300) NULL,
+Primary Key ([PKId_TBOperacao_transporte])
+) 
+go
+
+
+Alter table [TBOperacao_transporte] add  foreign key([FKCodigo_TBEmpresa]) references [TBEmpresa] ([PKCodigo_TBEmpresa])  on update no action on delete no action 
+go
+Alter table [TBHistorico_transporte] add  foreign key([FKId_TBCliente]) references [TBCliente] ([PKId_TBCliente])  on update no action on delete no action 
+go
+Alter table [TBOperacao_transporte] add  foreign key([FKCodigo_TBEspecie_transporte]) references [TBEspecie_transporte] ([PKCodigo_TBEspecie_transporte])  on update no action on delete no action 
+go
+Alter table [TBOperacao_transporte] add  foreign key([FKCodigo_TBNatureza_transporte]) references [TBNatureza_transporte] ([PKCodigo_TBNatureza_transporte])  on update no action on delete no action 
+go
+Alter table [TBHIstorico_transporte_roteiro] add  foreign key([FKCodigo_TBItinerario]) references [TBItinerario] ([PKCodigo_TBItinerario])  on update no action on delete no action 
+go
+Alter table [TBHIstorico_transporte_roteiro] add  foreign key([FKCodigo_TBDestinatario]) references [TBDestinatario] ([PKCodigo_TBDestinatario])  on update no action on delete no action 
+go
+Alter table [TBOperacao_transporte] add  foreign key([FKCodigo_TBVeiculo]) references [TBVeiculo] ([PKCodigo_TBVeiculo])  on update no action on delete no action 
+go
+Alter table [TBHIstorico_transporte_roteiro] add  foreign key([FKId_TBHIstorico_transporte]) references [TBHistorico_transporte] ([PKId_TBHistorico_transporte])  on update no action on delete no action 
+go
+Alter table [TBOperacao_transporte] add  foreign key([FKId_TBHIstorico_transporte_roteiro]) references [TBHIstorico_transporte_roteiro] ([PKId_TBHIstorico_transporte_roteiro])  on update no action on delete no action 
+go
+
+
+Set quoted_identifier on
+go
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Set quoted_identifier off
+go
+
+
+
+
+
+
+
+
+/* Roles permissions */
+
+
+
+
+
+/* Users permissions */
+
+
+
+
+
+

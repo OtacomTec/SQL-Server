@@ -1,0 +1,57 @@
+/*
+   segunda-feira, 7 de novembro de 2005 15:50:15
+   User: sa
+   Server: ONLYTECH-02
+   Database: BDRetaguarda
+   Application: MS SQLEM - Data Tools
+*/
+
+BEGIN TRANSACTION
+SET QUOTED_IDENTIFIER ON
+SET TRANSACTION ISOLATION LEVEL SERIALIZABLE
+SET ARITHABORT ON
+SET NUMERIC_ROUNDABORT OFF
+SET CONCAT_NULL_YIELDS_NULL ON
+SET ANSI_NULLS ON
+SET ANSI_PADDING ON
+SET ANSI_WARNINGS ON
+COMMIT
+BEGIN TRANSACTION
+CREATE TABLE dbo.Tmp_TBAlineas
+	(
+	PKCodigo_TBAlineas int NOT NULL,
+	DFDescricao_TBAlineas nvarchar(50) NULL,
+	DFDescricao_alerta_TBAlineas nvarchar(10) NULL,
+	DFCritico_TBAlineas bit NULL
+	)  ON [PRIMARY]
+GO
+IF EXISTS(SELECT * FROM dbo.TBAlineas)
+	 EXEC('INSERT INTO dbo.Tmp_TBAlineas (PKCodigo_TBAlineas, DFDescricao_TBAlineas, DFDescricao_alerta_TBAlineas, DFCritico_TBAlineas)
+		SELECT PKCodigo_TBAlineas, DFDescricao_TBAlineas, CONVERT(nvarchar(10), DFDescricao_alerta_TBAlineas), DFCritico_TBAlineas FROM dbo.TBAlineas TABLOCKX')
+GO
+ALTER TABLE dbo.TBCheque
+	DROP CONSTRAINT FK__TBCheque__FKCodi__4C9018D3
+GO
+DROP TABLE dbo.TBAlineas
+GO
+EXECUTE sp_rename N'dbo.Tmp_TBAlineas', N'TBAlineas', 'OBJECT'
+GO
+ALTER TABLE dbo.TBAlineas ADD CONSTRAINT
+	PK__TBAlineas__45E31B44 PRIMARY KEY CLUSTERED 
+	(
+	PKCodigo_TBAlineas
+	) ON [PRIMARY]
+
+GO
+COMMIT
+BEGIN TRANSACTION
+ALTER TABLE dbo.TBCheque WITH NOCHECK ADD CONSTRAINT
+	FK__TBCheque__FKCodi__4C9018D3 FOREIGN KEY
+	(
+	FKCodigo_TBAlineas
+	) REFERENCES dbo.TBAlineas
+	(
+	PKCodigo_TBAlineas
+	)
+GO
+COMMIT

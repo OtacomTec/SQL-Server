@@ -1,0 +1,12 @@
+if exists (select * from dbo.sysobjects where id = object_id(N'[dbo].[TBScript]') and OBJECTPROPERTY(id, N'IsUserTable') = 1)
+drop table [dbo].[TBScript]
+GO
+
+CREATE TABLE [dbo].[TBScript] (
+	[PKId_TBScript] [int] IDENTITY (1, 1) NOT NULL ,
+	[DFNome_TBScript] [nvarchar] (20) COLLATE Latin1_General_CI_AS NOT NULL ,
+	[DFObjetivo_TBScript] [nvarchar] (100) COLLATE Latin1_General_CI_AS NOT NULL ,
+	[DFData_execucao_TBScript] [smalldatetime] NOT NULL 
+) ON [PRIMARY]
+GO
+

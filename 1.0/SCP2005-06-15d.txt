@@ -1,0 +1,2 @@
+update TBItens_nota_saida 
+set DFValor_conta_corrente_vendedor_TBItens_nota_saida = 0

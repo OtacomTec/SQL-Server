@@ -1,0 +1,68 @@
+/*
+   segunda-feira, 19 de setembro de 2005 18:55:46
+   User: 
+   Server: (local)
+   Database: BDRetaguarda
+   Application: MS SQLEM - Data Tools
+*/
+
+BEGIN TRANSACTION
+SET QUOTED_IDENTIFIER ON
+SET TRANSACTION ISOLATION LEVEL SERIALIZABLE
+SET ARITHABORT ON
+SET NUMERIC_ROUNDABORT OFF
+SET CONCAT_NULL_YIELDS_NULL ON
+SET ANSI_NULLS ON
+SET ANSI_PADDING ON
+SET ANSI_WARNINGS ON
+COMMIT
+BEGIN TRANSACTION
+ALTER TABLE dbo.TBConta_corrente
+	DROP CONSTRAINT FK__TBConta_c__FKCod__3F5C4234
+GO
+COMMIT
+BEGIN TRANSACTION
+CREATE TABLE dbo.Tmp_TBConta_corrente
+	(
+	PkId_TBConta_corrente int NOT NULL IDENTITY (1, 1),
+	FKCodigo_TBBancos int NOT NULL,
+	DFAgencia_TBConta_corrente nvarchar(10) NULL,
+	DFNumero_contaTBConta_corrente nvarchar(10) NOT NULL,
+	DFDigito_conta_TBConta_corrente nvarchar(2) NULL,
+	DFCarteira_TBConta_corrente nvarchar(3) NULL,
+	DFProximo_nosso_numero_TBConta_corrente nvarchar(20) NOT NULL,
+	DFValor_tarifa_cobranca_TBConta_corrente money NULL,
+	DFPath_arquivo_remessa_TBConta_corrente nvarchar(100) NULL,
+	DFPath_arquivo_retorno_TBConta_corrente nvarchar(100) NULL,
+	DFCalcula_nosso_numero_TBConta_corrente bit NULL
+	)  ON [PRIMARY]
+GO
+SET IDENTITY_INSERT dbo.Tmp_TBConta_corrente ON
+GO
+IF EXISTS(SELECT * FROM dbo.TBConta_corrente)
+	 EXEC('INSERT INTO dbo.Tmp_TBConta_corrente (PkId_TBConta_corrente, FKCodigo_TBBancos, DFAgencia_TBConta_corrente, DFNumero_contaTBConta_corrente, DFDigito_conta_TBConta_corrente, DFCarteira_TBConta_corrente, DFProximo_nosso_numero_TBConta_corrente, DFValor_tarifa_cobranca_TBConta_corrente, DFPath_arquivo_remessa_TBConta_corrente, DFPath_arquivo_retorno_TBConta_corrente, DFCalcula_nosso_numero_TBConta_corrente)
+		SELECT PkId_TBConta_corrente, FKCodigo_TBBancos, DFAgencia_TBConta_corrente, DFNumero_contaTBConta_corrente, DFDigito_conta_TBConta_corrente, DFCarteira_TBConta_corrente, DFProximo_nosso_numero_TBConta_corrente, DFValor_tarifa_cobranca_TBConta_corrente, DFPath_arquivo_remessa_TBConta_corrente, DFPath_arquivo_retorno_TBConta_corrente, DFCalcula_nosso_numero_TBConta_corrente FROM dbo.TBConta_corrente TABLOCKX')
+GO
+SET IDENTITY_INSERT dbo.Tmp_TBConta_corrente OFF
+GO
+DROP TABLE dbo.TBConta_corrente
+GO
+EXECUTE sp_rename N'dbo.Tmp_TBConta_corrente', N'TBConta_corrente', 'OBJECT'
+GO
+ALTER TABLE dbo.TBConta_corrente ADD CONSTRAINT
+	PK__TBConta_corrente__3E681DFB PRIMARY KEY CLUSTERED 
+	(
+	PkId_TBConta_corrente
+	) ON [PRIMARY]
+
+GO
+ALTER TABLE dbo.TBConta_corrente WITH NOCHECK ADD CONSTRAINT
+	FK__TBConta_c__FKCod__3F5C4234 FOREIGN KEY
+	(
+	FKCodigo_TBBancos
+	) REFERENCES dbo.TBBancos
+	(
+	PKCodigo_TBBancos
+	)
+GO
+COMMIT

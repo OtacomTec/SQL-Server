@@ -1,0 +1,74 @@
+/*
+Created		27/5/2003
+Modified		15/12/2004
+Project		
+Model			
+Company		
+Author		
+Version		
+Database		MS SQL 2000 
+*/
+
+
+Create table [TBBanco_Fornecedor]
+(
+	[PKId_TBBanco_fornecedor] Integer Identity NOT NULL,
+	[FKId_TBFornecedor] Integer NOT NULL,
+	[FKCodigo_TBBancos] Integer NOT NULL,
+	[DFAgencia_TBBanco_Fornecedor] Nvarchar(5) NOT NULL,
+	[DFConta_TBBanco_Fornecedor] Nvarchar(20) NOT NULL,
+Primary Key ([PKId_TBBanco_fornecedor])
+) 
+go
+
+
+Alter table [TBBanco_Fornecedor] add  foreign key([FKId_TBFornecedor]) references [TBFornecedor] ([PKId_TBFornecedor])  on update no action on delete no action 
+Alter table [TBBanco_Fornecedor] add  foreign key([FKCodigo_TBBancos]) references [TBBancos] ([PKCodigo_TBBancos])  on update no action on delete no action 
+go
+
+
+Set quoted_identifier on
+go
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Set quoted_identifier off
+go
+
+
+
+
+
+
+
+
+/* Roles permissions */
+
+
+
+
+
+/* Users permissions */
+
+
+
+
+
+

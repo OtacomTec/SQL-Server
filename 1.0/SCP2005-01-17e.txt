@@ -1,0 +1,116 @@
+/*
+Created		27/5/2003
+Modified		16/1/2005
+Project		
+Model			
+Company		
+Author		
+Version		
+Database		MS SQL 2000 
+*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Create table [TBOperacao_caixa]
+(
+	[PKId_TBOperacao_caixa] Integer Identity NOT NULL,
+	[FKCofigo_TBPdv] Integer NOT NULL,
+	[FKId_TBFinalizadora] Integer NOT NULL,
+	[FKCodigo_TBOperadores_ecf] Integer NOT NULL,
+	[DFData_TBOperacao_caixa] Smalldatetime NULL,
+	[DFHora_TBOperacao_caixa] Nvarchar(10) NULL,
+	[DFValor_TBOperacao_caixa] Money NULL,
+	[DFTipo_operacao_TBOperacao_caixa] Bit NULL,
+	[DFStatus_aberto_fechado_TBOperacao_caixa] Bit NULL,
+Primary Key ([PKId_TBOperacao_caixa])
+) 
+go
+
+Create table [TBFinalizadora]
+(
+	[PKId_TBFinalizadora] Integer Identity NOT NULL,
+	[IXCodigo_TBFinalizadora] Integer NOT NULL,
+	[DFDescricao_TBFinalizadora] Nvarchar(40) NOT NULL,
+	[DFModalidade_TBFinalizadora] Integer NOT NULL,
+	[DFAcrescimo_desconto_TBFinalizadora] Integer NOT NULL,
+	[DFPercentual_TBFinalizadora] Money NULL,
+	[DFDebito_credito_TBFinalizadora] Bit NULL,
+	[DFTroco_TBFinalizadora] Bit NULL,
+Primary Key ([PKId_TBFinalizadora])
+) 
+go
+
+
+
+
+
+
+
+
+
+
+Alter table [TBOperacao_caixa] add  foreign key([FKId_TBFinalizadora]) references [TBFinalizadora] ([PKId_TBFinalizadora])  on update no action on delete no action 
+go
+
+
+Set quoted_identifier on
+go
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Set quoted_identifier off
+go
+
+
+
+
+
+
+
+
+/* Roles permissions */
+
+
+
+
+
+/* Users permissions */
+
+
+
+
+
+

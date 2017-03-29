@@ -1,0 +1,27 @@
+/*
+   sexta-feira, 30 de setembro de 2005 15:57:25
+   User: 
+   Server: ONLYTECH-05
+   Database: BDRetaguarda
+   Application: MS SQLEM - Data Tools
+*/
+
+BEGIN TRANSACTION
+SET QUOTED_IDENTIFIER ON
+SET TRANSACTION ISOLATION LEVEL SERIALIZABLE
+SET ARITHABORT ON
+SET NUMERIC_ROUNDABORT OFF
+SET CONCAT_NULL_YIELDS_NULL ON
+SET ANSI_NULLS ON
+SET ANSI_PADDING ON
+SET ANSI_WARNINGS ON
+COMMIT
+BEGIN TRANSACTION
+ALTER TABLE dbo.TBSinief ADD
+	DFCnpj_destinatario_TBSinief nvarchar(20) NULL,
+	DFCnpj_Emitente_Nota_Fiscal_TBSinief nvarchar(20) NULL,
+	DFCif_fob_TBSinief char(3) NULL,
+	DFNumero_Nota_Fiscal_TBSinief int NULL,
+	DFComplemento_Frete_TBSinief char(1) NULL
+GO
+COMMIT

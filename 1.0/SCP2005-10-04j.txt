@@ -1,0 +1,2 @@
+UPDATE TBConta_corrente
+SET DFConta_Corrente_Poupanca_TBConta_corrente = 1

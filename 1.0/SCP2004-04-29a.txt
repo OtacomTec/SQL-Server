@@ -1,0 +1,76 @@
+/*
+Created		27/5/2003
+Modified		10/5/2004
+Project		
+Model		
+Company		
+Author		
+Version		
+Database		MS SQL 2000 
+*/
+
+
+
+
+
+
+
+ 
+go
+
+Create table [TBCfop_nota_entrada] (
+	[PKId_TBCfop_nota_entrada] Integer Identity NOT NULL,
+	[FKId_TBNota_entrada] Integer NOT NULL,
+	[FKId_TBCfop] Integer NOT NULL,
+Primary Key ([PKId_TBCfop_nota_entrada])
+ 
+go
+
+
+
+
+
+
+
+
+Alter table [TBCfop_nota_entrada] add  foreign key([FKId_TBNota_entrada]) references [TBNota_entrada] ([PKId_TBNota_entrada])  on update no action on delete no action 
+go
+
+
+Set quoted_identifier on
+go
+
+
+
+
+
+
+
+
+
+
+
+
+Set quoted_identifier off
+go
+
+
+
+
+
+
+
+
+/* Roles permissions */
+
+
+
+
+
+/* Users permissions */
+
+
+
+
+
+

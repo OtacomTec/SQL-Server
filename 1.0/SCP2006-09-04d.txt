@@ -1,0 +1,65 @@
+BEGIN TRANSACTION
+/*
+ *** IDENTIFICAÇÃO DO SCRIPT ***
+
+ 1 - Apartir de 20/12/2005, fica expressamente proibida a criação de scripts sem que seja preenchido este cabeçalho
+ 2 - Obrigatoriamente necessário que este paragrafo seja inserido apos um BEGIN TRANSACTION
+ 3 - Obrigatoriamente o preenchimento das variaveis abaixo(@Nomenclatura,@Observacao,@Data)com valores correspondentes e condizentes
+ Att: Marcos
+
+*/
+
+--INICIO CABECALHO
+
+declare @Nomenclatura as nvarchar(20)
+declare @Observacao as nvarchar(100)
+declare @Data as SMALLDATETIME
+
+SET @Nomenclatura = 'SCP2006-09-04d'
+SET @Observacao = 'Cria campo DFQuantidade_TBFechamento_caixa_produto_posto'
+SET @Data = CURRENT_TIMESTAMP
+
+
+---LIMPEZA DA TABELA
+
+DELETE FROM TBSCRIPT
+
+---INSERCAO DO REGISTRO
+INSERT INTO TBSCRIPT(DFNome_TBScript,DFObjetivo_TBScript,DFData_execucao_TBScript)
+VALUES(@Nomenclatura,@Observacao,@Data)
+
+---FIM CABECALHO
+
+IF OBJECT_ID('TBFechamento_caixa_produto_posto') IS NOT NULL 
+BEGIN
+   print '1'
+   if exists (select * from syscolumns, sysobjects where sysobjects.id = syscolumns.id and syscolumns.name = 'DFQuantidade_caixa_produto_posto' and sysobjects.xtype = 'U')   
+   BEGIN
+      print '1.1'
+      EXEC sp_rename 'TBFechamento_caixa_produto_posto.[DFQuantidade_caixa_produto_posto]', 'DFQuantidade_TBFechamento_caixa_produto_posto', 'COLUMN'
+      PRINT 'Foi necessario renomear o campo DFQuantidade_caixa_produto_posto para DFQuantidade_TBFechamento_caixa_produto_posto na TBFechamento_caixa_produto_posto. Verifique!'
+   END 
+   ELSE
+   BEGIN
+      print '1.2'
+      if exists (select * from syscolumns, sysobjects where sysobjects.id = syscolumns.id and syscolumns.name = 'DFQuantidade_TBFechamento_caixa_produto_posto' and sysobjects.xtype = 'U')   
+      BEGIN
+      print '1.2.1'   
+      PRINT 'Nao foi necessario renomear ou criar o campo DFQuantidade_TBFechamento_caixa_produto_posto, o mesmo já existe na TBFechamento_caixa_produto_posto. Verifique!'
+      END
+      ELSE
+      BEGIN
+         print '1.2.2'   
+         ALTER TABLE TBFechamento_caixa_produto_posto
+                 ADD DFQuantidade_TBFechamento_caixa_produto_posto MONEY NULL
+         PRINT 'Foi necessario criar o campo DFQuantidade_TBFechamento_caixa_produto_posto na TBFechamento_caixa_produto_posto. Verifique!'
+      END
+   END
+END
+ELSE
+BEGIN
+   print '2'   
+   PRINT 'Nao foi possivel criar o campo DFQuantidade_TBFechamento_caixa_produto_posto na TBFechamento_caixa_produto_posto, pois essa tabela nao existe. Verifique!'
+END
+
+COMMIT TRANSACTION

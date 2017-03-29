@@ -1,0 +1,5 @@
+BEGIN TRANSACTION
+ALTER TABLE TBCliente ADD
+DFNome_fantasia_TBcliente nvarchar(30) NULL
+go
+COMMIT

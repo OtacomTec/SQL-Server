@@ -1,0 +1,77 @@
+/*
+   sábado, 29 de outubro de 2005 14:55:46
+   User: 
+   Server: (LOCAL)
+   Database: BDRetaguarda
+   Application: MS SQLEM - Data Tools
+*/
+
+BEGIN TRANSACTION
+SET QUOTED_IDENTIFIER ON
+SET TRANSACTION ISOLATION LEVEL SERIALIZABLE
+SET ARITHABORT ON
+SET NUMERIC_ROUNDABORT OFF
+SET CONCAT_NULL_YIELDS_NULL ON
+SET ANSI_NULLS ON
+SET ANSI_PADDING ON
+SET ANSI_WARNINGS ON
+COMMIT
+BEGIN TRANSACTION
+ALTER TABLE dbo.TBCaixa
+	DROP CONSTRAINT FK__TBCaixa__FKId_TB__5BCD9859
+GO
+COMMIT
+BEGIN TRANSACTION
+ALTER TABLE dbo.TBCaixa
+	DROP CONSTRAINT FK__TBCaixa__FKCodig__5AD97420
+GO
+COMMIT
+BEGIN TRANSACTION
+CREATE TABLE dbo.Tmp_TBCaixa
+	(
+	PKId_TBCaixa int NOT NULL IDENTITY (1, 1) NOT FOR REPLICATION,
+	FKCodigo_TBEmpresa int NOT NULL,
+	FKId_TBHistorico_padrao int NOT NULL,
+	DFData_lancamento_TBCaixa smalldatetime NOT NULL,
+	DFComplemento_TBCaixa nvarchar(200) NULL,
+	DFValor_TBCaixa money NOT NULL
+	)  ON [PRIMARY]
+GO
+SET IDENTITY_INSERT dbo.Tmp_TBCaixa ON
+GO
+IF EXISTS(SELECT * FROM dbo.TBCaixa)
+	 EXEC('INSERT INTO dbo.Tmp_TBCaixa (PKId_TBCaixa, FKCodigo_TBEmpresa, FKId_TBHistorico_padrao, DFData_lancamento_TBCaixa, DFComplemento_TBCaixa, DFValor_TBCaixa)
+		SELECT PKId_TBCaixa, FKCodigo_TBEmpresa, FKId_TBHistorico_padrao, DFData_lancamento_TBCaixa, DFComplemento_TBCaixa, DFValor_TBCaixa FROM dbo.TBCaixa TABLOCKX')
+GO
+SET IDENTITY_INSERT dbo.Tmp_TBCaixa OFF
+GO
+DROP TABLE dbo.TBCaixa
+GO
+EXECUTE sp_rename N'dbo.Tmp_TBCaixa', N'TBCaixa', 'OBJECT'
+GO
+ALTER TABLE dbo.TBCaixa ADD CONSTRAINT
+	PK__TBCaixa__59E54FE7 PRIMARY KEY CLUSTERED 
+	(
+	PKId_TBCaixa
+	) WITH FILLFACTOR = 90 ON [PRIMARY]
+
+GO
+ALTER TABLE dbo.TBCaixa WITH NOCHECK ADD CONSTRAINT
+	FK__TBCaixa__FKCodig__5AD97420 FOREIGN KEY
+	(
+	FKCodigo_TBEmpresa
+	) REFERENCES dbo.TBEmpresa
+	(
+	PKCodigo_TBEmpresa
+	)
+GO
+ALTER TABLE dbo.TBCaixa WITH NOCHECK ADD CONSTRAINT
+	FK__TBCaixa__FKId_TB__5BCD9859 FOREIGN KEY
+	(
+	FKId_TBHistorico_padrao
+	) REFERENCES dbo.TBHistorico_padrao
+	(
+	PKId_TBHistorico_padrao
+	)
+GO
+COMMIT

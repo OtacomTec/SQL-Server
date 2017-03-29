@@ -1,0 +1,89 @@
+/*
+Created		27/5/2003
+Modified		18/8/2005
+Project		Only Tech - ERP
+Model			Olt
+Company		Only Tech
+Author		Only Tech
+Version		1.0
+Database		MS SQL 2000 
+*/
+
+Create table [TBTanque]
+(
+	[PKId_TBTanque] Integer Identity NOT NULL,
+	[IXCodigo_TBEmpresa] Integer NOT NULL,
+	[IXCodigo_TBTanque] Integer NULL,
+	[DFDescricao_TBTanque] Nvarchar(40) NULL,
+	[DFCapacidade_TBTanque] Money NULL,
+Primary Key ([PKId_TBTanque])
+) 
+go
+
+Create table [TBBomba_bico]
+(
+	[PKId_TBBomba_bico] Integer Identity NOT NULL,
+	[FKId_TBProduto] Integer NOT NULL,
+	[FKId_TBTanque] Integer NOT NULL,
+	[IXCodigo_TBBomba_bico] Integer NULL,
+	[DFUltimo_encerrante_TBBomba_bico] Money NULL,
+	[DFNumero_maximo_encerrante_TBBomba_bico] Money NULL,
+        [DFTipo_preco_TBBomba_bico] int NULL,
+Primary Key ([PKId_TBBomba_bico])
+) 
+go
+
+go
+Alter table [TBTanque] add  foreign key([IXCodigo_TBEmpresa]) references [TBEmpresa] ([PKCodigo_TBEmpresa])  on update no action on delete no action 
+go
+Alter table [TBBomba_bico] add  foreign key([FKId_TBProduto]) references [TBProduto] ([PKId_TBProduto])  on update no action on delete no action 
+go
+Alter table [TBBomba_bico] add  foreign key([FKId_TBTanque]) references [TBTanque] ([PKId_TBTanque])  on update no action on delete no action 
+go
+
+
+Set quoted_identifier on
+go
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Set quoted_identifier off
+go
+
+
+
+
+
+
+
+
+/* Roles permissions */
+
+
+
+
+
+/* Users permissions */
+
+
+
+
+
+

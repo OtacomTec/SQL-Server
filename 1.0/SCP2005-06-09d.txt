@@ -1,0 +1,56 @@
+/*
+Created		27/5/2003
+Modified		9/6/2005
+Project		Only Tech - ERP
+Model			Olt
+Company		Only Tech
+Author		Only Tech
+Version		1.0
+Database		MS SQL 2000 
+*/
+
+Create table [TBProduto_similar]
+(
+	[PKId_TBProduto_similar] Integer Identity NOT NULL,
+	[FKId_primario_TBProduto] Integer NOT NULL,
+	[FKId_secundario_TBProduto] Integer NOT NULL,
+	[DFOrdem_prioridade_TBProduto_similar] Integer NULL,
+Primary Key ([PKId_TBProduto_similar])
+) 
+go
+
+go
+Alter table [TBProduto_similar] add  foreign key([FKId_primario_TBProduto]) references [TBProduto] ([PKId_TBProduto])  on update no action on delete no action 
+go
+Alter table [TBProduto_similar] add  foreign key([FKId_secundario_TBProduto]) references [TBProduto] ([PKId_TBProduto])  on update no action on delete no action 
+go
+
+
+Set quoted_identifier on
+go
+
+
+
+Set quoted_identifier off
+go
+
+
+
+
+
+
+
+
+/* Roles permissions */
+
+
+
+
+
+/* Users permissions */
+
+
+
+
+
+

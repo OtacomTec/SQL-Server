@@ -1,0 +1,14 @@
+/*
+   quarta-feira, 15 de fevereiro de 2006 11:57:02
+   User: sa
+   Server: ONLYTECH-DADOS
+   Database: BDPortal
+   Application: MS SQLEM - Data Tools
+*/
+
+
+BEGIN TRANSACTION
+ALTER TABLE dbo.TBFabricante_portal ADD
+	DFIntegrado_retaguarda_TBFabricante_portal bit NULL
+go
+COMMIT

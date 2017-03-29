@@ -1,0 +1,50 @@
+/*
+   sábado, 6 de novembro de 2004 11:29:22
+   User: sa
+   Server: LOGICX-SERVER
+   Database: BDRetaguarda
+   Application: MS SQLEM - Data Tools
+*/
+
+BEGIN TRANSACTION
+SET QUOTED_IDENTIFIER ON
+SET TRANSACTION ISOLATION LEVEL SERIALIZABLE
+SET ARITHABORT ON
+SET NUMERIC_ROUNDABORT OFF
+SET CONCAT_NULL_YIELDS_NULL ON
+SET ANSI_NULLS ON
+SET ANSI_PADDING ON
+SET ANSI_WARNINGS ON
+COMMIT
+BEGIN TRANSACTION
+ALTER TABLE dbo.TBItens_nota_saida
+	DROP CONSTRAINT PK__TBItens_nota_sai__1980B20F
+GO
+ALTER TABLE dbo.TBItens_nota_saida ADD CONSTRAINT
+	PK__TBItens_nota_sai__1980B20F PRIMARY KEY CLUSTERED 
+	(
+	PKId_TBItens_nota_saida
+	) ON [PRIMARY]
+
+GO
+CREATE NONCLUSTERED INDEX IX_TBItens_nota_saida ON dbo.TBItens_nota_saida
+	(
+	FKId_TBNota_saida
+	) ON [PRIMARY]
+GO
+CREATE NONCLUSTERED INDEX IX_TBItens_nota_saida_1 ON dbo.TBItens_nota_saida
+	(
+	FKId_TBCfop
+	) ON [PRIMARY]
+GO
+CREATE NONCLUSTERED INDEX IX_TBItens_nota_saida_2 ON dbo.TBItens_nota_saida
+	(
+	FKId_TBVendedor
+	) ON [PRIMARY]
+GO
+CREATE NONCLUSTERED INDEX IX_TBItens_nota_saida_3 ON dbo.TBItens_nota_saida
+	(
+	PKId_TBItens_nota_saida
+	) ON [PRIMARY]
+GO
+COMMIT

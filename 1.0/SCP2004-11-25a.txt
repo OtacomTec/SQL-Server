@@ -1,0 +1,83 @@
+/*
+Created		27/5/2003
+Modified		23/11/2004
+Project		
+Model			
+Company		
+Author		
+Version		
+Database		MS SQL 2000 
+*/
+
+
+Create table [TBTitulo_indevido]
+(
+	[PKId_TBTitulo_indevido] Integer Identity NOT NULL,
+	[FKCodigo_TBBancos] Integer NOT NULL,
+	[FKId_TBFornecedor] Integer NOT NULL,
+	[FKCodigo_TBEmpresa] Integer NOT NULL,
+	[DFNumero_documento_TBTitulo_indevido] Integer NULL,
+	[DFLetra_TBTitulo_indevido] Char(2) NULL,
+	[DFData_lancamento_TBTitulo_indevido] Smalldatetime NOT NULL,
+	[DFData_emissao_TBTitulo_indevido] Smalldatetime NOT NULL,
+	[DFData_vencimento_TBTitulo_indevido] Smalldatetime NOT NULL,
+	[DFValor_TBTitulo_indevido] Money NOT NULL,
+	[DFObservacao_TBTitulo_indevido] Nvarchar(50) NULL,
+	[DFPrevisao_TBTitulo_indevido] Bit NOT NULL,
+	[DFSerie_TBTitulo_indevido] Nvarchar(3) NULL,
+Primary Key ([PKId_TBTitulo_indevido])
+) 
+
+go
+Alter table [TBTitulo_indevido] add  foreign key([FKCodigo_TBEmpresa]) references [TBEmpresa] ([PKCodigo_TBEmpresa])  on update no action on delete no action 
+go
+Alter table [TBTitulo_indevido] add  foreign key([FKId_TBFornecedor]) references [TBFornecedor] ([PKId_TBFornecedor])  on update no action on delete no action 
+go
+Alter table [TBTitulo_indevido] add  foreign key([FKCodigo_TBBancos]) references [TBBancos] ([PKCodigo_TBBancos])  on update no action on delete no action 
+go
+
+Set quoted_identifier on
+go
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Set quoted_identifier off
+go
+
+
+
+
+
+
+
+
+/* Roles permissions */
+
+
+
+
+
+/* Users permissions */
+
+
+
+
+
+

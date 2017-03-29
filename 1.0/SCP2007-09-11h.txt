@@ -1,0 +1,82 @@
+USE BDRetaguarda
+
+BEGIN TRANSACTION
+/*
+ *** IDENTIFICAÇÃO DO SCRIPT ***
+
+ 1 - Apartir de 20/12/2005, fica expressamente proibida a criação de scripts sem que seja preenchido este cabeçalho
+ 2 - Obrigatoriamente necessário que este paragrafo seja inserido apos um BEGIN TRANSACTION
+ 3 - Obrigatoriamente o preenchimento das variaveis abaixo(@Nomenclatura,@Observacao,@Data)com valores correspondentes e condizentes
+ Att: Marcos
+
+*/
+
+--INICIO CABECALHO
+
+declare @Nomenclatura as nvarchar(20)
+declare @Observacao as nvarchar(100)
+declare @Data as SMALLDATETIME
+
+SET @Nomenclatura = 'SCP2007-09-11g'
+SET @Observacao = 'Cria Tabela Enderecamento Estoque' 
+SET @Data = CURRENT_TIMESTAMP
+
+---LIMPEZA DA TABELA
+
+DELETE FROM TBSCRIPT
+
+---INSERCAO DO REGISTRO
+
+INSERT INTO BDRetaguarda.dbo.TBSCRIPT(DFNome_TBScript,DFObjetivo_TBScript,DFData_execucao_TBScript)
+VALUES(@Nomenclatura,@Observacao,@Data)
+
+---FIM CABECALHO
+
+
+/*
+Created		27/5/2003
+Modified		23/8/2007
+Project		Only Tech - ERP
+Model			Olt
+Company		Only Tech
+Author		Only Tech
+Version		1.0
+Database		MS SQL 2000 
+*/
+
+Create table [TBEnderecamento_estoque]
+(
+	[PKid_TBEnderecamento_estoque] Integer Identity NOT NULL,
+	[FKid_TBCentro_estoque] Integer NOT NULL,
+	[DFRua_TBEnderecamento_estoque] Nvarchar(5) NULL,
+	[DFApartamento_TBEnderecamento_estoque] Nvarchar(5) NULL,
+Primary Key ([PKid_TBEnderecamento_estoque])
+) 
+go
+
+
+Alter table [TBEnderecamento_estoque] add  foreign key([FKid_TBCentro_estoque]) references [TBCentro_estoque] ([PKid_TBCentro_estoque])  on update no action on delete no action 
+go
+
+
+Set quoted_identifier on
+go
+
+Set quoted_identifier off
+go
+
+/* Roles permissions */
+
+/* Users permissions */
+
+
+Set quoted_identifier on
+go
+
+
+
+Set quoted_identifier off
+go
+
+COMMIT TRANSACTION
+

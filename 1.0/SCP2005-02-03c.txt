@@ -1,0 +1,114 @@
+/*
+Created		27/5/2003
+Modified		3/2/2005
+Project		
+Model			
+Company		
+Author		
+Version		
+Database		MS SQL 2000 
+*/
+
+
+go
+
+Create table [TBPneu]
+(
+	[PKCodigo_TBPneu] Integer NOT NULL,
+	[FKCodigo_TBTipo_pneu] Integer NOT NULL,
+	[DFNumero_controle_TBPneu] Integer NULL,
+	[DFData_aquisicao_TBPneu] Smalldatetime NULL,
+	[DFCusto_aquisicao_TBPneu] Money NULL,
+	[DFMedida_TBPneu] Nvarchar(20) NULL,
+	[DFAtivo_inativo_TBPneu] Bit NULL,
+	[DFData_baixa_TBPneu] Smalldatetime NULL,
+Primary Key ([PKCodigo_TBPneu])
+) 
+go
+
+Create table [TBReforma_pneu]
+(
+	[PKId_TBReforma_pneu] Integer Identity NOT NULL,
+	[FKCodigo_TBPneu] Integer NOT NULL,
+	[FKCodigo_TBTipo_pneu] Integer NOT NULL,
+	[DFData_reforma_TBReforma_pneu] Smalldatetime NOT NULL,
+	[DFReformador_TBReforma_pneu] Nvarchar(40) NULL,
+	[DFCusto_TBReforma_pneu] Money NULL,
+	[DFObservacao_TBReforma_pneu] Nvarchar(50) NULL,
+Primary Key ([PKId_TBReforma_pneu])
+) 
+go
+
+Create table [TBPosicao_pneu_veiculo]
+(
+	[PKId_TBPosicao_pneu_veiculo] Integer Identity NOT NULL,
+	[DFSigla_TBPosicao_pneu_veiculo] Nvarchar(4) NOT NULL,
+	[DFNomenclatura_TBPosicao_pneu_veiculo] Nvarchar(40) NOT NULL,
+Primary Key ([PKId_TBPosicao_pneu_veiculo])
+) 
+go
+
+
+
+
+
+
+
+
+
+
+
+
+Alter table [TBPneu] add  foreign key([FKCodigo_TBTipo_pneu]) references [TBTipo_pneu] ([PKCodigo_TBTipo_pneu])  on update no action on delete no action 
+go
+Alter table [TBReforma_pneu] add  foreign key([FKCodigo_TBTipo_pneu]) references [TBTipo_pneu] ([PKCodigo_TBTipo_pneu])  on update no action on delete no action 
+go
+Alter table [TBReforma_pneu] add  foreign key([FKCodigo_TBPneu]) references [TBPneu] ([PKCodigo_TBPneu])  on update no action on delete no action 
+go
+
+
+Set quoted_identifier on
+go
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Set quoted_identifier off
+go
+
+
+
+
+
+
+
+
+/* Roles permissions */
+
+
+
+
+
+/* Users permissions */
+
+
+
+
+
+

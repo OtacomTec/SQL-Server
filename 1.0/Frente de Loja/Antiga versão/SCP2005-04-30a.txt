@@ -1,0 +1,162 @@
+/*
+Created		27/5/2003
+Modified		26/4/2005
+Project		
+Model			
+Company		
+Author		
+Version		
+Database		MS SQL 2000 
+*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Create table [TBCupom]
+(
+	[PKId_TBCupom] Integer Identity NOT NULL,
+	[FKCodigo_TBEmpresa] Integer NOT NULL,
+	[FKId_TBVendedor] Integer NOT NULL,
+	[FKCodigo_TBTabela_preco] Integer NOT NULL,
+	[PKCodigo_TBPdv] Integer NOT NULL,
+	[DFTipo_operacao_TBCupom] Integer NOT NULL,
+	[DFNumero_TBCupom] Integer NOT NULL,
+	[DFSerie_TBCupom] Nchar(3) NOT NULL,
+	[DFTipo_emitente_TBCupom] Bit NOT NULL,
+	[DFEmitente_TBCupom] Integer NOT NULL,
+	[DFTotal_itens_TBCupom] Money NOT NULL,
+	[DFTotal_cupom_TBCupom] Money NOT NULL,
+	[DFTotal_cupom_tabela_TBCupom] Money NOT NULL,
+	[DFData_Saida_TBCupom] Smalldatetime NOT NULL,
+	[DFHora_Saida] Smalldatetime NOT NULL,
+	[DFOperador_TBCupom] Nvarchar(20) NOT NULL,
+	[DFPrevisao_TBCupom] Bit NOT NULL,
+	[DFCancelado_TBCupom] Bit NOT NULL,
+	[DFMotivo_cancelamento_TBCupom] Nvarchar(50) NULL,
+	[DFUsuario_cancelamento_TBCupom] Nvarchar(20) NULL,
+	[DFIntegrado_fiscal_TBCupom] Bit NOT NULL,
+	[DFBase_calculo_subst_tributaria_TBCupom] Money NULL,
+	[DFValor_subst_tributaria_TBCupom] Money NULL,
+	[DFObservacao_TBCupom] Nvarchar(150) NULL,
+	[DFCupom_Registrado_TBCupom] Bit NOT NULL,
+Primary Key ([PKId_TBCupom])
+) 
+go
+
+Create table [TBImpostos_cupom]
+(
+	[PKId_TBImpostos_cupom] Integer Identity NOT NULL,
+	[FKId_TBNota_saida] Integer NOT NULL,
+	[DFAliquota_TBImpostos_cupom] Money NOT NULL,
+	[DFBase_calculo_TBImpostos_cupom] Money NOT NULL,
+	[DFValor_TBImpostos_cupom] Money NOT NULL,
+Primary Key ([PKId_TBImpostos_cupom])
+) 
+go
+
+Create table [TBItens_cupom]
+(
+	[PKId_TBItens_cupom] Integer Identity NOT NULL,
+	[FKId_TBCupom] Integer NOT NULL,
+	[FKId_TBProduto] Integer NOT NULL,
+	[DFCst1_TBItens_cupom] Char(1) NOT NULL,
+	[DFCst2_TBItens_cupom] Char(2) NOT NULL,
+	[DFQuantidade_TBItens_cupom] Money NOT NULL,
+	[DFTipo_preco_TBItens_cupom] Integer NOT NULL,
+	[DFPreco_tabela_TBItens_cupom] Money NOT NULL,
+	[DFPercentual_desconto_TBItens_cupom] Money NOT NULL,
+	[DFPreco_praticado_TBItens_cupom] Money NOT NULL,
+	[DFValor_total_tabela_TBItens_cupom] Money NOT NULL,
+	[DFValor_total_praticado_TBItens_cupom] Money NOT NULL,
+	[DFPercentual_icms_TBItens_cupom] Money NOT NULL,
+	[DFValor_total_icms_TBItens_cupom] Money NOT NULL,
+	[DFUnidade_TBItens_cupom] Char(3) NOT NULL,
+	[DFCusto_real_TBItens_cupom] Money NOT NULL,
+	[DFCusto_contabil_TBItens_cupom] Money NOT NULL,
+	[DFCusto_medio_TBItens_cupom] Money NOT NULL,
+	[DFPeso_liquido_TBItens_cupom] Money NOT NULL,
+	[DFPeso_bruto_TBItens_cupom] Money NOT NULL,
+	[DFQuantidade_baixa_estoque_TBItens_cupom] Money NOT NULL,
+	[DFValor_total_item_TBItens_cupom] Money NOT NULL,
+	[DFDivisor_baixa_estouqe_TBItens_cupom] Integer NULL,
+	[DFItens_cupom_Registrado_TBItens_cupom] Char(10) NULL,
+Primary Key ([PKId_TBItens_cupom])
+) 
+go
+
+
+
+
+
+
+
+
+
+
+
+Alter table [TBImpostos_cupom] add  foreign key([FKId_TBNota_saida]) references [TBCupom] ([PKId_TBCupom])  on update no action on delete no action 
+go
+Alter table [TBItens_cupom] add  foreign key([FKId_TBCupom]) references [TBCupom] ([PKId_TBCupom])  on update no action on delete no action 
+go
+
+
+Set quoted_identifier on
+go
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Set quoted_identifier off
+go
+
+
+
+
+
+
+
+
+/* Roles permissions */
+
+
+
+
+
+/* Users permissions */
+
+
+
+
+
+

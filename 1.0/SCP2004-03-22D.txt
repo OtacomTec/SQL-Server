@@ -1,0 +1,71 @@
+/*
+Created		27/5/2003
+Modified		22/2/2004
+Project		
+Model		
+Company		
+Author		
+Version		
+Database		MS SQL 2000 
+*/
+
+
+Create table [TBTipo_tabela] (
+	[PKCodigo_TBTipo_tabela] Integer NOT NULL,
+	[DFDescricao_TBTipo_tabela] Nvarchar(50) NOT NULL,
+Primary Key ([PKCodigo_TBTipo_tabela])
+) 
+go
+
+Create table [TBSecao_tipo_tabela] (
+	[PKId_TBSecao_tipo_tabela] Integer Identity NOT NULL,
+	[FKCodigo_TBSecao] Integer NOT NULL,
+	[FKCodigo_TBTipo_tabela] Integer NOT NULL,
+Primary Key ([PKId_TBSecao_tipo_tabela])
+) 
+go
+
+
+Alter table [TBSecao_tipo_tabela] add  foreign key([FKCodigo_TBSecao]) references [TBSecao] ([PKCodigo_TBSecao])  on update no action on delete no action 
+go
+Alter table [TBSecao_tipo_tabela] add  foreign key([FKCodigo_TBTipo_tabela]) references [TBTipo_tabela] ([PKCodigo_TBTipo_tabela])  on update no action on delete no action 
+go
+
+
+Set quoted_identifier on
+go
+
+
+
+
+
+
+
+
+
+
+
+
+Set quoted_identifier off
+go
+
+
+
+
+
+
+
+
+/* Roles permissions */
+
+
+
+
+
+/* Users permissions */
+
+
+
+
+
+

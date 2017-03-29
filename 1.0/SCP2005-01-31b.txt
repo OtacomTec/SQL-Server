@@ -1,0 +1,133 @@
+/*
+Created		27/5/2003
+Modified		31/1/2005
+Project		
+Model			
+Company		
+Author		
+Version		
+Database		MS SQL 2000 
+*/
+
+
+go
+
+Create table [TBOrdem_compra]
+(
+	[PKId_TBOrdem_compra] Integer Identity NOT NULL,
+	[FKCodigo_TBEmpresa] Integer NOT NULL,
+	[FKCodigo_TBComprador] Integer NOT NULL,
+	[FKId_TBFornecedor] Integer NOT NULL,
+	[DFData_lancamento_TBOrdem_compra] Smalldatetime NULL,
+	[DFData_previsao_entrega_TBOrdem_compra] Integer NULL,
+	[DFValor_frete_TBOrdem_compra] Money NULL,
+	[DFVerba_TBOrdem_compra] Money NULL,
+	[DFNome_vendedor_TBOrdem_compra] Nvarchar(50) NULL,
+	[DFPercentual_vendor_TBOrdem_compra] Money NULL,
+	[DFValor_total_compra_TBOrdem_compra] Money NULL,
+	[DFStatus_aberto_fechado_TBordem_compra] Bit NULL,
+        [DFObservacao_TBOrdem_compra] Nvarchar(200) NULL,
+Primary Key ([PKId_TBOrdem_compra])
+) 
+go
+
+Create table [TBItens_ordem_compra]
+(
+	[PKId_TBItens_ordem_compra] Integer Identity NOT NULL,
+	[FKId_TBProduto] Integer NOT NULL,
+	[FKId_TBOrdem_compra] Integer NOT NULL,
+	[DFQuantidade_TBItens_ordem_compra] Money NOT NULL,
+	[DFValor_unitario_TBItens_ordem_compra] Money NULL,
+	[DFValor_desconto_TBItens_ordem_compra] Money NULL,
+	[DFValor_Total_TBItens_ordem_compra] Money NULL,
+	[DFVerba_TBItens_ordem_compra] Money NULL,
+	[DFQuantidade_bonificacao_TBItens_ordem_compra] Money NULL,
+	[DFPercentual_st_TBItens_ordem_compra] Money NULL,
+	[DFPercentual_ipí_TBitens_ordem_compra] Money NULL,
+	[DFValor_total_ipi_TBItens_ordem_compra] Money NULL,
+	[DFQuantidade_recebida_TBItens_ordem_compra] Money NULL,
+	[DFQuantidade_recebida_bonificacao_TBItens_ordem_compra] Money NULL,
+        [DFBonificacao_TBCompra_empresa] Money NULL,
+Primary Key ([PKId_TBItens_ordem_compra])
+) 
+go
+
+Create table [TBDesconto_itens_ordem_compra]
+(
+	[PKId_TBDesconto_itens_ordem_compra] Integer Identity NOT NULL,
+	[FKId_TBItens_ordem_compra] Integer NOT NULL,
+	[DFPercentual_TBDesconto_itens_ordem_compra] Money NULL,
+Primary Key ([PKId_TBDesconto_itens_ordem_compra])
+) 
+go
+
+Create table [TBCompra_empresa]
+(
+	[PKId_TBCompra_empresa] Integer Identity NOT NULL,
+	[FKCodigo_TBEmpresa] Integer NOT NULL,
+	[FKId_TBItens_ordem_compra] Integer NOT NULL,
+	[DFQuantidade_TBCompra_empresa] Money NULL,
+Primary Key ([PKId_TBCompra_empresa])
+) 
+go
+Alter table [TBOrdem_compra] add  foreign key([FKCodigo_TBEmpresa]) references [TBEmpresa] ([PKCodigo_TBEmpresa])  on update no action on delete no action 
+go
+Alter table [TBCompra_empresa] add  foreign key([FKCodigo_TBEmpresa]) references [TBEmpresa] ([PKCodigo_TBEmpresa])  on update no action on delete no action 
+go
+Alter table [TBItens_ordem_compra] add  foreign key([FKId_TBProduto]) references [TBProduto] ([PKId_TBProduto])  on update no action on delete no action 
+go
+Alter table [TBOrdem_compra] add  foreign key([FKCodigo_TBComprador]) references [TBComprador] ([PKCodigo_TBComprador])  on update no action on delete no action 
+go
+Alter table [TBItens_ordem_compra] add  foreign key([FKId_TBOrdem_compra]) references [TBOrdem_compra] ([PKId_TBOrdem_compra])  on update no action on delete no action 
+go
+Alter table [TBDesconto_itens_ordem_compra] add  foreign key([FKId_TBItens_ordem_compra]) references [TBItens_ordem_compra] ([PKId_TBItens_ordem_compra])  on update no action on delete no action 
+go
+Alter table [TBCompra_empresa] add  foreign key([FKId_TBItens_ordem_compra]) references [TBItens_ordem_compra] ([PKId_TBItens_ordem_compra])  on update no action on delete no action 
+go
+
+
+Set quoted_identifier on
+go
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Set quoted_identifier off
+go
+
+
+
+
+
+
+
+
+/* Roles permissions */
+
+
+
+
+
+/* Users permissions */
+
+
+
+
+
+

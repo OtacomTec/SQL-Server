@@ -1,0 +1,73 @@
+/*
+Created		27/5/2003
+Modified		15/10/2005
+Project		Only Tech - ERP
+Model			Olt
+Company		Only Tech
+Author		Only Tech
+Version		1.0
+Database		MS SQL 2000 
+*/
+
+
+Create table [TBTabela_conveniado]
+(
+	[PKId_TBTabela_conveniado] Integer Identity NOT NULL,
+	[FKCodigo_TBServico] Integer NOT NULL,
+	[FKCodigo_TBConveniados] Integer NOT NULL,
+	[DFValor_pago_TBTabela_conveniado] Money NULL,
+Primary Key ([PKId_TBTabela_conveniado])
+) 
+go
+
+Alter table [TBTabela_conveniado] add  foreign key([FKCodigo_TBServico]) references [TBServico] ([PKCodigo_TBServico])  on update no action on delete no action 
+go
+Alter table [TBTabela_conveniado] add  foreign key([FKCodigo_TBConveniados]) references [TBConveniados] ([PKCodigo_TBConveniados])  on update no action on delete no action 
+go
+
+
+Set quoted_identifier on
+go
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Set quoted_identifier off
+go
+
+
+
+
+
+
+
+
+/* Roles permissions */
+
+
+
+
+
+/* Users permissions */
+
+
+
+
+
+

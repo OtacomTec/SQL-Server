@@ -1,0 +1,66 @@
+/*
+   quinta-feira, 21 de julho de 2005 12:19:29
+   User: sa
+   Server: ONLYTECH-02
+   Database: BDRetaguarda
+   Application: MS SQLEM - Data Tools
+*/
+
+BEGIN TRANSACTION
+SET QUOTED_IDENTIFIER ON
+SET TRANSACTION ISOLATION LEVEL SERIALIZABLE
+SET ARITHABORT ON
+SET NUMERIC_ROUNDABORT OFF
+SET CONCAT_NULL_YIELDS_NULL ON
+SET ANSI_NULLS ON
+SET ANSI_PADDING ON
+SET ANSI_WARNINGS ON
+COMMIT
+BEGIN TRANSACTION
+ALTER TABLE dbo.TBTitulo_pago
+	DROP CONSTRAINT FK__TBTitulo___FKId___0F183235
+GO
+COMMIT
+BEGIN TRANSACTION
+CREATE TABLE dbo.Tmp_TBTitulo_pago
+	(
+	PKId_TBTitulo_pago int NOT NULL IDENTITY (1, 1),
+	FKId_TBTitulo_pagar int NOT NULL,
+	DFValor_TBTitulo_pago money NOT NULL,
+	DFData_pagamento_TBTitulo_pago smalldatetime NOT NULL,
+	DFForma_pagamento_TBTitulo_pago int NOT NULL,
+	DFObservacao_TBTitulo_pago nvarchar(200) NULL,
+	DFTipo_baixa_TBtitulo_pago bit NOT NULL,
+	DFValor_diferenca_TBTitulo_pago money NULL,
+	DFUsuario_TBTitulo_pago nvarchar(20) NULL
+	)  ON [PRIMARY]
+GO
+SET IDENTITY_INSERT dbo.Tmp_TBTitulo_pago ON
+GO
+IF EXISTS(SELECT * FROM dbo.TBTitulo_pago)
+	 EXEC('INSERT INTO dbo.Tmp_TBTitulo_pago (PKId_TBTitulo_pago, FKId_TBTitulo_pagar, DFValor_TBTitulo_pago, DFData_pagamento_TBTitulo_pago, DFForma_pagamento_TBTitulo_pago, DFObservacao_TBTitulo_pago, DFTipo_baixa_TBtitulo_pago, DFValor_diferenca_TBTitulo_pago, DFUsuario_TBTitulo_pago)
+		SELECT PKId_TBTitulo_pago, FKId_TBTitulo_pagar, DFValor_TBTitulo_pago, DFData_pagamento_TBTitulo_pago, DFForma_pagamento_TBTitulo_pago, DFObservacao_TBTitulo_pago, DFTipo_baixa_TBtitulo_pago, DFValor_diferenca_TBTitulo_pago, DFUsuario_TBTitulo_pago FROM dbo.TBTitulo_pago TABLOCKX')
+GO
+SET IDENTITY_INSERT dbo.Tmp_TBTitulo_pago OFF
+GO
+DROP TABLE dbo.TBTitulo_pago
+GO
+EXECUTE sp_rename N'dbo.Tmp_TBTitulo_pago', N'TBTitulo_pago', 'OBJECT'
+GO
+ALTER TABLE dbo.TBTitulo_pago ADD CONSTRAINT
+	PK__TBTitulo_pago__095F58DF PRIMARY KEY CLUSTERED 
+	(
+	PKId_TBTitulo_pago
+	) WITH FILLFACTOR = 90 ON [PRIMARY]
+
+GO
+ALTER TABLE dbo.TBTitulo_pago WITH NOCHECK ADD CONSTRAINT
+	FK__TBTitulo___FKId___0F183235 FOREIGN KEY
+	(
+	FKId_TBTitulo_pagar
+	) REFERENCES dbo.TBTitulo_pagar
+	(
+	PKId_TBTitulo_pagar
+	)
+GO
+COMMIT

@@ -1,0 +1,296 @@
+
+CREATE TABLE [dbo].[TBArea_venda_palm](
+	[PKCodigo_TBArea_venda_palm] [int] IDENTITY(0,1) NOT NULL,
+	[DFNome_TBArea_venda_palm] [nvarchar](40) NULL,
+	[DFData_atualizacao_portal] [smalldatetime] NULL,
+	[DFHora_atualizacao_portal] [smalldatetime] NULL
+) ON [PRIMARY]
+
+
+CREATE TABLE [dbo].[TBCategoria_palm](
+	[PKId_TBCategoria_palm] [int] NULL,
+	[DFDescricao_TBCategoria_palm] [nvarchar](40) NULL,
+	[DFData_atualizacao_portal] [smalldatetime] NULL,
+	[DFHora_atualizacao_portal] [smalldatetime] NULL
+) ON [PRIMARY]
+
+CREATE TABLE [dbo].[TBCidade_palm](
+	[PKID_TBCidade_palm] [int] NOT NULL,
+	[IXCodigo_Correios_TBCidade_palm] [int] NOT NULL,
+	[DFNome_TBCidade_palm] [nvarchar](50) NOT NULL,
+	[DFPais_TBCidade_palm] [nvarchar](2) NULL,
+	[DFUf_TBCidade_palm] [nvarchar](2) NULL,
+	[DFData_atualizacao_portal] [smalldatetime] NULL,
+	[DFHora_atualizacao_portal] [smalldatetime] NULL
+) ON [PRIMARY]
+
+
+CREATE TABLE [dbo].[TBCliente_Contatos_palm](
+	[PKId_TBCliente_contatos_palm] [int] IDENTITY(1,1) NOT NULL,
+	[DFNome_TBCliente_contatos_palm] [nvarchar](40) NULL,
+	[DFTelefone_TBCliente_contatos_palm] [nvarchar](20) NULL,
+	[DFEmail_TBCliente_contatos_palm] [nvarchar](50) NULL,
+	[DFData_aniversario_TBCliente_contatos_palm] [smalldatetime] NULL,
+	[FKCodigo_TBCliente_palm] [int] NULL,
+	[DFData_atualizacao_portal] [smalldatetime] NULL,
+	[DFHora_atualizacao_portal] [smalldatetime] NULL
+) ON [PRIMARY]
+
+CREATE TABLE [dbo].[TBCliente_media_anual_palm](
+	[FKCodigo_TBCliente_TBCliente_media_anual_palm] [int] NULL,
+	[DFValor_Jan_TBCliente_media_anual_palm] [money] NULL,
+	[DFValor_Fev_TBCliente_media_anual_palm] [money] NULL,
+	[DFValor_Mar_TBCliente_media_anual_palm] [money] NULL,
+	[DFValor_Abr_TBCliente_media_anual_palm] [money] NULL,
+	[DFValor_Mai_TBCliente_media_anual_palm] [money] NULL,
+	[DFValor_Jun_TBCliente_media_anual_palm] [money] NULL,
+	[DFValor_Jul_TBCliente_media_anual_palm] [money] NULL,
+	[DFValor_Ago_TBCliente_media_anual_palm] [money] NULL,
+	[DFValor_Set_TBCliente_media_anual_palm] [money] NULL,
+	[DFValor_Out_TBCliente_media_anual_palm] [money] NULL,
+	[DFValor_Nov_TBCliente_media_anual_palm] [money] NULL,
+	[DFValor_Dez_TBCliente_media_anual_palm] [money] NULL,
+	[FKCodigo_TBCliente_palm] [int] NULL,
+	[DFData_atualizacao_portal] [smalldatetime] NULL,
+	[DFHora_atualizacao_portal] [smalldatetime] NULL
+) ON [PRIMARY]
+
+CREATE TABLE [dbo].[TBCliente_palm](
+	[PKId_TBCliente_palm] [int] IDENTITY(1,1) NOT NULL,
+	[IXCodigo_TBEmpresa_palm] [int] NOT NULL,
+	[IXCodigo_TBCliente_palm] [int] NOT NULL,
+	[DFNome_TBCliente_palm] [nvarchar](40) NULL,
+	[DFEndereco_TBCliente_palm] [nvarchar](40) NULL,
+	[DFNumero_TBCliente_palm] [nvarchar](10) NULL,
+	[DFComplemento_TBCliente_palm] [nvarchar](20) NULL,
+	[DFBairro_TBCliente_palm] [nvarchar](30) NULL,
+	[DFTelefone_fixo_TBCliente_palm] [nvarchar](20) NULL,
+	[DFCep_TBCliente_palm] [nvarchar](10) NULL,
+	[DFCpf_TBCliente_palm] [nvarchar](20) NULL,
+	[DFRegistro_geral_TBCliente_palm] [nvarchar](20) NULL,
+	[DFOrgao_emissao_TBCliente_palm] [nvarchar](20) NULL,
+	[DFBloqueado_TBCliente_palm] [bit] NULL,
+	[DFInativo_TBCliente_palm] [bit] NULL,
+	[DFLimite_credito_TBCliente_palm] [money] NULL,
+	[DFTipo_pessoa_TBCliente_palm] [bit] NULL,
+	[DFInscricao_estadual_TBCliente_palm] [nvarchar](20) NULL,
+	[DFObservacao_TBCliente_palm] [nvarchar](200) NULL,
+	[DFNome_fantasia_TBCliente_palm] [nvarchar](40) NULL,
+	[FKId_TBPlano_pagamento_palm] [int] NULL,
+	[FKId_TBCidade_otica_palm] [int] NULL,
+	[FKCodigo_TBRamo_atividade_palm] [int] NULL,
+	[DFMaior_compra_TBCliente_palm] [money] NULL,
+	[DFMenor_compra_TBCliente_palm] [money] NULL,
+	[DFPedido_medio_TBCliente_palm] [money] NULL,
+	[DFNumero_ultimo_pedido_TBCliente_palm] [int] NULL,
+	[DFNumero_ultima_nota_TBCliente_palm] [int] NULL,
+	[DFValor_ultima_compra_TBCliente_palm] [money] NULL,
+	[FKCodigo_TBVendedor_palm] [int] NULL,
+	[DFReferencia_TBCliente_palm] [nvarchar](30) NULL,
+	[DFData_atualizacao_portal] [smalldatetime] NULL,
+	[DFHora_atualizacao_portal] [smalldatetime] NULL
+) ON [PRIMARY]
+
+
+CREATE TABLE [dbo].[TBCliente_Produtos_Top5_palm](
+	[FKCodigo_TBProduto_palm_TBCliente_Produtos_Top5_palm] [int] NOT NULL,
+	[DFValor_Vendido_TBCliente_Produtos_Top5_palm] [money] NULL,
+	[FKCodigo_TBCliente_palm] [int] NULL,
+	[FKCodigo_TBProduto_palm] [int] NULL
+) ON [PRIMARY]
+
+USE [stokdistribuidora]
+GO
+
+CREATE TABLE [dbo].[TBCliente_Titulo_receber_palm](
+	[PKId_TBCliente_TBCliente_Titulo_receber_palm] [int] NULL,
+	[DFData_Vencimento_TBCliente_Titulo_receber_palm] [smalldatetime] NULL,
+	[DFNumero_titulo_TBCliente_TBCliente_Titulo_receber_palm] [nvarchar](20) NULL,
+	[DFValor_TBCliente_TBCliente_Titulo_receber_palm] [money] NULL,
+	[FKCodigo_TBCliente_palm] [int] NULL
+) ON [PRIMARY]
+
+CREATE TABLE [dbo].[TBCliente_titulo_recebido_palm](
+	[PKId_TBCliente_titulo_recebido_palm] [int] NOT NULL,
+	[DFData_vencimento_TBCliente_titulo_recebido_palm] [smalldatetime] NULL,
+	[DFData_recebimento_TBCliente_titulo_recebido_palm] [smalldatetime] NULL,
+	[DFNumero_TBCliente_titulo_recebido_palm] [nvarchar](20) NULL,
+	[DFValor_TBCliente_titulo_recebido_palm] [money] NULL,
+	[FKCodigo_TBCliente_palm] [int] NULL
+) ON [PRIMARY]
+
+CREATE TABLE [dbo].[TBCliente_visita_palm](
+	[PKId_TBCliente_visita_palm] [int] IDENTITY(1,1) NOT NULL,
+	[FKCodigo_TBCliente_palm] [int] NULL,
+	[FKCodigo_TBVendedor_palm] [int] NULL,
+	[DFTipo_visita_TBCliente_visita_palm] [int] NULL,
+	[DFDia_visita_TBCliente_visita_palm] [int] NULL,
+	[DFSequencia_TBCliente_visita_palm] [int] NULL,
+	[DFSub_Sequencia_TBCliente_visita_palm] [char](2) NULL,
+	[DFData_atualizacao_TBCliente_visita_palm] [smalldatetime] NULL,
+	[DFHora_atualizacao_TBCliente_visita_palm] [smalldatetime] NULL
+) ON [PRIMARY]
+
+CREATE TABLE [dbo].[TBFabricante_palm](
+	[PKCodigo_TBFabricante_palm] [int] NOT NULL,
+	[DFNome_TBFabricante] [nvarchar](40) NULL,
+	[DFData_atualizacao_portal] [smalldatetime] NULL,
+	[DFHora_atualizacao_portal] [smalldatetime] NULL
+) ON [PRIMARY]
+
+CREATE TABLE [dbo].[TBFaixa_comissao_vendedor_palm](
+	[PKCodigo_TBFaixa_comissao_vendedor_palm] [int] NOT NULL,
+	[DFPercentual_TBFaixa_comissao_vendedor_palm] [money] NULL,
+	[DFData_atualizacao_portal] [smalldatetime] NULL,
+	[DFHora_atualizacao_portal] [smalldatetime] NULL
+) ON [PRIMARY]
+
+CREATE TABLE [dbo].[TBItens_pedido_palm](
+	[PKId_TBItens_pedido_palm] [int] IDENTITY(1,1) NOT NULL,
+	[FKId_TBPedido_palm] [int] NULL,
+	[FKId_TBProduto_palm] [int] NULL,
+	[DFQuantidade_TBItens_pedido_palm] [money] NULL,
+	[DFTipo_preco_TBItens_pedido_palm] [nvarchar](20) NULL,
+	[DFPercentual_desconto_TBItens_pedido_palm] [money] NULL,
+	[DFPreco_praticado_TBItens_pedido_palm] [money] NULL,
+	[DFValor_total_praticado_TBItens_pedido_palm] [money] NULL,
+	[DFUnidade_TBItens_pedido_palm] [nvarchar](3) NULL,
+	[DFStatus_Integracao_TBItens_pedido_palm] [int] NULL,
+	[DFData_atualizacao_portal] [smalldatetime] NULL,
+	[DFHora_atualizacao_portal] [smalldatetime] NULL
+) ON [PRIMARY]
+
+CREATE TABLE [dbo].[TBLinha_venda_palm](
+	[PKCodigo_TBLinha_venda] [int] NOT NULL,
+	[DFDescricao_TBLinha_venda] [nvarchar](40) NULL,
+	[DFData_atualizacao_portal] [smalldatetime] NULL,
+	[DFHora_atualizacao_portal] [smalldatetime] NULL
+) ON [PRIMARY]
+
+CREATE TABLE [dbo].[TBMaterial_controle_palm](
+	[PKId_TBMaterial_controle_palm] [int] NOT NULL,
+	[DFDescricao_TBMaterial_controle_pal] [nvarchar](40) NULL,
+	[DFData_atualizacao_portal] [smalldatetime] NULL,
+	[DFHora_atualizacao_portal] [smalldatetime] NULL
+) ON [PRIMARY]
+
+CREATE TABLE [dbo].[TBMensagem_TBVendedor_palm](
+	[PKId_TBMensagem_palm] [int] IDENTITY(1,1) NOT NULL,
+	[DFConteudo_TBMensagem_palm] [nvarchar](500) NULL,
+	[DFData_envio_TBMensagem_palm] [date] NULL,
+	[DFHora_envio_TBMensagem_palm] [date] NULL,
+	[DFData_leitura_TBMensagem_palm] [date] NULL,
+	[DFHora_leitura_TBMensagem_palm] [date] NULL,
+	[DFLida_TBMensagem_TBVendedor_palm] [bit] NULL,
+	[FKCodigo_TBVendedor_Palm] [int] NULL,
+	[DFTipo_Mensagem_TBMensagem_palm] [int] NULL,
+	[DFData_atualizacao_portal] [smalldatetime] NULL,
+	[DFHora_atualizacao_portal] [smalldatetime] NULL
+) ON [PRIMARY]
+
+CREATE TABLE [dbo].[TBModelo_lista_palm](
+	[PKId_TBModelo_lista_palm] [int] NOT NULL,
+	[DFDescricao_TBModelo_lista_palm] [nvarchar](40) NULL,
+	[DFData_atualizacao_portal] [smalldatetime] NULL,
+	[DFHora_atualizacao_portal] [smalldatetime] NULL
+) ON [PRIMARY]
+
+CREATE TABLE [dbo].[TBPedido_palm](
+	[PKID_TBPedido_palm] [int] IDENTITY(1,1) NOT NULL,
+	[FKId_TBPlano_pagamento_palm] [int] NULL,
+	[DFEmitente_TBPedido] [int] NULL,
+	[DFTotal_itens_TBPedido] [money] NULL,
+	[DFTotal_pedido_TBPedido] [money] NULL,
+	[DFDesconto_especial_TBPedido] [money] NULL,
+	[DFDesconto_indenizacao_TBPedido] [money] NULL,
+	[DFData_Digitacao_TBPedido] [date] NULL,
+	[DFFaturado_TBPedido] [int] NULL,
+	[DFValor_ipi_TBPedido] [money] NULL,
+	[DFBloqueado_TBPedido] [int] NULL,
+	[DFDespesas_acessorias_TBPedido] [money] NULL,
+	[DFObservacao_TBPedido] [nvarchar](200) NULL,
+	[DFValor_Frete_TBPedido] [money] NULL,
+	[DFStatus__Integracao_TBPedido] [int] NULL,
+	[DFAcresimo_especial_TBPedido] [money] NULL,
+	[DFData_atualizacao_portal] [smalldatetime] NULL,
+	[DFHora_atualizacao_portal] [smalldatetime] NULL,
+	[DFTipo_pedido_TBPedido] [int] NULL,
+	[DFNumero_Pedido_palm_TBPedido] [bigint] NULL,
+	[IXCodigo_TBVendedor_palm_TBPedido] [int] NULL
+) ON [PRIMARY]
+
+CREATE TABLE [dbo].[TBPlano_pagamento_palm](
+	[PKId_TBPlano_pagamento_palm] [int] IDENTITY(1,1) NOT NULL,
+	[IXCodigo_TBPlano_pagamento_palm] [int] NULL,
+	[DFDescricao_TBPlano_pagamento_palm] [nvarchar](40) NULL,
+	[DFData_atualizacao_portal] [smalldatetime] NULL,
+	[DFHora_atualizacao_portal] [smalldatetime] NULL
+) ON [PRIMARY]
+
+CREATE TABLE [dbo].[TBProduto_palm](
+	[PKId_TBProduto_palm] [int] IDENTITY(1,1) NOT NULL,
+	[IXCodigo_TBEmpresa_palm] [int] NULL,
+	[IXCodigo_TBProduto_palm] [int] NULL,
+	[DFDescricao_TBProduto_palm] [nvarchar](40) NULL,
+	[DFDescricao_resumida_TBProduto_palm] [nvarchar](40) NULL,
+	[DFReferencia_TBProduto_palm] [nvarchar](40) NULL,
+	[DFObservacao_TBProduto_palm] [nvarchar](500) NULL,
+	[DFSuspenso_TBProduto_palm] [bit] NULL,
+	[DFEstoque_atual_TBProduto_palm] [money] NULL,
+	[DFQuantidade_minima_pedido_TBProduto_palm] [money] NULL,
+	[DFUnidade_venda_TBProduto_palm] [nvarchar](2) NULL,
+	[DFUnidade_compra_TBProduto_palm] [nvarchar](2) NULL,
+	[DFPath_imagem_TBProduto_palm] [nvarchar](100) NULL,
+	[FKCodigo_TBSecao_palm] [int] NULL,
+	[FKId_TBModelo_palm] [int] NULL,
+	[FKId_TBCores_palm] [int] NULL,
+	[FKId_TBCategoria_palm] [int] NULL,
+	[FKId_TBMaterial_palm] [int] NULL,
+	[FKCodigo_TBLinha_venda_palm] [int] NULL,
+	[DFPreco_avista_TBProduto_palm] [money] NULL,
+	[DFPreco_promocao_TBProduto_palm] [money] NULL,
+	[DFPreco_revenda_TBProduto_palm] [money] NULL,
+	[DFPreco_especial_TBProduto_palm] [money] NULL,
+	[DFPreco_varejo_TBProduto_palm] [money] NULL,
+	[DFData_inicio_promocao_TBProduto_palm] [date] NULL,
+	[DFData_fim_promocao_TBProduto_palm] [date] NULL,
+	[DFMargem_negociacao_TBProduto_palm] [money] NULL,
+	[DFObservacao2_TBProduto_palm] [nvarchar](100) NULL,
+	[FKCodigo_TBFabricante_palm] [int] NULL,
+	[DFInativo_TBProduto_palm1] [bit] NULL,
+	[DFCusto_real_TBProduto_palm] [money] NULL,
+	[DFFator_compra_TBProduto_palm] [int] NULL,
+	[DFData_atualizacao_portal] [smalldatetime] NULL,
+	[DFHora_atualizacao_portal] [smalldatetime] NULL,
+	[DFDescricao_palm_TBProduto_palm] [nvarchar](80) NULL
+) ON [PRIMARY]
+
+CREATE TABLE [dbo].[TBRamo_atividade_palm](
+	[PKCodigo_TBRamo_atividade_palm] [int] NOT NULL,
+	[DFDescricao_TBRamo_atividade_palm] [nvarchar](40) NULL,
+	[DFData_atualizacao_portal] [smalldatetime] NULL,
+	[DFHora_atualizacao_portal] [smalldatetime] NULL
+) ON [PRIMARY]
+
+CREATE TABLE [dbo].[TBSecao_palm](
+	[PKCodigo_TBSecao] [int] NOT NULL,
+	[DFDescricao_TBsecao] [nvarchar](40) NULL,
+	[FKId_TBCategoria] [int] NULL,
+	[DFData_atualizacao_portal] [smalldatetime] NULL,
+	[DFHora_atualizacao_portal] [smalldatetime] NULL
+) ON [PRIMARY]
+
+CREATE TABLE [dbo].[TBVendedor_palm](
+	[PKId_TBVendedor_palm] [int] IDENTITY(1,1) NOT NULL,
+	[IXCodigo_TBEmpresa_palm] [int] NULL,
+	[IXCodigo_TBVendedor_palm] [int] NULL,
+	[DFNome_TBVendedor_palm] [nvarchar](40) NULL,
+	[DFTelefone_TBVendedor_palm] [nvarchar](20) NULL,
+	[FKCodigo_TBLinha_venda_palm] [int] NULL,
+	[FKCodigo_TBTipo_tabela_palm] [int] NULL,
+	[DFSaldo_conta_corrente_TBVendedor_palm] [money] NULL,
+	[DFSerial_palm_TBVendedor_palm] [nvarchar](40) NULL,
+	[DFConexao_data_center_TBVendedor_palm] [nvarchar](400) NULL,
+	[DFData_atualizacao_portal] [smalldatetime] NULL,
+	[DFHora_atualizacao_portal] [smalldatetime] NULL
+) ON [PRIMARY]

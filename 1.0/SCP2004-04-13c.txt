@@ -1,0 +1,74 @@
+/*
+Created		27/5/2003
+Modified		13/4/2004
+Project		
+Model		
+Company		
+Author		
+Version		
+Database		MS SQL 2000 
+*/
+
+
+
+
+Create table [TBAgenda_telefone_pessoal] (
+	[PKId_TBAgenda_telefone_pessoal] Integer Identity NOT NULL,
+	[FKCodigo_TBAgenda_pessoal] Integer NOT NULL,
+	[DFContato_TBAgenda_telefone_pessoal] Integer NOT NULL,
+	[DFTelefone_TBAgenda_telefone_pessoal] Nvarchar(20) NOT NULL,
+	[DFEmail_TBAgenda_telefone_pessoal] Nvarchar(50) NULL,
+Primary Key ([PKId_TBAgenda_telefone_pessoal])
+) 
+go
+
+
+
+
+
+
+
+
+
+
+Alter table [TBAgenda_telefone_pessoal] add  foreign key([FKCodigo_TBAgenda_pessoal]) references [TBAgenda_pessoal] ([PKCodigo_TBAgenda_pessoal])  on update no action on delete no action 
+go
+
+
+Set quoted_identifier on
+go
+
+
+
+
+
+
+
+
+
+
+
+
+Set quoted_identifier off
+go
+
+
+
+
+
+
+
+
+/* Roles permissions */
+
+
+
+
+
+/* Users permissions */
+
+
+
+
+
+

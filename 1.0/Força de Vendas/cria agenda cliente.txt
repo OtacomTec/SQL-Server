@@ -1,0 +1,10 @@
+CREATE TABLE [dbo].[TBCliente_Contatos_palm](
+	[PKId_TBCliente_contatos_palm] [int] IDENTITY(1,1) NOT NULL,
+	[DFNome_TBCliente_contatos_palm] [nvarchar](40) NULL,
+	[DFTelefone_TBCliente_contatos_palm] [nvarchar](20) NULL,
+	[DFEmail_TBCliente_contatos_palm] [nvarchar](50) NULL,
+	[DFData_aniversario_TBCliente_contatos_palm] [smalldatetime] NULL,
+	[FKCodigo_TBCliente_palm] [int] NULL,
+	[DFData_atualizacao_portal] [smalldatetime] NULL,
+	[DFHora_atualizacao_portal] [smalldatetime] NULL
+) ON [PRIMARY]

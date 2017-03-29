@@ -1,0 +1,66 @@
+/*
+   quinta-feira, 15 de setembro de 2005 14:14:51
+   User: sa
+   Server: ONLYTECH-02
+   Database: BDRetaguarda
+   Application: MS SQLEM - Data Tools
+*/
+
+BEGIN TRANSACTION
+SET QUOTED_IDENTIFIER ON
+SET TRANSACTION ISOLATION LEVEL SERIALIZABLE
+SET ARITHABORT ON
+SET NUMERIC_ROUNDABORT OFF
+SET CONCAT_NULL_YIELDS_NULL ON
+SET ANSI_NULLS ON
+SET ANSI_PADDING ON
+SET ANSI_WARNINGS ON
+COMMIT
+BEGIN TRANSACTION
+CREATE TABLE dbo.Tmp_TBItens_nota_entrada_fiscal
+	(
+	PKId_TBItens_nota_entrada_fiscal int NOT NULL IDENTITY (1, 1),
+	FKId_TBNota_entrada int NOT NULL,
+	FKId_TBProduto int NOT NULL,
+	FKId_TBCfop int NOT NULL,
+	DFCst1_TBItens_nota_entrada_fiscal char(1) NOT NULL,
+	DFCst2_TBItens_nota_entrada_fiscal char(2) NOT NULL,
+	DFQuantidade_TBItens_nota_entrada_fiscal money NOT NULL,
+	DFPreco_TBItens_nota_entrada_fiscal money NOT NULL,
+	DFPercentual_desconto_TBItens_nota_entrada_fiscal money NOT NULL,
+	DFValor_desconto_TBItens_nota_entrada_fiscal money NULL,
+	DFValor_total_TBItens_nota_entrada_fiscal money NULL,
+	DFPercentual_icms_TBItens_nota_entrada_fiscal money NULL,
+	DFValor_total_icms_TBItens_nota_entrada_fiscal money NULL,
+	DFPercentual_ipi_TBItens_nota_entrada_fiscal money NOT NULL,
+	DFValor_total_ipi_TBItens_nota_entrada_fiscal money NOT NULL,
+	DFUnidade_TBItens_nota_entrada_fiscal char(3) NOT NULL,
+	DFCusto_real_TBItens_nota_entrada_fiscal money NOT NULL,
+	DFCusto_contabil_TBItens_nota_entrada_fiscal money NOT NULL,
+	DFCusto_medio_TBItens_nota_entrada_fiscal money NOT NULL,
+	DFPeso_liquido_TBItens_nota_entrada_fiscal money NOT NULL,
+	DFPeso_bruto_TBItens_nota_entrada_fiscal money NOT NULL,
+	DFQuantidade_lancamento_estoque_TBItens_nota_entrada_fiscal money NOT NULL,
+	DFDivisor_movimenta_estoque_TBItens_nota_entrada_fiscal money NULL
+	)  ON [PRIMARY]
+GO
+SET IDENTITY_INSERT dbo.Tmp_TBItens_nota_entrada_fiscal ON
+GO
+IF EXISTS(SELECT * FROM dbo.TBItens_nota_entrada_fiscal)
+	 EXEC('INSERT INTO dbo.Tmp_TBItens_nota_entrada_fiscal (PKId_TBItens_nota_entrada_fiscal, FKId_TBNota_entrada, FKId_TBProduto, FKId_TBCfop, DFCst1_TBItens_nota_entrada_fiscal, DFCst2_TBItens_nota_entrada_fiscal, DFQuantidade_TBItens_nota_entrada_fiscal, DFPreco_TBItens_nota_entrada_fiscal, DFPercentual_desconto_TBItens_nota_entrada_fiscal, DFValor_desconto_TBItens_nota_entrada_fiscal, DFValor_total_TBItens_nota_entrada_fiscal, DFPercentual_icms_TBItens_nota_entrada_fiscal, DFValor_total_icms_TBItens_nota_entrada_fiscal, DFPercentual_ipi_TBItens_nota_entrada_fiscal, DFValor_total_ipi_TBItens_nota_entrada_fiscal, DFUnidade_TBItens_nota_entrada_fiscal, DFCusto_real_TBItens_nota_entrada_fiscal, DFCusto_contabil_TBItens_nota_entrada_fiscal, DFCusto_medio_TBItens_nota_entrada_fiscal, DFPeso_liquido_TBItens_nota_entrada_fiscal, DFPeso_bruto_TBItens_nota_entrada_fiscal, DFQuantidade_lancamento_estoque_TBItens_nota_entrada_fiscal, DFDivisor_movimenta_estoque_TBItens_nota_entrada_fiscal)
+		SELECT PKId_TBItens_nota_entrada, FKId_TBNota_entrada, FKId_TBProduto, FKId_TBCfop, DFCst1_TBItens_nota_entrada, DFCst2_TBItens_nota_entrada, DFQuantidade_TBItens_nota_entrada, DFPreco_TBItens_nota_entrada, DFPercentual_desconto_TBItens_nota_entrada, DFValor_desconto_TBItens_nota_entrada, DFValor_total_TBItens_nota_entrada, DFPercentual_icms_TBItens_nota_entrada, DFValor_total_icms_TBItens_nota_entrada, DFPercentual_ipi_TBItens_nota_entrada, DFValor_total_ipi_TBItens_nota_entrada, DFUnidade_TBItens_nota_entrada, DFCusto_real_TBItens_nota_entrada, DFCusto_contabil_TBItens_nota_entrada, DFCusto_medio_TBItens_nota_entrada, DFPeso_liquido_TBItens_nota_entrada, DFPeso_bruto_TBItens_nota_entrada, DFQuantidade_lancamento_estoque_TBItens_nota_entrada, DFDivisor_movimenta_estoque_TBItens_nota_entrada FROM dbo.TBItens_nota_entrada_fiscal TABLOCKX')
+GO
+SET IDENTITY_INSERT dbo.Tmp_TBItens_nota_entrada_fiscal OFF
+GO
+DROP TABLE dbo.TBItens_nota_entrada_fiscal
+GO
+EXECUTE sp_rename N'dbo.Tmp_TBItens_nota_entrada_fiscal', N'TBItens_nota_entrada_fiscal', 'OBJECT'
+GO
+ALTER TABLE dbo.TBItens_nota_entrada_fiscal ADD CONSTRAINT
+	PK_TBItens_nota_entrada_fiscal PRIMARY KEY CLUSTERED 
+	(
+	PKId_TBItens_nota_entrada_fiscal
+	) ON [PRIMARY]
+
+GO
+COMMIT

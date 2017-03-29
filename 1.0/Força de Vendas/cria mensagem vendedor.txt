@@ -1,0 +1,13 @@
+CREATE TABLE [dbo].[TBMensagem_TBVendedor_palm](
+	[PKId_TBMensagem_palm] [int] IDENTITY(1,1) NOT NULL,
+	[DFConteudo_TBMensagem_palm] [nvarchar](500) NULL,
+	[DFData_envio_TBMensagem_palm] [date] NULL,
+	[DFHora_envio_TBMensagem_palm] [date] NULL,
+	[DFData_leitura_TBMensagem_palm] [date] NULL,
+	[DFHora_leitura_TBMensagem_palm] [date] NULL,
+	[DFLida_TBMensagem_TBVendedor_palm] [bit] NULL,
+	[FKCodigo_TBVendedor_Palm] [int] NULL,
+	[DFTipo_Mensagem_TBMensagem_palm] [int] NULL,
+	[DFData_atualizacao_portal] [smalldatetime] NULL,
+	[DFHora_atualizacao_portal] [smalldatetime] NULL
+) ON [PRIMARY]

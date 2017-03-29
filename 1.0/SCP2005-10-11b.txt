@@ -1,0 +1,72 @@
+/*
+Created		27/5/2003
+Modified		11/10/2005
+Project		Only Tech - ERP
+Model			Olt
+Company		Only Tech
+Author		Only Tech
+Version		1.0
+Database		MS SQL 2000 
+*/
+
+
+
+Create table [TBCliente_Documentacao]
+(
+	[PKId_TBCliente_Documentacao] Integer Identity NOT NULL,
+	[FKId_TBCliente] Integer NOT NULL,
+	[DFNomencltura_TBCliente_Documentacao] Nvarchar(40) NULL,
+	[DFData_validade_TBCliente_Documentacao] Smalldatetime NULL,
+Primary Key ([PKId_TBCliente_Documentacao])
+) 
+go
+
+Alter table [TBCliente_Documentacao] add  foreign key([FKId_TBCliente]) references [TBCliente] ([PKId_TBCliente])  on update no action on delete no action 
+go
+
+
+Set quoted_identifier on
+go
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Set quoted_identifier off
+go
+
+
+
+
+
+
+
+
+/* Roles permissions */
+
+
+
+
+
+/* Users permissions */
+
+
+
+
+
+

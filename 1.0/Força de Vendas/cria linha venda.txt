@@ -1,0 +1,7 @@
+
+CREATE TABLE [dbo].[TBLinha_venda_palm](
+	[PKCodigo_TBLinha_venda] [int] NOT NULL,
+	[DFDescricao_TBLinha_venda] [nvarchar](40) NULL,
+	[DFData_atualizacao_portal] [smalldatetime] NULL,
+	[DFHora_atualizacao_portal] [smalldatetime] NULL
+) ON [PRIMARY]

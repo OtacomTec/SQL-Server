@@ -1,0 +1,134 @@
+/*
+   segunda-feira, 10 de outubro de 2005 19:42:37
+   User: sa
+   Server: ONLYTECH-02
+   Database: BDRetaguarda
+   Application: MS SQLEM - Data Tools
+*/
+
+BEGIN TRANSACTION
+SET QUOTED_IDENTIFIER ON
+SET TRANSACTION ISOLATION LEVEL SERIALIZABLE
+SET ARITHABORT ON
+SET NUMERIC_ROUNDABORT OFF
+SET CONCAT_NULL_YIELDS_NULL ON
+SET ANSI_NULLS ON
+SET ANSI_PADDING ON
+SET ANSI_WARNINGS ON
+COMMIT
+BEGIN TRANSACTION
+ALTER TABLE dbo.TBNota_entrada_fiscal
+	DROP CONSTRAINT FK_TBNota_entrada_fiscal_TBEmpresa
+GO
+COMMIT
+BEGIN TRANSACTION
+CREATE TABLE dbo.Tmp_TBNota_entrada_fiscal
+	(
+	PKId_TBNota_entrada_fiscal int NOT NULL IDENTITY (1, 1),
+	FKCodigo_TBEmpresa int NOT NULL,
+	FKId_TBPlano_pagamento int NOT NULL,
+	DFTipo_operacao_TBNota_entrada_fiscal int NOT NULL,
+	DFNumero_TBNota_entrada_fiscal int NOT NULL,
+	DFSerie_TBNota_entrada_fiscal nchar(3) NOT NULL,
+	DFTipo_emitente_TBNota_entrada_fiscal bit NOT NULL,
+	DFEmitente_TBNota_entrada_fiscal int NOT NULL,
+	DFTotal_itens_TBNota_entrada_fiscal money NOT NULL,
+	DFTotal_nota_TBNota_entrada_fiscal money NOT NULL,
+	DFDesconto_especial_TBNota_entrada_fiscal money NULL,
+	DFDesconto_indenizacao_TBNota_entrada_fiscal money NULL,
+	DFData_emissao_TBNota_entrada_fiscal smalldatetime NOT NULL,
+	DFData_entrada_TBNota_entrada_fiscal smalldatetime NOT NULL,
+	DFData_lancamento_TBNota_entrada_fiscal smalldatetime NULL,
+	DFDigitador_TBNota_entrada_fiscal nvarchar(20) NOT NULL,
+	DFPrevisao_TBNota_entrada_fiscal bit NOT NULL,
+	DFValor_ipi_TBNota_entrada_fiscal money NULL,
+	DFDespesas_acessorias_TBNota_entrada_fiscal money NULL,
+	DFValor_frete_TBNota_entrada_fiscal money NULL,
+	DFTotal_descontos_itens_TBNota_entrada_fiscal money NULL,
+	DFTotal_peso_liquido_TBNota_entrada_fiscal money NOT NULL,
+	DFTotal_peso_bruto_TBNota_entrada_fiscal money NOT NULL,
+	DFNumero_pedido_TBNota_entrada_fiscal int NOT NULL,
+	DFIntegrado_fiscal_TBNota_entrada_fiscal bit NOT NULL,
+	DFValor_seguro_TBNota_entrada_fiscal money NULL,
+	DFBase_calculo_icms_TBNota_entrada_fiscal money NULL,
+	DFValor_icms_TBNota_entrada_fiscal money NULL,
+	DFFator_vendor_TBNota_entrada_fiscal money NULL,
+	DFPercentual_desconto_antecipacao_TBNota_entrada_fiscal money NULL,
+	DFBase_calculo_subst_tributaria_TBNota_entrada_fiscal money NULL,
+	DFValor_subst_tributaria_TBNota_entrada_fiscal money NULL,
+	DFAbatimento_especial_TBNota_entrada_fiscal money NULL,
+	DFDiferido_TBNota_entrada_fiscal money NULL,
+	DFValor_frete_conhecimento_TBNota_entrada_fiscal money NULL
+	)  ON [PRIMARY]
+GO
+SET IDENTITY_INSERT dbo.Tmp_TBNota_entrada_fiscal ON
+GO
+IF EXISTS(SELECT * FROM dbo.TBNota_entrada_fiscal)
+	 EXEC('INSERT INTO dbo.Tmp_TBNota_entrada_fiscal (PKId_TBNota_entrada_fiscal, FKCodigo_TBEmpresa, FKId_TBPlano_pagamento, DFTipo_operacao_TBNota_entrada_fiscal, DFNumero_TBNota_entrada_fiscal, DFSerie_TBNota_entrada_fiscal, DFTipo_emitente_TBNota_entrada_fiscal, DFEmitente_TBNota_entrada_fiscal, DFTotal_itens_TBNota_entrada_fiscal, DFTotal_nota_TBNota_entrada_fiscal, DFDesconto_especial_TBNota_entrada_fiscal, DFDesconto_indenizacao_TBNota_entrada_fiscal, DFData_emissao_TBNota_entrada_fiscal, DFData_entrada_TBNota_entrada_fiscal, DFData_lancamento_TBNota_entrada_fiscal, DFDigitador_TBNota_entrada_fiscal, DFPrevisao_TBNota_entrada_fiscal, DFValor_ipi_TBNota_entrada_fiscal, DFDespesas_acessorias_TBNota_entrada_fiscal, DFValor_frete_TBNota_entrada_fiscal, DFTotal_descontos_itens_TBNota_entrada_fiscal, DFTotal_peso_liquido_TBNota_entrada_fiscal, DFTotal_peso_bruto_TBNota_entrada_fiscal, DFNumero_pedido_TBNota_entrada_fiscal, DFIntegrado_fiscal_TBNota_entrada_fiscal, DFValor_seguro_TBNota_entrada_fiscal, DFBase_calculo_icms_TBNota_entrada_fiscal, DFValor_icms_TBNota_entrada_fiscal, DFFator_vendor_TBNota_entrada_fiscal, DFPercentual_desconto_antecipacao_TBNota_entrada_fiscal, DFBase_calculo_subst_tributaria_TBNota_entrada_fiscal, DFValor_subst_tributaria_TBNota_entrada_fiscal, DFAbatimento_especial_TBNota_entrada_fiscal, DFDiferido_TBNota_entrada_fiscal, DFValor_frete_conhecimento_TBNota_entrada_fiscal)
+		SELECT PKId_TBNota_entrada_fiscal, FKCodigo_TBEmpresa, FKId_TBPlano_pagamento, DFTipo_operacao_TBNota_entrada_fiscal, DFNumero_TBNota_entrada_fiscal, DFSerie_TBNota_entrada_fiscal, DFTipo_emitente_TBNota_entrada_fiscal, DFEmitente_TBNota_entrada_fiscal, DFTotal_itens_TBNota_entrada_fiscal, DFTotal_nota_TBNota_entrada_fiscal, DFDesconto_especial_TBNota_entrada_fiscal, DFDesconto_indenizacao_TBNota_entrada_fiscal, DFData_emissao_TBNota_entrada_fiscal, DFData_entrada_TBNota_entrada_fiscal, DFData_lancamento_TBNota_entrada_fiscal, DFDigitador_TBNota_entrada_fiscal, DFPrevisao_TBNota_entrada_fiscal, DFValor_ipi_TBNota_entrada_fiscal, DFDespesas_acessorias_TBNota_entrada_fiscal, DFValor_frete_TBNota_entrada_fiscal, DFTotal_descontos_itens_TBNota_entrada_fiscal, DFTotal_peso_liquido_TBNota_entrada_fiscal, DFTotal_peso_bruto_TBNota_entrada_fiscal, DFNumero_pedido_TBNota_entrada_fiscal, DFIntegrado_fiscal_TBNota_entrada_fiscal, DFValor_seguro_TBNota_entrada_fiscal, DFBase_calculo_icms_TBNota_entrada_fiscal, DFValor_icms_TBNota_entrada_fiscal, DFFator_vendor_TBNota_entrada_fiscal, DFPercentual_desconto_antecipacao_TBNota_entrada_fiscal, DFBase_calculo_subst_tributaria_TBNota_entrada_fiscal, DFValor_subst_tributaria_TBNota_entrada_fiscal, DFAbatimento_especial_TBNota_entrada_fiscal, DFDiferido_TBNota_entrada_fiscal, DFValor_frete_conhecimento_TBNota_entrada_fiscal FROM dbo.TBNota_entrada_fiscal TABLOCKX')
+GO
+SET IDENTITY_INSERT dbo.Tmp_TBNota_entrada_fiscal OFF
+GO
+ALTER TABLE dbo.TBItens_nota_entrada_fiscal
+	DROP CONSTRAINT FK_TBItens_nota_entrada_fiscal_TBNota_entrada_fiscal
+GO
+ALTER TABLE dbo.TBImpostos_nota_entrada_fiscal
+	DROP CONSTRAINT FK_TBImpostos_nota_entrada_fiscal_TBNota_entrada_fiscal
+GO
+ALTER TABLE dbo.TBCfop_Nota_entrada_fiscal
+	DROP CONSTRAINT FK_TBCfop_Nota_entrada_fiscal_TBNota_entrada_fiscal
+GO
+DROP TABLE dbo.TBNota_entrada_fiscal
+GO
+EXECUTE sp_rename N'dbo.Tmp_TBNota_entrada_fiscal', N'TBNota_entrada_fiscal', 'OBJECT'
+GO
+ALTER TABLE dbo.TBNota_entrada_fiscal ADD CONSTRAINT
+	PK_TBNota_entrada_fiscal PRIMARY KEY CLUSTERED 
+	(
+	PKId_TBNota_entrada_fiscal
+	) ON [PRIMARY]
+
+GO
+ALTER TABLE dbo.TBNota_entrada_fiscal WITH NOCHECK ADD CONSTRAINT
+	FK_TBNota_entrada_fiscal_TBEmpresa FOREIGN KEY
+	(
+	FKCodigo_TBEmpresa
+	) REFERENCES dbo.TBEmpresa
+	(
+	PKCodigo_TBEmpresa
+	)
+GO
+COMMIT
+BEGIN TRANSACTION
+ALTER TABLE dbo.TBCfop_Nota_entrada_fiscal WITH NOCHECK ADD CONSTRAINT
+	FK_TBCfop_Nota_entrada_fiscal_TBNota_entrada_fiscal FOREIGN KEY
+	(
+	FKId_TBNota_entrada_fiscal
+	) REFERENCES dbo.TBNota_entrada_fiscal
+	(
+	PKId_TBNota_entrada_fiscal
+	)
+GO
+COMMIT
+BEGIN TRANSACTION
+ALTER TABLE dbo.TBImpostos_nota_entrada_fiscal WITH NOCHECK ADD CONSTRAINT
+	FK_TBImpostos_nota_entrada_fiscal_TBNota_entrada_fiscal FOREIGN KEY
+	(
+	FKId_TBNota_entrada_fiscal
+	) REFERENCES dbo.TBNota_entrada_fiscal
+	(
+	PKId_TBNota_entrada_fiscal
+	)
+GO
+COMMIT
+BEGIN TRANSACTION
+ALTER TABLE dbo.TBItens_nota_entrada_fiscal WITH NOCHECK ADD CONSTRAINT
+	FK_TBItens_nota_entrada_fiscal_TBNota_entrada_fiscal FOREIGN KEY
+	(
+	FKId_TBNota_entrada
+	) REFERENCES dbo.TBNota_entrada_fiscal
+	(
+	PKId_TBNota_entrada_fiscal
+	)
+GO
+COMMIT

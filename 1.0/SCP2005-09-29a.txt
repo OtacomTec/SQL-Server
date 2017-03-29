@@ -1,0 +1,99 @@
+/*
+Created		27/5/2003
+Modified		21/9/2005
+Project		Only Tech - ERP
+Model			Olt
+Company		Only Tech
+Author		Only Tech
+Version		1.0
+Database		MS SQL 2000 
+*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Create table [TBSinief]
+(
+	[PKId_TBSinief] Integer Identity NOT NULL,
+	[DFNumero_CTRC_TBSinief] Integer NULL,
+	[DFSerie_CTRC_TBSinief] Char(1) NULL,
+	[DFSubserie_CTRC_TBSinief] Char(2) NULL,
+	[DFModelo_CTRC_TBSinief] Char(2) NULL,
+	[DFData_emissao_ctrc_TBSinief] Smalldatetime NULL,
+	[DFCodigo_operacao_TBSinief] Integer NULL,
+	[DFValor_ctrc_TBSinief] Money NULL,
+	[DFAliquota_ctrc_TBSinief] Money NULL,
+Primary Key ([PKId_TBSinief])
+) 
+go
+
+
+
+
+
+
+
+
+
+
+
+Set quoted_identifier on
+go
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Set quoted_identifier off
+go
+
+
+
+
+
+
+
+
+/* Roles permissions */
+
+
+
+
+
+/* Users permissions */
+
+
+
+
+
+

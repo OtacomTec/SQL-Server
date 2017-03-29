@@ -1,0 +1,123 @@
+/*
+Created		27/5/2003
+Modified		16/12/2004
+Project		
+Model			
+Company		
+Author		
+Version		
+Database		MS SQL 2000 
+*/
+
+
+Create table [TBAutorizacao_servico]
+(
+	[PKId_TBAutorizacao_servico] Integer Identity NOT NULL,
+	[FKCodigo_TBServico] Integer NOT NULL,
+	[FKCodigo_TBConveniados] Integer NOT NULL,
+	[FKCodigo_TBEmpresa] Integer NOT NULL,
+	[FKCodigo_TBAssociado] Integer NOT NULL,
+	[DFTitular_dependente_TBAutorizacao_servico] Bit NOT NULL,
+	[DFCodigo_titular_dependente_TBAutorizacao_servico] Integer NOT NULL,
+	[DFMotivo_TBAutorizacao_servico] Nvarchar(100) NULL,
+	[DFObservacao_TBAutorizacao_servico] Nvarchar(100) NULL,
+	[DFCancelado_TBAutorizacao_servico] Bit NULL,
+	[DFMotivo_cancelamento_TBAutorizacao_servico] Nvarchar(50) NULL,
+	[DFUsuario_cancelamento_TBAutorizacao_servico] Nvarchar(20) NULL,
+	[DFData_TBAutorizacao_servico] Smalldatetime NOT NULL,
+	[DFUsuario_TBAutorizacao_servico] Nvarchar(20) NOT NULL,
+	[DFLiberado_por_TBAutorizacao_servico] Nvarchar(20) NULL,
+Primary Key ([PKId_TBAutorizacao_servico])
+) 
+go
+
+Create table [TBFaixa_etaria]
+(
+	[PKId_TBFaixa_etaria] Integer Identity NOT NULL,
+	[DFInicio_TBFaixa_etaria] Integer NOT NULL,
+	[DFFim_TBFaixa_etaria] Integer NULL,
+Primary Key ([PKId_TBFaixa_etaria])
+) 
+go
+
+Create table [TBTabela_plano_saude]
+(
+	[PKId_TBTabela_plano_saude] Integer Identity NOT NULL,
+	[FKCodigo_TBplano_saude] Integer NOT NULL,
+	[DFData_inicio_vigencia_TBTabela_plano_saude] Smalldatetime NOT NULL,
+	[DFData_final_vigencia_TBTabela_plano_saude] Smalldatetime NULL,
+Primary Key ([PKId_TBTabela_plano_saude])
+) 
+go
+
+Create table [TBFaixa_Tabela]
+(
+	[PKId_TBFaixa_tabela] Integer NOT NULL,
+	[FKId_TBFaixa_etaria] Integer NOT NULL,
+	[FKId_TBTabela_plano_saude] Integer NOT NULL,
+	[DFPreco_TBFaixa_tabela] Money NOT NULL,
+Primary Key ([PKId_TBFaixa_tabela])
+) 
+go
+
+
+
+Alter table [TBAutorizacao_servico] add  foreign key([FKCodigo_TBEmpresa]) references [TBEmpresa] ([PKCodigo_TBEmpresa])  on update no action on delete no action 
+go
+Alter table [TBAutorizacao_servico] add  foreign key([FKCodigo_TBServico]) references [TBServico] ([PKCodigo_TBServico])  on update no action on delete no action 
+go
+Alter table [TBAutorizacao_servico] add  foreign key([FKCodigo_TBAssociado]) references [TBAssociado] ([PKCodigo_TBAssociado])  on update no action on delete no action 
+go
+Alter table [TBAutorizacao_servico] add  foreign key([FKCodigo_TBConveniados]) references [TBConveniados] ([PKCodigo_TBConveniados])  on update no action on delete no action 
+go
+Alter table [TBFaixa_Tabela] add  foreign key([FKId_TBFaixa_etaria]) references [TBFaixa_etaria] ([PKId_TBFaixa_etaria])  on update no action on delete no action 
+go
+Alter table [TBFaixa_Tabela] add  foreign key([FKId_TBTabela_plano_saude]) references [TBTabela_plano_saude] ([PKId_TBTabela_plano_saude])  on update no action on delete no action 
+go
+
+
+Set quoted_identifier on
+go
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Set quoted_identifier off
+go
+
+
+
+
+
+
+
+
+/* Roles permissions */
+
+
+
+
+
+/* Users permissions */
+
+
+
+
+
+

@@ -1,0 +1,100 @@
+/*
+Created		27/5/2003
+Modified		8/6/2005
+Project		
+Model			
+Company		
+Author		
+Version		
+Database		MS SQL 2000 
+*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Create table [TBTipo_preco]
+(
+	[PKId_TBTipo_preco] Integer Identity NOT NULL, UNIQUE ([PKId_TBTipo_preco]),
+	[DFNome_Preco_avista_TBTipo_preco] Nvarchar(20) NOT NULL,
+	[DFNome_Preco_promocao_TBTipo_preco] Nvarchar(20) NULL,
+	[DFPercentual_preco_promocao_TBTipo_preco] Money NULL,
+	[DFNome_Preco_revenda_TBTipo_preco] Nvarchar(20) NULL,
+	[DFPercentual_preco_revenda_TBTipo_preco] Money NULL,
+	[DFNome_Preco_especial_TBTipo_preco] Nvarchar(20) NULL,
+	[DFPercentual_preco_especial_TBTipo_preco] Money NULL,
+	[DFNome_Preco_varejo_TBTipo_preco] Nvarchar(20) NULL,
+	[DFPercentual_preco_varejo_TBTipo_preco] Money NULL,
+Primary Key ([PKId_TBTipo_preco])
+) 
+go
+
+
+
+
+
+
+
+
+
+
+
+Set quoted_identifier on
+go
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Set quoted_identifier off
+go
+
+
+
+
+
+
+
+
+/* Roles permissions */
+
+
+
+
+
+/* Users permissions */
+
+
+
+
+
+

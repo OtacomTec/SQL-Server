@@ -1,0 +1,115 @@
+BEGIN TRANSACTION
+/*
+ *** IDENTIFICAÇÃO DO SCRIPT ***
+
+ 1 - Apartir de 20/12/2005, fica expressamente proibida a criação de scripts sem que seja preenchido este cabeçalho
+ 2 - Obrigatoriamente necessário que este paragrafo seja inserido apos um BEGIN TRANSACTION
+ 3 - Obrigatoriamente o preenchimento das variaveis abaixo(@Nomenclatura,@Observacao,@Data)com valores correspondentes e condizentes
+ Att: Marcos
+
+*/
+
+--INICIO CABECALHO
+
+declare @Nomenclatura as nvarchar(20)
+declare @Observacao as nvarchar(100)
+declare @Data as SMALLDATETIME
+
+SET @Nomenclatura = 'SCP2006-05-17B'
+SET @Observacao = 'RECRIA A TABELA DE MARCHA'
+SET @Data = CURRENT_TIMESTAMP
+
+---LIMPEZA DA TABELA
+DELETE FROM TBSCRIPT
+
+---INSERCAO DO REGISTRO
+
+INSERT INTO TBSCRIPT(DFNome_TBScript,DFObjetivo_TBScript,DFData_execucao_TBScript)
+VALUES(@Nomenclatura,@Observacao,@Data)
+
+---FIM CABECALHO
+
+ALTER TABLE dbo.TBMarcha
+	DROP CONSTRAINT FK__TBMarcha__FKCodi__79C1E6A6
+ALTER TABLE dbo.TBMarcha
+	DROP CONSTRAINT FK__TBMarcha__FKCodi__1CEBF2A9
+ALTER TABLE dbo.TBMarcha
+	DROP CONSTRAINT FK__TBMarcha__FKId_T__75F155C2
+ALTER TABLE dbo.TBMarcha
+	DROP CONSTRAINT FK__TBMarcha__FKId_T__191B61C5
+ALTER TABLE dbo.TBMarcha
+	DROP CONSTRAINT FK__TBMarcha__FKCodi__78CDC26D
+ALTER TABLE dbo.TBMarcha
+	DROP CONSTRAINT FK__TBMarcha__FKCodi__1BF7CE70
+ALTER TABLE dbo.TBAcompanhamento_marcha
+	DROP CONSTRAINT FK__TBAcompan__FKId___1A0F85FE
+ALTER TABLE dbo.TBAnalise_Insumo_marcha
+	DROP CONSTRAINT FK__TBAnalise__FKId___1B03AA37
+ALTER TABLE dbo.TBAcompanhamento_marcha
+	DROP CONSTRAINT FK__TBAcompan__FKId___76E579FB
+ALTER TABLE dbo.TBAnalise_Insumo_marcha
+	DROP CONSTRAINT FK__TBAnalise__FKId___77D99E34
+DROP TABLE TBMarcha
+DROP TABLE TBMarcha
+
+CREATE TABLE [dbo].[TBMarcha] (
+	[PKId_TBMarcha] [int] IDENTITY (1, 1) NOT NULL ,
+	[FKId_TBCliente] [int] NOT NULL ,
+	[FKCodigo_TBInsumo] [int] NOT NULL ,
+	[FKCodigo_TBTipo_marcha] [int] NOT NULL ,
+	[DFPrevisao_entrega_TBMarcha] [smalldatetime] NOT NULL ,
+	[DFPrioridade_TBMarcha] [int] NOT NULL ,
+	[DFCompetencia_TBMarcha] [smalldatetime] NOT NULL ,
+	[DFLote_TBMarcha] [nvarchar] (10) COLLATE Latin1_General_CI_AS NULL ,
+	[DFQuantidade_TBMarcha] [int] NULL ,
+	[DFMedida_TBMarcha] [nvarchar] (10) COLLATE Latin1_General_CI_AS NULL ,
+	[DFEmbalagem_TBMarcha] [nvarchar] (20) COLLATE Latin1_General_CI_AS NULL ,
+	[DFData_fabricacao_TBMarcha] [smalldatetime] NULL ,
+	[DFData_validade_TBMarcha] [smalldatetime] NULL ,
+	[DFFabricante_TBMarcha] [nvarchar] (50) COLLATE Latin1_General_CI_AS NULL ,
+	[DFData_fabricacao_material_TBMarcha] [smalldatetime] NULL ,
+	[DFData_validade_material_TBMarcha] [smalldatetime] NULL ,
+	[DFLote_material_TBMarcha] [nvarchar] (10) COLLATE Latin1_General_CI_AS NULL ,
+	[DFNumero_sequencia_TBMarcha] [nvarchar] (15) COLLATE Latin1_General_CI_AS NULL ,
+	[DFPeso_insumo_TBMarcha] [money] NULL ,
+	[DFUnidade_insumo_TBMarcha] [nvarchar] (3) COLLATE Latin1_General_CI_AS NULL ,
+	[FKCodigo_TBServico_laboratorio] [int] NULL ,
+	[DFIntegrado_filiais_TBMarcha] [bit] NULL ,
+	[DFIntegrado_portal_TBMarcha] [bit] NULL ,
+	[DFData_alteracao_TBMarcha] [smalldatetime] NULL ,
+	[DFCodigo_Identificador_TBMarcha] [int] NULL 
+) ON [PRIMARY]
+
+ALTER TABLE [dbo].[TBMarcha] WITH NOCHECK ADD 
+	CONSTRAINT [PK__TBMarcha__126E6436] PRIMARY KEY  CLUSTERED 
+	(
+		[PKId_TBMarcha]
+	) WITH  FILLFACTOR = 90  ON [PRIMARY] 
+
+ALTER TABLE [dbo].[TBMarcha] ADD 
+	CONSTRAINT [FK__TBMarcha__FKCodi__1BF7CE70] FOREIGN KEY 
+	(
+		[FKCodigo_TBInsumo]
+	) REFERENCES [dbo].[TBInsumo] (
+		[PKCodigo_TBInsumo]
+	),
+	CONSTRAINT [FK__TBMarcha__FKCodi__1CEBF2A9] FOREIGN KEY 
+	(
+		[FKCodigo_TBTipo_marcha]
+	) REFERENCES [dbo].[TBTipo_marcha] (
+		[PKCodigo_TBTipo_marcha]
+	),
+	CONSTRAINT [FK__TBMarcha__FKId_T__191B61C5] FOREIGN KEY 
+	(
+		[FKId_TBCliente]
+	) REFERENCES [dbo].[TBCliente] (
+		[PKId_TBCliente]
+	),
+	CONSTRAINT [FK_TBMarcha_TBServico_laboratorio] FOREIGN KEY 
+	(
+		[FKCodigo_TBServico_laboratorio]
+	) REFERENCES [dbo].[TBServico_laboratorio] (
+		[PKCodigo_TBServico_laboratorio]
+	)
+
+COMMIT TRANSACTION

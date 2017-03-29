@@ -1,0 +1,54 @@
+USE BDRetaguarda
+
+BEGIN TRANSACTION
+
+/*
+ *** IDENTIFICAÇÃO DO SCRIPT ***
+
+ 1 - Apartir de 20/12/2005, fica expressamente proibida a criação de scripts sem que seja preenchido este cabeçalho
+ 2 - Obrigatoriamente necessário que este paragrafo seja inserido apos um BEGIN TRANSACTION
+ 3 - Obrigatoriamente o preenchimento das variaveis abaixo(@Nomenclatura,@Observacao,@Data)com valores correspondentes e condizentes
+ Att: Marcos
+
+*/
+
+--INICIO CABECALHO
+
+declare @Nomenclatura as nvarchar(20)
+declare @Observacao as nvarchar(100)
+declare @Data as SMALLDATETIME
+
+SET @Nomenclatura = 'SCP2013-10-28a'
+SET @Observacao = 'CRIAÇÃO DE TABELA [TBRota_Vendedor_Cliente_Itens]'
+SET @Data = CURRENT_TIMESTAMP
+
+
+---LIMPEZA DA TABELA
+
+DELETE FROM TBSCRIPT
+
+---INSERCAO DO REGISTRO
+
+INSERT INTO BDRetaguarda.dbo.TBSCRIPT(DFNome_TBScript,DFObjetivo_TBScript,DFData_execucao_TBScript)
+VALUES(@Nomenclatura,@Observacao,@Data)
+
+---FIM CABECALHO
+
+CREATE TABLE [TBRota_Vendedor_Cliente_Itens](
+	[PKId_TBRota_Vendedor_Cliente_Itens] [int] IDENTITY(1,1) NOT NULL,
+	[FKId_TBProduto] [int] NOT NULL,
+                     [FKId_TBRota_vendedor_cliente] [int] NOT NULL,
+	[DFQuantidade_saida_TBRota_Vendedor_Cliente_Itens] [money] NULL,
+	[DFEmbalagem_saida_TBRota_Vendedor_Cliente_Itens] [char](3) NULL,
+	[DFTipo_Preco_TBRota_Vendedor_Cliente_Itens] [int] NULL,
+	[DFPreco_praticado_TBRota_Vendedor_Cliente_Itens] [money] NULL,
+	[DFValor_Total_Saida_TBRota_Vendedor_Cliente_Itens] [money] NULL,
+	[DFQuantidade_Consignada_TBRota_Vendedor_Cliente_Itens] [money] NULL,
+	[DFEmbalagem_Consignada_TBRota_Vendedor_Cliente_Itens] [char](3) NULL,
+	[DFQuantidade_Retorno_TBRota_Vendedor_Cliente_Itens] [money] NULL,
+	[DFEmbalagem_Retorno_TBRota_Vendedor_Cliente_Itens] [char](3) NULL,
+	[DFValor_Total_Consignado_TBRota_Vendedor_Cliente_Itens] [money] NULL,
+	[DFValor_Total_Retorno_TBRota_Vendedor_Cliente_Itens] [money] NULL)
+
+commit transaction
+

@@ -1,0 +1,11 @@
+update dbo.TBCliente 
+set DFTipo_entrega_TBCliente = 3, 
+DFRecebe_visita_correios_TBCliente = 1
+from dbo.TBCliente 
+where DFTipo_pessoa_TBCliente = 1
+
+update dbo.TBCliente 
+set DFTipo_entrega_TBCliente = 1,
+dFRecebe_visita_correios_TBCliente = 0
+from dbo.TBCliente 
+where DFTipo_pessoa_TBCliente = 0

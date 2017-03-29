@@ -1,0 +1,27 @@
+/*
+   sexta-feira, 9 de dezembro de 2005 18:20:16
+   User: sa
+   Server: ONLYTECH-02
+   Database: BDRetaguarda
+   Application: MS SQLEM - Data Tools
+*/
+
+BEGIN TRANSACTION
+SET QUOTED_IDENTIFIER ON
+SET TRANSACTION ISOLATION LEVEL SERIALIZABLE
+SET ARITHABORT ON
+SET NUMERIC_ROUNDABORT OFF
+SET CONCAT_NULL_YIELDS_NULL ON
+SET ANSI_NULLS ON
+SET ANSI_PADDING ON
+SET ANSI_WARNINGS ON
+COMMIT
+BEGIN TRANSACTION
+ALTER TABLE dbo.TBTipo_preco ADD
+	DFPercentual_comissao_avista_TBTipo_preco money NULL,
+	DFPercentual_comissao_promocao_TBTipo_preco money NULL,
+	DFPercentual_comissao_revenda_TBTipo_preco money NULL,
+	DFPercentual_comissao_especial_TBTipo_preco money NULL,
+	DFPercentual_comissao_varejo_TBTipo_preco money NULL
+GO
+COMMIT

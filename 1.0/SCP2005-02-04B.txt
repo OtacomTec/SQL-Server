@@ -1,0 +1,125 @@
+/*
+Created		27/5/2003
+Modified		4/2/2005
+Project		
+Model			
+Company		
+Author		
+Version		
+Database		MS SQL 2000 
+*/
+
+go
+
+Create table [TBTipo_frota]
+(
+	[PKCodigo_TBTipo_frota] Integer NOT NULL,
+	[DFDescricao_TBTipo_frota] Nvarchar(50) NULL
+Primary Key ([PKCodigo_TBTipo_frota])
+)
+go
+
+Create table [TBVeiculo]
+(
+	[PKCodigo_TBVeiculo] Integer NOT NULL,
+	[FKCodigo_TBEmpresa] Integer NOT NULL,
+	[FKCodigo_TBModelo_veiculo] Integer NOT NULL,
+	[FKCodigo_TBTipo_frota] Integer NOT NULL,
+	[FKId_TBCidade_otica] Integer NOT NULL,
+	[DFPath_foto_TBVeiculo] Nvarchar(100) NULL,
+	[DFChassi_TBVeiculo] Nvarchar(30) NULL,
+	[DFRenavan_TBVeiculo] Nvarchar(20) NULL,
+	[DFStatus_TBVeiculo] Bit NULL,
+	[DFFrota_TBVeiculo] Bit NULL,
+	[DFPlaca_TBVeiculo] Nvarchar(10) NULL,
+	[DFAno_modelo_TBVeiculo] Integer NULL,
+	[DFAno_fabricacao_TBVeiculo] Integer NULL,
+	[DFCor_TBveiculo] Nvarchar(30) NULL,
+	[DFCombustivel_TBVeiculo] Nvarchar(30) NULL,
+	[DFNumero_eixos_TBVeiculo] Integer NULL,
+	[DFValor_real_TBVeiculo] Money NULL,
+	[DFValor_dolar_TBVeiculo] Money NULL,
+	[DFData_aquisicao_TBVeiculo] Smalldatetime NULL,	
+	[DFValor_real_venda_TBVeiculo] Money NULL,
+	[DFValor_dolar_venda_TBVeiculo] Money NULL,
+	[DFData_venda_TBVeiculo] Smalldatetime NULL,
+	[DFObservacao_TBVeiculo] Nvarchar(200) NULL,
+Primary Key ([PKCodigo_TBVeiculo])
+) 
+go
+
+Create table [TBAlocacao_pneu]
+(
+	[PKId_TBAlocacao_pneu] Integer Identity NOT NULL,
+	[FKCodigo_TBPneu] Integer NOT NULL,
+	[FKId_TBPosicao_pneu_veiculo] Integer NOT NULL,
+	[FKCodigo_TBVeiculo] Integer NOT NULL,
+	[DFKm_TBAlocacao_pneu] Money NULL,
+	[DFData_inicio_TBAlocacao_pneu] Smalldatetime NOT NULL,
+	[DFKm_final_TBAlocacao_pneu] Money NULL,
+	[DFData_final_TBAlocacao_pneu] Smalldatetime NULL,
+Primary Key ([PKId_TBAlocacao_pneu])
+) 
+go
+
+Alter table [TBVeiculo] add  foreign key([FKCodigo_TBEmpresa]) references [TBEmpresa] ([PKCodigo_TBEmpresa])  on update no action on delete no action 
+go
+Alter table [TBVeiculo] add  foreign key([FKId_TBCidade_otica]) references [TBCidade_otica] ([PKId_TBCidade_otica])  on update no action on delete no action 
+go
+Alter table [TBVeiculo] add  foreign key([FKCodigo_TBTipo_frota]) references [TBTipo_frota] ([PKCodigo_TBTipo_frota])  on update no action on delete no action 
+go
+Alter table [TBVeiculo] add  foreign key([FKCodigo_TBModelo_veiculo]) references [TBModelo_veiculo] ([PKCodigo_TBModelo_veiculo])  on update no action on delete no action 
+go
+Alter table [TBAlocacao_pneu] add  foreign key([FKCodigo_TBVeiculo]) references [TBVeiculo] ([PKCodigo_TBVeiculo])  on update no action on delete no action 
+go
+Alter table [TBAlocacao_pneu] add  foreign key([FKCodigo_TBPneu]) references [TBPneu] ([PKCodigo_TBPneu])  on update no action on delete no action 
+go
+Alter table [TBAlocacao_pneu] add  foreign key([FKId_TBPosicao_pneu_veiculo]) references [TBPosicao_pneu_veiculo] ([PKId_TBPosicao_pneu_veiculo])  on update no action on delete no action 
+go
+
+
+Set quoted_identifier on
+go
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Set quoted_identifier off
+go
+
+
+
+
+
+
+
+
+/* Roles permissions */
+
+
+
+
+
+/* Users permissions */
+
+
+
+
+
+

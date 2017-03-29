@@ -1,0 +1,13 @@
+if exists (select * from dbo.sysobjects where id = object_id(N'[dbo].[TBEvento_funcao]') and OBJECTPROPERTY(id, N'IsUserTable') = 1)
+drop table [dbo].[TBEvento_funcao]
+GO
+
+CREATE TABLE [dbo].[TBEvento_funcao] (
+	[PKId_TBEVento_funcao] [int] IDENTITY (1, 1) NOT NULL ,
+	[FKCodigo_TBFuncao] [int] NULL ,
+	[DFNomenclatura_TBEvento_funcao] [nvarchar] (50) COLLATE Latin1_General_CI_AS NULL ,
+	[DFPercentual_TBEvento_funcao] [money] NULL ,
+	[DFCalcula_formula_TBEvento_funcao] [bit] NULL 
+) ON [PRIMARY]
+GO
+

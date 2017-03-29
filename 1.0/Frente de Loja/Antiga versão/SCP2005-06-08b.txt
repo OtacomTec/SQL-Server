@@ -1,0 +1,53 @@
+/*
+   quarta-feira, 8 de junho de 2005 13:16:30
+   User: sa
+   Server: ONLYTECH-02
+   Database: BDRetaguarda
+   Application: MS SQLEM - Data Tools
+*/
+
+BEGIN TRANSACTION
+SET QUOTED_IDENTIFIER ON
+SET TRANSACTION ISOLATION LEVEL SERIALIZABLE
+SET ARITHABORT ON
+SET NUMERIC_ROUNDABORT OFF
+SET CONCAT_NULL_YIELDS_NULL ON
+SET ANSI_NULLS ON
+SET ANSI_PADDING ON
+SET ANSI_WARNINGS ON
+COMMIT
+BEGIN TRANSACTION
+CREATE TABLE dbo.Tmp_TBDia_operacao_pdv
+	(
+	PKID_TBDia_operacao_pdv int NOT NULL IDENTITY (1, 1),
+	DFDia_TBDia_operacao_pdv smalldatetime NOT NULL,
+	DFStatus_dia_TBDia_Operacao_pdv char(1) NOT NULL
+	)  ON [PRIMARY]
+GO
+SET IDENTITY_INSERT dbo.Tmp_TBDia_operacao_pdv ON
+GO
+IF EXISTS(SELECT * FROM dbo.TBDia_operacao_pdv)
+	 EXEC('INSERT INTO dbo.Tmp_TBDia_operacao_pdv (PKID_TBDia_operacao_pdv, DFDia_TBDia_operacao_pdv, DFStatus_dia_TBDia_Operacao_pdv)
+		SELECT PKID_TBDia_operacao_pdv, DFDia_TBDia_operacao_pdv, DFStatus_dia_TBDia_Operacao_pdv FROM dbo.TBDia_operacao_pdv TABLOCKX')
+GO
+SET IDENTITY_INSERT dbo.Tmp_TBDia_operacao_pdv OFF
+GO
+DROP TABLE dbo.TBDia_operacao_pdv
+GO
+EXECUTE sp_rename N'dbo.Tmp_TBDia_operacao_pdv', N'TBDia_operacao_pdv', 'OBJECT'
+GO
+ALTER TABLE dbo.TBDia_operacao_pdv ADD CONSTRAINT
+	PK__TBDia_operacao_p__179C6250 PRIMARY KEY CLUSTERED 
+	(
+	PKID_TBDia_operacao_pdv
+	) ON [PRIMARY]
+
+GO
+ALTER TABLE dbo.TBDia_operacao_pdv ADD CONSTRAINT
+	UQ__TBDia_operacao_p__18908689 UNIQUE NONCLUSTERED 
+	(
+	PKID_TBDia_operacao_pdv
+	) ON [PRIMARY]
+
+GO
+COMMIT

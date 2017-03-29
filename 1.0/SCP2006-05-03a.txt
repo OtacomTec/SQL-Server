@@ -1,0 +1,911 @@
+BEGIN TRANSACTION
+/*
+ *** IDENTIFICAÇÃO DO SCRIPT ***
+
+ 1 - Apartir de 20/12/2005, fica expressamente proibida a criação de scripts sem que seja preenchido este cabeçalho
+ 2 - Obrigatoriamente necessário que este paragrafo seja inserido apos um BEGIN TRANSACTION
+ 3 - Obrigatoriamente o preenchimento das variaveis abaixo(@Nomenclatura,@Observacao,@Data)com valores correspondentes e condizentes
+ Att: Marcos
+
+*/
+
+--INICIO CABECALHO
+
+declare @Nomenclatura as nvarchar(20)
+declare @Observacao as nvarchar(100)
+declare @Data as SMALLDATETIME
+
+SET @Nomenclatura = 'SCP2006-05-03a'
+SET @Observacao = 'Aumenta tamanho do campo DFRazao_Social_TBEmpresa'
+SET @Data = CURRENT_TIMESTAMP
+
+
+---LIMPEZA DA TABELA
+
+DELETE FROM TBSCRIPT
+
+---INSERCAO DO REGISTRO
+
+INSERT INTO TBSCRIPT(DFNome_TBScript,DFObjetivo_TBScript,DFData_execucao_TBScript)
+VALUES(@Nomenclatura,@Observacao,@Data)
+
+---FIM CABECALHO
+
+SET QUOTED_IDENTIFIER ON
+SET TRANSACTION ISOLATION LEVEL SERIALIZABLE
+SET ARITHABORT ON
+SET NUMERIC_ROUNDABORT OFF
+SET CONCAT_NULL_YIELDS_NULL ON
+SET ANSI_NULLS ON
+SET ANSI_PADDING ON
+SET ANSI_WARNINGS ON
+
+ALTER TABLE dbo.TBEmpresa
+	DROP CONSTRAINT FK__TBEmpresa__FKId___2F9A1060
+GO
+ALTER TABLE dbo.TBEmpresa
+	DROP CONSTRAINT FK__TBEmpresa__FKId___59C55456
+GO
+
+CREATE TABLE dbo.Tmp_TBEmpresa
+	(
+	PKCodigo_TBEmpresa int NOT NULL,
+	DFRazao_Social_TBEmpresa nvarchar(50) NOT NULL,
+	DFNome_fantasia_TBEmpresa nvarchar(20) NOT NULL,
+	DFNome_reduzido_TBEmpresa nvarchar(20) NOT NULL,
+	DFEndereco_TBEmpresa nvarchar(40) NOT NULL,
+	DFNumero_TBEmpresa nvarchar(10) NOT NULL,
+	DFComplemento_TBEmpresa nvarchar(20) NULL,
+	DFBairro_TBEmpresa nvarchar(30) NOT NULL,
+	FKId_TBCidade_otica int NOT NULL,
+	DFCep_TBEmpresa nvarchar(10) NOT NULL,
+	DFEmail_TBEmpresa nvarchar(50) NULL,
+	DFHome_page_TBEmpresa nvarchar(50) NULL,
+	DFCnpj_TBEmpresa nvarchar(20) NOT NULL,
+	DFInscricao_estadual_TBEmpresa nvarchar(20) NOT NULL,
+	DFInscricao_municipal_TBEmpresa nvarchar(20) NOT NULL,
+	DFTelefone_TBEmpresa nvarchar(20) NULL,
+	DFFax_TBEmpresa nvarchar(20) NULL,
+	DFMatriz_filial_TBEmpresa bit NULL,
+	DFPath_integracao_tx_TBEmpresa nvarchar(100) NULL,
+	DFPath_integracao_rx_TBEmpresa nvarchar(100) NULL,
+	DFPath_logomarca_TBEmpresa nvarchar(100) NULL,
+	DFIntegrado_portal_TBEmpresa bit NULL,
+	DFIntegrado_filiais_TBEmpresa bit NULL,
+	DFData_alteracao_TBEmpresa smalldatetime NULL,
+	DFCodigo_Identificador_TBEmpresa int NULL
+	)  ON [PRIMARY]
+GO
+IF EXISTS(SELECT * FROM dbo.TBEmpresa)
+	 EXEC('INSERT INTO dbo.Tmp_TBEmpresa (PKCodigo_TBEmpresa, DFRazao_Social_TBEmpresa, DFNome_fantasia_TBEmpresa, DFNome_reduzido_TBEmpresa, DFEndereco_TBEmpresa, DFNumero_TBEmpresa, DFComplemento_TBEmpresa, DFBairro_TBEmpresa, FKId_TBCidade_otica, DFCep_TBEmpresa, DFEmail_TBEmpresa, DFHome_page_TBEmpresa, DFCnpj_TBEmpresa, DFInscricao_estadual_TBEmpresa, DFInscricao_municipal_TBEmpresa, DFTelefone_TBEmpresa, DFFax_TBEmpresa, DFMatriz_filial_TBEmpresa, DFPath_integracao_tx_TBEmpresa, DFPath_integracao_rx_TBEmpresa, DFPath_logomarca_TBEmpresa, DFIntegrado_portal_TBEmpresa, DFIntegrado_filiais_TBEmpresa, DFData_alteracao_TBEmpresa, DFCodigo_Identificador_TBEmpresa)
+		SELECT PKCodigo_TBEmpresa, DFRazao_Social_TBEmpresa, DFNome_fantasia_TBEmpresa, DFNome_reduzido_TBEmpresa, DFEndereco_TBEmpresa, DFNumero_TBEmpresa, DFComplemento_TBEmpresa, DFBairro_TBEmpresa, FKId_TBCidade_otica, DFCep_TBEmpresa, DFEmail_TBEmpresa, DFHome_page_TBEmpresa, DFCnpj_TBEmpresa, DFInscricao_estadual_TBEmpresa, DFInscricao_municipal_TBEmpresa, DFTelefone_TBEmpresa, DFFax_TBEmpresa, DFMatriz_filial_TBEmpresa, DFPath_integracao_tx_TBEmpresa, DFPath_integracao_rx_TBEmpresa, DFPath_logomarca_TBEmpresa, DFIntegrado_portal_TBEmpresa, DFIntegrado_filiais_TBEmpresa, DFData_alteracao_TBEmpresa, DFCodigo_Identificador_TBEmpresa FROM dbo.TBEmpresa TABLOCKX')
+GO
+ALTER TABLE dbo.TBFornecedor
+	DROP CONSTRAINT FK__TBFornece__IXCod__503BEA1C
+GO
+ALTER TABLE dbo.TBTanque
+	DROP CONSTRAINT FK__TBTanque__IXCodi__031646B6
+GO
+ALTER TABLE dbo.TBParametros_servicos
+	DROP CONSTRAINT FK_TBParametros_servicos_TBEmpresa
+GO
+ALTER TABLE dbo.TBParametros_funcionarios
+	DROP CONSTRAINT FK__TBParamet__PFKCo__0D3AD6BB
+GO
+ALTER TABLE dbo.TBCliente
+	DROP CONSTRAINT FK_TBCliente_TBEmpresa
+GO
+ALTER TABLE dbo.TBParametros_contabilidade
+	DROP CONSTRAINT FK__TBParamet__FKCod__1629E681
+GO
+ALTER TABLE dbo.TBParametros_funcionarios
+	DROP CONSTRAINT FK__TBParamet__PFKCo__16C440F5
+GO
+ALTER TABLE dbo.TBPlano_contas
+	DROP CONSTRAINT FK__TBPlano_c__FKCod__171E0ABA
+GO
+ALTER TABLE dbo.TBTitulo_receber_plano_saude
+	DROP CONSTRAINT FK__TBTitulo___FKCod__71FFFDF6
+GO
+ALTER TABLE dbo.TBPdv
+	DROP CONSTRAINT FK_TBPdv_TBEmpresa
+GO
+ALTER TABLE dbo.TBDia_operacao_pdv
+	DROP CONSTRAINT FK_TBDia_operacao_pdv_TBEmpresa
+GO
+ALTER TABLE dbo.TBOperacao_transporte
+	DROP CONSTRAINT FK__TBOperaca__FKCod__1F728E42
+GO
+ALTER TABLE dbo.TBVeiculo
+	DROP CONSTRAINT FK__TBVeiculo__FKCod__61D48325
+GO
+ALTER TABLE dbo.TBOperacao_transporte
+	DROP CONSTRAINT FK__TBOperaca__FKCod__337986EF
+GO
+ALTER TABLE dbo.TBTabela_preco
+	DROP CONSTRAINT FK__TBTabela___FKCod__770B9E7A
+GO
+ALTER TABLE dbo.TBAcompanhamento_caixa
+	DROP CONSTRAINT FK__TBAcompan__FKCod__73A521EA
+GO
+ALTER TABLE dbo.TBOperacao_caixa
+	DROP CONSTRAINT FK_TBOperacao_caixa_TBEmpresa
+GO
+ALTER TABLE dbo.TBTroca
+	DROP CONSTRAINT FK__TBTroca__FKCodig__66C02818
+GO
+ALTER TABLE dbo.TBPaciente
+	DROP CONSTRAINT FK__TBPacient__FKCod__2EA5EC27
+GO
+ALTER TABLE dbo.TBParametros_gerais
+	DROP CONSTRAINT FK__TBParamet__FKCod__29E1370A
+GO
+ALTER TABLE dbo.TBOperadores_ecf
+	DROP CONSTRAINT FK_TBOperadores_ecf_TBEmpresa
+GO
+ALTER TABLE dbo.TBPaciente
+	DROP CONSTRAINT FK__TBPacient__FKCod__58D1301D
+GO
+ALTER TABLE dbo.TBParametros_gerais
+	DROP CONSTRAINT FK__TBParamet__FKCod__540C7B00
+GO
+ALTER TABLE dbo.TBParametros_fiscais
+	DROP CONSTRAINT FK__TBParamet__FKCod__4668671F
+GO
+ALTER TABLE dbo.TBSupervisor
+	DROP CONSTRAINT FK__TBSupervi__IXCod__27F8EE98
+GO
+ALTER TABLE dbo.TBAtendimento
+	DROP CONSTRAINT FK_TBAtendimento_TBEmpresa
+GO
+ALTER TABLE dbo.TBSupervisor
+	DROP CONSTRAINT FK__TBSupervi__IXCod__5224328E
+GO
+ALTER TABLE dbo.TBReceituario
+	DROP CONSTRAINT FK__TBReceitu__FKCod__2DB1C7EE
+GO
+ALTER TABLE dbo.TBNota_saida
+	DROP CONSTRAINT FK__TBNota_sa__FKCod__587208C1
+GO
+ALTER TABLE dbo.TBReceituario
+	DROP CONSTRAINT FK__TBReceitu__FKCod__57DD0BE4
+GO
+ALTER TABLE dbo.TBPedido
+	DROP CONSTRAINT FK__TBPedido__FKCodi__76177A41
+GO
+ALTER TABLE dbo.TBOftalmo
+	DROP CONSTRAINT FK__TBTBOftal__IXCod__251C81ED
+GO
+ALTER TABLE dbo.TBVendedor
+	DROP CONSTRAINT FK__TBVendedo__IXCod__28ED12D1
+GO
+ALTER TABLE dbo.TBOftalmo
+	DROP CONSTRAINT FK__TBTBOftal__IXCod__4F47C5E3
+GO
+ALTER TABLE dbo.TBVendedor
+	DROP CONSTRAINT FK__TBVendedo__IXCod__531856C7
+GO
+ALTER TABLE dbo.TBNota_saida_fiscal
+	DROP CONSTRAINT FK_TBNota_saida_fiscal_TBEmpresa1
+GO
+ALTER TABLE dbo.TBPlano_pagamento
+	DROP CONSTRAINT FK__TBPlano_p__IXCod__2AD55B43
+GO
+ALTER TABLE dbo.TBPlano_pagamento
+	DROP CONSTRAINT FK__TBPlano_p__IXCod__55009F39
+GO
+ALTER TABLE dbo.TBHistorico_padrao
+	DROP CONSTRAINT FK__TBHistori__FKCod__2CBDA3B5
+GO
+ALTER TABLE dbo.TBParametros_plano_saude
+	DROP CONSTRAINT FK__TBParamet__FKCod__48FDE863
+GO
+ALTER TABLE dbo.TBHistorico_padrao
+	DROP CONSTRAINT FK__TBHistori__FKCod__56E8E7AB
+GO
+ALTER TABLE dbo.TBCheque
+	DROP CONSTRAINT FK__TBCheque__FKCodi__49B3AC28
+GO
+ALTER TABLE dbo.TBPlano_saude
+	DROP CONSTRAINT FK__TBPlano_s__FKCod__49F20C9C
+GO
+ALTER TABLE dbo.TBNota_entrada_fiscal
+	DROP CONSTRAINT FK_TBNota_entrada_fiscal_TBEmpresa
+GO
+ALTER TABLE dbo.TBAssociado
+	DROP CONSTRAINT FK__TBAssocia__FKCod__4AE630D5
+GO
+ALTER TABLE dbo.TBBomba
+	DROP CONSTRAINT FK_TBBomba_TBEmpresa
+GO
+ALTER TABLE dbo.TBFuncionario
+	DROP CONSTRAINT FK__TBFuncion__FKCod__0C46B282
+GO
+ALTER TABLE dbo.TBFuncionario
+	DROP CONSTRAINT FK__TBFuncion__FKCod__15D01CBC
+GO
+ALTER TABLE dbo.TBTitulo_receber
+	DROP CONSTRAINT FK_TBTitulo_receber_TBEmpresa
+GO
+ALTER TABLE dbo.TBNota_entrada
+	DROP CONSTRAINT FK__TBNota_en__FKCod__70698DE3
+GO
+ALTER TABLE dbo.TBTriagem_Software
+	DROP CONSTRAINT FK_TBTriagem_Software_TBEmpresa
+GO
+ALTER TABLE dbo.TBCupom
+	DROP CONSTRAINT FK_TBCupom_TBEmpresa
+GO
+ALTER TABLE dbo.TBTanque
+	DROP CONSTRAINT FK__TBTanque__IXCodi__62A97724
+GO
+ALTER TABLE dbo.TBParametros_venda
+	DROP CONSTRAINT FK__TBParamet__IXCod__2BC97F7C
+GO
+ALTER TABLE dbo.TBParametros_venda
+	DROP CONSTRAINT FK__TBParamet__IXCod__55F4C372
+GO
+ALTER TABLE dbo.TBTitulo_pagar
+	DROP CONSTRAINT FK__TBTitulo___FKCod__0C3BC58A
+GO
+ALTER TABLE dbo.TBParametros_transporte
+	DROP CONSTRAINT FK__TBParamet__FKCod__673856C0
+GO
+ALTER TABLE dbo.TBCaixa
+	DROP CONSTRAINT FK__TBCaixa__FKCodig__5AD97420
+GO
+ALTER TABLE dbo.TBPendencia_Servicos
+	DROP CONSTRAINT FK_TBPendencia_Servicos_TBEmpresa
+GO
+ALTER TABLE dbo.TBTitulo_indevido
+	DROP CONSTRAINT FK__TBTitulo___FKCod__761AA79D
+GO
+ALTER TABLE dbo.TBCompra_empresa
+	DROP CONSTRAINT FK__TBCompra___FKCod__7CBD838B
+GO
+ALTER TABLE dbo.TBAcessibilidade_Empresa
+	DROP CONSTRAINT FK_TBAcessibilidade_Empresa_TBEmpresa
+GO
+ALTER TABLE dbo.TBAcessibilidade_Empresa
+	DROP CONSTRAINT FK_TBAcessibilidade_Empresa_TBEmpresa1
+GO
+ALTER TABLE dbo.TBFornecedor
+	DROP CONSTRAINT FK__TBFornece__IXCod__2610A626
+GO
+ALTER TABLE dbo.TBAutorizacao_servico
+	DROP CONSTRAINT FK__TBAutoriz__FKCod__041EAE31
+GO
+ALTER TABLE dbo.TBCompra_empresa
+	DROP CONSTRAINT FK__TBCompra___FKCod__073B11FE
+GO
+DROP TABLE dbo.TBEmpresa
+GO
+EXECUTE sp_rename N'dbo.Tmp_TBEmpresa', N'TBEmpresa', 'OBJECT'
+GO
+ALTER TABLE dbo.TBEmpresa ADD CONSTRAINT
+	PK__TBEmpresa__0E6E26BF PRIMARY KEY CLUSTERED 
+	(
+	PKCodigo_TBEmpresa
+	) WITH FILLFACTOR = 90 ON [PRIMARY]
+
+GO
+ALTER TABLE dbo.TBEmpresa ADD CONSTRAINT
+	UQ__TBEmpresa__0F624AF8 UNIQUE NONCLUSTERED 
+	(
+	DFNome_reduzido_TBEmpresa
+	) WITH FILLFACTOR = 90 ON [PRIMARY]
+
+GO
+ALTER TABLE dbo.TBEmpresa WITH NOCHECK ADD CONSTRAINT
+	FK__TBEmpresa__FKId___2F9A1060 FOREIGN KEY
+	(
+	FKId_TBCidade_otica
+	) REFERENCES dbo.TBCidade_otica
+	(
+	PKId_TBCidade_otica
+	)
+GO
+ALTER TABLE dbo.TBEmpresa WITH NOCHECK ADD CONSTRAINT
+	FK__TBEmpresa__FKId___59C55456 FOREIGN KEY
+	(
+	FKId_TBCidade_otica
+	) REFERENCES dbo.TBCidade_otica
+	(
+	PKId_TBCidade_otica
+	)
+GO
+ALTER TABLE dbo.TBAutorizacao_servico WITH NOCHECK ADD CONSTRAINT
+	FK__TBAutoriz__FKCod__041EAE31 FOREIGN KEY
+	(
+	FKCodigo_TBEmpresa
+	) REFERENCES dbo.TBEmpresa
+	(
+	PKCodigo_TBEmpresa
+	)
+GO
+ALTER TABLE dbo.TBAcessibilidade_Empresa WITH NOCHECK ADD CONSTRAINT
+	FK_TBAcessibilidade_Empresa_TBEmpresa FOREIGN KEY
+	(
+	DFCod_Empresa_envia_TBAcessibilidade_Empresa
+	) REFERENCES dbo.TBEmpresa
+	(
+	PKCodigo_TBEmpresa
+	)
+GO
+ALTER TABLE dbo.TBAcessibilidade_Empresa WITH NOCHECK ADD CONSTRAINT
+	FK_TBAcessibilidade_Empresa_TBEmpresa1 FOREIGN KEY
+	(
+	DFCod_Empresa_recebe_TBAcessibilidade_Empresa
+	) REFERENCES dbo.TBEmpresa
+	(
+	PKCodigo_TBEmpresa
+	)
+GO
+ALTER TABLE dbo.TBCompra_empresa WITH NOCHECK ADD CONSTRAINT
+	FK__TBCompra___FKCod__073B11FE FOREIGN KEY
+	(
+	FKCodigo_TBEmpresa
+	) REFERENCES dbo.TBEmpresa
+	(
+	PKCodigo_TBEmpresa
+	)
+GO
+ALTER TABLE dbo.TBCompra_empresa WITH NOCHECK ADD CONSTRAINT
+	FK__TBCompra___FKCod__7CBD838B FOREIGN KEY
+	(
+	FKCodigo_TBEmpresa
+	) REFERENCES dbo.TBEmpresa
+	(
+	PKCodigo_TBEmpresa
+	)
+GO
+ALTER TABLE dbo.TBTitulo_indevido WITH NOCHECK ADD CONSTRAINT
+	FK__TBTitulo___FKCod__761AA79D FOREIGN KEY
+	(
+	FKCodigo_TBEmpresa
+	) REFERENCES dbo.TBEmpresa
+	(
+	PKCodigo_TBEmpresa
+	)
+GO
+ALTER TABLE dbo.TBPendencia_Servicos WITH NOCHECK ADD CONSTRAINT
+	FK_TBPendencia_Servicos_TBEmpresa FOREIGN KEY
+	(
+	FKCodigo_TBEmpresa
+	) REFERENCES dbo.TBEmpresa
+	(
+	PKCodigo_TBEmpresa
+	)
+GO
+ALTER TABLE dbo.TBCaixa WITH NOCHECK ADD CONSTRAINT
+	FK__TBCaixa__FKCodig__5AD97420 FOREIGN KEY
+	(
+	FKCodigo_TBEmpresa
+	) REFERENCES dbo.TBEmpresa
+	(
+	PKCodigo_TBEmpresa
+	)
+GO
+ALTER TABLE dbo.TBParametros_transporte WITH NOCHECK ADD CONSTRAINT
+	FK__TBParamet__FKCod__673856C0 FOREIGN KEY
+	(
+	FKCodigo_TBEmpresa
+	) REFERENCES dbo.TBEmpresa
+	(
+	PKCodigo_TBEmpresa
+	)
+GO
+ALTER TABLE dbo.TBTitulo_pagar WITH NOCHECK ADD CONSTRAINT
+	FK__TBTitulo___FKCod__0C3BC58A FOREIGN KEY
+	(
+	FKCodigo_TBEmpresa
+	) REFERENCES dbo.TBEmpresa
+	(
+	PKCodigo_TBEmpresa
+	)
+GO
+ALTER TABLE dbo.TBParametros_venda WITH NOCHECK ADD CONSTRAINT
+	FK__TBParamet__IXCod__2BC97F7C FOREIGN KEY
+	(
+	IXCodigo_TBEmpresa
+	) REFERENCES dbo.TBEmpresa
+	(
+	PKCodigo_TBEmpresa
+	)
+GO
+ALTER TABLE dbo.TBParametros_venda WITH NOCHECK ADD CONSTRAINT
+	FK__TBParamet__IXCod__55F4C372 FOREIGN KEY
+	(
+	IXCodigo_TBEmpresa
+	) REFERENCES dbo.TBEmpresa
+	(
+	PKCodigo_TBEmpresa
+	)
+GO
+ALTER TABLE dbo.TBCupom WITH NOCHECK ADD CONSTRAINT
+	FK_TBCupom_TBEmpresa FOREIGN KEY
+	(
+	FKCodigo_TBEmpresa
+	) REFERENCES dbo.TBEmpresa
+	(
+	PKCodigo_TBEmpresa
+	)
+GO
+ALTER TABLE dbo.TBTriagem_Software WITH NOCHECK ADD CONSTRAINT
+	FK_TBTriagem_Software_TBEmpresa FOREIGN KEY
+	(
+	FKCodigo_TBEmpresa
+	) REFERENCES dbo.TBEmpresa
+	(
+	PKCodigo_TBEmpresa
+	)
+GO
+ALTER TABLE dbo.TBNota_entrada WITH NOCHECK ADD CONSTRAINT
+	FK__TBNota_en__FKCod__70698DE3 FOREIGN KEY
+	(
+	FKCodigo_TBEmpresa
+	) REFERENCES dbo.TBEmpresa
+	(
+	PKCodigo_TBEmpresa
+	)
+GO
+ALTER TABLE dbo.TBTitulo_receber WITH NOCHECK ADD CONSTRAINT
+	FK_TBTitulo_receber_TBEmpresa FOREIGN KEY
+	(
+	FKCodigo_TBEmpresa
+	) REFERENCES dbo.TBEmpresa
+	(
+	PKCodigo_TBEmpresa
+	)
+GO
+ALTER TABLE dbo.TBFuncionario WITH NOCHECK ADD CONSTRAINT
+	FK__TBFuncion__FKCod__0C46B282 FOREIGN KEY
+	(
+	FKCodigo_TBEmpresa
+	) REFERENCES dbo.TBEmpresa
+	(
+	PKCodigo_TBEmpresa
+	)
+GO
+ALTER TABLE dbo.TBFuncionario WITH NOCHECK ADD CONSTRAINT
+	FK__TBFuncion__FKCod__15D01CBC FOREIGN KEY
+	(
+	FKCodigo_TBEmpresa
+	) REFERENCES dbo.TBEmpresa
+	(
+	PKCodigo_TBEmpresa
+	)
+GO
+ALTER TABLE dbo.TBBomba WITH NOCHECK ADD CONSTRAINT
+	FK_TBBomba_TBEmpresa FOREIGN KEY
+	(
+	IXCodigo_TBEmpresa
+	) REFERENCES dbo.TBEmpresa
+	(
+	PKCodigo_TBEmpresa
+	)
+GO
+ALTER TABLE dbo.TBAssociado WITH NOCHECK ADD CONSTRAINT
+	FK__TBAssocia__FKCod__4AE630D5 FOREIGN KEY
+	(
+	FKCodigo_TBEmpresa
+	) REFERENCES dbo.TBEmpresa
+	(
+	PKCodigo_TBEmpresa
+	)
+GO
+ALTER TABLE dbo.TBNota_entrada_fiscal WITH NOCHECK ADD CONSTRAINT
+	FK_TBNota_entrada_fiscal_TBEmpresa FOREIGN KEY
+	(
+	FKCodigo_TBEmpresa
+	) REFERENCES dbo.TBEmpresa
+	(
+	PKCodigo_TBEmpresa
+	)
+GO
+ALTER TABLE dbo.TBPlano_saude WITH NOCHECK ADD CONSTRAINT
+	FK__TBPlano_s__FKCod__49F20C9C FOREIGN KEY
+	(
+	FKCodigo_TBEmpresa
+	) REFERENCES dbo.TBEmpresa
+	(
+	PKCodigo_TBEmpresa
+	)
+GO
+ALTER TABLE dbo.TBCheque WITH NOCHECK ADD CONSTRAINT
+	FK__TBCheque__FKCodi__49B3AC28 FOREIGN KEY
+	(
+	FKCodigo_TBEmpresa
+	) REFERENCES dbo.TBEmpresa
+	(
+	PKCodigo_TBEmpresa
+	)
+GO
+ALTER TABLE dbo.TBParametros_plano_saude WITH NOCHECK ADD CONSTRAINT
+	FK__TBParamet__FKCod__48FDE863 FOREIGN KEY
+	(
+	FKCodigo_TBEmpresa
+	) REFERENCES dbo.TBEmpresa
+	(
+	PKCodigo_TBEmpresa
+	)
+GO
+ALTER TABLE dbo.TBHistorico_padrao WITH NOCHECK ADD CONSTRAINT
+	FK__TBHistori__FKCod__2CBDA3B5 FOREIGN KEY
+	(
+	FKCodigo_TBEmpresa
+	) REFERENCES dbo.TBEmpresa
+	(
+	PKCodigo_TBEmpresa
+	)
+GO
+ALTER TABLE dbo.TBHistorico_padrao WITH NOCHECK ADD CONSTRAINT
+	FK__TBHistori__FKCod__56E8E7AB FOREIGN KEY
+	(
+	FKCodigo_TBEmpresa
+	) REFERENCES dbo.TBEmpresa
+	(
+	PKCodigo_TBEmpresa
+	)
+GO
+ALTER TABLE dbo.TBPlano_pagamento WITH NOCHECK ADD CONSTRAINT
+	FK__TBPlano_p__IXCod__2AD55B43 FOREIGN KEY
+	(
+	IXCodigo_TBEmpresa
+	) REFERENCES dbo.TBEmpresa
+	(
+	PKCodigo_TBEmpresa
+	)
+GO
+ALTER TABLE dbo.TBPlano_pagamento WITH NOCHECK ADD CONSTRAINT
+	FK__TBPlano_p__IXCod__55009F39 FOREIGN KEY
+	(
+	IXCodigo_TBEmpresa
+	) REFERENCES dbo.TBEmpresa
+	(
+	PKCodigo_TBEmpresa
+	)
+GO
+ALTER TABLE dbo.TBNota_saida_fiscal WITH NOCHECK ADD CONSTRAINT
+	FK_TBNota_saida_fiscal_TBEmpresa1 FOREIGN KEY
+	(
+	FKCodigo_TBEmpresa
+	) REFERENCES dbo.TBEmpresa
+	(
+	PKCodigo_TBEmpresa
+	)
+GO
+ALTER TABLE dbo.TBVendedor WITH NOCHECK ADD CONSTRAINT
+	FK__TBVendedo__IXCod__28ED12D1 FOREIGN KEY
+	(
+	IXCodigo_TBEmpresa
+	) REFERENCES dbo.TBEmpresa
+	(
+	PKCodigo_TBEmpresa
+	)
+GO
+ALTER TABLE dbo.TBVendedor WITH NOCHECK ADD CONSTRAINT
+	FK__TBVendedo__IXCod__531856C7 FOREIGN KEY
+	(
+	IXCodigo_TBEmpresa
+	) REFERENCES dbo.TBEmpresa
+	(
+	PKCodigo_TBEmpresa
+	)
+GO
+ALTER TABLE dbo.TBOftalmo WITH NOCHECK ADD CONSTRAINT
+	FK__TBTBOftal__IXCod__251C81ED FOREIGN KEY
+	(
+	IXCodigo_TBEmpresa
+	) REFERENCES dbo.TBEmpresa
+	(
+	PKCodigo_TBEmpresa
+	)
+GO
+ALTER TABLE dbo.TBOftalmo WITH NOCHECK ADD CONSTRAINT
+	FK__TBTBOftal__IXCod__4F47C5E3 FOREIGN KEY
+	(
+	IXCodigo_TBEmpresa
+	) REFERENCES dbo.TBEmpresa
+	(
+	PKCodigo_TBEmpresa
+	)
+GO
+ALTER TABLE dbo.TBPedido WITH NOCHECK ADD CONSTRAINT
+	FK__TBPedido__FKCodi__76177A41 FOREIGN KEY
+	(
+	FKCodigo_TBEmpresa
+	) REFERENCES dbo.TBEmpresa
+	(
+	PKCodigo_TBEmpresa
+	)
+GO
+ALTER TABLE dbo.TBNota_saida WITH NOCHECK ADD CONSTRAINT
+	FK__TBNota_sa__FKCod__587208C1 FOREIGN KEY
+	(
+	FKCodigo_TBEmpresa
+	) REFERENCES dbo.TBEmpresa
+	(
+	PKCodigo_TBEmpresa
+	)
+GO
+ALTER TABLE dbo.TBReceituario WITH NOCHECK ADD CONSTRAINT
+	FK__TBReceitu__FKCod__2DB1C7EE FOREIGN KEY
+	(
+	FKCodigo_TBEmpresa
+	) REFERENCES dbo.TBEmpresa
+	(
+	PKCodigo_TBEmpresa
+	)
+GO
+ALTER TABLE dbo.TBReceituario WITH NOCHECK ADD CONSTRAINT
+	FK__TBReceitu__FKCod__57DD0BE4 FOREIGN KEY
+	(
+	FKCodigo_TBEmpresa
+	) REFERENCES dbo.TBEmpresa
+	(
+	PKCodigo_TBEmpresa
+	)
+GO
+ALTER TABLE dbo.TBAtendimento WITH NOCHECK ADD CONSTRAINT
+	FK_TBAtendimento_TBEmpresa FOREIGN KEY
+	(
+	FKCodigo_TBEmpresa
+	) REFERENCES dbo.TBEmpresa
+	(
+	PKCodigo_TBEmpresa
+	)
+GO
+ALTER TABLE dbo.TBSupervisor WITH NOCHECK ADD CONSTRAINT
+	FK__TBSupervi__IXCod__27F8EE98 FOREIGN KEY
+	(
+	IXCodigo_TBEmpresa
+	) REFERENCES dbo.TBEmpresa
+	(
+	PKCodigo_TBEmpresa
+	)
+GO
+ALTER TABLE dbo.TBSupervisor WITH NOCHECK ADD CONSTRAINT
+	FK__TBSupervi__IXCod__5224328E FOREIGN KEY
+	(
+	IXCodigo_TBEmpresa
+	) REFERENCES dbo.TBEmpresa
+	(
+	PKCodigo_TBEmpresa
+	)
+GO
+ALTER TABLE dbo.TBParametros_fiscais WITH NOCHECK ADD CONSTRAINT
+	FK__TBParamet__FKCod__4668671F FOREIGN KEY
+	(
+	FKCodigo_TBEmpresa
+	) REFERENCES dbo.TBEmpresa
+	(
+	PKCodigo_TBEmpresa
+	)
+GO
+ALTER TABLE dbo.TBOperadores_ecf WITH NOCHECK ADD CONSTRAINT
+	FK_TBOperadores_ecf_TBEmpresa FOREIGN KEY
+	(
+	FKCodigo_TBEmpresa
+	) REFERENCES dbo.TBEmpresa
+	(
+	PKCodigo_TBEmpresa
+	)
+GO
+ALTER TABLE dbo.TBParametros_gerais WITH NOCHECK ADD CONSTRAINT
+	FK__TBParamet__FKCod__29E1370A FOREIGN KEY
+	(
+	PFKCodigo_TBEmpresa
+	) REFERENCES dbo.TBEmpresa
+	(
+	PKCodigo_TBEmpresa
+	)
+GO
+ALTER TABLE dbo.TBParametros_gerais WITH NOCHECK ADD CONSTRAINT
+	FK__TBParamet__FKCod__540C7B00 FOREIGN KEY
+	(
+	PFKCodigo_TBEmpresa
+	) REFERENCES dbo.TBEmpresa
+	(
+	PKCodigo_TBEmpresa
+	)
+GO
+ALTER TABLE dbo.TBPaciente WITH NOCHECK ADD CONSTRAINT
+	FK__TBPacient__FKCod__2EA5EC27 FOREIGN KEY
+	(
+	FKCodigo_TBEmpresa
+	) REFERENCES dbo.TBEmpresa
+	(
+	PKCodigo_TBEmpresa
+	)
+GO
+ALTER TABLE dbo.TBPaciente WITH NOCHECK ADD CONSTRAINT
+	FK__TBPacient__FKCod__58D1301D FOREIGN KEY
+	(
+	FKCodigo_TBEmpresa
+	) REFERENCES dbo.TBEmpresa
+	(
+	PKCodigo_TBEmpresa
+	)
+GO
+ALTER TABLE dbo.TBTroca WITH NOCHECK ADD CONSTRAINT
+	FK__TBTroca__FKCodig__66C02818 FOREIGN KEY
+	(
+	FKCodigo_TBEmpresa
+	) REFERENCES dbo.TBEmpresa
+	(
+	PKCodigo_TBEmpresa
+	)
+GO
+ALTER TABLE dbo.TBOperacao_caixa WITH NOCHECK ADD CONSTRAINT
+	FK_TBOperacao_caixa_TBEmpresa FOREIGN KEY
+	(
+	FKCodigo_TBEmpresa
+	) REFERENCES dbo.TBEmpresa
+	(
+	PKCodigo_TBEmpresa
+	)
+GO
+ALTER TABLE dbo.TBAcompanhamento_caixa WITH NOCHECK ADD CONSTRAINT
+	FK__TBAcompan__FKCod__73A521EA FOREIGN KEY
+	(
+	FKCodigo_TBEmpresa
+	) REFERENCES dbo.TBEmpresa
+	(
+	PKCodigo_TBEmpresa
+	)
+GO
+ALTER TABLE dbo.TBTabela_preco WITH NOCHECK ADD CONSTRAINT
+	FK__TBTabela___FKCod__770B9E7A FOREIGN KEY
+	(
+	FKCodigo_TBEmpresa
+	) REFERENCES dbo.TBEmpresa
+	(
+	PKCodigo_TBEmpresa
+	)
+GO
+ALTER TABLE dbo.TBVeiculo WITH NOCHECK ADD CONSTRAINT
+	FK__TBVeiculo__FKCod__61D48325 FOREIGN KEY
+	(
+	FKCodigo_TBEmpresa
+	) REFERENCES dbo.TBEmpresa
+	(
+	PKCodigo_TBEmpresa
+	)
+GO
+ALTER TABLE dbo.TBOperacao_transporte WITH NOCHECK ADD CONSTRAINT
+	FK__TBOperaca__FKCod__1F728E42 FOREIGN KEY
+	(
+	FKCodigo_TBEmpresa
+	) REFERENCES dbo.TBEmpresa
+	(
+	PKCodigo_TBEmpresa
+	)
+GO
+ALTER TABLE dbo.TBOperacao_transporte WITH NOCHECK ADD CONSTRAINT
+	FK__TBOperaca__FKCod__337986EF FOREIGN KEY
+	(
+	FKCodigo_TBEmpresa
+	) REFERENCES dbo.TBEmpresa
+	(
+	PKCodigo_TBEmpresa
+	)
+GO
+ALTER TABLE dbo.TBDia_operacao_pdv WITH NOCHECK ADD CONSTRAINT
+	FK_TBDia_operacao_pdv_TBEmpresa FOREIGN KEY
+	(
+	IXCodigo_TBEmpresa
+	) REFERENCES dbo.TBEmpresa
+	(
+	PKCodigo_TBEmpresa
+	)
+GO
+ALTER TABLE dbo.TBPdv WITH NOCHECK ADD CONSTRAINT
+	FK_TBPdv_TBEmpresa FOREIGN KEY
+	(
+	IXCodigo_TBEmpresa
+	) REFERENCES dbo.TBEmpresa
+	(
+	PKCodigo_TBEmpresa
+	)
+GO
+ALTER TABLE dbo.TBTitulo_receber_plano_saude WITH NOCHECK ADD CONSTRAINT
+	FK__TBTitulo___FKCod__71FFFDF6 FOREIGN KEY
+	(
+	FKCodigo_TBEmpresa
+	) REFERENCES dbo.TBEmpresa
+	(
+	PKCodigo_TBEmpresa
+	)
+GO
+ALTER TABLE dbo.TBPlano_contas WITH NOCHECK ADD CONSTRAINT
+	FK__TBPlano_c__FKCod__171E0ABA FOREIGN KEY
+	(
+	FKCodigo_TBEmpresa
+	) REFERENCES dbo.TBEmpresa
+	(
+	PKCodigo_TBEmpresa
+	)
+GO
+ALTER TABLE dbo.TBParametros_contabilidade WITH NOCHECK ADD CONSTRAINT
+	FK__TBParamet__FKCod__1629E681 FOREIGN KEY
+	(
+	FKCodigo_TBEmpresa
+	) REFERENCES dbo.TBEmpresa
+	(
+	PKCodigo_TBEmpresa
+	)
+GO
+ALTER TABLE dbo.TBCliente WITH NOCHECK ADD CONSTRAINT
+	FK_TBCliente_TBEmpresa FOREIGN KEY
+	(
+	IXCodigo_TBEmpresa
+	) REFERENCES dbo.TBEmpresa
+	(
+	PKCodigo_TBEmpresa
+	)
+GO
+ALTER TABLE dbo.TBParametros_funcionarios WITH NOCHECK ADD CONSTRAINT
+	FK__TBParamet__PFKCo__0D3AD6BB FOREIGN KEY
+	(
+	PFKCodigo_TBEmpresa
+	) REFERENCES dbo.TBEmpresa
+	(
+	PKCodigo_TBEmpresa
+	)
+GO
+ALTER TABLE dbo.TBParametros_funcionarios WITH NOCHECK ADD CONSTRAINT
+	FK__TBParamet__PFKCo__16C440F5 FOREIGN KEY
+	(
+	PFKCodigo_TBEmpresa
+	) REFERENCES dbo.TBEmpresa
+	(
+	PKCodigo_TBEmpresa
+	)
+GO
+ALTER TABLE dbo.TBParametros_servicos WITH NOCHECK ADD CONSTRAINT
+	FK_TBParametros_servicos_TBEmpresa FOREIGN KEY
+	(
+	FKCodigo_TBEmpresa
+	) REFERENCES dbo.TBEmpresa
+	(
+	PKCodigo_TBEmpresa
+	)
+GO
+ALTER TABLE dbo.TBTanque WITH NOCHECK ADD CONSTRAINT
+	FK__TBTanque__IXCodi__031646B6 FOREIGN KEY
+	(
+	IXCodigo_TBEmpresa
+	) REFERENCES dbo.TBEmpresa
+	(
+	PKCodigo_TBEmpresa
+	)
+GO
+ALTER TABLE dbo.TBTanque WITH NOCHECK ADD CONSTRAINT
+	FK__TBTanque__IXCodi__62A97724 FOREIGN KEY
+	(
+	IXCodigo_TBEmpresa
+	) REFERENCES dbo.TBEmpresa
+	(
+	PKCodigo_TBEmpresa
+	)
+GO
+ALTER TABLE dbo.TBFornecedor WITH NOCHECK ADD CONSTRAINT
+	FK__TBFornece__IXCod__503BEA1C FOREIGN KEY
+	(
+	IXCodigo_TBEmpresa
+	) REFERENCES dbo.TBEmpresa
+	(
+	PKCodigo_TBEmpresa
+	)
+GO
+ALTER TABLE dbo.TBFornecedor WITH NOCHECK ADD CONSTRAINT
+	FK__TBFornece__IXCod__2610A626 FOREIGN KEY
+	(
+	IXCodigo_TBEmpresa
+	) REFERENCES dbo.TBEmpresa
+	(
+	PKCodigo_TBEmpresa
+	)
+GO
+COMMIT

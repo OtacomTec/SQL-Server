@@ -1,0 +1,3 @@
+Update  TBParametros_venda
+set DFEmite_banco_TBParametros_venda  = 0 
+from  TBParametros_venda

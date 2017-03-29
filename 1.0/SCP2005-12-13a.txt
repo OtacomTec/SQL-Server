@@ -1,0 +1,3 @@
+update tbnota_saida 
+set dfhora_emissao_Tbnota_saida = '00:00:00'
+where dfhora_emissao_Tbnota_saida is null

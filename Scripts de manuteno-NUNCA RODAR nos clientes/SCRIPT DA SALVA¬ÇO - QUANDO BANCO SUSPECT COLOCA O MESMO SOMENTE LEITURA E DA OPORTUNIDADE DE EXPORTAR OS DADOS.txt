@@ -1,0 +1,15 @@
+USE master 
+GO 
+sp_configure 'allow updates', 1 
+GO 
+RECONFIGURE WITH OVERRIDE 
+GO 
+
+UPDATE SYSDATABASES SET STATUS=-32768 WHERE NAME='BDRetaguarda' 
+
+USE master 
+GO 
+sp_configure 'allow updates', 0 
+GO 
+RECONFIGURE WITH OVERRIDE 
+GO 

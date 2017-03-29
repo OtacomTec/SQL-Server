@@ -1,0 +1,5 @@
+UPDATE TBItinerario
+SET DFValor_frete_TBItinerario = DFValor_frete_kg_lt_TBHIstorico_transporte_roteiro
+FROM TBItinerario
+LEFT JOIN TBHIstorico_transporte_roteiro
+ON TBItinerario.PKCodigo_TBItinerario = TBHIstorico_transporte_roteiro.FKCodigo_TBItinerario

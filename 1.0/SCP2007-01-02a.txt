@@ -1,0 +1,98 @@
+USE BDRetaguarda
+GO
+BEGIN TRANSACTION
+/*
+ *** IDENTIFICAÇÃO DO SCRIPT ***
+
+ 1 - Apartir de 20/12/2005, fica expressamente proibida a criação de scripts sem que seja preenchido este cabeçalho
+ 2 - Obrigatoriamente necessário que este paragrafo seja inserido apos um BEGIN TRANSACTION
+ 3 - Obrigatoriamente o preenchimento das variaveis abaixo(@Nomenclatura,@Observacao,@Data)com valores correspondentes e condizentes
+ Att: Marcos
+
+*/
+
+--INICIO CABECALHO
+
+declare @Nomenclatura as nvarchar(20)
+declare @Observacao as nvarchar(100)
+declare @Data as SMALLDATETIME
+
+SET @Nomenclatura = 'SCP2007-01-02a'
+SET @Observacao = 'Criando Campo Multi-empresa na TBInventario'
+SET @Data = CURRENT_TIMESTAMP
+
+
+---LIMPEZA DA TABELA
+
+DELETE FROM TBSCRIPT
+
+---INSERCAO DO REGISTRO
+INSERT INTO BDRetaguarda.dbo.TBSCRIPT(DFNome_TBScript,DFObjetivo_TBScript,DFData_execucao_TBScript)
+VALUES(@Nomenclatura,@Observacao,@Data)
+
+---FIM CABECALHO
+
+SET QUOTED_IDENTIFIER ON
+SET TRANSACTION ISOLATION LEVEL SERIALIZABLE
+SET ARITHABORT ON
+SET NUMERIC_ROUNDABORT OFF
+SET CONCAT_NULL_YIELDS_NULL ON
+SET ANSI_NULLS ON
+SET ANSI_PADDING ON
+SET ANSI_WARNINGS ON
+
+CREATE TABLE dbo.Tmp_TBInventario
+	(
+	PKId_TBInventario int NOT NULL IDENTITY (1, 1),
+	IXCodigo_TBEmpresa int NOT NULL,
+	DFData_TBInventario smalldatetime NOT NULL,
+	DFDescricao_TBInventario nvarchar(40) NULL,
+	DFResultado_balanco_TBInventario money NOT NULL,
+	DFObservacao_TBInventario nvarchar(100) NULL
+	)  ON [PRIMARY]
+GO
+SET IDENTITY_INSERT dbo.Tmp_TBInventario ON
+GO
+IF EXISTS(SELECT * FROM dbo.TBInventario)
+	 EXEC('INSERT INTO dbo.Tmp_TBInventario (PKId_TBInventario, DFData_TBInventario, DFDescricao_TBInventario, DFResultado_balanco_TBInventario, DFObservacao_TBInventario)
+		SELECT PKId_TBInventario, DFData_TBInventario, DFDescricao_TBInventario, DFResultado_balanco_TBInventario, DFObservacao_TBInventario FROM dbo.TBInventario TABLOCKX')
+GO
+SET IDENTITY_INSERT dbo.Tmp_TBInventario OFF
+GO
+ALTER TABLE dbo.TBItens_inventario
+	DROP CONSTRAINT FK__TBItens_i__FKId___42534CD9
+GO
+DROP TABLE dbo.TBInventario
+GO
+EXECUTE sp_rename N'dbo.Tmp_TBInventario', N'TBInventario', 'OBJECT'
+GO
+ALTER TABLE dbo.TBInventario ADD CONSTRAINT
+	PK__TBInventario__3E82BBF5 PRIMARY KEY CLUSTERED 
+	(
+	PKId_TBInventario
+	) ON [PRIMARY]
+
+GO
+ALTER TABLE dbo.TBInventario ADD CONSTRAINT
+	FK_TBInventario_TBEmpresa FOREIGN KEY
+	(
+	IXCodigo_TBEmpresa
+	) REFERENCES dbo.TBEmpresa
+	(
+	PKCodigo_TBEmpresa
+	)
+GO
+
+ALTER TABLE dbo.TBItens_inventario WITH NOCHECK ADD CONSTRAINT
+	FK__TBItens_i__FKId___42534CD9 FOREIGN KEY
+	(
+	FKId_TBInventario
+	) REFERENCES dbo.TBInventario
+	(
+	PKId_TBInventario
+	)
+GO
+
+
+
+COMMIT TRANSACTION

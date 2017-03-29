@@ -1,0 +1,31 @@
+--------------------------------------------------------------------------------------
+
+--FAVOR SEGUIR RIGOROSAMENTE OS PASSOS ABAIXO......
+--NÃO RODAR VIA F5
+
+--SEGUIR PASSO A PASSO , SELECIONANDO OS COMANDOS E EXECUTANDO OS MESMOS ISOLADOS
+
+--------------------------------------------------------------------------------------
+--PASSO 1 - VERIFICAR O MODEL RECOVERY
+ USE master
+
+ GO
+
+ SELECT database_id [ID],  name [Banco], compatibility_level [Versao], recovery_model_desc [Model] FROM sys.databases
+
+GO
+--FIM PASSO 1
+
+--PASSO 2 - CASO O MODEL ESTEJA FULL, RODAR A LINHA ABAIXO
+ 
+ ALTER DATABASE BDRetaguarda SET RECOVERY SIMPLE
+
+GO
+
+--FIM PASSO 2
+
+--PASSO 3 - SHRINK DO BANCO
+
+ DBCC SHRINKFILE (BDRetaguarda_log, 1)
+
+--OBSERVAÇÃO: MANTER O BACKUP PELO MENOS 2 X POR DIA

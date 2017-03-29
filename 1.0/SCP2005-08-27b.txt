@@ -1,0 +1,35 @@
+BEGIN TRANSACTION
+SET QUOTED_IDENTIFIER ON
+SET TRANSACTION ISOLATION LEVEL SERIALIZABLE
+SET ARITHABORT ON
+SET NUMERIC_ROUNDABORT OFF
+SET CONCAT_NULL_YIELDS_NULL ON
+SET ANSI_NULLS ON
+SET ANSI_PADDING ON
+SET ANSI_WARNINGS ON
+COMMIT
+BEGIN TRANSACTION
+CREATE TABLE dbo.TBSalario_funcionario
+	(
+	PKId_TBSalario_funcionario int NOT NULL IDENTITY (1, 1) NOT FOR REPLICATION,
+	DFValor_bruto_TBSalario_funcionario money NULL,
+	DFValor_liquido_TBSalario_funcionario money NULL,
+	DFValor_adicional_TBSalario_funcionario money NULL,
+	DFValor_ferias_TBSalario_funcionario money NULL,
+	DFValor_Decimo_terceiro_TBSalario_funcionario money NULL,
+	DFValor_Comissoes_TBSalario_funcionario money NULL,
+	DFValor_vale_TBSalario_funcionario money NULL,
+	DFMes_competencia_TBSalario_funcionario money NULL,
+	DFAno_competencia_TBSalario_funcionario money NULL,
+	DFValor_apagar_TBSalario_funcionario money NULL,
+	FKCodigo_TBFuncionario int NULL
+	)  ON [PRIMARY]
+GO
+ALTER TABLE dbo.TBSalario_funcionario ADD CONSTRAINT
+	PK_TBSalario_funcionario PRIMARY KEY CLUSTERED 
+	(
+	PKId_TBSalario_funcionario
+	) ON [PRIMARY]
+
+GO
+COMMIT

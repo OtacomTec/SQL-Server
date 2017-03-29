@@ -1,0 +1,8 @@
+
+CREATE TABLE [dbo].[TBSecao_palm](
+	[PKCodigo_TBSecao] [int] NOT NULL,
+	[DFDescricao_TBsecao] [nvarchar](40) NULL,
+	[FKId_TBCategoria] [int] NULL,
+	[DFData_atualizacao_portal] [smalldatetime] NULL,
+	[DFHora_atualizacao_portal] [smalldatetime] NULL
+) ON [PRIMARY]

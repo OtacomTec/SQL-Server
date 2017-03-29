@@ -1,0 +1,5 @@
+update dbo.TBItens_tabela_preco
+set DFData_alteracao_TBItens_tabela_preco  = DFData_inicio_vigencia_TBTabela_preco
+from dbo.TBItens_tabela_preco
+inner join TBTabela_preco
+on FKCodigo_TBTabela_preco  = PKCodigo_TBTabela_preco

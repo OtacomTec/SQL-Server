@@ -1,0 +1,42 @@
+/*
+   quinta-feira, 15 de setembro de 2005 15:39:37
+   User: sa
+   Server: ONLYTECH-02
+   Database: BDRetaguarda
+   Application: MS SQLEM - Data Tools
+*/
+
+BEGIN TRANSACTION
+SET QUOTED_IDENTIFIER ON
+SET TRANSACTION ISOLATION LEVEL SERIALIZABLE
+SET ARITHABORT ON
+SET NUMERIC_ROUNDABORT OFF
+SET CONCAT_NULL_YIELDS_NULL ON
+SET ANSI_NULLS ON
+SET ANSI_PADDING ON
+SET ANSI_WARNINGS ON
+COMMIT
+BEGIN TRANSACTION
+COMMIT
+BEGIN TRANSACTION
+COMMIT
+BEGIN TRANSACTION
+ALTER TABLE dbo.TBImpostos_nota_saida_fiscal ADD CONSTRAINT
+	FK_TBImpostos_nota_saida_fiscal_TBNota_saida FOREIGN KEY
+	(
+	FKId_TBNota_saida
+	) REFERENCES dbo.TBNota_saida
+	(
+	PKId_TBNota_saida
+	)
+GO
+ALTER TABLE dbo.TBImpostos_nota_saida_fiscal ADD CONSTRAINT
+	FK_TBImpostos_nota_saida_fiscal_TBNota_saida_fiscal FOREIGN KEY
+	(
+	FKId_TBNota_saida
+	) REFERENCES dbo.TBNota_saida_fiscal
+	(
+	PKId_TBNota_saida_fiscal
+	)
+GO
+COMMIT
