@@ -1,0 +1,55 @@
+/*
+ *** IDENTIFICAÇÃO DO SCRIPT ***
+
+ 1 - A partir de 20/12/2005, fica expressamente proibida a criação de scripts sem que seja preenchido este cabeçalho
+ 2 - Obrigatoriamente necessário que este paragrafo seja inserido apos um BEGIN TRANSACTION
+ 3 - Obrigatoriamente o preenchimento das variaveis abaixo(@Nomenclatura,@Observacao,@Data)com valores correspondentes e condizentes
+
+     Att: Marcos
+*/
+
+---INICIO CABECALHO -----------------
+
+USE BDRetaguarda
+	GO
+BEGIN TRANSACTION
+	GO
+	declare @Nomenclatura as nvarchar(20)
+	declare @Observacao as nvarchar(100)
+	declare @Data as SMALLDATETIME
+
+	SET @Nomenclatura = 'SCP2019-01-15e'
+	SET @Observacao = 'Nova tabela TBFuncionario_Ponto'
+	SET @Data = CURRENT_TIMESTAMP
+
+	---LIMPEZA DA TABELA
+	DELETE FROM TBSCRIPT
+
+	---INSERCAO DO REGISTRO
+	INSERT INTO BDRetaguarda.dbo.TBSCRIPT(DFNome_TBScript,DFObjetivo_TBScript,DFData_execucao_TBScript)
+	VALUES(@Nomenclatura,@Observacao,@Data)
+	GO
+COMMIT
+---FIM CABECALHO ----------------------
+
+---INICIO SCRIPT ----------------------
+
+BEGIN TRANSACTION
+	CREATE TABLE [dbo].[TBFuncionario_Ponto](
+	[PKId_TBFuncionario_Ponto] [int] IDENTITY(1,1) NOT NULL,
+	[FKCodigo_TBFuncionario] [int] NOT NULL,
+	[DFData_Marcacao_TBFuncionario_Ponto] [smalldatetime] NOT NULL,
+	[DFAbonado_TBFuncionario_Ponto] [bit] NOT NULL CONSTRAINT [DF_TBFuncionario_Ponto_DFAbonado_TBFuncionario_Ponto]  DEFAULT ((0)),
+	[DFData_Alteracao_TBFuncionario_Ponto] [smalldatetime] NOT NULL,
+	[FKCodigo_TBFuncionario_RH] [int] NOT NULL,
+ CONSTRAINT [PK_TBFuncionario_Ponto] PRIMARY KEY CLUSTERED 
+(
+	[PKId_TBFuncionario_Ponto] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+	GO
+COMMIT
+
+---FIM SCRIPT
+

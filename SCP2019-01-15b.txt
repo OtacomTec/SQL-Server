@@ -1,0 +1,56 @@
+/*
+ *** IDENTIFICAÇÃO DO SCRIPT ***
+
+ 1 - A partir de 20/12/2005, fica expressamente proibida a criação de scripts sem que seja preenchido este cabeçalho
+ 2 - Obrigatoriamente necessário que este paragrafo seja inserido apos um BEGIN TRANSACTION
+ 3 - Obrigatoriamente o preenchimento das variaveis abaixo(@Nomenclatura,@Observacao,@Data)com valores correspondentes e condizentes
+
+     Att: Marcos
+*/
+
+---INICIO CABECALHO -----------------
+
+USE BDRetaguarda
+	GO
+BEGIN TRANSACTION
+	GO
+	declare @Nomenclatura as nvarchar(20)
+	declare @Observacao as nvarchar(100)
+	declare @Data as SMALLDATETIME
+
+	SET @Nomenclatura = 'SCP2019-01-15b'
+	SET @Observacao = 'Nova tabela TBFuncionario_Jornada'
+	SET @Data = CURRENT_TIMESTAMP
+
+	---LIMPEZA DA TABELA
+	DELETE FROM TBSCRIPT
+
+	---INSERCAO DO REGISTRO
+	INSERT INTO BDRetaguarda.dbo.TBSCRIPT(DFNome_TBScript,DFObjetivo_TBScript,DFData_execucao_TBScript)
+	VALUES(@Nomenclatura,@Observacao,@Data)
+	GO
+COMMIT
+---FIM CABECALHO ----------------------
+
+---INICIO SCRIPT ----------------------
+
+BEGIN TRANSACTION
+	CREATE TABLE [dbo].[TBFuncionario_Jornada](
+		[PKId_TBFuncionario_Jornada] [int] IDENTITY(1,1) NOT NULL,
+		[DFNome_TBFuncionario_Jornada] [nvarchar](50) NOT NULL,
+		[DFDuracao_TBFuncionario_Jornada] [int] NOT NULL CONSTRAINT [DF_TBFuncionario_Jornada_DFDuracao_TBFuncionario_Jornada]  DEFAULT ((220)),
+		[DFPeriodicidade_TBFuncionario_Jornada] [int] NOT NULL CONSTRAINT [DF_TBFuncionario_Jornada_DFPeriodicidade_TBFuncionario_Jornada]  DEFAULT ((2)),
+	 CONSTRAINT [PK_TBFuncionario_Jornada] PRIMARY KEY CLUSTERED 
+	(
+		[PKId_TBFuncionario_Jornada] ASC
+	)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+	) ON [PRIMARY]
+
+	GO
+
+	EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'(0=Diária;1=Semanal;2=Mensal)' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'TBFuncionario_Jornada', @level2type=N'COLUMN',@level2name=N'DFPeriodicidade_TBFuncionario_Jornada'
+	GO
+COMMIT
+
+---FIM SCRIPT
+

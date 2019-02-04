@@ -1,0 +1,68 @@
+/*
+ *** IDENTIFICAÇÃO DO SCRIPT ***
+
+ 1 - A partir de 20/12/2005, fica expressamente proibida a criação de scripts sem que seja preenchido este cabeçalho
+ 2 - Obrigatoriamente necessário que este paragrafo seja inserido apos um BEGIN TRANSACTION
+ 3 - Obrigatoriamente o preenchimento das variaveis abaixo(@Nomenclatura,@Observacao,@Data)com valores correspondentes e condizentes
+
+     Att: Marcos
+*/
+
+---INICIO CABECALHO -----------------
+
+USE BDRetaguarda
+	GO
+BEGIN TRANSACTION
+	GO
+	declare @Nomenclatura as nvarchar(20)
+	declare @Observacao as nvarchar(100)
+	declare @Data as SMALLDATETIME
+
+	SET @Nomenclatura = 'SCP2019-01-15c'
+	SET @Observacao = 'Nova tabela TBFuncionario_Escala'
+	SET @Data = CURRENT_TIMESTAMP
+
+	---LIMPEZA DA TABELA
+	DELETE FROM TBSCRIPT
+
+	---INSERCAO DO REGISTRO
+	INSERT INTO BDRetaguarda.dbo.TBSCRIPT(DFNome_TBScript,DFObjetivo_TBScript,DFData_execucao_TBScript)
+	VALUES(@Nomenclatura,@Observacao,@Data)
+	GO
+COMMIT
+---FIM CABECALHO ----------------------
+
+---INICIO SCRIPT ----------------------
+
+BEGIN TRANSACTION
+	CREATE TABLE [dbo].[TBFuncionario_Escala](
+		[PKId_TBFuncionario_Escala] [int] IDENTITY(1,1) NOT NULL,
+		[FKId_TBFuncionario_Jornada] [int] NOT NULL,
+		[DFNome_TBFuncionario_Escala] [nvarchar](25) NOT NULL,
+		[DFDescricao_TBFuncionario_Escala] [nvarchar](100) NOT NULL,
+		[DFPeriodo_Trabalho_TBFuncionario_Escala] [int] NOT NULL,
+		[DFPeriodo_Descanso_TBFuncionario_Escala] [int] NOT NULL,
+		[DFUnidade_Tempo_TBFuncionario_Escala] [int] NOT NULL,
+		[DFDuracao_Intervalo_TBFuncionario_Escala] [smalldatetime] NOT NULL,
+		[DFHoras_Segunda_TBFuncionario_Escala] [smalldatetime] NOT NULL,
+		[DFHoras_Terca_TBFuncionario_Escala] [smalldatetime] NOT NULL,
+		[DFHoras_Quarta_TBFuncionario_Escala] [smalldatetime] NOT NULL,
+		[DFHoras_Quinta_TBFuncionario_Escala] [smalldatetime] NOT NULL,
+		[DFHoras_Sexta_TBFuncionario_Escala] [smalldatetime] NOT NULL,
+		[DFHoras_Sabado_TBFuncionario_Escala] [smalldatetime] NOT NULL,
+		[DFHoras_Domingo_TBFuncionario_Escala] [smalldatetime] NOT NULL,
+	 CONSTRAINT [PK_TBFuncionario_Escala] PRIMARY KEY CLUSTERED 
+	(
+		[PKId_TBFuncionario_Escala] ASC
+	)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+	) ON [PRIMARY]
+
+	GO
+
+	EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'(0=Minutos; 1=Horas; 2=Dias)' , @level0type=N'SCHEMA',@level0name=N'dbo', @level1type=N'TABLE',@level1name=N'TBFuncionario_Escala', @level2type=N'COLUMN',@level2name=N'DFUnidade_Tempo_TBFuncionario_Escala'
+	GO
+COMMIT
+
+---FIM SCRIPT
+
+
