@@ -1,0 +1,69 @@
+/*
+ *** IDENTIFICAÇÃO DO SCRIPT ***
+
+ 1 - A partir de 20/12/2005, fica expressamente proibida a criação de scripts sem que seja preenchido este cabeçalho
+ 2 - Obrigatoriamente necessário que este paragrafo seja inserido apos um BEGIN TRANSACTION
+ 3 - Obrigatoriamente o preenchimento das variaveis abaixo(@Nomenclatura,@Observacao,@Data)com valores correspondentes e condizentes
+
+     Att: Marcos
+*/
+
+---INICIO CABECALHO -----------------
+
+USE BDRetaguarda
+	GO
+BEGIN TRANSACTION
+	GO
+	declare @Nomenclatura as nvarchar(20)
+	declare @Observacao as nvarchar(100)
+	declare @Data as SMALLDATETIME
+
+	SET @Nomenclatura = 'SCP2019-02-07a'
+	SET @Observacao = 'Altera tabela TBAgenda_transportador'
+	SET @Data = CURRENT_TIMESTAMP
+
+	---LIMPEZA DA TABELA
+	DELETE FROM TBSCRIPT
+
+	---INSERCAO DO REGISTRO
+	INSERT INTO BDRetaguarda.dbo.TBSCRIPT(DFNome_TBScript,DFObjetivo_TBScript,DFData_execucao_TBScript)
+	VALUES(@Nomenclatura,@Observacao,@Data)
+	GO
+COMMIT
+---FIM CABECALHO ----------------------
+
+---INICIO SCRIPT ----------------------
+
+CREATE TABLE [TBAgenda_transportadora](
+	[PKId_TBAgenda_transportadora] [int] IDENTITY(1,1) NOT NULL,
+	[FKCodigo_TBTransportadora] [int] NOT NULL,
+	[DFContato_TBAgenda_transportadora] [nvarchar](40) NOT NULL,
+	[DFTelefone_TBAgenda_transportadora] [nvarchar](20) NOT NULL,
+	[DFEmail_TBAgenda_transportadora] [nvarchar](50) NULL,
+	[DFData_aniversario_TBAgenda_transportadora] [smalldatetime] NULL,
+	[DFIntegrado_filiais_TBAgenda_transportadora] [bit] NULL,
+	[DFIntegrado_portal_TBAgenda_transportadora] [bit] NULL,
+	[DFData_alteracao_TBAgenda_transportadora] [smalldatetime] NULL,
+	[DFCodigo_Identificador_TBAgenda_transportadora] [int] NULL,
+	[DFTipo_Contato_TBAgenda_transportadora] [int] NULL,
+	[DFImagem_stream_TBAgenda_transportadora] [image] NULL,
+	[DFPath_logomarca_TBAgenda_transportadora] [nchar](1000) NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[PKId_TBAgenda_transportadora] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, FILLFACTOR = 90) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+
+GO
+
+ALTER TABLE [dbo].[TBAgenda_transportadora]  WITH NOCHECK ADD  CONSTRAINT [FK__TBAgenda___FKId___080120573] FOREIGN KEY([FKCodigo_TBTransportadora])
+REFERENCES [dbo].[TBTransportadora] ([PKCodigo_TBTransportadora])
+GO
+
+ALTER TABLE [dbo].[TBAgenda_transportadora] CHECK CONSTRAINT [FK__TBAgenda___FKId___080120573]
+GO
+
+
+---FIM SCRIPT
+
+
