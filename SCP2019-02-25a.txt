@@ -1,0 +1,51 @@
+/*
+ *** IDENTIFICAÇÃO DO SCRIPT ***
+
+ 1 - A partir de 20/12/2005, fica expressamente proibida a criação de scripts sem que seja preenchido este cabeçalho
+ 2 - Obrigatoriamente necessário que este paragrafo seja inserido apos um BEGIN TRANSACTION
+ 3 - Obrigatoriamente o preenchimento das variaveis abaixo(@Nomenclatura,@Observacao,@Data)com valores correspondentes e condizentes
+
+     Att: Marcos
+*/
+
+---INICIO CABECALHO -----------------
+
+USE BDRetaguarda
+	GO
+BEGIN TRANSACTION
+	GO
+	declare @Nomenclatura as nvarchar(20)
+	declare @Observacao as nvarchar(100)
+	declare @Data as SMALLDATETIME
+
+	SET @Nomenclatura = 'SCP2019-02-25a'
+	SET @Observacao = 'Altera tabela TBFuncionario_Ponto'
+	SET @Data = CURRENT_TIMESTAMP
+
+	---LIMPEZA DA TABELA
+	DELETE FROM TBSCRIPT
+
+	---INSERCAO DO REGISTRO
+	INSERT INTO BDRetaguarda.dbo.TBSCRIPT(DFNome_TBScript,DFObjetivo_TBScript,DFData_execucao_TBScript)
+	VALUES(@Nomenclatura,@Observacao,@Data)
+	GO
+COMMIT
+---FIM CABECALHO ----------------------
+
+---INICIO SCRIPT ----------------------
+
+BEGIN TRANSACTION
+GO
+
+ALTER TABLE dbo.TBFuncionario_Ponto ADD
+
+	DFFeriado_TBFuncionario_Ponto bit NOT NULL CONSTRAINT DF_TBFuncao_DFFeriado_TBFuncionario_Ponto DEFAULT ((0)),
+	DFObservacao_TBFuncionario_Ponto nvarchar(100) NULL
+GO
+ALTER TABLE dbo.TBFuncionario_Ponto SET (LOCK_ESCALATION = TABLE)
+GO
+COMMIT
+
+---FIM SCRIPT
+
+
