@@ -1,0 +1,53 @@
+/*
+ *** IDENTIFICAÇÃO DO SCRIPT ***
+
+ 1 - A partir de 20/12/2005, fica expressamente proibida a criação de scripts sem que seja preenchido este cabeçalho
+ 2 - Obrigatoriamente necessário que este paragrafo seja inserido apos um BEGIN TRANSACTION
+ 3 - Obrigatoriamente o preenchimento das variaveis abaixo(@Nomenclatura,@Observacao,@Data)com valores correspondentes e condizentes
+
+     Att: Marcos
+*/
+
+---INICIO CABECALHO -----------------
+
+USE BDPDV
+	
+BEGIN TRANSACTION
+	GO
+	declare @Nomenclatura as nvarchar(20)
+	declare @Observacao as nvarchar(100)
+	declare @Data as SMALLDATETIME
+
+	SET @Nomenclatura = 'SCP2019-03-21c'
+	SET @Observacao = 'Campos na TBCupom referente NFCe'
+	SET @Data = CURRENT_TIMESTAMP
+
+	---LIMPEZA DA TABELA
+	DELETE FROM TBSCRIPT
+
+	---INSERCAO DO REGISTRO
+	INSERT INTO BDRetaguarda.dbo.TBSCRIPT(DFNome_TBScript,DFObjetivo_TBScript,DFData_execucao_TBScript)
+	VALUES(@Nomenclatura,@Observacao,@Data)
+	GO
+COMMIT
+---FIM CABECALHO ----------------------
+
+---INICIO SCRIPT ----------------------
+
+BEGIN TRANSACTION
+GO
+
+ALTER TABLE TBCupom ADD
+	DFChave_nfce_TBCupom nvarchar(44) NULL,
+	DFHash_nfce_TBCupom nvarchar(40) NULL,
+	DFUrl_qrcode_nfce_TBCupom nvarchar(300) NULL,
+	DFRecibo_sefaz_TBCupom nvarchar(15) NULL,
+	DFTipo_processamento_nfce_TBCupom int NULL,
+	DFData_processamento_TBCupom smalldatetime NULL,
+	DFPath_imagem_qrcode_TBCupom nvarchar(500) NULL
+
+COMMIT
+
+---FIM SCRIPT
+
+
