@@ -10,7 +10,7 @@
 
 ---INICIO CABECALHO -----------------
 
-USE BDPDV
+USE BDRetaguarda
 	
 BEGIN TRANSACTION
 	GO
